@@ -14,12 +14,17 @@ public class ShoppingItemController {
     }
 
     @GetMapping
-    public String getItems(){
+    public String getItems() {
         return shoppingItemService.getItems().toString();
     }
 
     @PostMapping
-    public void addShoppingItem(@RequestBody ShoppingItem shoppingItem){
+    public void addShoppingItem(@RequestBody ShoppingItem shoppingItem) {
         shoppingItemService.addShoppingItem(shoppingItem);
+    }
+
+    @DeleteMapping(path = "{shoppingItemID}")
+    public void deleteShoppingItem(@PathVariable("shoppingItemID") Long shoppingItemID) {
+        shoppingItemService.deleteShoppingItem(shoppingItemID);
     }
 }
