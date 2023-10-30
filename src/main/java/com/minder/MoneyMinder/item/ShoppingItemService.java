@@ -20,7 +20,14 @@ public class ShoppingItemService {
     }
 
     public void addShoppingItem(ShoppingItem shoppingItem){
-        System.out.println(shoppingItem);
         shoppingItemRepository.save(shoppingItem);
+    }
+
+    public void deleteShoppingItem(long shoppingItemID) {
+        boolean exists = shoppingItemRepository.existsById(shoppingItemID);
+        if(!exists){
+            throw new IllegalStateException("Item does not exist!");
+        }
+        shoppingItemRepository.deleteById(shoppingItemID);
     }
 }
