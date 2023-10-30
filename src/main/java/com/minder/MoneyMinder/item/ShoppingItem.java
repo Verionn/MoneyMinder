@@ -12,7 +12,7 @@ public class ShoppingItem {
             allocationSize = 1
     )
     @GeneratedValue(
-            strategy = GenerationType.AUTO,
+            strategy = GenerationType.SEQUENCE,
             generator = "shoppingitem_sequence"
     )
 
@@ -34,12 +34,63 @@ public class ShoppingItem {
     public ShoppingItem() {
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getShoppingListID() {
+        return shoppingListID;
+    }
+
+    public void setShoppingListID(long shoppingListID) {
+        this.shoppingListID = shoppingListID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
-        return "item{" +
-                "name='" + name + '\'' +
+        return "ShoppingItem{" +
+                "id=" + id +
+                ", shoppingListID=" + shoppingListID +
+                ", name='" + name + '\'' +
                 ", price=" + price +
-                ", category=" + category +
+                ", amount=" + amount +
+                ", category='" + category + '\'' +
                 '}';
     }
 }
