@@ -3,6 +3,8 @@ package com.minder.MoneyMinder.item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.constant.Constable;
+
 @RestController
 @RequestMapping(path = "item")
 public class ShoppingItemController {
@@ -26,5 +28,13 @@ public class ShoppingItemController {
     @DeleteMapping(path = "{shoppingItemID}")
     public void deleteShoppingItem(@PathVariable("shoppingItemID") Long shoppingItemID) {
         shoppingItemService.deleteShoppingItem(shoppingItemID);
+    }
+
+    @PutMapping(path = "{shoppingItemID}")
+    public void updateShoppingItems(@PathVariable("shoppingItemID") Long shoppingItemID,
+                                    @RequestParam(required = false) Double price,
+                                    @RequestParam(required = false) Integer amount) {
+        shoppingItemService.updateShoppingItem(shoppingItemID, price, amount);
+
     }
 }
