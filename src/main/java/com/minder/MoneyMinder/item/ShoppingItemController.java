@@ -1,5 +1,6 @@
 package com.minder.MoneyMinder.item;
 
+import com.minder.MoneyMinder.item.dto.UpdateShoppingItemRequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,16 +26,15 @@ public class ShoppingItemController {
         shoppingItemService.addShoppingItem(shoppingItem);
     }
 
-    @DeleteMapping(path = "{shoppingItemID}")
+    @DeleteMapping(path = "/{shoppingItemID}")
     public void deleteShoppingItem(@PathVariable("shoppingItemID") Long shoppingItemID) {
         shoppingItemService.deleteShoppingItem(shoppingItemID);
     }
 
-    @PutMapping(path = "{shoppingItemID}")
+    @PutMapping(path = "/{shoppingItemID}")
     public void updateShoppingItems(@PathVariable("shoppingItemID") Long shoppingItemID,
-                                    @RequestParam(required = false) Double price,
-                                    @RequestParam(required = false) Integer amount) {
-        shoppingItemService.updateShoppingItem(shoppingItemID, price, amount);
+                                    @RequestBody UpdateShoppingItemRequestBody updateShoppingItemRequestBody) {
+        shoppingItemService.updateShoppingItem(shoppingItemID, updateShoppingItemRequestBody);
 
     }
 }

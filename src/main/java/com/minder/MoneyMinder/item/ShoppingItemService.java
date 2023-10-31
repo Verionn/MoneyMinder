@@ -1,6 +1,7 @@
 package com.minder.MoneyMinder.item;
 
 
+import com.minder.MoneyMinder.item.dto.UpdateShoppingItemRequestBody;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,16 +34,23 @@ public class ShoppingItemService {
     }
 
     @Transactional
-    public void updateShoppingItem(Long shoppingItemID, Double price, Integer amount) {
+    public void updateShoppingItem(Long shoppingItemID, UpdateShoppingItemRequestBody updateShoppingItemRequestBody) {
         ShoppingItem shoppingItem = shoppingItemRepository.findById(shoppingItemID).
                 orElseThrow(() -> new IllegalStateException("Item with id: " + shoppingItemID + " does not exist"));
 
-        if(price > 0 && shoppingItem.getPrice() != price){
+        double price = updateShoppingItemRequestBody.price();
+        int amount = updateShoppingItemRequestBody.amount();
+
+        if(price > 0){
             shoppingItem.setPrice(price);
         }
 
-        if(amount != null && amount >= 0 && shoppingItem.getAmount() != amount){
+        if(amount >= 0){
             shoppingItem.setAmount(amount);
         }
+
+        shoppingItem.setName(updateShoppingItemRequestBody.name());
+        shoppingItem.setCategory(updateShoppingItemRequestBody.category());
+
     }
 }
