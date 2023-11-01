@@ -76,6 +76,7 @@ public class ShoppingList {
 
     @Override
     public String toString() {
-        return "Nazwa listy: " + name + "\n";
+        return "Nazwa listy: " + name +
+                "\n" + "full price: " + fullPrice;
     }
 }
