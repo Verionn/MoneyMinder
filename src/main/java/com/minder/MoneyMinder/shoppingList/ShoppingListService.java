@@ -1,15 +1,11 @@
 package com.minder.MoneyMinder.shoppingList;
 
-import com.minder.MoneyMinder.item.ShoppingItem;
-import com.minder.MoneyMinder.item.dto.UpdateShoppingItemRequestBody;
 import com.minder.MoneyMinder.shoppingList.dto.UpdateShoppingListRequestBody;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class ShoppingListService {
@@ -20,12 +16,8 @@ public class ShoppingListService {
         this.shoppingListRepository = shoppingListRepository;
     }
 
-    public List<String> getShoppingList() {
-        List<String> shoppingLists = new ArrayList<>();
-        shoppingLists.add("testowa nazwa 1");
-        shoppingLists.add("testowa nazwa 2");
-        shoppingLists.add("testowa nazwa 3");
-        return shoppingLists;
+    public List<ShoppingList> getShoppingList() {
+        return shoppingListRepository.findAll();
     }
 
     public void addShoppingList(ShoppingList shoppingList){
