@@ -1,10 +1,8 @@
 package com.minder.MoneyMinder.shoppingList;
 
+import com.minder.MoneyMinder.shoppingList.dto.UpdateShoppingListRequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +19,22 @@ public class ShoppingListController {
     @GetMapping
     public List<String> getShoppingList() {
         return shoppingListService.getShoppingList();
+    }
+
+    @PostMapping
+    public void addShoppingList(@RequestBody ShoppingList shoppingList) {
+        shoppingListService.addShoppingList(shoppingList);
+    }
+
+    @DeleteMapping(path = "/{shoppingListID}")
+    public void deleteShoppingList(@PathVariable("shoppingListID") Long shoppingListID) {
+        shoppingListService.deleteShoppingList(shoppingListID);
+    }
+
+    @PutMapping(path = "/{shoppingListID}")
+    public void updateShoppingLists(@PathVariable("shoppingListID") Long shoppingListID,
+                                    @RequestBody UpdateShoppingListRequestBody updateShoppingListRequestBody) {
+        shoppingListService.updateShoppingList(shoppingListID, updateShoppingListRequestBody);
+
     }
 }
