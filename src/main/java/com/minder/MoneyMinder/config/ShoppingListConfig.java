@@ -1,9 +1,9 @@
 package com.minder.MoneyMinder.config;
 
-import com.minder.MoneyMinder.item.ShoppingItem;
-import com.minder.MoneyMinder.item.ShoppingItemRepository;
-import com.minder.MoneyMinder.shoppingList.ShoppingList;
-import com.minder.MoneyMinder.shoppingList.ShoppingListRepository;
+import com.minder.MoneyMinder.item.ItemEntity;
+import com.minder.MoneyMinder.item.ItemRepository;
+import com.minder.MoneyMinder.list.ListEntity;
+import com.minder.MoneyMinder.list.ListRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,44 +14,44 @@ import java.util.List;
 public class ShoppingListConfig {
 
     @Bean
-    CommandLineRunner addSampleLists(ShoppingListRepository shoppingListRepository, ShoppingItemRepository shoppingItemRepository){
+    CommandLineRunner addSampleLists(ListRepository listRepository, ItemRepository itemRepository){
         return args -> {
-            ShoppingList daily = new ShoppingList(
+            ListEntity daily = new ListEntity(
                     "Na jutro"
             );
-            ShoppingList weekend = new ShoppingList(
+            ListEntity weekend = new ListEntity(
                     "Na weekend"
             );
 
-            ShoppingItem bread = new ShoppingItem(
+            ItemEntity bread = new ItemEntity(
                     "Bread",
                     3.20,
                     1,
                     "Food",
                     1L
             );
-            ShoppingItem milk = new ShoppingItem(
+            ItemEntity milk = new ItemEntity(
                     "Milk",
                     3.20,
                     1,
                     "Food",
                     1L
             );
-            ShoppingItem potato = new ShoppingItem(
+            ItemEntity potato = new ItemEntity(
                     "Potato",
                     3.20,
                     10,
                     "Food",
                     1L
             );
-            ShoppingItem carrot = new ShoppingItem(
+            ItemEntity carrot = new ItemEntity(
                     "Carrot",
                     3.20,
                     3,
                     "Food",
                     2L
             );
-            ShoppingItem cola = new ShoppingItem(
+            ItemEntity cola = new ItemEntity(
                     "Cola",
                     3.20,
                     1,
@@ -59,8 +59,8 @@ public class ShoppingListConfig {
                     2L
             );
 
-            shoppingListRepository.saveAll(List.of(daily, weekend));
-            shoppingItemRepository.saveAll(List.of(bread, milk, potato, carrot, cola));
+            listRepository.saveAll(List.of(daily, weekend));
+            itemRepository.saveAll(List.of(bread, milk, potato, carrot, cola));
 
         };
     }

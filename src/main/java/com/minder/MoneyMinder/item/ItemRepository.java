@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ShoppingItemRepository extends JpaRepository<ShoppingItem, Long> {
-    List<ShoppingItem> findByShoppingListId(Long listId);
+public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
+    List<ItemEntity> findByListId(Long listId);
 }
