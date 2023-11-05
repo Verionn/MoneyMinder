@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-public class ShoppingListConfig {
+public class ListConfig {
 
     @Bean
     CommandLineRunner addSampleLists(ListRepository listRepository, ItemRepository itemRepository){
