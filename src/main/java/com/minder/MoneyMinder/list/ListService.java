@@ -49,4 +49,9 @@ public class ListService {
             listEntity.setName(name);
         }
     }
+
+    public boolean existsById(Long listId) {
+
+        return true;
+    }
 }
