@@ -4,34 +4,34 @@ import jakarta.persistence.*;
 
 @Entity
 @Table
-public class ShoppingItem {
+public class ItemEntity {
     @Id
     @SequenceGenerator(
-            name = "shoppingitem_sequence",
-            sequenceName = "shoppingitem_sequence",
+            name = "item_sequence",
+            sequenceName = "item_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "shoppingitem_sequence"
+            generator = "item_sequence"
     )
 
     long id;
-    long shoppingListId;
+    long listId;
     String name;
     double price;
     int amount;
     String category;
 
-    public ShoppingItem(String name, double price, int amount, String category, Long shoppingListId) {
-        this.shoppingListId = shoppingListId;
+    public ItemEntity(String name, double price, int amount, String category, Long listId) {
+        this.listId = listId;
         this.name = name;
         this.price = price;
         this.category = category;
         this.amount = amount;
     }
 
-    public ShoppingItem() {
+    public ItemEntity() {
     }
 
     public long getId() {
@@ -42,12 +42,12 @@ public class ShoppingItem {
         this.id = id;
     }
 
-    public Long getShoppingListId() {
-        return shoppingListId;
+    public Long getListId() {
+        return listId;
     }
 
-    public void setShoppingListId(Long shoppingListID) {
-        this.shoppingListId = shoppingListID;
+    public void setListId(Long listId) {
+        this.listId = listId;
     }
 
     public String getName() {
@@ -84,6 +84,6 @@ public class ShoppingItem {
 
     @Override
     public String toString() {
-        return "Item: " + name + "\nID: " + id + "\nLista: " + shoppingListId + "\nIlosc: " + amount + "\nCena: " + price + "\nKategoria: " + category + "\n\n";
+        return "Item: " + name + "\nID: " + id + "\nLista: " + listId + "\nIlosc: " + amount + "\nCena: " + price + "\nKategoria: " + category + "\n\n";
     }
 }
