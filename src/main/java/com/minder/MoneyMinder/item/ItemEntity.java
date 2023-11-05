@@ -16,8 +16,8 @@ public class ItemEntity {
             generator = "item_sequence"
     )
 
-    long id;
-    long listId;
+    Long itemId;
+    Long listId;
     String name;
     double price;
     int amount;
@@ -34,12 +34,12 @@ public class ItemEntity {
     public ItemEntity() {
     }
 
-    public long getId() {
-        return id;
+    public Long getItemId() {
+        return itemId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
     }
 
     public Long getListId() {
@@ -84,6 +84,6 @@ public class ItemEntity {
 
     @Override
     public String toString() {
-        return "Item: " + name + "\nID: " + id + "\nLista: " + listId + "\nIlosc: " + amount + "\nCena: " + price + "\nKategoria: " + category + "\n\n";
+        return "Item: " + name + "\nID: " + itemId + "\nLista: " + listId + "\nIlosc: " + amount + "\nCena: " + price + "\nKategoria: " + category + "\n\n";
     }
 }

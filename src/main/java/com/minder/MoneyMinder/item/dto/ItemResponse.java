@@ -1,7 +1,7 @@
 package com.minder.MoneyMinder.item.dto;
 
 public record ItemResponse(
-        long id,
+        Long itemId,
         Long listId,
         String name,
         double price,

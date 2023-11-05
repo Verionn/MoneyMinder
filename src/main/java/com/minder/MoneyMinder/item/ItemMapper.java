@@ -11,6 +11,7 @@ public interface ItemMapper {
     ItemMapper INSTANCE = Mappers.getMapper(ItemMapper.class);
 
     ItemEntity createItemRequestBodyToItem(CreateItemRequestBody createItemRequestBody);
+
     ItemEntity updateItemRequestBodyToItem(UpdateItemRequestBody updateItemRequestBody);
 
     ItemResponse itemToItemResponse(ItemEntity itemEntity);

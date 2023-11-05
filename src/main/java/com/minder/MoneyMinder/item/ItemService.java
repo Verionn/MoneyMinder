@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemService {
@@ -26,7 +27,13 @@ public class ItemService {
         return itemRepository.save(itemEntity);
     }
 
-    public void deleteItem(long itemID) {
+    public Optional<ItemEntity> getItem(Long id, Long listId) {
+        //TODO:
+        //walidacja czy istnieje
+        return itemRepository.findById(id);
+    }
+
+    public void deleteItem(Long itemID) {
         boolean exists = itemRepository.existsById(itemID);
         if(!exists){
             throw new IllegalStateException("Item does not exist!");
@@ -40,7 +47,7 @@ public class ItemService {
                 orElseThrow(() -> new IllegalStateException("Item with id: " + itemId + " does not exist"));
 
         //TODO:
-        //sprawdzic czy lista i item istnieje
+        //sprawdzic czy lista istnieje
 
         double price = updateItemRequestBody.price();
         int amount = updateItemRequestBody.amount();
@@ -63,4 +70,5 @@ public class ItemService {
     public List<ItemEntity> getItemsOnList(Long listId) {
         return itemRepository.findByListId(listId);
     }
+
 }
