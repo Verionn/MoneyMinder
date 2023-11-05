@@ -18,9 +18,9 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public List<ItemEntity> getItems(){
-        return itemRepository.findAll();
-    }
+//    public List<ItemEntity> getItems(){
+//        return itemRepository.findAll();
+//    }
 
     public ItemEntity addItem(ItemEntity itemEntity, Long listId){
         itemEntity.setListId(listId);
@@ -31,6 +31,10 @@ public class ItemService {
         //TODO:
         //walidacja czy istnieje
         return itemRepository.findById(id);
+    }
+
+    public List<ItemEntity> getItemsOnSpecificList(Long listId) {
+        return itemRepository.findByListId(listId);
     }
 
     public void deleteItem(Long itemID) {
@@ -66,9 +70,4 @@ public class ItemService {
 
         return itemEntity;
     }
-
-    public List<ItemEntity> getItemsOnList(Long listId) {
-        return itemRepository.findByListId(listId);
-    }
-
 }
