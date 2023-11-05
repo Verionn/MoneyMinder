@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -26,6 +27,13 @@ public class ItemController {
     public String getItems(@PathVariable Long listId) {
         List<ItemEntity> itemsOnList = itemService.getItemsOnList(listId);
         return itemsOnList.toString();
+    }
+
+    @GetMapping("/{listId}/items/{itemId}")
+    public ResponseEntity<ItemResponse> getItem(@PathVariable Long listId, @PathVariable Long itemId){
+        return itemService.getItem(itemId, listId).map(itemRecord -> ResponseEntity.ok().body(
+                    itemMapper.itemToItemResponse(itemRecord)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/{listId}/items")

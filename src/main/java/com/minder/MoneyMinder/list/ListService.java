@@ -25,7 +25,7 @@ public class ListService {
         listRepository.save(listEntity);
     }
 
-    public void deleteList(long listId) {
+    public void deleteList(Long listId) {
         boolean exists = listRepository.existsById(listId);
         if (!exists) {
             throw new IllegalStateException("List does not exist!");

@@ -8,7 +8,7 @@ public class ListEntity {
     @Id
     @SequenceGenerator(name = "list_sequence", sequenceName = "list_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "list_sequence")
-    int listId;
+    Long listId;
     String name;
     @Transient
     double fullPrice = 0;
@@ -20,11 +20,11 @@ public class ListEntity {
     public ListEntity() {
     }
 
-    public int getListId() {
+    public Long getListId() {
         return listId;
     }
 
-    public void setListId(int listId) {
+    public void setListId(Long listId) {
         this.listId = listId;
     }
 
