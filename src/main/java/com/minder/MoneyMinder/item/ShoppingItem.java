@@ -17,14 +17,14 @@ public class ShoppingItem {
     )
 
     long id;
-    long shoppingListID;
+    long shoppingListId;
     String name;
     double price;
     int amount;
     String category;
 
-    public ShoppingItem(String name, double price, int amount, String category, long shoppingListID) {
-        this.shoppingListID = shoppingListID;
+    public ShoppingItem(String name, double price, int amount, String category, Long shoppingListId) {
+        this.shoppingListId = shoppingListId;
         this.name = name;
         this.price = price;
         this.category = category;
@@ -42,12 +42,12 @@ public class ShoppingItem {
         this.id = id;
     }
 
-    public long getShoppingListID() {
-        return shoppingListID;
+    public Long getShoppingListId() {
+        return shoppingListId;
     }
 
-    public void setShoppingListID(long shoppingListID) {
-        this.shoppingListID = shoppingListID;
+    public void setShoppingListId(Long shoppingListID) {
+        this.shoppingListId = shoppingListID;
     }
 
     public String getName() {
@@ -84,13 +84,6 @@ public class ShoppingItem {
 
     @Override
     public String toString() {
-        return "ShoppingItem{" +
-                "id=" + id +
-                ", shoppingListID=" + shoppingListID +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", amount=" + amount +
-                ", category='" + category + '\'' +
-                '}';
+        return "Item: " + name + "\nID: " + id + "\nLista: " + shoppingListId + "\nIlosc: " + amount + "\nCena: " + price + "\nKategoria: " + category + "\n\n";
     }
 }

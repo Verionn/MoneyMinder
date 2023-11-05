@@ -1,6 +1,8 @@
 package com.minder.MoneyMinder.item.dto;
 
-public record CreateShoppingItemRequestBody(
+public record ShoppingItemResponse(
+        long id,
+        Long shoppingListId,
         String name,
         double price,
         int amount,

@@ -13,26 +13,8 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.http.HttpStatus.CREATED;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 @ActiveProfiles("test")
 class MoneyMinderApplicationTests {
-
-	@Autowired
-	protected TestRestTemplate client;
-
-//	protected CategoryResponse createCategory(String categoryName) {
-//		//given
-//		var createCategoryRequestBody = new CreateCategoryRequestBody(categoryName);
-//
-//		//when
-//		var createCategoryResponse = client.postForEntity(prepareUrl(CATEGORY_RESOURCE),
-//				createCategoryRequestBody, CategoryResponse.class);
-//
-//		//then
-//		assertThat(createCategoryResponse.getStatusCode(), equalTo(CREATED));
-//		assertThat(createCategoryResponse.getBody(), is(not(nullValue())));
-//		assertThat(createCategoryResponse.getBody().name(), is(equalTo(categoryName)));
-//		return createCategoryResponse.getBody();
-//	}
 
 }
