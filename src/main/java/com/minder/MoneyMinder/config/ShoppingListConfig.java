@@ -28,42 +28,36 @@ public class ShoppingListConfig {
                     3.20,
                     1,
                     "Food",
-                    1
+                    1L
             );
             ShoppingItem milk = new ShoppingItem(
                     "Milk",
                     3.20,
                     1,
                     "Food",
-                    1
+                    1L
             );
             ShoppingItem potato = new ShoppingItem(
                     "Potato",
                     3.20,
                     10,
                     "Food",
-                    1
+                    1L
             );
             ShoppingItem carrot = new ShoppingItem(
                     "Carrot",
                     3.20,
                     3,
                     "Food",
-                    1
+                    2L
             );
             ShoppingItem cola = new ShoppingItem(
                     "Cola",
                     3.20,
                     1,
                     "Sweets",
-                    1
+                    2L
             );
-
-            daily.addItems(bread);
-            daily.addItems(milk);
-            weekend.addItems(potato);
-            weekend.addItems(cola);
-            weekend.addItems(carrot);
 
             shoppingListRepository.saveAll(List.of(daily, weekend));
             shoppingItemRepository.saveAll(List.of(bread, milk, potato, carrot, cola));

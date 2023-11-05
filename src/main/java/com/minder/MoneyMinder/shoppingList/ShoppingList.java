@@ -19,15 +19,8 @@ public class ShoppingList {
             strategy = GenerationType.SEQUENCE,
             generator = "shoppinglist_sequence"
     )
-    int shoppingListID;
+    int shoppingListId;
     String name;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "shoppinglist_shoppingitem",
-            joinColumns = @JoinColumn(name = "shoppingListID"),
-            inverseJoinColumns = @JoinColumn(name = "id"))
-    private Set<ShoppingItem> items = new HashSet<>();
-
     @Transient
     double fullPrice = 0;
 
@@ -39,11 +32,11 @@ public class ShoppingList {
     }
 
     public int getShoppingListID() {
-        return shoppingListID;
+        return shoppingListId;
     }
 
     public void setShoppingListID(int shoppingListID) {
-        this.shoppingListID = shoppingListID;
+        this.shoppingListId = shoppingListID;
     }
 
     public String getName() {
@@ -52,18 +45,6 @@ public class ShoppingList {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<ShoppingItem> getItems() {
-        return items;
-    }
-
-    public void setItems(Set<ShoppingItem> items) {
-        this.items = items;
-    }
-
-    public void addItems(ShoppingItem shoppingItem){
-        items.add(shoppingItem);
     }
 
     public double getFullPrice() {
