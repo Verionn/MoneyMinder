@@ -19,17 +19,17 @@ const sideBarContainer = () =>{
 
                 <li>
                     <box-icon type='solid' name='trash' color="white"></box-icon>
-                    <h3>trash</h3>
+                    <h3>Trash</h3>
                 </li>
 
                 <li>
                     <box-icon name='question-mark' color="white"></box-icon>
-                    <h3>help</h3>
+                    <h3>Help</h3>
                 </li>
 
                 <li>
                     <box-icon name='cog' color="white"></box-icon>
-                    setting
+                    <h3>Settings</h3>
                 </li>
 
             </ul>
@@ -48,11 +48,11 @@ const sideBarContainer = () =>{
             <div className="downloads">
                 <div>
                     <box-icon type='logo' name='play-store' color="gray" size="md"></box-icon>
-                    get it on  <div className="boldText">Google Play</div>
+                    <p>get it on <br/> <div className="boldText">Google Play</div></p>
                 </div>
                 <div>
                     <box-icon type='logo' name='apple' color="white" size="md"></box-icon>
-                    get it on <div className="boldText">App Store</div>
+                    <p>get it on <br/> <div className="boldText">App Store</div></p>
                 </div>
             </div>
 
