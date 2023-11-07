@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .App-logo {
@@ -26,6 +30,12 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.verticalLine{
+  border: 1px solid white;
+  width: 1%;
+  height: 100px;
 }
 
 @keyframes App-logo-spin {
