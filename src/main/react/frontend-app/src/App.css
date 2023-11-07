@@ -1,8 +1,8 @@
 .App {
   text-align: center;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: flex-start;
 }
 
@@ -33,9 +33,10 @@
 }
 
 .verticalLine{
-  border: 1px solid white;
-  width: 1%;
-  height: 100px;
+  border: 1px solid rgb(128, 128, 128);
+  background-color: rgb(128, 128, 128);
+  width: 1px;
+  height: 845px;
 }
 
 @keyframes App-logo-spin {
