@@ -36,15 +36,20 @@ public class ItemController {
 
     @GetMapping("/{listId}/items/{itemId}")
     public ResponseEntity<ItemResponse> getItem(@PathVariable Long listId, @PathVariable Long itemId) {
-        return itemService.getItem(itemId, listId).map(itemRecord -> ResponseEntity.ok().body(
+        if (!listService.existsById(listId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return itemService.getItem(itemId).map(itemRecord -> ResponseEntity.ok().body(
                         itemMapper.itemToItemResponse(itemRecord)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/{listId}/items")
     public ResponseEntity<ItemResponse> addItem(@PathVariable Long listId, @RequestBody CreateItemRequestBody createItemRequestBody) {
-        //TODO:
-        //czy lista istnieje
+        if (!listService.existsById(listId)) {
+            return ResponseEntity.badRequest().build();
+        }
 
         if (checkIfNewItemRequestBodyIsInvalid(createItemRequestBody)) {
             return ResponseEntity.badRequest().build();
@@ -58,21 +63,23 @@ public class ItemController {
 
     @DeleteMapping(path = "{listId}/items/{itemId}")
     public ResponseEntity<HttpStatus> deleteItem(@PathVariable Long listId, @PathVariable Long itemId) {
-        //TODO::
-//        if(checkIfListAndItemExists(listId, shoppingItemId)){
-//            return ResponseEntity.notFound().build();
-//        }
+        if (!checkIfItemAndListExists(listId, itemId)) {
+            return ResponseEntity.notFound().build();
+        }
+
         itemService.deleteItem(itemId);
+
         return ResponseEntity.ok().build();
     }
 
     @PutMapping(path = "{listId}/items/{itemId}")
-    public ResponseEntity<ItemResponse> updateItems(@PathVariable Long listId,
+    public ResponseEntity<ItemResponse> updateItem(@PathVariable Long listId,
                                                     @PathVariable Long itemId,
                                                     @RequestBody UpdateItemRequestBody updateItemRequestBody) {
 
-        //TODO:
-        //weryfikacja czy lista oraz item istnieje
+        if (!checkIfItemAndListExists(itemId, listId)) {
+            return ResponseEntity.notFound().build();
+        }
 
         return ResponseEntity.ok().body(itemMapper.itemToItemResponse(itemService.
                 updateItem(itemId, updateItemRequestBody)));
@@ -80,5 +87,9 @@ public class ItemController {
 
     private boolean checkIfNewItemRequestBodyIsInvalid(CreateItemRequestBody createItemRequestBody) {
         return createItemRequestBody.amount() < 0 || createItemRequestBody.name().isBlank() || createItemRequestBody.category().isBlank() || createItemRequestBody.price() < 0;
+    }
+
+    private boolean checkIfItemAndListExists(Long itemId, Long listId) {
+        return listService.existsById(listId) && itemService.existsById(itemId);
     }
 }

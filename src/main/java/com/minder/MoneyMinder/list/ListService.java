@@ -36,7 +36,7 @@ public class ListService {
     @Transactional
     public void updateList(Long listId, UpdateListRequestBody updateListRequestBody) {
         ListEntity listEntity = listRepository.findById(listId).
-                orElseThrow(() -> new IllegalStateException("List with id: " + listId + " does not exist"));
+                orElseThrow();
 
         double fullPrice = updateListRequestBody.fullPrice();
         String name = updateListRequestBody.name();
@@ -51,7 +51,6 @@ public class ListService {
     }
 
     public boolean existsById(Long listId) {
-
-        return true;
+        return listRepository.existsById(listId);
     }
 }
