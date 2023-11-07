@@ -17,7 +17,7 @@ public class ListService {
         this.listRepository = listRepository;
     }
 
-    public List<ListEntity> getList() {
+    public List<ListEntity> getLists() {
         return listRepository.findAll();
     }
 
@@ -26,10 +26,6 @@ public class ListService {
     }
 
     public void deleteList(Long listId) {
-        boolean exists = listRepository.existsById(listId);
-        if (!exists) {
-            throw new IllegalStateException("List does not exist!");
-        }
         listRepository.deleteById(listId);
     }
 
