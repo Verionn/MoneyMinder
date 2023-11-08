@@ -18,19 +18,13 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-//    public List<ItemEntity> getItems(){
-//        return itemRepository.findAll();
-//    }
-
     public ItemEntity addItem(ItemEntity itemEntity, Long listId){
         itemEntity.setListId(listId);
         return itemRepository.save(itemEntity);
     }
 
-    public Optional<ItemEntity> getItem(Long id, Long listId) {
-        //TODO:
-        //walidacja czy istnieje
-        return itemRepository.findById(id);
+    public Optional<ItemEntity> getItem(Long itemId) {
+        return itemRepository.findById(itemId);
     }
 
     public List<ItemEntity> getItemsOnSpecificList(Long listId) {
@@ -38,36 +32,22 @@ public class ItemService {
     }
 
     public void deleteItem(Long itemID) {
-        boolean exists = itemRepository.existsById(itemID);
-        if(!exists){
-            throw new IllegalStateException("Item does not exist!");
-        }
         itemRepository.deleteById(itemID);
     }
 
     @Transactional
     public ItemEntity updateItem(Long itemId, UpdateItemRequestBody updateItemRequestBody) {
         ItemEntity itemEntity = itemRepository.findById(itemId).
-                orElseThrow(() -> new IllegalStateException("Item with id: " + itemId + " does not exist"));
-
-        //TODO:
-        //sprawdzic czy lista istnieje
-
-        double price = updateItemRequestBody.price();
-        int amount = updateItemRequestBody.amount();
-
-        if(price > 0){
-            itemEntity.setPrice(price);
-        }
-
-        if(amount >= 0){
-            itemEntity.setAmount(amount);
-        }
+                orElseThrow();
 
         itemEntity.setName(updateItemRequestBody.name());
         itemEntity.setCategory(updateItemRequestBody.category());
         itemEntity.setListId(updateItemRequestBody.listId());
 
         return itemEntity;
+    }
+
+    public boolean existsById(Long itemId) {
+        return itemRepository.existsById(itemId);
     }
 }

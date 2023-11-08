@@ -17,7 +17,7 @@ public class ListService {
         this.listRepository = listRepository;
     }
 
-    public List<ListEntity> getList() {
+    public List<ListEntity> getLists() {
         return listRepository.findAll();
     }
 
@@ -26,17 +26,13 @@ public class ListService {
     }
 
     public void deleteList(Long listId) {
-        boolean exists = listRepository.existsById(listId);
-        if (!exists) {
-            throw new IllegalStateException("List does not exist!");
-        }
         listRepository.deleteById(listId);
     }
 
     @Transactional
     public void updateList(Long listId, UpdateListRequestBody updateListRequestBody) {
         ListEntity listEntity = listRepository.findById(listId).
-                orElseThrow(() -> new IllegalStateException("List with id: " + listId + " does not exist"));
+                orElseThrow();
 
         double fullPrice = updateListRequestBody.fullPrice();
         String name = updateListRequestBody.name();
@@ -51,7 +47,6 @@ public class ListService {
     }
 
     public boolean existsById(Long listId) {
-
-        return true;
+        return listRepository.existsById(listId);
     }
 }
