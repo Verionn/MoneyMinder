@@ -1,12 +1,10 @@
 package com.minder.MoneyMinder.item;
 
 import com.minder.MoneyMinder.item.dto.CreateItemRequestBody;
-import com.minder.MoneyMinder.item.dto.ItemListResponse;
 import com.minder.MoneyMinder.item.dto.ItemResponse;
 import com.minder.MoneyMinder.item.dto.UpdateItemRequestBody;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

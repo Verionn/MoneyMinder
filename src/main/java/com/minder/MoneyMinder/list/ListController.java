@@ -1,18 +1,19 @@
 package com.minder.MoneyMinder.list;
 
 import com.minder.MoneyMinder.list.dto.ListResponse;
+import com.minder.MoneyMinder.list.dto.ListsResponse;
 import com.minder.MoneyMinder.list.dto.UpdateListRequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/lists")
 public class ListController {
     private final ListService listService;
+    private final ListMapper listMapper = ListMapper.INSTANCE;
 
     @Autowired
     public ListController(ListService listService) {
@@ -20,15 +21,15 @@ public class ListController {
     }
 
     @GetMapping
-    public List<ListEntity> getLists() {
-        return listService.getLists();
-        //Tutaj lista obiektow
+    public ResponseEntity<ListsResponse> getLists() {
+        return ResponseEntity.ok().body(
+                new ListsResponse(listMapper.listOfListEntityToListOfListResponse(listService.getLists())));
     }
 
     @PostMapping
-    public void addList(@RequestBody ListEntity listEntity) {
-        listService.addList(listEntity);
-        //Tutaj tez trzeba zwrocic status 201 - Created oraz utworzony obiekt (ListResponse)
+    public ResponseEntity<ListResponse> addList(@RequestBody ListEntity listEntity) {
+        return ResponseEntity.status(201).body(
+                listMapper.listEntityToListResponse(listService.addList(listEntity)));
     }
 
     @DeleteMapping(path = "/{listId}")
@@ -49,9 +50,8 @@ public class ListController {
             return ResponseEntity.notFound().build();
         }
 
-        listService.updateList(listId, updateListRequestBody);
-        //zwróc obiekt który został utworzony zmapuj go do ListRepesponse
-        return null;
+        return ResponseEntity.status(200).body(
+                listMapper.listEntityToListResponse(listService.updateList(listId, updateListRequestBody)));
     }
 
     private boolean checkIfListExits(Long listId) {
