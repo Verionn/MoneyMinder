@@ -21,8 +21,8 @@ public class ListService {
         return listRepository.findAll();
     }
 
-    public void addList(ListEntity listEntity) {
-        listRepository.save(listEntity);
+    public ListEntity addList(ListEntity listEntity) {
+        return listRepository.save(listEntity);
     }
 
     public void deleteList(Long listId) {
@@ -30,20 +30,22 @@ public class ListService {
     }
 
     @Transactional
-    public void updateList(Long listId, UpdateListRequestBody updateListRequestBody) {
+    public ListEntity updateList(Long listId, UpdateListRequestBody updateListRequestBody) {
         ListEntity listEntity = listRepository.findById(listId).
                 orElseThrow();
 
         double fullPrice = updateListRequestBody.fullPrice();
         String name = updateListRequestBody.name();
 
-        if (fullPrice > 0) {
+        if (fullPrice >= 0) {
             listEntity.setFullPrice(fullPrice);
         }
 
         if (name != null && !name.isEmpty() && !listEntity.getName().equals(name)) {
             listEntity.setName(name);
         }
+
+        return listEntity;
     }
 
     public boolean existsById(Long listId) {
