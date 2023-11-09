@@ -38,17 +38,17 @@ public class CreateListTests extends MoneyMinderApplicationTests {
     @DisplayName("Should get specific list")
     public void ShouldGetSpecificListAndReturnOk(){
         //given
-        var createdList = createList(FIRST_LIST_NAME);
+        var createListResponse = createList(FIRST_LIST_NAME);
 
         //when
-        var getListResponse = client.getForEntity(listPath(createdList.listId()),
+        var getListResponse = client.getForEntity(listPath(createListResponse.listId()),
                 ListResponse.class);
 
         //then
         assertThat(getListResponse.getStatusCode(), equalTo(OK));
         assertNotNull(getListResponse.getBody());
         assertEquals(FIRST_LIST_NAME, getListResponse.getBody().name());
-        assertEquals(createdList.listId(), getListResponse.getBody().listId());
+        assertEquals(createListResponse.listId(), getListResponse.getBody().listId());
     }
 
     @Test
