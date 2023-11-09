@@ -58,7 +58,7 @@ public class ListController {
     @PutMapping(path = "/{listId}")
     public ResponseEntity<ListResponse> updateList(@PathVariable("listId") Long listId,
                                                    @RequestBody UpdateListRequestBody updateListRequestBody) {
-        if (checkIfListExits(listId)) {
+        if (!checkIfListExits(listId)) {
             return ResponseEntity.notFound().build();
         }
 
