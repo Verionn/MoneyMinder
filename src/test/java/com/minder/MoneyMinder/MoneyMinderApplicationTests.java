@@ -22,6 +22,8 @@ public abstract class MoneyMinderApplicationTests {
     protected static final String LIST_DETAILS_PATH_FORMAT = LIST_RESOURCE + "/%d";
     public static final String FIRST_LIST_NAME = "NEXT WEEK";
     public static final String SECOND_LIST_NAME = "PARTY";
+    public static final String NEW_LIST_NAME = "CHRISTMAS";
+    public static final double NEW_FULL_PRICE = 235.50;
     public static final int WRONG_LIST_ID = -12;
     public static final int GOOD_LIST_ID = 1;
 
