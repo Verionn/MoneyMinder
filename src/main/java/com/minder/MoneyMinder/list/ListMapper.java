@@ -1,5 +1,6 @@
 package com.minder.MoneyMinder.list;
 
+import com.minder.MoneyMinder.list.dto.CreateListRequestBody;
 import com.minder.MoneyMinder.list.dto.ListResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -13,4 +14,6 @@ public interface ListMapper {
     List<ListResponse> listOfListEntityToListOfListResponse(List<ListEntity> list);
 
     ListResponse listEntityToListResponse(ListEntity listEntity);
+
+    ListEntity createListRequestBodyToListEntity(CreateListRequestBody createListRequestBody);
 }

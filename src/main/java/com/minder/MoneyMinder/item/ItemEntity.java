@@ -3,19 +3,9 @@ package com.minder.MoneyMinder.item;
 import jakarta.persistence.*;
 
 @Entity
-@Table
 public class ItemEntity {
     @Id
-    @SequenceGenerator(
-            name = "item_sequence",
-            sequenceName = "item_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "item_sequence"
-    )
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long itemId;
     Long listId;
     String name;
