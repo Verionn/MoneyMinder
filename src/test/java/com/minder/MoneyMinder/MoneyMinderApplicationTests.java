@@ -20,9 +20,10 @@ public abstract class MoneyMinderApplicationTests {
     private final static String BASE_URL_FORMAT = "http://localhost:%d%s";
     protected static final String LIST_RESOURCE = "/lists";
     protected static final String LIST_DETAILS_PATH_FORMAT = LIST_RESOURCE + "/%d";
-    public static final String FIRST_LIST_NAME = "DAILY";
-    public static final String SECOND_LIST_NAME = "WEEKLY";
+    public static final String FIRST_LIST_NAME = "NEXT WEEK";
+    public static final String SECOND_LIST_NAME = "PARTY";
     public static final int WRONG_LIST_ID = -12;
+    public static final int GOOD_LIST_ID = 1;
 
     @Autowired
     protected TestRestTemplate client;
@@ -37,6 +38,10 @@ public abstract class MoneyMinderApplicationTests {
 
     protected String listPath(long listId) {
         return prepareUrl(String.format(LIST_DETAILS_PATH_FORMAT, listId));
+    }
+
+    protected String listPath() {
+        return prepareUrl(String.format(LIST_RESOURCE));
     }
 
     protected ListResponse createList(String listName) {

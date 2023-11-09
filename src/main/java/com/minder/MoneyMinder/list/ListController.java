@@ -46,7 +46,7 @@ public class ListController {
 
     @DeleteMapping(path = "/{listId}")
     public ResponseEntity<HttpStatus> deleteList(@PathVariable("listId") Long listId) {
-        if (checkIfListExits(listId)) {
+        if (!checkIfListExits(listId)) {
             return ResponseEntity.notFound().build();
         }
 
