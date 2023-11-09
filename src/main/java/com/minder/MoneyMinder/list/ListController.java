@@ -21,6 +21,17 @@ public class ListController {
         this.listService = listService;
     }
 
+    @GetMapping(path = "/{listId}")
+    public ResponseEntity<ListResponse> getSpecificList(@PathVariable Long listId){
+        if (!checkIfListExits(listId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return listService.getList(listId).map(listRecord -> ResponseEntity.ok().body(
+                listMapper.listEntityToListResponse(listRecord)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @GetMapping
     public ResponseEntity<ListsResponse> getLists() {
         return ResponseEntity.ok().body(

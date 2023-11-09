@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ListService {
@@ -17,6 +18,9 @@ public class ListService {
         this.listRepository = listRepository;
     }
 
+    public Optional<ListEntity> getList(Long listId) {
+        return listRepository.findById(listId);
+    }
     public List<ListEntity> getLists() {
         return listRepository.findAll();
     }
