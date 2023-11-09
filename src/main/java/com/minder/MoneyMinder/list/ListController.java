@@ -1,5 +1,6 @@
 package com.minder.MoneyMinder.list;
 
+import com.minder.MoneyMinder.list.dto.CreateListRequestBody;
 import com.minder.MoneyMinder.list.dto.ListResponse;
 import com.minder.MoneyMinder.list.dto.ListsResponse;
 import com.minder.MoneyMinder.list.dto.UpdateListRequestBody;
@@ -27,9 +28,9 @@ public class ListController {
     }
 
     @PostMapping
-    public ResponseEntity<ListResponse> addList(@RequestBody ListEntity listEntity) {
+    public ResponseEntity<ListResponse> addList(@RequestBody CreateListRequestBody createListRequestBody) {
         return ResponseEntity.status(201).body(
-                listMapper.listEntityToListResponse(listService.addList(listEntity)));
+                listMapper.listEntityToListResponse(listService.addList(listMapper.createListRequestBodyToListEntity(createListRequestBody))));
     }
 
     @DeleteMapping(path = "/{listId}")
