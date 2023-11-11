@@ -5,5 +5,6 @@ public record UpdateItemRequestBody(
         String name,
         double price,
         int amount,
-        String category) {
+        String category,
+        long weight) {
 }

@@ -48,7 +48,7 @@ public class ItemController {
     @PostMapping("/{listId}/items")
     public ResponseEntity<ItemResponse> addItem(@PathVariable Long listId, @RequestBody CreateItemRequestBody createItemRequestBody) {
         if (!listService.existsById(listId)) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
 
         if (checkIfNewItemRequestBodyIsInvalid(createItemRequestBody)) {
@@ -86,7 +86,7 @@ public class ItemController {
     }
 
     private boolean checkIfNewItemRequestBodyIsInvalid(CreateItemRequestBody createItemRequestBody) {
-        return createItemRequestBody.amount() < 0 || createItemRequestBody.name().isBlank() || createItemRequestBody.category().isBlank() || createItemRequestBody.price() < 0;
+        return createItemRequestBody.amount() < 0 || createItemRequestBody.name().isBlank() || createItemRequestBody.category().isBlank() || createItemRequestBody.price() < 0 || createItemRequestBody.weight() < 0;
     }
 
     private boolean checkIfItemAndListExists(Long itemId, Long listId) {
