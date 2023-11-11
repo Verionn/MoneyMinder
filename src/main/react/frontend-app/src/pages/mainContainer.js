@@ -2,6 +2,7 @@ import React from "react";
 import "../css/mainContainer.css";
 import "boxicons";
 import Dropdown from "react-bootstrap/Dropdown";
+import Test from './testjs'
 
 const mainContainer = () => {
   return (
@@ -33,7 +34,9 @@ const mainContainer = () => {
         </div>
       </div>
 
-      <div className="bodyContainer"></div>
+      <div className="bodyContainer">
+        <Test></Test>
+      </div>
     </div>
   );
 };
