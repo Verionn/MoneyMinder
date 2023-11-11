@@ -21,17 +21,17 @@ public class DeleteListTests extends MoneyMinderApplicationTests {
         //given
         var createListResponse = createList(FIRST_LIST_NAME);
         var listId = createListResponse.listId();
-        int numberOfLists = client.getForEntity(listPath(), ListsResponse.class).getBody()
+        int numberOfLists = client.getForEntity(listsPath(), ListsResponse.class).getBody()
                 .lists().size();
 
         //when
-        client.delete(listPath(listId));
+        client.delete(listsPath(listId));
 
         //then
-        int numberOfListsAfterDelete = client.getForEntity(listPath(), ListsResponse.class).getBody()
+        int numberOfListsAfterDelete = client.getForEntity(listsPath(), ListsResponse.class).getBody()
                 .lists().size();
 
-        List<ListResponse> lists = client.getForEntity(listPath(), ListsResponse.class).getBody().lists();
+        List<ListResponse> lists = client.getForEntity(listsPath(), ListsResponse.class).getBody().lists();
 
         assertThat(numberOfLists, equalTo(numberOfListsAfterDelete + 1));
         assertTrue(lists.stream().map(ListResponse::listId).noneMatch(id -> id.equals(listId)));
@@ -41,10 +41,10 @@ public class DeleteListTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return 404 when given wrong category id")
     public void shouldNotDeleteCategoryAndReturnNotFound() {
         //when
-        client.delete(listPath(WRONG_LIST_ID));
+        client.delete(listsPath(WRONG_LIST_ID));
 
         //then
-        assertThat(client.getForEntity(listPath(WRONG_LIST_ID),
+        assertThat(client.getForEntity(listsPath(WRONG_LIST_ID),
                 ListsResponse.class).getStatusCode(), equalTo(NOT_FOUND));
     }
 }

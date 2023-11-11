@@ -24,7 +24,7 @@ public class CreateListTests extends MoneyMinderApplicationTests {
         createList(SECOND_LIST_NAME);
 
         //when
-        var getListsResponse = client.getForEntity(prepareUrl(LIST_RESOURCE),
+        var getListsResponse = client.getForEntity(prepareUrl(LISTS_RESOURCE),
                 ListsResponse.class);
 
         //then
@@ -41,7 +41,7 @@ public class CreateListTests extends MoneyMinderApplicationTests {
         var createListResponse = createList(FIRST_LIST_NAME);
 
         //when
-        var getListResponse = client.getForEntity(listPath(createListResponse.listId()),
+        var getListResponse = client.getForEntity(listsPath(createListResponse.listId()),
                 ListResponse.class);
 
         //then
@@ -56,7 +56,7 @@ public class CreateListTests extends MoneyMinderApplicationTests {
     public void ShouldNotGetListAndReturn404(){
 
         //when
-        var getListResponse = client.getForEntity(listPath(WRONG_LIST_ID),
+        var getListResponse = client.getForEntity(listsPath(WRONG_LIST_ID),
                 ListResponse.class);
 
         //then

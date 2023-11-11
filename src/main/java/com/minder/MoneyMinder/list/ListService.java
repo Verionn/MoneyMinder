@@ -45,8 +45,8 @@ public class ListService {
         return listEntity;
     }
 
-    public ResponseEntity<Double> getFullPrice(Long listId) {
-        return ResponseEntity.ok().body(listRepository.findTotalAmountByListId(listId));
+    public double getFullPrice(Long listId) {
+        return listRepository.findTotalAmountByListId(listId);
     }
 
     public boolean existsById(Long listId) {

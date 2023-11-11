@@ -1,9 +1,6 @@
 package com.minder.MoneyMinder.list;
 
-import com.minder.MoneyMinder.list.dto.CreateListRequestBody;
-import com.minder.MoneyMinder.list.dto.ListResponse;
-import com.minder.MoneyMinder.list.dto.ListsResponse;
-import com.minder.MoneyMinder.list.dto.UpdateListRequestBody;
+import com.minder.MoneyMinder.list.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,12 +68,12 @@ public class ListController {
     }
 
     @GetMapping(path = "/{listId}/fullprice")
-    public ResponseEntity<Double> getFullPrice(@PathVariable Long listId){
+    public ResponseEntity<FullPriceResponse> getFullPrice(@PathVariable Long listId){
         if(!checkIfListExits(listId)){
             return ResponseEntity.notFound().build();
         }
 
-        return listService.getFullPrice(listId);
+        return ResponseEntity.ok().body(new FullPriceResponse(listService.getFullPrice(listId)));
     }
 
     private boolean checkIfDataIsCorrect(UpdateListRequestBody updateListRequestBody) {
