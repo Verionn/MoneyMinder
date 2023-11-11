@@ -62,8 +62,16 @@ public class ListController {
             return ResponseEntity.notFound().build();
         }
 
+        if(!checkIfDataIsCorrect(updateListRequestBody)){
+            return ResponseEntity.badRequest().build();
+        }
+
         return ResponseEntity.status(200).body(
                 listMapper.listEntityToListResponse(listService.updateList(listId, updateListRequestBody)));
+    }
+
+    private boolean checkIfDataIsCorrect(UpdateListRequestBody updateListRequestBody) {
+        return !updateListRequestBody.name().isBlank() && !(updateListRequestBody.fullPrice() < 0);
     }
 
     private boolean checkIfListExits(Long listId) {
