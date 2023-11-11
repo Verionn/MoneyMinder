@@ -2,6 +2,7 @@ package com.minder.MoneyMinder.item;
 
 
 import com.minder.MoneyMinder.item.dto.UpdateItemRequestBody;
+import com.minder.MoneyMinder.list.ListRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ import java.util.Optional;
 @Service
 public class ItemService {
     private final ItemRepository itemRepository;
+    private final ListRepository listRepository;
 
     @Autowired
-    public ItemService(ItemRepository itemRepository) {
+    public ItemService(ItemRepository itemRepository, ListRepository listRepository) {
         this.itemRepository = itemRepository;
+        this.listRepository = listRepository;
     }
 
     public ItemEntity addItem(ItemEntity itemEntity, Long listId) {

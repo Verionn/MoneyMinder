@@ -70,8 +70,17 @@ public class ListController {
                 listMapper.listEntityToListResponse(listService.updateList(listId, updateListRequestBody)));
     }
 
+    @GetMapping(path = "/{listId}/fullprice")
+    public ResponseEntity<Double> getFullPrice(@PathVariable Long listId){
+        if(!checkIfListExits(listId)){
+            return ResponseEntity.notFound().build();
+        }
+
+        return listService.getFullPrice(listId);
+    }
+
     private boolean checkIfDataIsCorrect(UpdateListRequestBody updateListRequestBody) {
-        return !updateListRequestBody.name().isBlank() && !(updateListRequestBody.fullPrice() < 0);
+        return !updateListRequestBody.name().isBlank();
     }
 
     private boolean checkIfListExits(Long listId) {
