@@ -24,10 +24,7 @@ public abstract class MoneyMinderApplicationTests {
     public static final String SECOND_LIST_NAME = "PARTY";
     public static final String NEW_LIST_NAME = "CHRISTMAS";
     public static final String WRONG_LIST_NAME = "";
-    public static final double NEW_FULL_PRICE = 235.50;
-    public static final double WRONG_FULL_PRICE = -12.30;
     public static final int WRONG_LIST_ID = -12;
-    public static final int GOOD_LIST_ID = 1;
 
     @Autowired
     protected TestRestTemplate client;
