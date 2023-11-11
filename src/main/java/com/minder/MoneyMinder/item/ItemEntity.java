@@ -2,6 +2,8 @@ package com.minder.MoneyMinder.item;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class ItemEntity {
     @Id
@@ -12,24 +14,14 @@ public class ItemEntity {
     double price;
     int amount;
     String category;
-
-    public ItemEntity(String name, double price, int amount, String category, Long listId) {
-        this.listId = listId;
-        this.name = name;
-        this.price = price;
-        this.category = category;
-        this.amount = amount;
-    }
+    long weight;
+    LocalDateTime timeCreated;
 
     public ItemEntity() {
     }
 
     public Long getItemId() {
         return itemId;
-    }
-
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
     }
 
     public Long getListId() {
@@ -70,6 +62,22 @@ public class ItemEntity {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public long getWeight() {
+        return weight;
+    }
+
+    public void setWeight(long weight) {
+        this.weight = weight;
+    }
+
+    public LocalDateTime getTimeCreated() {
+        return timeCreated;
+    }
+
+    public void setTimeCreated(LocalDateTime creationDate) {
+        this.timeCreated = creationDate;
     }
 
     @Override
