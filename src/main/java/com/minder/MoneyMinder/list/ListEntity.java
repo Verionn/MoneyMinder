@@ -8,12 +8,6 @@ public class ListEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long listId;
     String name;
-    @Transient
-    double fullPrice = 0;
-
-    public ListEntity(String name) {
-        this.name = name;
-    }
 
     public ListEntity() {
     }
@@ -34,16 +28,8 @@ public class ListEntity {
         this.name = name;
     }
 
-    public double getFullPrice() {
-        return fullPrice;
-    }
-
-    public void setFullPrice(double fullPrice) {
-        this.fullPrice = fullPrice;
-    }
-
     @Override
     public String toString() {
-        return "Nazwa listy: " + name + "\n" + "full price: " + fullPrice;
+        return "Nazwa listy: " + name + "\n";
     }
 }

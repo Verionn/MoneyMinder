@@ -3,10 +3,13 @@ package com.minder.MoneyMinder.list;
 import com.minder.MoneyMinder.list.dto.UpdateListRequestBody;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static java.lang.Double.sum;
 
 @Service
 public class ListService {
@@ -38,18 +41,13 @@ public class ListService {
         ListEntity listEntity = listRepository.findById(listId).
                 orElseThrow();
 
-        double fullPrice = updateListRequestBody.fullPrice();
-        String name = updateListRequestBody.name();
-
-        if (fullPrice >= 0) {
-            listEntity.setFullPrice(fullPrice);
-        }
-
-        if (name != null && !name.isEmpty() && !listEntity.getName().equals(name)) {
-            listEntity.setName(name);
-        }
+        listEntity.setName(updateListRequestBody.name());
 
         return listEntity;
+    }
+
+    public ResponseEntity<Double> getFullPrice(Long listId) {
+        return ResponseEntity.ok().body(listRepository.findTotalAmountByListId(listId));
     }
 
     public boolean existsById(Long listId) {
