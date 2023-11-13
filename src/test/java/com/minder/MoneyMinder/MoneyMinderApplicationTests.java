@@ -37,6 +37,7 @@ public abstract class MoneyMinderApplicationTests {
     public static final String WRONG_ITEM_NAME = "";
     public static final int WRONG_LIST_ID = -12;
     public static final int WRONG_ITEM_ID = -13;
+    public static final int RANDOM_ITEM_ID = 13;
     public static final String RANDOM_CATEGORY_NAME = "FOOD";
     public static final String WRONG_CATEGORY_NAME = "";
     public static final Double RANDOM_PRICE = 3.50;
