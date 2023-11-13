@@ -7,6 +7,7 @@
   width: 100vw;
   border: solid;
   padding-top:5px ;
+
 }
 
 .header {
@@ -125,4 +126,12 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.DarkMode{
+  color: green;
+}
+
+.ButtonDarkMode{
+  color: green;
 }
