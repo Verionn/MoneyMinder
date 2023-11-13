@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import 'boxicons'
 import SideBarContainer from "./pages/sideBarContainer";
-import MainContainer from "./pages/mainContainer";
+import MainContainer from "./pages/MainContainer";
 
 function App() {
   return (
