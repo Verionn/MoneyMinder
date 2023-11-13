@@ -46,7 +46,7 @@ public class ItemService {
                 orElseThrow();
 
         itemEntity.setName(updateItemRequestBody.name());
-        itemEntity.setCategory(updateItemRequestBody.category());
+        itemEntity.setCategoryId(updateItemRequestBody.categoryId());
         itemEntity.setListId(updateItemRequestBody.listId());
 
         return itemEntity;
