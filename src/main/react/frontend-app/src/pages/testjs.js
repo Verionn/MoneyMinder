@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../css/mainContainer.css";
+import "./MainContainer/mainContainer.css";
 
 const YourComponent = () => {
   // Declare 'lists' and 'setLists' using the useState hook
