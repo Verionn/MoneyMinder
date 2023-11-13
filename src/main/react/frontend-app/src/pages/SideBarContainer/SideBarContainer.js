@@ -1,7 +1,7 @@
 import React from "react";
-import "../css/sideBarContainer.css";
+import "./sideBarContainer.css";
 import "boxicons";
-import OffCanvasExample from "./components/OffCanvas";
+import OffCanvasExample from "../../components/SettingsCanvas/SettingsCanvas";
 
 
 const SideBarContainer = () => {
