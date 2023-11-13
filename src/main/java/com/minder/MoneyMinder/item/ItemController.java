@@ -26,7 +26,7 @@ public class ItemController {
 
     @GetMapping("/{listId}/items")
     public ResponseEntity<ItemListResponse> getItemsFromSpecificList(@PathVariable Long listId) {
-        if (!listService.existsById(listId)) {
+        if (!checkIfListExists(listId)) {
             return ResponseEntity.notFound().build();
         }
 
@@ -36,7 +36,7 @@ public class ItemController {
 
     @GetMapping("/{listId}/items/{itemId}")
     public ResponseEntity<ItemResponse> getItem(@PathVariable Long listId, @PathVariable Long itemId) {
-        if (!listService.existsById(listId)) {
+        if (!checkIfListExists(listId)) {
             return ResponseEntity.notFound().build();
         }
 
@@ -47,7 +47,7 @@ public class ItemController {
 
     @PostMapping("/{listId}/items")
     public ResponseEntity<ItemResponse> addItem(@PathVariable Long listId, @RequestBody CreateItemRequestBody createItemRequestBody) {
-        if (!listService.existsById(listId)) {
+        if (!checkIfListExists(listId)) {
             return ResponseEntity.notFound().build();
         }
 
@@ -81,6 +81,14 @@ public class ItemController {
             return ResponseEntity.notFound().build();
         }
 
+        if (!checkIfListExists(updateItemRequestBody.listId())) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (checkIfUpdateItemRequestBodyIsInvalid(updateItemRequestBody)) {
+            return ResponseEntity.badRequest().build();
+        }
+
         return ResponseEntity.ok().body(itemMapper.itemToItemResponse(itemService.
                 updateItem(itemId, updateItemRequestBody)));
     }
@@ -89,7 +97,15 @@ public class ItemController {
         return createItemRequestBody.amount() < 0 || createItemRequestBody.name().isBlank() || createItemRequestBody.category().isBlank() || createItemRequestBody.price() < 0 || createItemRequestBody.weight() < 0;
     }
 
+    private boolean checkIfUpdateItemRequestBodyIsInvalid(UpdateItemRequestBody updateItemRequestBody) {
+        return updateItemRequestBody.amount() < 0 || updateItemRequestBody.name().isBlank() || updateItemRequestBody.category().isBlank() || updateItemRequestBody.price() < 0 || updateItemRequestBody.weight() < 0;
+    }
+
     private boolean checkIfItemAndListExists(Long itemId, Long listId) {
         return listService.existsById(listId) && itemService.existsById(itemId);
+    }
+
+    private boolean checkIfListExists(Long listId) {
+        return listService.existsById(listId);
     }
 }
