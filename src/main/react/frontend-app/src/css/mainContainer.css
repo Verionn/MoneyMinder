@@ -1,73 +1,137 @@
-.mainContainer{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: 100vh;
-    width: 100vw;
-    border: solid;
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100vh;
+  width: 100vw;
+  border: solid;
+  padding-top:5px ;
+
 }
 
-.header{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    height: 10vh;
-    width: 100%;
-    border: solid;
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 10vh;
+  width: 100%;
 }
 
-.header>h3{
-    font-size: 2em;
-    word-wrap: none;
-    border: solid;
-    width: 25%;
+.header > h3 {
+  font-size: 2em;
+  word-wrap: none;
+  width: 25%;
+  padding: 5px;
 }
 
-.headerLeft{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    gap:20px;
-    width: 30%;
-    border: solid;
+.headerRight {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  width: 30%;
+
 }
-.listViewMode{
-    background-color: #865400;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    
+.listViewMode {
+  background-color: #865400;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
 }
-.createListButton{
-    height: 100%;
-    width: 10em;
-    border: solid;
-    background-color: #0856b2;
+.createListButton {
+  height: 4em;
+  width: 12em;
+  border: solid;
+  background-color: #0856b2;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: bold;
 }
+.createListButton:hover {
+    width: 12.5em;
+    height: 4.5em;
+    font-size: 16px;
+  }
+  
 
 .dropdownListViewMode {
-    position: relative;
-    display: inline-block;
-  }
+  position: relative;
+  display: inline-block;
+}
 
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
 
-  .show {display:block;}
+.show {
+  display: block;
+}
 
+.test {
+  background-color: #61dafb;
+}
 
+.viewDisplay {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 10em;
+  
+}
 
-.test{
-    background-color: #61dafb;
+#dropdown-basic {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 15px;
+  background-color: #865400;
+}
+#dropdown-basic:hover{
+    font-size: 18px;
+}
+
+.listView {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: #0856b2;
+}
+.contentView {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.arrowDownDropdownButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.DarkMode{
+  color: green;
+}
+
+.ButtonDarkMode{
+  color: green;
 }
