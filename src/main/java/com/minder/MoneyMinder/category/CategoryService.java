@@ -1,5 +1,7 @@
 package com.minder.MoneyMinder.category;
 
+import com.minder.MoneyMinder.category.dto.UpdateCategoryRequestBody;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,14 @@ public class CategoryService {
     }
     public void deleteCategory(Long categoryId){
         categoryRepository.deleteById(categoryId);
+    }
+    @Transactional
+    public CategoryEntity updateCategory(Long categoryId, UpdateCategoryRequestBody updateCategoryRequestBody){
+        CategoryEntity categoryEntity = categoryRepository.findById(categoryId).orElseThrow();
+
+        categoryEntity.setName(updateCategoryRequestBody.name());
+
+        return categoryEntity;
     }
     public boolean existsById(Long categoryId) {
         return categoryRepository.existsById(categoryId);
