@@ -91,6 +91,7 @@
   width: 10em;
   
 }
+
 #dropdown-basic {
   display: flex;
   flex-direction: row;
@@ -99,6 +100,9 @@
   gap: 5px;
   font-size: 15px;
   background-color: #865400;
+}
+#dropdown-basic:hover{
+    font-size: 18px;
 }
 
 .listView {
