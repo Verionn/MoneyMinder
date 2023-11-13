@@ -39,7 +39,7 @@ function OffCanvas({ name, content, ...props }) {
           {content} {name}
         </span>
       </Button>
-      <Offcanvas show={show} onHide={handleClose} {...props}>
+      <Offcanvas show={show} onHide={handleClose} {...props} >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
             {content} {name}

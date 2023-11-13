@@ -156,6 +156,7 @@ li > h3 {
 .settingStyle{
     border: solid white;    
 }
+
 @media screen and (max-width: 900px) {
   li {
     font-size: 12px;
