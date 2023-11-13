@@ -2,12 +2,10 @@ package com.minder.MoneyMinder.category;
 
 import com.minder.MoneyMinder.category.dto.CategoriesResponse;
 import com.minder.MoneyMinder.category.dto.CategoryResponse;
+import com.minder.MoneyMinder.category.dto.CreateCategoryRequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/categories")
@@ -37,7 +35,11 @@ public class CategoryController {
                 new CategoriesResponse(categoryMapper
                         .listOfCategoryEntityToListOfCategoryResponse(categoryService.getCategories())));
     }
-
+    @PostMapping
+    public ResponseEntity<CategoryResponse> addCategory(@RequestBody CreateCategoryRequestBody createCategoryRequestBody){
+        return ResponseEntity.status(201).body(
+                categoryMapper.categoryEntityToCategoryResponse(categoryService.addCategory(categoryMapper.createCategoryRequestBodyToCategoryEntity(createCategoryRequestBody))));
+    }
     private boolean checkIfCategoryExits(Long categoryId) {
         return categoryService.existsById(categoryId);
     }
