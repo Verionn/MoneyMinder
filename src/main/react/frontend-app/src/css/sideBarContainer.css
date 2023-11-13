@@ -117,7 +117,20 @@ li>h3{
     width: 85%;
     margin-bottom: 10px;
     margin-top: 10px;
+    
 }
+.navigationTags:hover{
+    background-color: #ededed;
+    color: #002A4E;
+    cursor: pointer;
+    border-radius:5px;
+}
+
+.boxIconNavigationTags{
+    background-color: #ededed;
+    color: #002A4E;
+}
+
 
 @media screen and (max-width: 900px){
     li{

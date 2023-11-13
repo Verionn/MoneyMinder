@@ -8,27 +8,27 @@ const sideBarContainer = () =>{
                 <h1 className="logo">MoneyMinder</h1>
             </a>
             <button>
-                <p>Log in > </p>
+                <p>Log in &gt; </p>
                 <p>Access your list from any device</p>
             </button>
             <ul>
-                <li>
-                    <box-icon type='solid' name='basket' color="white"></box-icon>
+                <li className="navigationTags">
+                    <box-icon type='solid' name='basket' color="#865400" className="boxIconNavigationTags"></box-icon>
                     <h3>Shopping lists</h3>
                 </li>
 
-                <li>
-                    <box-icon type='solid' name='trash' color="white"></box-icon>
+                <li className="navigationTags">
+                    <box-icon type='solid' name='trash' color="#865400"></box-icon>
                     <h3>Trash</h3>
                 </li>
 
-                <li>
-                    <box-icon name='question-mark' color="white"></box-icon>
+                <li className="navigationTags">
+                    <box-icon name='question-mark' color="#865400"></box-icon>
                     <h3>Help</h3>
                 </li>
 
-                <li>
-                    <box-icon name='cog' color="white"></box-icon>
+                <li className="navigationTags">
+                    <box-icon name='cog' color="#865400"></box-icon>
                     <h3>Settings</h3>
                 </li>
 
