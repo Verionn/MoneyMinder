@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+
 import "./App.css";
 import "boxicons";
 import SideBarContainer from "./pages/SideBarContainer";

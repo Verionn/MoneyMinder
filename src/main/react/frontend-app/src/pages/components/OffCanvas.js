@@ -12,7 +12,7 @@ function OffCanvas({ name, content, ...props }) {
   const handleShow = () => setShow(true);
   const [isHovered, setIsHovered] = useState(false);
   const { darkMode, toggleDarkMode } = useDarkMode();
-  console.log("darkMode "+ darkMode);
+  console.log("darkMode " + darkMode);
   const buttonStyles = {
     backgroundColor: isHovered ? "#ededed" : "#002A4E",
     color: isHovered ? "#002A4E" : "#ffffff",
@@ -52,7 +52,7 @@ function OffCanvas({ name, content, ...props }) {
               type="solid"
               name={darkMode ? "toggle-left" : "toggle-right"}
               className={darkMode ? "DarkMode" : "LightMode"}
-              size='lg'
+              size="lg"
             ></box-icon>
             <div>{darkMode ? "Dark Mode " : "Light Mode"}</div>
           </div>
