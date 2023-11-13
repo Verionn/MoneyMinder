@@ -1,3 +1,6 @@
+INSERT INTO category_entity (name) VALUES ('Food');
+INSERT INTO category_entity (name) VALUES ('Sweets');
+
 INSERT INTO list_entity (name) VALUES ('Na jutro');
 INSERT INTO list_entity (name) VALUES ('Na weekend');
 
