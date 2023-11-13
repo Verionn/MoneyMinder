@@ -1,0 +1,23 @@
+.TabContainer{
+    display: flex;
+    width: 100%;
+    height: auto;
+    padding: 0px 0px 0px 0px;
+}
+
+.TabContainerRow{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0px 0px 0px 0px;
+}
+
+.NavBars{
+   border: solid 1px #002a4e;
+   margin-top: 0px;
+   height: 100vh;
+   width: 2000px;
+}

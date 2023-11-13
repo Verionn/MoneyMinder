@@ -1,0 +1,36 @@
+.customNameStyle {
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    width: 100%;
+    justify-self: flex-start;
+  }
+  .customNameStyle:hover {
+    background-color: #ededed;
+    color: #002a4e;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .settingsBox{
+    padding: 0;
+    border: solid 1px #002a4e;
+    border-radius: 8px;
+    margin-right: 5px;
+
+  }
+
+  .SettingsHeader{
+    border: solid 1px #002a4e;
+    border-radius: 8px 8px 0px 0px;
+    margin-bottom: 0px;
+    
+  }
+
+  .settingsBody{
+    padding: 0px;
+  }
+  .offcanvas-body{
+    padding: 0px;
+  }
