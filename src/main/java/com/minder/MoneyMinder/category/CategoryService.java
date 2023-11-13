@@ -24,6 +24,9 @@ public class CategoryService {
     public CategoryEntity addCategory(CategoryEntity categoryEntity){
         return categoryRepository.save(categoryEntity);
     }
+    public void deleteCategory(Long categoryId){
+        categoryRepository.deleteById(categoryId);
+    }
     public boolean existsById(Long categoryId) {
         return categoryRepository.existsById(categoryId);
     }
