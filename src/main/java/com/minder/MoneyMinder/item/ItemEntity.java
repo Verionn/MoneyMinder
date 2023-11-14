@@ -11,10 +11,10 @@ public class ItemEntity {
     Long itemId;
     Long listId;
     String name;
-    double price;
-    int amount;
-    String category;
-    long weight;
+    Double price;
+    Integer amount;
+    Long categoryId;
+    Long weight;
     LocalDateTime timeCreated;
 
     public ItemEntity() {
@@ -56,12 +56,12 @@ public class ItemEntity {
         this.amount = amount;
     }
 
-    public String getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public long getWeight() {
@@ -82,6 +82,6 @@ public class ItemEntity {
 
     @Override
     public String toString() {
-        return "Item: " + name + "\nID: " + itemId + "\nLista: " + listId + "\nIlosc: " + amount + "\nCena: " + price + "\nKategoria: " + category + "\n\n";
+        return "Item: " + name + "\nID: " + itemId + "\nLista: " + listId + "\nIlosc: " + amount + "\nCena: " + price + "\nKategoria: " + categoryId + "\n\n";
     }
 }

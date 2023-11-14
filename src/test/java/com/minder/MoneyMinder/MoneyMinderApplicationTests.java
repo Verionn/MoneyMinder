@@ -35,15 +35,14 @@ public abstract class MoneyMinderApplicationTests {
     public static final String SECOND_ITEM_NAME = "Pepsi";
     public static final String NEW_ITEM_NAME = "Sprite";
     public static final String WRONG_LIST_NAME = "";
+    public static final int WRONG_LIST_ID = -12;
+    public static final Long RANDOM_CATEGORY_ID = 1L;
     public static final String WRONG_ITEM_NAME = "";
     public static final Long WRONG_LIST_ID = -12L;
     public static final Long NEW_LIST_ID = 2L;
     public static final Long WRONG_NEW_LIST_ID = 22L;
     public static final Long WRONG_ITEM_ID = -13L;
     public static final Long RANDOM_ITEM_ID = 13L;
-    public static final String RANDOM_CATEGORY_NAME = "FOOD";
-    public static final String NEW_CATEGORY_NAME = "DRINK";
-    public static final String WRONG_CATEGORY_NAME = "";
     public static final Double RANDOM_PRICE = 3.50;
     public static final Double NEW_PRICE = 5.50;
     public static final Double WRONG_PRICE = -3.50;
@@ -102,7 +101,7 @@ public abstract class MoneyMinderApplicationTests {
     }
 
     protected CreateItemRequestBody createValidItemRequestBody(String name){
-        return new CreateItemRequestBody(name, RANDOM_PRICE, RANDOM_AMOUNT, RANDOM_CATEGORY_NAME, RANDOM_WEIGHT, RANDOM_DATE);
+        return new CreateItemRequestBody(name, RANDOM_PRICE, RANDOM_AMOUNT, RANDOM_CATEGORY_ID, RANDOM_WEIGHT, RANDOM_DATE);
     }
 
     protected ItemResponse addItem(String itemName, Long listId){
@@ -113,8 +112,8 @@ public abstract class MoneyMinderApplicationTests {
         var addItemResponse = client.postForEntity(itemsPath(listId), createdItemRequestBody, ItemResponse.class);
 
         //then
-        assertThat(addItemResponse.getBody().name(), equalTo(itemName));
         assertThat(addItemResponse.getStatusCode(), equalTo(HttpStatus.CREATED));
+        assertThat(addItemResponse.getBody().name(), equalTo(itemName));
         assertThat(addItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
         assertThat(addItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
         assertThat(addItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));

@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 
 public record CreateItemRequestBody(
         String name,
-        double price,
-        int amount,
-        String category,
-        long weight,
+        Double price,
+        Integer amount,
+        Long categoryId,
+        Long weight,
         LocalDateTime timeCreated) {
 }
