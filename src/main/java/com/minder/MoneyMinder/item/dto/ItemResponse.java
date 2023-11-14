@@ -8,7 +8,7 @@ public record ItemResponse(
         String name,
         double price,
         int amount,
-        String category,
+        Long categoryId,
         long weight,
         LocalDateTime timeCreated) {
 }
