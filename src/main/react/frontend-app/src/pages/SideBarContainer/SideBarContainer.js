@@ -1,7 +1,7 @@
 import React from "react";
 import "./sideBarContainer.css";
 import "boxicons";
-import SettingsCanvas from "../../components/SettingsCanvas/SettingsCanvas";
+import SettingsCanvas from "../SettingsCanvas/SettingsCanvas";
 import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
 
 const SideBarContainer = () => {
