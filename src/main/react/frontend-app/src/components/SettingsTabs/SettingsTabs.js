@@ -45,7 +45,13 @@ function SettingsTabs() {
                     }
                   ></box-icon>
                   <p
-                    className={activeTab === "first" ? "" : "NavLinkTitleDark"}
+                    className={
+                      darkMode
+                        ? ""
+                        : activeTab === "first"
+                        ? ""
+                        : "NavLinkTitleDark"
+                    }
                   >
                     General
                   </p>
@@ -75,7 +81,7 @@ function SettingsTabs() {
                     }
                   ></box-icon>
                   <p
-                    className={activeTab === "second" ? "" : "NavLinkTitleDark"}
+                    className={ darkMode ?"":activeTab === "second" ? "" : "NavLinkTitleDark"}
                   >
                     List
                   </p>
@@ -106,7 +112,7 @@ function SettingsTabs() {
                     }
                   ></box-icon>
                   <p
-                    className={activeTab === "third" ? "" : "NavLinkTitleDark"}
+                    className={darkMode ?"":activeTab === "third" ? "" : "NavLinkTitleDark"}
                   >
                     Account
                   </p>
@@ -136,7 +142,7 @@ function SettingsTabs() {
                     }
                   ></box-icon>
                   <p
-                    className={activeTab === "fourth" ? "" : "NavLinkTitleDark"}
+                    className={darkMode ?"":activeTab === "fourth" ? "" : "NavLinkTitleDark"}
                   >
                     Support
                   </p>
