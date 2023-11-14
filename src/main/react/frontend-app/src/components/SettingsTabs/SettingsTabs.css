@@ -1,23 +1,79 @@
-.TabContainer{
-    display: flex;
-    width: 100%;
-    height: auto;
-    padding: 0px 0px 0px 0px;
+.TabContainer {
+  display: flex;
+  width: 100%;
+  height: auto;
+  padding: 0;
 }
 
-.TabContainerRow{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: auto;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 0px 0px 0px 0px;
+.TabContainerRow {
+  display: flex !important;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px 0px 0px 0px;
+  margin-left: 1px !important;
 }
 
-.NavBars{
-   border: solid 1px #002a4e;
-   margin-top: 0px;
-   height: 100vh;
-   width: 2000px;
+.NavBars {
+  border: solid 1px #d6d6d6;
+  margin-top: 0px;
+  height: 100vh;
+  width: 150px !important;
+  padding: 20px;
+  padding-left: 20px;
+  
+ 
+}
+
+.NavBarsDisplay{
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-self: flex-start;
+    gap: 10px;
+}
+
+.NavBarsContents {
+  border-left: solid 1px #d6d6d6;
+  margin-top: 0px;
+  height: 100vh;
+  width: 300px !important;
+  padding: 20px;
+  
+}
+
+.NavItem{
+    background-color: #002a4e !important;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.NavLink{
+    background-color: #fff !important;
+    color: #002a4e !important;
+}
+
+.NavLink:hover{
+    background-color: #ededed !important;
+}
+
+.NavLink.active{
+    background-color: #002a4e !important;
+    color: #fff !important;
+}
+
+.NavLinkDark{
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+.NavLinkDark.active{
+    background-color: #002a4e !important;
+    color: #fff !important;
+}
+
+.NavLinkDark:hover{
+    background-color: #1c1c1d !important;
 }

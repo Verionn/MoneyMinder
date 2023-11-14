@@ -4,12 +4,12 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import "boxicons";
 import "../../pages/SideBarContainer/sideBarContainer.css";
 import "./SettingsCanvas.css";
-
+import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
 import SettingsTabs from "../SettingsTabs/SettingsTabs";
 
 function SettingsCanvas({ name, content, ...props }) {
   const [show, setShow] = useState(false);
-
+  const { darkMode } = useDarkMode();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [isHovered, setIsHovered] = useState(false);
@@ -45,14 +45,15 @@ function SettingsCanvas({ name, content, ...props }) {
         onHide={handleClose}
         {...props}
         className="settingsBox"
+        style={{ backgroundColor: darkMode ? "#161616" : "#fff" }}
       >
         <Offcanvas.Header closeButton className="SettingsHeader">
-          <Offcanvas.Title>
+          <Offcanvas.Title className="settingsTitle">
             {content} {name}
           </Offcanvas.Title>
         </Offcanvas.Header>
 
-        <Offcanvas.Body className="settingsBody  .offcanvas-body">
+        <Offcanvas.Body className="settingsBody">
           <SettingsTabs></SettingsTabs>
         </Offcanvas.Body>
       </Offcanvas>
