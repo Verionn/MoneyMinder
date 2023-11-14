@@ -2,9 +2,11 @@ import React from "react";
 import "./sideBarContainer.css";
 import "boxicons";
 import OffCanvasExample from "../../components/SettingsCanvas/SettingsCanvas";
-
+import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
 
 const SideBarContainer = () => {
+  const { darkMode } = useDarkMode();
+
   return (
     <div className="sideBar">
       <a href={"https://github.com/Verionn/MoneyMinder"}>
@@ -40,7 +42,7 @@ const SideBarContainer = () => {
           <OffCanvasExample className="navigationTags settingStyle"
             name={<h3>Settings</h3>}
             placement="end"
-            content={<box-icon name="cog" color="#865400"></box-icon>}
+            content={<box-icon name="cog" color={ darkMode?"#fff":"#865400"}></box-icon>}
           ></OffCanvasExample>
         </li>
       </ul>

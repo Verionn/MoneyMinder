@@ -48,7 +48,11 @@ function SettingsCanvas({ name, content, ...props }) {
         style={{ backgroundColor: darkMode ? "#161616" : "#fff" }}
       >
         <Offcanvas.Header closeButton className="SettingsHeader">
-          <Offcanvas.Title className="settingsTitle">
+          <Offcanvas.Title
+            className={
+              darkMode ? "settingsTitle textDarkMode" : "settingsTitle"
+            }
+          >
             {content} {name}
           </Offcanvas.Title>
         </Offcanvas.Header>

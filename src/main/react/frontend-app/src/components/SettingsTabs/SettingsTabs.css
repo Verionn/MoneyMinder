@@ -88,13 +88,11 @@
 
 .NavLinkTitle > p {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-top: 1rem !important;
 }
 
 .NavLinkTitleDark {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
+  color: #1c1c1d !important;
 }

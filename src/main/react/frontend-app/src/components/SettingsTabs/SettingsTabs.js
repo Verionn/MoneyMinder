@@ -9,7 +9,7 @@ function SettingsTabs() {
   const { darkMode, toggleDarkMode } = useDarkMode();
 
   const [activeTab, setActiveTab] = useState("first");
-
+  console.log(activeTab);
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
@@ -34,8 +34,21 @@ function SettingsTabs() {
                 onClick={() => handleTabClick("first")}
               >
                 <div className="NavLinkTitle">
-                  <box-icon name="cog"></box-icon>
-                  <p>General</p>
+                  <box-icon
+                    name="cog"
+                    color={
+                      darkMode
+                        ? "#fff"
+                        : activeTab === "first"
+                        ? "#fff"
+                        : "#1c1c1c"
+                    }
+                  ></box-icon>
+                  <p
+                    className={activeTab === "first" ? "" : "NavLinkTitleDark"}
+                  >
+                    General
+                  </p>
                 </div>
               </Nav.Link>
             </Nav.Item>
@@ -51,8 +64,21 @@ function SettingsTabs() {
                 onClick={() => handleTabClick("second")}
               >
                 <div className="NavLinkTitle">
-                  <box-icon name="list-ol"></box-icon>
-                  <p>List</p>
+                  <box-icon
+                    name="list-ol"
+                    color={
+                      darkMode
+                        ? "#fff"
+                        : activeTab === "second"
+                        ? "#fff"
+                        : "#1c1c1c"
+                    }
+                  ></box-icon>
+                  <p
+                    className={activeTab === "second" ? "" : "NavLinkTitleDark"}
+                  >
+                    List
+                  </p>
                 </div>
               </Nav.Link>
             </Nav.Item>
@@ -68,8 +94,22 @@ function SettingsTabs() {
                 onClick={() => handleTabClick("third")}
               >
                 <div className="NavLinkTitle">
-                  <box-icon name="user-account" type="solid"></box-icon>
-                  <p>Account</p>
+                  <box-icon
+                    name="user-account"
+                    type="solid"
+                    color={
+                      darkMode
+                        ? "#fff"
+                        : activeTab === "third"
+                        ? "#fff"
+                        : "#1c1c1c"
+                    }
+                  ></box-icon>
+                  <p
+                    className={activeTab === "third" ? "" : "NavLinkTitleDark"}
+                  >
+                    Account
+                  </p>
                 </div>
               </Nav.Link>
             </Nav.Item>
@@ -85,8 +125,21 @@ function SettingsTabs() {
                 onClick={() => handleTabClick("fourth")}
               >
                 <div className="NavLinkTitle">
-                  <box-icon name="support"></box-icon>
-                  <p>Support</p>
+                  <box-icon
+                    name="support"
+                    color={
+                      darkMode
+                        ? "#fff"
+                        : activeTab === "fourth"
+                        ? "#fff"
+                        : "#1c1c1c"
+                    }
+                  ></box-icon>
+                  <p
+                    className={activeTab === "fourth" ? "" : "NavLinkTitleDark"}
+                  >
+                    Support
+                  </p>
                 </div>
               </Nav.Link>
             </Nav.Item>
