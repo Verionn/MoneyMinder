@@ -6,6 +6,7 @@ import HeaderMainContainer from "../HeaderMainContainer/HeaderMainContainer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Test from "../testjs";
 import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
+import ListsDisplay from "./lists/ListsDisplay";
 
 const MainContainer = () => {
   const { darkMode } = useDarkMode();
@@ -18,7 +19,7 @@ const MainContainer = () => {
       <HeaderMainContainer></HeaderMainContainer>
 
       <div className="bodyContainer">
-        <Test></Test>
+        <ListsDisplay></ListsDisplay>
       </div>
     </div>
   );
