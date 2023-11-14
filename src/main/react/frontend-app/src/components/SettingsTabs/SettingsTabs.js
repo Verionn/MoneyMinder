@@ -81,7 +81,13 @@ function SettingsTabs() {
                     }
                   ></box-icon>
                   <p
-                    className={ darkMode ?"":activeTab === "second" ? "" : "NavLinkTitleDark"}
+                    className={
+                      darkMode
+                        ? ""
+                        : activeTab === "second"
+                        ? ""
+                        : "NavLinkTitleDark"
+                    }
                   >
                     List
                   </p>
@@ -112,7 +118,13 @@ function SettingsTabs() {
                     }
                   ></box-icon>
                   <p
-                    className={darkMode ?"":activeTab === "third" ? "" : "NavLinkTitleDark"}
+                    className={
+                      darkMode
+                        ? ""
+                        : activeTab === "third"
+                        ? ""
+                        : "NavLinkTitleDark"
+                    }
                   >
                     Account
                   </p>
@@ -142,7 +154,13 @@ function SettingsTabs() {
                     }
                   ></box-icon>
                   <p
-                    className={darkMode ?"":activeTab === "fourth" ? "" : "NavLinkTitleDark"}
+                    className={
+                      darkMode
+                        ? ""
+                        : activeTab === "fourth"
+                        ? ""
+                        : "NavLinkTitleDark"
+                    }
                   >
                     Support
                   </p>
@@ -154,14 +172,21 @@ function SettingsTabs() {
         <Col sm={9} className="NavBarsContents">
           <Tab.Content>
             <Tab.Pane eventKey="first">
+              <button className="generalLoginButton">
+                <p>Log in &gt; </p>
+                <p>Access your list from any device</p>
+              </button>
               <div className="ButtonDarkMode" onClick={toggleDarkMode}>
                 <box-icon
                   type="solid"
-                  name={darkMode ? "toggle-left" : "toggle-right"}
+                  name={darkMode ? "toggle-right" : "toggle-left"}
                   className={darkMode ? "DarkMode" : "LightMode"}
                   size="lg"
+                  color={darkMode ? "#002a4e" : "#1c1c1c"}
                 ></box-icon>
-                <div>{darkMode ? "Dark Mode " : "Light Mode"}</div>
+                <div className={darkMode ? "textDarkMode" : ""}>
+                  {darkMode ? "Dark Mode " : "Light Mode"}
+                </div>
               </div>
             </Tab.Pane>
             <Tab.Pane eventKey="second">Second tab content</Tab.Pane>

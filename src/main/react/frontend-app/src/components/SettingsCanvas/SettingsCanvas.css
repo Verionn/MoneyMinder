@@ -19,7 +19,8 @@
     width: 500px !important;
     gap: 0px;
     border-radius: 8px;
-    margin-right: 5px;
+    margin-right: 20px;
+    
 
   }
 
@@ -53,7 +54,8 @@
 
 
   .settingsBody{
-    padding: 0 !important
+    padding: 0 !important;
+    
   }
 
   .textDarkMode{

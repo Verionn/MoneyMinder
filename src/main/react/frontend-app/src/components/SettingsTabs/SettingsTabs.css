@@ -19,7 +19,7 @@
 .NavBars {
   border: solid 1px #d6d6d6;
   margin-top: 0px;
-  height: 100vh;
+  height: 86vh;
   width: 150px !important;
   padding: 20px;
   padding-left: 20px;
@@ -36,9 +36,10 @@
 .NavBarsContents {
   border-left: solid 1px #d6d6d6;
   margin-top: 0px;
-  height: 100vh;
-  width: 300px !important;
+  height: 86vh;
+  width: 320px !important;
   padding: 20px;
+  
 }
 
 .NavItem {
@@ -95,4 +96,21 @@
 
 .NavLinkTitleDark {
   color: #1c1c1d !important;
+}
+
+.ButtonDarkMode{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.textDarkMode{
+  color: #fff;
+}
+
+.generalLoginButton{
+  font-size: 10px;
+  width: 90%;
+  border-radius: 8px;
+  display: flex;
 }
