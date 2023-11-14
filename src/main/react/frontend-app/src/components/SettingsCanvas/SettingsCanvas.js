@@ -2,10 +2,10 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import "boxicons";
-import "../../css/sideBarContainer.css";
-import { useDarkMode } from "./DarkModeContext";
+import "../../pages/SideBarContainer/sideBarContainer.css";
+import { useDarkMode } from "../DarkModeContext/DarkModeContext";
 
-function OffCanvas({ name, content, ...props }) {
+function SettingsCanvas({ name, content, ...props }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -66,10 +66,10 @@ function Example() {
   return (
     <>
       {["start", "end", "top", "bottom"].map((placement, idx) => (
-        <OffCanvas key={idx} placement={placement} name={placement} />
+        <SettingsCanvas key={idx} placement={placement} name={placement} />
       ))}
     </>
   );
 }
 
-export default OffCanvas;
+export default SettingsCanvas;

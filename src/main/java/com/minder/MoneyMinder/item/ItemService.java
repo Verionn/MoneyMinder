@@ -47,6 +47,9 @@ public class ItemService {
 
         itemEntity.setName(updateItemRequestBody.name());
         itemEntity.setCategoryId(updateItemRequestBody.categoryId());
+        itemEntity.setPrice(updateItemRequestBody.price());
+        itemEntity.setAmount(updateItemRequestBody.amount());
+        itemEntity.setWeight(updateItemRequestBody.weight());
         itemEntity.setListId(updateItemRequestBody.listId());
 
         return itemEntity;

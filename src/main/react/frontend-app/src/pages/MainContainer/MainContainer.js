@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import "../css/mainContainer.css";
+import "./mainContainer.css";
 import "boxicons";
 
-import HeaderMainContainer from "./HeaderMainContainer";
+import HeaderMainContainer from "../HeaderMainContainer/HeaderMainContainer";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Test from "./testjs";
-import { useDarkMode } from "./components/DarkModeContext";
+import Test from "../testjs";
+import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
 
 const MainContainer = () => {
 
