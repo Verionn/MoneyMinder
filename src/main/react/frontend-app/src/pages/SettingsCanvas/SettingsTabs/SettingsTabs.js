@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import "./SettingsTabs.css";
-import { useDarkMode } from "../DarkModeContext/DarkModeContext";
+import { useDarkMode } from "../../../components/DarkModeContext/DarkModeContext";
 function SettingsTabs() {
   const { darkMode, toggleDarkMode } = useDarkMode();
 
