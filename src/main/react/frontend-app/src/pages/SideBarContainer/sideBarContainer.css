@@ -134,21 +134,7 @@ li > h3 {
   font-size: small;
   background-color: red;
 }
-.customNameStyle {
-  display: flex;
-  font-size: 20px;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-  width: 100%;
-  justify-self: flex-start;
-}
-.customNameStyle:hover {
-  background-color: #ededed;
-  color: #002a4e;
-  cursor: pointer;
-  border-radius: 5px;
-}
+
 .moreMarginAndPadding{
     margin-top: 20px;
     padding-left: 0px;

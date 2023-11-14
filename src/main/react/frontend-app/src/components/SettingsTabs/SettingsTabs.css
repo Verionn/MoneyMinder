@@ -1,0 +1,116 @@
+.TabContainer {
+  display: flex;
+  width: 100%;
+  height: auto;
+  padding: 0;
+}
+
+.TabContainerRow {
+  display: flex !important;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px 0px 0px 0px;
+  margin-left: 1px !important;
+}
+
+.NavBars {
+  border: solid 1px #d6d6d6;
+  margin-top: 0px;
+  height: 86vh;
+  width: 150px !important;
+  padding: 20px;
+  padding-left: 20px;
+}
+
+.NavBarsDisplay {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-self: flex-start;
+  gap: 10px;
+}
+
+.NavBarsContents {
+  border-left: solid 1px #d6d6d6;
+  margin-top: 0px;
+  height: 86vh;
+  width: 320px !important;
+  padding: 20px;
+  
+}
+
+.NavItem {
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.NavLink {
+  background-color: #fff !important;
+  color: #002a4e !important;
+  margin-bottom: 10px;
+}
+
+.NavLink:hover {
+  background-color: #ededed !important;
+}
+
+.NavLink.active {
+  background-color: #002a4e !important;
+  color: #fff !important;
+}
+.NavLink:not(.active):hover {
+  background-color: #ededed !important;
+}
+
+.NavLinkDark {
+  background-color: #161616 !important;
+  color: #fff !important;
+  margin-bottom: 10px;
+}
+
+.NavLinkDark.active {
+  background-color: #002a4e !important;
+  color: #fff !important;
+}
+
+.NavLinkDark:not(.active):hover {
+  background-color: #1c1c1d !important;
+}
+
+.NavLinkTitle {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.NavLinkTitle > p {
+  display: flex;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-top: 1rem !important;
+}
+
+.NavLinkTitleDark {
+  color: #1c1c1d !important;
+}
+
+.ButtonDarkMode{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.textDarkMode{
+  color: #fff;
+}
+
+.generalLoginButton{
+  font-size: 10px;
+  width: 90%;
+  border-radius: 8px;
+  display: flex;
+}

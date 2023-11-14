@@ -1,0 +1,68 @@
+.customNameStyle {
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    width: 100%;
+    justify-self: flex-start;
+  }
+  .customNameStyle:hover {
+    background-color: #ededed;
+    color: #002a4e;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .settingsBox{
+    padding: 0;
+    border: solid 1px #d6d6d6;
+    width: 500px !important;
+    gap: 0px;
+    border-radius: 8px;
+    margin-right: 20px;
+    
+
+  }
+
+  .SettingsHeader{
+    border: solid 1px #d6d6d6;
+    border-radius: 8px 8px 0px 0px;
+    margin-bottom: 0px;
+    
+  }
+  .settingsTitle{
+    font-size: 20px;
+    font-weight: 600;
+    color: #1c1c1d;
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 2px;
+  }
+
+  .settingsTitle>h3{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+
+  .settingsBody{
+    padding: 0 !important;
+    
+  }
+
+  .textDarkMode{
+    color: #fff;
+  }
+
+  .textDarkMode>h3{
+    color: #fff;
+  }
+ 

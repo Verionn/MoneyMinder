@@ -3,16 +3,17 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import "boxicons";
 import "../../pages/SideBarContainer/sideBarContainer.css";
-import { useDarkMode } from "../DarkModeContext/DarkModeContext";
+import "./SettingsCanvas.css";
+import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
+import SettingsTabs from "../SettingsTabs/SettingsTabs";
 
 function SettingsCanvas({ name, content, ...props }) {
   const [show, setShow] = useState(false);
-
+  const { darkMode } = useDarkMode();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [isHovered, setIsHovered] = useState(false);
-  const { darkMode, toggleDarkMode } = useDarkMode();
-  console.log("darkMode " + darkMode);
+
   const buttonStyles = {
     backgroundColor: isHovered ? "#ededed" : "#002A4E",
     color: isHovered ? "#002A4E" : "#ffffff",
@@ -23,7 +24,7 @@ function SettingsCanvas({ name, content, ...props }) {
     border: "none",
     transition: "background-color 0.3s, color 0.3s",
     width: "100%",
-    paddingleft: "1px",
+    paddingLeft: "1px",
   };
 
   return (
@@ -39,23 +40,25 @@ function SettingsCanvas({ name, content, ...props }) {
           {content} {name}
         </span>
       </Button>
-      <Offcanvas show={show} onHide={handleClose} {...props} >
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>
+      <Offcanvas
+        show={show}
+        onHide={handleClose}
+        {...props}
+        className="settingsBox"
+        style={{ backgroundColor: darkMode ? "#161616" : "#fff" }}
+      >
+        <Offcanvas.Header closeButton className="SettingsHeader">
+          <Offcanvas.Title
+            className={
+              darkMode ? "settingsTitle textDarkMode" : "settingsTitle"
+            }
+          >
             {content} {name}
           </Offcanvas.Title>
         </Offcanvas.Header>
 
-        <Offcanvas.Body>
-          <div className="ButtonDarkMode" onClick={toggleDarkMode}>
-            <box-icon
-              type="solid"
-              name={darkMode ? "toggle-left" : "toggle-right"}
-              className={darkMode ? "DarkMode" : "LightMode"}
-              size="lg"
-            ></box-icon>
-            <div>{darkMode ? "Dark Mode " : "Light Mode"}</div>
-          </div>
+        <Offcanvas.Body className="settingsBody">
+          <SettingsTabs></SettingsTabs>
         </Offcanvas.Body>
       </Offcanvas>
     </>
