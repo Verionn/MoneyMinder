@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/mainContainer.css";
+import "./HeaderMainContainer.css"
 import "boxicons";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";

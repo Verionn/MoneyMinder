@@ -33,12 +33,25 @@ public abstract class MoneyMinderApplicationTests {
     public static final String NEW_LIST_NAME = "CHRISTMAS";
     public static final String FIRST_ITEM_NAME = "Bread";
     public static final String SECOND_ITEM_NAME = "Pepsi";
+    public static final String NEW_ITEM_NAME = "Sprite";
     public static final String WRONG_LIST_NAME = "";
     public static final int WRONG_LIST_ID = -12;
     public static final Long RANDOM_CATEGORY_ID = 1L;
+    public static final String WRONG_ITEM_NAME = "";
+    public static final Long WRONG_LIST_ID = -12L;
+    public static final Long NEW_LIST_ID = 2L;
+    public static final Long WRONG_NEW_LIST_ID = 22L;
+    public static final Long WRONG_ITEM_ID = -13L;
+    public static final Long RANDOM_ITEM_ID = 13L;
     public static final Double RANDOM_PRICE = 3.50;
+    public static final Double NEW_PRICE = 5.50;
+    public static final Double WRONG_PRICE = -3.50;
     public static final int RANDOM_AMOUNT = 1;
+    public static final int NEW_AMOUNT = 2;
+    public static final int WRONG_AMOUNT = -13;
     public static final long RANDOM_WEIGHT = 123;
+    public static final long NEW_WEIGHT = 353;
+    public static final long WRONG_WEIGHT = -123;
     public static final LocalDateTime RANDOM_DATE = LocalDateTime.parse("2023-10-15T21:15:00");
 
     @Autowired
