@@ -6,9 +6,9 @@ public record ItemResponse(
         Long itemId,
         Long listId,
         String name,
-        double price,
-        int amount,
+        Double price,
+        Integer amount,
         Long categoryId,
-        long weight,
+        Long weight,
         LocalDateTime timeCreated) {
 }
