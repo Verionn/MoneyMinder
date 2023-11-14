@@ -98,7 +98,7 @@ public class ItemController {
     }
 
     private boolean checkIfUpdateItemRequestBodyIsInvalid(UpdateItemRequestBody updateItemRequestBody) {
-        return updateItemRequestBody.amount() < 0 || updateItemRequestBody.name().isBlank() || updateItemRequestBody.category().isBlank() || updateItemRequestBody.price() < 0 || updateItemRequestBody.weight() < 0;
+        return updateItemRequestBody.amount() < 0 || updateItemRequestBody.name().isBlank() || updateItemRequestBody.price() < 0 || updateItemRequestBody.weight() < 0;
     }
 
     private boolean checkIfItemAndListExists(Long itemId, Long listId) {
