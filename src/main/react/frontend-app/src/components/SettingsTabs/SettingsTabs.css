@@ -23,16 +23,14 @@
   width: 150px !important;
   padding: 20px;
   padding-left: 20px;
-  
- 
 }
 
-.NavBarsDisplay{
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    justify-self: flex-start;
-    gap: 10px;
+.NavBarsDisplay {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-self: flex-start;
+  gap: 10px;
 }
 
 .NavBarsContents {
@@ -41,39 +39,62 @@
   height: 100vh;
   width: 300px !important;
   padding: 20px;
-  
 }
 
-.NavItem{
-    background-color: #002a4e !important;
-    margin-bottom: 10px;
-    border-radius: 8px;
+.NavItem {
+  margin-bottom: 10px;
+  border-radius: 8px;
 }
 
-.NavLink{
-    background-color: #fff !important;
-    color: #002a4e !important;
+.NavLink {
+  background-color: #fff !important;
+  color: #002a4e !important;
+  margin-bottom: 10px;
 }
 
-.NavLink:hover{
-    background-color: #ededed !important;
+.NavLink:hover {
+  background-color: #ededed !important;
 }
 
-.NavLink.active{
-    background-color: #002a4e !important;
-    color: #fff !important;
+.NavLink.active {
+  background-color: #002a4e !important;
+  color: #fff !important;
+}
+.NavLink:not(.active):hover {
+  background-color: #ededed !important;
 }
 
-.NavLinkDark{
-    background-color: #333 !important;
-    color: #fff !important;
+.NavLinkDark {
+  background-color: #161616 !important;
+  color: #fff !important;
+  margin-bottom: 10px;
 }
 
-.NavLinkDark.active{
-    background-color: #002a4e !important;
-    color: #fff !important;
+.NavLinkDark.active {
+  background-color: #002a4e !important;
+  color: #fff !important;
 }
 
-.NavLinkDark:hover{
-    background-color: #1c1c1d !important;
+.NavLinkDark:not(.active):hover {
+  background-color: #1c1c1d !important;
+}
+
+.NavLinkTitle {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.NavLinkTitle > p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.NavLinkTitleDark {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
 }

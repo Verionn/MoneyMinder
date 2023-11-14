@@ -32,12 +32,15 @@ function SettingsTabs() {
                     : `NavLink ${activeTab === "first" ? "active" : ""}`
                 }
                 onClick={() => handleTabClick("first")}
-                
               >
-                Tab 1
+                <div className="NavLinkTitle">
+                  <box-icon name="cog"></box-icon>
+                  <p>General</p>
+                </div>
               </Nav.Link>
             </Nav.Item>
-            <Nav.Item>
+
+            <Nav.Item className="NavItem">
               <Nav.Link
                 eventKey="second"
                 className={
@@ -47,7 +50,44 @@ function SettingsTabs() {
                 }
                 onClick={() => handleTabClick("second")}
               >
-                Tab 2
+                <div className="NavLinkTitle">
+                  <box-icon name="list-ol"></box-icon>
+                  <p>List</p>
+                </div>
+              </Nav.Link>
+            </Nav.Item>
+
+            <Nav.Item className="NavItem">
+              <Nav.Link
+                eventKey="third"
+                className={
+                  darkMode
+                    ? `NavLinkDark ${activeTab === "third" ? "active" : ""}`
+                    : `NavLink ${activeTab === "third" ? "active" : ""}`
+                }
+                onClick={() => handleTabClick("third")}
+              >
+                <div className="NavLinkTitle">
+                  <box-icon name="user-account" type="solid"></box-icon>
+                  <p>Account</p>
+                </div>
+              </Nav.Link>
+            </Nav.Item>
+
+            <Nav.Item className="NavItem">
+              <Nav.Link
+                eventKey="fourth"
+                className={
+                  darkMode
+                    ? `NavLinkDark ${activeTab === "fourth" ? "active" : ""}`
+                    : `NavLink ${activeTab === "fourth" ? "active" : ""}`
+                }
+                onClick={() => handleTabClick("fourth")}
+              >
+                <div className="NavLinkTitle">
+                  <box-icon name="support"></box-icon>
+                  <p>Support</p>
+                </div>
               </Nav.Link>
             </Nav.Item>
           </Nav>
@@ -66,6 +106,8 @@ function SettingsTabs() {
               </div>
             </Tab.Pane>
             <Tab.Pane eventKey="second">Second tab content</Tab.Pane>
+            <Tab.Pane eventKey="third">third tab content</Tab.Pane>
+            <Tab.Pane eventKey="fourth">fourth tab content</Tab.Pane>
           </Tab.Content>
         </Col>
       </Row>
