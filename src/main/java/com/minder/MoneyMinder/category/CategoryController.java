@@ -40,7 +40,8 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<CategoryResponse> addCategory(@RequestBody CreateCategoryRequestBody createCategoryRequestBody){
         return ResponseEntity.status(201).body(
-                categoryMapper.categoryEntityToCategoryResponse(categoryService.addCategory(categoryMapper.createCategoryRequestBodyToCategoryEntity(createCategoryRequestBody))));
+                categoryMapper.categoryEntityToCategoryResponse(categoryService.addCategory(
+                                categoryMapper.createCategoryRequestBodyToCategoryEntity(createCategoryRequestBody))));
     }
     @DeleteMapping(path = "/{categoryId}")
     public ResponseEntity<HttpStatus> deleteCategory(@PathVariable("categoryId") Long categoryId) {
@@ -62,7 +63,8 @@ public class CategoryController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.status(200).body(
-                categoryMapper.categoryEntityToCategoryResponse(categoryService.updateCategory(categoryId, updateCategoryRequestBody)));
+                categoryMapper.categoryEntityToCategoryResponse(
+                        categoryService.updateCategory(categoryId, updateCategoryRequestBody)));
     }
 
     private boolean checkIfCategoryExits(Long categoryId) {
