@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 
-const YourComponent = () => {
+const GetList = () => {
   // Declare 'lists' and 'setLists' using the useState hook
   const [lists, setLists] = useState([]);
 
@@ -19,19 +19,7 @@ const YourComponent = () => {
     }
   };
 
-  return (
-    <div className="test">
-      <h2>List of Lists on</h2>
-      {console.log("list "+lists)} {/* Correct way to log in JSX */}
-      <ul>
-        {lists.map((list) => (
-          <li key={list.listId}>
-            {list.name} - Full Price: {list.fullPrice}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  return lists;
 };
 
-export default YourComponent;
+export default GetList;

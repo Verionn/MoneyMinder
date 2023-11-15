@@ -13,6 +13,12 @@
   width: 25%;
   padding: 5px;
 }
+.headerRight{
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 #dropdown-basic {
   display: flex;
@@ -39,6 +45,16 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+.contentView>p{
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-bottom: 0rem !important;
+}
+p{
+  margin-bottom: 0rem !important;
 }
 
 .createListButton {

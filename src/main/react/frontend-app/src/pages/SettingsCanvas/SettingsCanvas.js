@@ -2,7 +2,6 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import "boxicons";
-import "../SideBarContainer/sideBarContainer.css";
 import "./SettingsCanvas.css";
 import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
 import SettingsTabs from "./SettingsTabs/SettingsTabs";
@@ -35,6 +34,7 @@ function SettingsCanvas({ name, content, ...props }) {
         style={buttonStyles}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        className={darkMode ? "settingsButton Darkmode" : "settingsButton"}
       >
         <span className="customNameStyle">
           {content} {name}
