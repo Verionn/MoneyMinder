@@ -5,7 +5,9 @@ import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import "./newMainContainer.css";
 import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
-
+import Logo from "../../ressources/logo.png";
+import HeaderMainContainer from "../HeaderMainContainer/HeaderMainContainer";
+import SettingsCanvas from "../SettingsCanvas/SettingsCanvas";
 function NewMainContainer() {
   const { darkMode, toggleDarkMode } = useDarkMode();
 
@@ -16,7 +18,7 @@ function NewMainContainer() {
   };
 
   return (
-    <div className="newMaincontainer">
+    <div className={darkMode ? "newMaincontainer dark" : "newMaincontainer"}>
       <Tab.Container
         id="left-tabs-example"
         defaultActiveKey="first"
@@ -25,19 +27,31 @@ function NewMainContainer() {
         <Row className="MainContainerRows">
           <Col sm={3} className="MainContainerNavBars">
             <Nav variant="pills" className="flex-column MainContainersideBar">
-              <a href={"https://github.com/Verionn/MoneyMinder"}>
-                <h1 className="logo">MoneyMinder</h1>
+              <a
+                href={"https://github.com/Verionn/MoneyMinder"}
+                className="brandLink"
+              >
+                <img
+                  src={Logo}
+                  alt="MoneyMinder Logo"
+                  className="brandLogo"
+                ></img>
+                <h1 className="brandName">MoneyMinder</h1>
               </a>
-              <button>
+
+              <button className="loginButton">
                 <p>Log in &gt; </p>
                 <p>Access your list from any device</p>
               </button>
-              <Nav.Item className="NavItem">
+
+              <Nav.Item className="MainContainerNavItem">
                 <Nav.Link
                   eventKey="first"
                   className={
                     darkMode
-                      ? `NavLinkDark ${activeTab === "first" ? "active" : ""}`
+                      ? `NavLink DarkLink ${
+                          activeTab === "first" ? "active" : ""
+                        }`
                       : `NavLink ${activeTab === "first" ? "active" : ""}`
                   }
                   onClick={() => handleTabClick("first")}
@@ -69,12 +83,14 @@ function NewMainContainer() {
                 </Nav.Link>
               </Nav.Item>
 
-              <Nav.Item className="NavItem">
+              <Nav.Item className="MainContainerNavItem">
                 <Nav.Link
                   eventKey="second"
                   className={
                     darkMode
-                      ? `NavLinkDark ${activeTab === "second" ? "active" : ""}`
+                      ? `NavLink DarkLink ${
+                          activeTab === "second" ? "active" : ""
+                        }`
                       : `NavLink ${activeTab === "second" ? "active" : ""}`
                   }
                   onClick={() => handleTabClick("second")}
@@ -106,12 +122,14 @@ function NewMainContainer() {
                 </Nav.Link>
               </Nav.Item>
 
-              <Nav.Item className="NavItem">
+              <Nav.Item className="MainContainerNavItem">
                 <Nav.Link
                   eventKey="third"
                   className={
                     darkMode
-                      ? `NavLinkDark ${activeTab === "third" ? "active" : ""}`
+                      ? `NavLink DarkLink ${
+                          activeTab === "third" ? "active" : ""
+                        }`
                       : `NavLink ${activeTab === "third" ? "active" : ""}`
                   }
                   onClick={() => handleTabClick("third")}
@@ -142,38 +160,47 @@ function NewMainContainer() {
                 </Nav.Link>
               </Nav.Item>
 
-              <Nav.Item className="NavItem">
+              <Nav.Item className="MainContainerNavItem">
                 <Nav.Link
-                  eventKey="fourth"
                   className={
                     darkMode
-                      ? `NavLinkDark ${activeTab === "fourth" ? "active" : ""}`
+                      ? `NavLink DarkLink ${
+                          activeTab === "fourth" ? "active" : ""
+                        }`
                       : `NavLink ${activeTab === "fourth" ? "active" : ""}`
                   }
                   onClick={() => handleTabClick("fourth")}
                 >
                   <div className="NavLinkTitle">
-                    <box-icon
-                      name="cog"
-                      color={
-                        darkMode
-                          ? "#fff"
-                          : activeTab === "fourth"
-                          ? "#fff"
-                          : "#1c1c1c"
+                    <SettingsCanvas
+                      className=""
+                      name={
+                        <h3
+                          className={
+                            darkMode
+                              ? ""
+                              : activeTab === "fourth"
+                              ? ""
+                              : "NavLinkTitleDark"
+                          }
+                        >
+                          Settings
+                        </h3>
                       }
-                    ></box-icon>
-                    <p
-                      className={
-                        darkMode
-                          ? ""
-                          : activeTab === "fourth"
-                          ? ""
-                          : "NavLinkTitleDark"
+                      placement="end"
+                      content={
+                        <box-icon
+                          name="cog"
+                          color={
+                            darkMode
+                              ? "#fff"
+                              : activeTab === "fourth"
+                              ? "#fff"
+                              : "#1c1c1c"
+                          }
+                        ></box-icon>
                       }
-                    >
-                      Settings
-                    </p>
+                    ></SettingsCanvas>
                   </div>
                 </Nav.Link>
               </Nav.Item>
@@ -184,22 +211,16 @@ function NewMainContainer() {
                   type="logo"
                   size="md"
                   name="github"
-                  color="white"
-                ></box-icon>
-                <box-icon
-                  type="logo"
-                  size="md"
-                  name="facebook-circle"
-                  color="white"
+                  color="black"
                 ></box-icon>
               </div>
 
-              <div className="terms">
+              <div className="termsAndConditions">
                 <p>Privacy Policy</p>
                 <p>Terms of service</p>
                 <div className="horizontal-line"></div>
 
-                <p>
+                <p className="copyRights">
                   {" "}
                   <box-icon name="copyright"></box-icon>2023 MoneyMinder{" "}
                   <br></br> All rights reserved
@@ -207,25 +228,10 @@ function NewMainContainer() {
               </div>
             </Nav>
           </Col>
-          <Col sm={9} className="NavBarsContents">
+          <Col sm={9} className="mainContainerNavBarsContents">
             <Tab.Content>
               <Tab.Pane eventKey="first">
-                <button className="generalLoginButton">
-                  <p>Log in &gt; </p>
-                  <p>Access your list from any device</p>
-                </button>
-                <div className="ButtonDarkMode" onClick={toggleDarkMode}>
-                  <box-icon
-                    type="solid"
-                    name={darkMode ? "toggle-right" : "toggle-left"}
-                    className={darkMode ? "DarkMode" : "LightMode"}
-                    size="lg"
-                    color={darkMode ? "#002a4e" : "#1c1c1c"}
-                  ></box-icon>
-                  <div className={darkMode ? "textDarkMode" : ""}>
-                    {darkMode ? "Dark Mode " : "Light Mode"}
-                  </div>
-                </div>
+                <HeaderMainContainer></HeaderMainContainer>
               </Tab.Pane>
               <Tab.Pane eventKey="second">Second tab content</Tab.Pane>
               <Tab.Pane eventKey="third">third tab content</Tab.Pane>

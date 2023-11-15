@@ -35,6 +35,7 @@ function SettingsCanvas({ name, content, ...props }) {
         style={buttonStyles}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        className="settingsButton"
       >
         <span className="customNameStyle">
           {content} {name}
