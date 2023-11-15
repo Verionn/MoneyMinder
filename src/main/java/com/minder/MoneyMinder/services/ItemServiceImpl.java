@@ -24,25 +24,29 @@ public class ItemServiceImpl implements ItemService {
         this.listRepository = listRepository;
     }
 
+    @Override
     public ItemEntity addItem(ItemEntity itemEntity, Long listId) {
         itemEntity.setListId(listId);
         itemEntity.setTimeCreated(LocalDateTime.now());
         return itemRepository.save(itemEntity);
     }
 
+    @Override
     public Optional<ItemEntity> getItem(Long itemId) {
         return itemRepository.findById(itemId);
     }
 
+    @Override
     public List<ItemEntity> getItemsOnSpecificList(Long listId) {
         return itemRepository.findByListId(listId);
     }
 
+    @Override
     public void deleteItem(Long itemID) {
         itemRepository.deleteById(itemID);
     }
 
-    @Transactional
+    @Override
     public ItemEntity updateItem(Long itemId, UpdateItemRequestBody updateItemRequestBody) {
         ItemEntity itemEntity = itemRepository.findById(itemId).
                 orElseThrow();
@@ -57,7 +61,14 @@ public class ItemServiceImpl implements ItemService {
         return itemEntity;
     }
 
+    @Override
     public boolean existsById(Long itemId) {
         return itemRepository.existsById(itemId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteItemsByListId(Long listId) {
+        itemRepository.deleteAllByListId(listId);
     }
 }
