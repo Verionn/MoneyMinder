@@ -20,3 +20,15 @@ CREATE TABLE IF NOT EXISTS item_entity (
     weight BIGINT NOT NULL DEFAULT 0,
     time_created TIMESTAMP WITHOUT TIME ZONE
     );
+
+CREATE TABLE IF NOT EXISTS user_item_entity (
+    id SERIAL PRIMARY KEY,
+    item_id BIGINT NOT NULL,
+    list_id BIGINT NOT NULL,
+    category_id BIGINT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    price BIGINT NOT NULL,
+    amount BIGINT NOT NULL,
+    weight BIGINT NOT NULL,
+    time_created TIMESTAMP WITHOUT TIME ZONE
+    );
