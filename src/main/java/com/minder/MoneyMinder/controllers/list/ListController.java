@@ -1,6 +1,7 @@
 package com.minder.MoneyMinder.controllers.list;
 
 import com.minder.MoneyMinder.controllers.list.dto.*;
+import com.minder.MoneyMinder.services.ItemService;
 import com.minder.MoneyMinder.services.ListService;
 import com.minder.MoneyMinder.services.mappers.ListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/lists")
 public class ListController {
     private final ListService listService;
+    private final ItemService itemService;
     private final ListMapper listMapper = ListMapper.INSTANCE;
 
     @Autowired
-    public ListController(ListService listService) {
+    public ListController(ListService listService, ItemService itemService) {
+        this.itemService = itemService;
         this.listService = listService;
     }
 
@@ -48,6 +51,8 @@ public class ListController {
         if (!checkIfListExits(listId)) {
             return ResponseEntity.notFound().build();
         }
+
+        itemService.deleteItemsByListId(listId);
 
         listService.deleteList(listId);
 
