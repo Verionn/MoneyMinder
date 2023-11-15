@@ -27,7 +27,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
                 NEW_ITEM_NAME,
                 NEW_PRICE,
                 NEW_AMOUNT,
-                NEW_CATEGORY_NAME,
+                NEW_CATEGORY_ID,
                 NEW_WEIGHT);
 
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
@@ -42,7 +42,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
         assertThat(updateItemResponse.getBody().price(), equalTo(NEW_PRICE));
         assertThat(updateItemResponse.getBody().amount(), equalTo(NEW_AMOUNT));
         assertThat(updateItemResponse.getBody().weight(), equalTo(NEW_WEIGHT));
-        assertThat(updateItemResponse.getBody().category(), equalTo(NEW_CATEGORY_NAME));
+        assertThat(updateItemResponse.getBody().categoryId(), equalTo(NEW_CATEGORY_ID));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
                 NEW_ITEM_NAME,
                 NEW_PRICE,
                 NEW_AMOUNT,
-                NEW_CATEGORY_NAME,
+                NEW_CATEGORY_ID,
                 NEW_WEIGHT);
 
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
@@ -81,7 +81,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
                 NEW_ITEM_NAME,
                 NEW_PRICE,
                 NEW_AMOUNT,
-                NEW_CATEGORY_NAME,
+                NEW_CATEGORY_ID,
                 NEW_WEIGHT);
 
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
@@ -106,7 +106,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
                 NEW_ITEM_NAME,
                 NEW_PRICE,
                 NEW_AMOUNT,
-                NEW_CATEGORY_NAME,
+                NEW_CATEGORY_ID,
                 NEW_WEIGHT);
 
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
@@ -131,7 +131,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
                 WRONG_ITEM_NAME,
                 NEW_PRICE,
                 NEW_AMOUNT,
-                NEW_CATEGORY_NAME,
+                NEW_CATEGORY_ID,
                 NEW_WEIGHT);
 
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
@@ -156,7 +156,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
                 NEW_ITEM_NAME,
                 WRONG_PRICE,
                 NEW_AMOUNT,
-                NEW_CATEGORY_NAME,
+                NEW_CATEGORY_ID,
                 NEW_WEIGHT);
 
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
@@ -181,7 +181,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
                 NEW_ITEM_NAME,
                 NEW_PRICE,
                 WRONG_AMOUNT,
-                NEW_CATEGORY_NAME,
+                NEW_CATEGORY_ID,
                 NEW_WEIGHT);
 
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
@@ -206,7 +206,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
                 NEW_ITEM_NAME,
                 NEW_PRICE,
                 NEW_AMOUNT,
-                NEW_CATEGORY_NAME,
+                NEW_CATEGORY_ID,
                 WRONG_WEIGHT);
 
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
@@ -231,7 +231,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
                 NEW_ITEM_NAME,
                 NEW_PRICE,
                 NEW_AMOUNT,
-                WRONG_CATEGORY_NAME,
+                WRONG_CATEGORY_ID,
                 NEW_WEIGHT);
 
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);

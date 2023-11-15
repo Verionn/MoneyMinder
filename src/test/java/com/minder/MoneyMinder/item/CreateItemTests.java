@@ -79,7 +79,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         var createdItemRequestBody = new CreateItemRequestBody(FIRST_ITEM_NAME,
                 WRONG_PRICE,
                 RANDOM_AMOUNT,
-                RANDOM_CATEGORY_NAME,
+                RANDOM_CATEGORY_ID,
                 RANDOM_WEIGHT,
                 LocalDateTime.now());
 
@@ -101,7 +101,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         var createdItemRequestBody = new CreateItemRequestBody(FIRST_ITEM_NAME,
                 RANDOM_PRICE,
                 RANDOM_AMOUNT,
-                RANDOM_CATEGORY_NAME,
+                RANDOM_CATEGORY_ID,
                 WRONG_WEIGHT,
                 LocalDateTime.now());
 
@@ -123,7 +123,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         var createdItemRequestBody = new CreateItemRequestBody(FIRST_ITEM_NAME,
                 RANDOM_PRICE,
                 WRONG_AMOUNT,
-                RANDOM_CATEGORY_NAME,
+                RANDOM_CATEGORY_ID,
                 RANDOM_WEIGHT,
                 LocalDateTime.now());
 
@@ -145,7 +145,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         var createdItemRequestBody = new CreateItemRequestBody(FIRST_ITEM_NAME,
                 RANDOM_PRICE,
                 RANDOM_AMOUNT,
-                WRONG_CATEGORY_NAME,
+                WRONG_CATEGORY_ID,
                 RANDOM_WEIGHT,
                 LocalDateTime.now());
 
@@ -208,7 +208,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         assertThat(getSpecificItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
         assertThat(getSpecificItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
         assertThat(getSpecificItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
-        assertThat(getSpecificItemResponse.getBody().category(), equalTo(RANDOM_CATEGORY_NAME));
+        assertThat(getSpecificItemResponse.getBody().categoryId(), equalTo(RANDOM_CATEGORY_ID));
     }
 
     @Test

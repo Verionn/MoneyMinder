@@ -37,8 +37,9 @@ public abstract class MoneyMinderApplicationTests {
     public static final String WRONG_LIST_NAME = "";
     public static final int WRONG_LIST_ID = -12;
     public static final Long RANDOM_CATEGORY_ID = 1L;
+    public static final Long NEW_CATEGORY_ID = 3L;
+    public static final Long WRONG_CATEGORY_ID = -1L;
     public static final String WRONG_ITEM_NAME = "";
-    public static final Long WRONG_LIST_ID = -12L;
     public static final Long NEW_LIST_ID = 2L;
     public static final Long WRONG_NEW_LIST_ID = 22L;
     public static final Long WRONG_ITEM_ID = -13L;
