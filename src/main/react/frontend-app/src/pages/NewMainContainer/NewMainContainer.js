@@ -8,6 +8,7 @@ import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
 import Logo from "../../ressources/logo.png";
 import HeaderMainContainer from "../HeaderMainContainer/HeaderMainContainer";
 import SettingsCanvas from "../SettingsCanvas/SettingsCanvas";
+import ListsDisplay from "./lists/ListsDisplay";
 function NewMainContainer() {
   const { darkMode, toggleDarkMode } = useDarkMode();
 
@@ -49,10 +50,10 @@ function NewMainContainer() {
                   eventKey="first"
                   className={
                     darkMode
-                      ? `NavLink DarkLink ${
+                      ? `NavLinks DarkLink ${
                           activeTab === "first" ? "active" : ""
                         }`
-                      : `NavLink ${activeTab === "first" ? "active" : ""}`
+                      : `NavLinks ${activeTab === "first" ? "active" : ""}`
                   }
                   onClick={() => handleTabClick("first")}
                 >
@@ -88,10 +89,10 @@ function NewMainContainer() {
                   eventKey="second"
                   className={
                     darkMode
-                      ? `NavLink DarkLink ${
+                      ? `NavLinks DarkLink ${
                           activeTab === "second" ? "active" : ""
                         }`
-                      : `NavLink ${activeTab === "second" ? "active" : ""}`
+                      : `NavLinks ${activeTab === "second" ? "active" : ""}`
                   }
                   onClick={() => handleTabClick("second")}
                 >
@@ -127,10 +128,10 @@ function NewMainContainer() {
                   eventKey="third"
                   className={
                     darkMode
-                      ? `NavLink DarkLink ${
+                      ? `NavLinks DarkLink ${
                           activeTab === "third" ? "active" : ""
                         }`
-                      : `NavLink ${activeTab === "third" ? "active" : ""}`
+                      : `NavLinks ${activeTab === "third" ? "active" : ""}`
                   }
                   onClick={() => handleTabClick("third")}
                 >
@@ -160,35 +161,18 @@ function NewMainContainer() {
                 </Nav.Link>
               </Nav.Item>
 
-           
               <SettingsCanvas
-                      
-                      name={
-                        <p
-                          className={
-                            darkMode
-                              ? ""
-                              : activeTab === "fourth"
-                              ? ""
-                              : "NavLinkTitleDark"
-                          }
-                        >
-                          Settings
-                        </p>
-                      }
-                      placement="end"
-                      content={
-                        <box-icon
-                          name="cog"
-                          color={
-                            darkMode
-                              ? "#fff"
-                              : activeTab === "fourth"
-                              ? "#fff"
-                              : "#1c1c1c"
-                          }></box-icon>
-                      }
-                    ></SettingsCanvas>
+                name={
+                  <p className={darkMode ? "NavLinkTitleDark" : ""}>Settings</p>
+                }
+                placement="end"
+                content={
+                  <box-icon
+                    name="cog"
+                    color={darkMode ? "#fff" : "#1c1c1c"}
+                  ></box-icon>
+                }
+              ></SettingsCanvas>
               <div className="horizontal-line"></div>
               <div className="links">
                 <box-icon
@@ -216,6 +200,9 @@ function NewMainContainer() {
             <Tab.Content>
               <Tab.Pane eventKey="first">
                 <HeaderMainContainer></HeaderMainContainer>
+                <div className="mainContainerBody">
+                  <ListsDisplay></ListsDisplay>
+                </div>
               </Tab.Pane>
               <Tab.Pane eventKey="second">Second tab content</Tab.Pane>
               <Tab.Pane eventKey="third">third tab content</Tab.Pane>

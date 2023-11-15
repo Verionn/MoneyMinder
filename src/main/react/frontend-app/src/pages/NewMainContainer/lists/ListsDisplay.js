@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Lists from "../../../components/communicationWithBackEnd/GetList.js";
+import Lists from "../../../components/communicationWithBackEnd/GetList";
 import "./listsDisplay.css";
 
 const listsDisplay = () => {

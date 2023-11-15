@@ -2,7 +2,6 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import "boxicons";
-import "../SideBarContainer/sideBarContainer.css";
 import "./SettingsCanvas.css";
 import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
 import SettingsTabs from "./SettingsTabs/SettingsTabs";

@@ -6,21 +6,45 @@
   gap: 8px;
   width: 100%;
   justify-self: flex-start;
-  margin-left: 2px;
+  margin-left: 15px !important;
   color: #1c1c1d;
 }
-.settingsButton{
+.settingsButton {
   background-color: #fff !important;
-  border: solid 1px yellowgreen !important;
   padding-left: 2px !important;
-  margin-left:2px ;
+  margin-left: 2px;
+}
+.customNameStyle > p:hover {
+  color: #ededed !important;
+}
+.customNameStyle > p {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-bottom: 0rem !important;
 }
 
-.customNameStyle:hover {
-  background-color: #ededed;
-  color: #002a4e;
+.settingsButton:hover {
+  background-color: #865400 !important;
+  color: #ededed !important;
   cursor: pointer;
   border-radius: 5px;
+}
+.customNameStyle:hover {
+  background-color: #865400;
+  color: #ededed;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.customNameStyle>.NavLinkTitleDark{
+  color: #fff !important;
+}
+.Darkmode {
+  background-color: #161616 !important;
+  color: #fff !important;
+}
+.NavLinkTitleDark {
+  color: #fff !important;
 }
 .settingsBox {
   padding: 0;

@@ -1,7 +1,6 @@
 import "./App.css";
 import "boxicons";
-import SideBarContainer from "./pages/SideBarContainer/SideBarContainer";
-import MainContainer from "./pages/MainContainer/MainContainer";
+
 import { DarkModeProvider } from "./components/DarkModeContext/DarkModeContext";
 import NewMainContainer from "./pages/NewMainContainer/NewMainContainer";
 function App() {

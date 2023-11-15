@@ -4,7 +4,7 @@
   padding: 0;
 }
 .dark {
-  background-color: #1c1c1d !important;
+  background-color: #161616 !important;
   color: white !important;
 }
 
@@ -20,13 +20,19 @@
 }
 
 .MainContainerNavBars {
-  width: 270px;
+  width: 270px !important;
   height: 100vh;
+  padding-top: 10px;
+  padding-left: 30px !important;
   border-right: solid 1px #d6d6d6;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .MainContainersideBar {
-  width: 255px;
+  width: 255px !important;
   display: flex;
   flex-direction: column !important;
   align-items: flex-start;
@@ -34,17 +40,6 @@
   gap: 10px;
 }
 
-.sideBar {
-  background-color: #002a4e;
-  width: 255px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  color: black;
-  padding-left: 5px;
-}
 .brandLink {
   text-decoration: none;
   display: flex;
@@ -55,6 +50,7 @@
 .brandLogo {
   width: 70px;
   height: 70px;
+  border-radius: 50%;
 }
 
 .brandName {
@@ -69,6 +65,12 @@
   width: 95%;
   border-radius: 8px;
   font-size: 10px;
+  background-color: #865400;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 10px;
 }
 
 .MainContainerNavItem {
@@ -81,13 +83,10 @@
   font-weight: bold;
 }
 
-.NavLink {
+.NavLinks {
   width: 100%;
 }
 
-.DarkLink {
-  color: white;
-}
 
 .links {
   width: 100%;
@@ -109,7 +108,7 @@
 
 .termsAndConditions > p {
   margin: 0;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .copyRights {
@@ -118,12 +117,39 @@
 }
 
 .mainContainerNavBarsContents {
-  border: solid 1px #d6d6d6;
-  width: 1265px;
+  width: 80% !important;
   height: 100vh;
 }
 
 .NavLinkTitle {
   font-size: 20px;
   font-weight: normal;
+}
+.NavLinkTitle>p{
+  margin-bottom: 1rem !important;
+}
+
+.horizontal-line {
+  align-self: center;
+  justify-self: center;
+  border: 1px solid rgb(128, 128, 128);
+  width: 85%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.DarkLink{
+  color: white !important;
+}
+
+.DarkLink:hover{
+  background-color: #1c1c1d !important;
+  color: white !important;
+}
+
+.NavLinks.active {
+  background-color: #002a4e !important;
+  color: #fff !important;
+}
+.NavLinks:not(.active):hover {
+  background-color: #1c1c1d !important;
 }
