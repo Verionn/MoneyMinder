@@ -1,8 +1,8 @@
 package com.minder.MoneyMinder.list;
 
 import com.minder.MoneyMinder.MoneyMinderApplicationTests;
-import com.minder.MoneyMinder.list.dto.ListResponse;
-import com.minder.MoneyMinder.list.dto.UpdateListRequestBody;
+import com.minder.MoneyMinder.controllers.list.dto.ListResponse;
+import com.minder.MoneyMinder.controllers.list.dto.UpdateListRequestBody;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
