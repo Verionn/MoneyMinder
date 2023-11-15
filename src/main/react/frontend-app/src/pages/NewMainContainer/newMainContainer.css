@@ -142,7 +142,7 @@
 }
 
 .DarkLink:hover{
-  background-color: #1c1c1d !important;
+  background-color: #ededed !important;
   color: white !important;
 }
 
@@ -151,5 +151,5 @@
   color: #fff !important;
 }
 .NavLinks:not(.active):hover {
-  background-color: #1c1c1d !important;
+  background-color: #ededed !important;
 }
