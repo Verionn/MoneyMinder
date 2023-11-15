@@ -1,0 +1,49 @@
+.newMaincontainer{
+    border:solid 1px red;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+}
+
+.MainContainerRows{
+    border: solid 1px blue;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+.MainContainerNavBars{
+    width: 270px;
+    height: 100vh;
+    border: solid 1px green;
+  
+}
+
+.MainContainersideBar{
+    width: 255px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column !important;
+    border: solid 1px yellow;
+}
+
+
+.sideBar {
+    background-color: #002a4e;
+    width: 255px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    color: black;
+    padding-left: 5px;
+    border: solid 1px red;
+  }
+
+ 

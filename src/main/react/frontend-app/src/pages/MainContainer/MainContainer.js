@@ -1,10 +1,8 @@
 import React from "react";
 import "./mainContainer.css";
 import "boxicons";
-
 import HeaderMainContainer from "../HeaderMainContainer/HeaderMainContainer";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Test from "../testjs";
+import "bootstrap/dist/css/bootstrap.min.css"
 import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
 import ListsDisplay from "./lists/ListsDisplay";
 

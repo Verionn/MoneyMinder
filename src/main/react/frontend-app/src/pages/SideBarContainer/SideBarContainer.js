@@ -38,11 +38,16 @@ const SideBarContainer = () => {
         </li>
 
         <li className="navigationTags moreMarginAndPadding">
-          
-          <SettingsCanvas className="navigationTags settingStyle"
+          <SettingsCanvas
+            className="navigationTags settingStyle"
             name={<h3>Settings</h3>}
             placement="end"
-            content={<box-icon name="cog" color={ darkMode?"#fff":"#865400"}></box-icon>}
+            content={
+              <box-icon
+                name="cog"
+                color={darkMode ? "#fff" : "#865400"}
+              ></box-icon>
+            }
           ></SettingsCanvas>
         </li>
       </ul>
@@ -63,7 +68,7 @@ const SideBarContainer = () => {
         <p>Terms of service</p>
       </div>
 
-      <div className="downloads">
+      {/*<div className="downloads">
         <div>
           <box-icon
             type="logo"
@@ -81,11 +86,11 @@ const SideBarContainer = () => {
             get it on <br /> <div className="boldText">App Store</div>
           </p>
         </div>
-      </div>
+  </div>*/}
 
       <div className="horizontal-line"></div>
 
-      <p>2023 MoneyMinder All rights reserved</p>
+      <p> <box-icon name='copyright'></box-icon>2023 MoneyMinder <br></br> All rights reserved</p>
     </div>
   );
 };
