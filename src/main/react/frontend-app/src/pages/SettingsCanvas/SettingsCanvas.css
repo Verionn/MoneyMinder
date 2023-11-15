@@ -6,9 +6,16 @@
   gap: 8px;
   width: 100%;
   justify-self: flex-start;
-  background-color: #fff;
+  margin-left: 2px;
   color: #1c1c1d;
 }
+.settingsButton{
+  background-color: #fff !important;
+  border: solid 1px yellowgreen !important;
+  padding-left: 2px !important;
+  margin-left:2px ;
+}
+
 .customNameStyle:hover {
   background-color: #ededed;
   color: #002a4e;
@@ -17,15 +24,12 @@
 }
 .settingsBox {
   padding: 0;
-  border: solid 1px #d6d6d6;
   width: 500px !important;
   gap: 0px;
   border-radius: 8px;
   margin-right: 20px;
 }
-.settingsButton{
-  background-color: #fff;
-}
+
 .SettingsHeader {
   border: solid 1px #d6d6d6;
   border-radius: 8px 8px 0px 0px;

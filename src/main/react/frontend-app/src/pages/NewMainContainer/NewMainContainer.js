@@ -160,22 +160,11 @@ function NewMainContainer() {
                 </Nav.Link>
               </Nav.Item>
 
-              <Nav.Item className="MainContainerNavItem">
-                <Nav.Link
-                  className={
-                    darkMode
-                      ? `NavLink DarkLink ${
-                          activeTab === "fourth" ? "active" : ""
-                        }`
-                      : `NavLink ${activeTab === "fourth" ? "active" : ""}`
-                  }
-                  onClick={() => handleTabClick("fourth")}
-                >
-                  <div className="NavLinkTitle">
-                    <SettingsCanvas
-                      className=""
+           
+              <SettingsCanvas
+                      
                       name={
-                        <h3
+                        <p
                           className={
                             darkMode
                               ? ""
@@ -185,7 +174,7 @@ function NewMainContainer() {
                           }
                         >
                           Settings
-                        </h3>
+                        </p>
                       }
                       placement="end"
                       content={
@@ -197,14 +186,9 @@ function NewMainContainer() {
                               : activeTab === "fourth"
                               ? "#fff"
                               : "#1c1c1c"
-                          }
-                        ></box-icon>
+                          }></box-icon>
                       }
                     ></SettingsCanvas>
-                  </div>
-                </Nav.Link>
-              </Nav.Item>
-
               <div className="horizontal-line"></div>
               <div className="links">
                 <box-icon
