@@ -1,9 +1,9 @@
 package com.minder.MoneyMinder;
 
-import com.minder.MoneyMinder.item.dto.CreateItemRequestBody;
-import com.minder.MoneyMinder.item.dto.ItemResponse;
-import com.minder.MoneyMinder.list.dto.CreateListRequestBody;
-import com.minder.MoneyMinder.list.dto.ListResponse;
+import com.minder.MoneyMinder.controllers.item.dto.CreateItemRequestBody;
+import com.minder.MoneyMinder.controllers.item.dto.ItemResponse;
+import com.minder.MoneyMinder.controllers.list.dto.CreateListRequestBody;
+import com.minder.MoneyMinder.controllers.list.dto.ListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;

@@ -1,18 +1,16 @@
 package com.minder.MoneyMinder.item;
 
 import com.minder.MoneyMinder.MoneyMinderApplicationTests;
-import com.minder.MoneyMinder.item.dto.ItemListResponse;
-import com.minder.MoneyMinder.item.dto.ItemResponse;
+import com.minder.MoneyMinder.controllers.item.dto.ItemListResponse;
+import com.minder.MoneyMinder.controllers.item.dto.ItemResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpMethod;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpStatus.*;
 
 public class DeleteItemTests extends MoneyMinderApplicationTests {
