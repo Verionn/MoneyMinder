@@ -9,6 +9,7 @@ import com.minder.MoneyMinder.controllers.item.dto.CreateItemRequestBody;
 import com.minder.MoneyMinder.controllers.item.dto.ItemListResponse;
 import com.minder.MoneyMinder.controllers.item.dto.ItemResponse;
 import com.minder.MoneyMinder.controllers.item.dto.UpdateItemRequestBody;
+import com.minder.MoneyMinder.services.mappers.UserItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class ItemController {
     private final ListService listService;
     private final UserItemService userItemService;
     private final ItemMapper itemMapper = ItemMapper.INSTANCE;
+    private final UserItemMapper userItemMapper = UserItemMapper.INSTANCE;
 
     @Autowired
     public ItemController(ItemServiceImpl itemService, ListServiceImpl listService, UserItemService userItemService) {
@@ -111,7 +113,7 @@ public class ItemController {
         Optional<ItemEntity> itemEntity = itemService.getItem(itemId);
 
         if (itemEntity.isPresent()) {
-            userItemService.markItemAsBought(itemEntity.get());
+            userItemService.markItemAsBought(userItemMapper.itemEntityToUserItemRecord(itemEntity.get()));
             itemService.deleteItem(itemId);
             return ResponseEntity.ok().build();
         } else {
