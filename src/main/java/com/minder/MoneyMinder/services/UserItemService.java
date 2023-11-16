@@ -1,8 +1,8 @@
 package com.minder.MoneyMinder.services;
 
 
-import com.minder.MoneyMinder.models.ItemEntity;
+import com.minder.MoneyMinder.controllers.item.dto.UserItemRecord;
 
 public interface UserItemService {
-    void markItemAsBought(ItemEntity itemEntity);
+    void markItemAsBought(UserItemRecord userItemRecord);
 }

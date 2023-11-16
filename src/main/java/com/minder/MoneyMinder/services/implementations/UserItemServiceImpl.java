@@ -1,6 +1,6 @@
 package com.minder.MoneyMinder.services.implementations;
 
-import com.minder.MoneyMinder.models.ItemEntity;
+import com.minder.MoneyMinder.controllers.item.dto.UserItemRecord;
 import com.minder.MoneyMinder.repositories.ItemRepository;
 import com.minder.MoneyMinder.repositories.UserItemRepository;
 import com.minder.MoneyMinder.services.UserItemService;
@@ -19,8 +19,7 @@ public class UserItemServiceImpl implements UserItemService {
     }
 
     @Override
-    public void markItemAsBought(ItemEntity itemEntity) {
-
-        userItemRepository.save(userItemMapper.itemEntityToUserItemEntity(itemEntity));
+    public void markItemAsBought(UserItemRecord userItemRecord) {
+        userItemRepository.save(userItemMapper.userItemRecordToUserItemEntity(userItemRecord));
     }
 }
