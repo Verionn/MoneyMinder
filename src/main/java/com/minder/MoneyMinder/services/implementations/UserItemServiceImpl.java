@@ -1,11 +1,14 @@
 package com.minder.MoneyMinder.services.implementations;
 
 import com.minder.MoneyMinder.controllers.item.dto.UserItemRecord;
+import com.minder.MoneyMinder.controllers.item.dto.UserItemResponse;
 import com.minder.MoneyMinder.repositories.ItemRepository;
 import com.minder.MoneyMinder.repositories.UserItemRepository;
 import com.minder.MoneyMinder.services.UserItemService;
 import com.minder.MoneyMinder.services.mappers.UserItemMapper;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class UserItemServiceImpl implements UserItemService {
@@ -19,7 +22,8 @@ public class UserItemServiceImpl implements UserItemService {
     }
 
     @Override
-    public void markItemAsBought(UserItemRecord userItemRecord) {
-        userItemRepository.save(userItemMapper.userItemRecordToUserItemEntity(userItemRecord));
+    public UserItemResponse markItemAsBought(UserItemRecord userItemRecord) {
+        return userItemMapper.userItemRecordToUserItemResponse(
+                userItemRepository.save(userItemMapper.userItemRecordToUserItemEntity(userItemRecord)));
     }
 }

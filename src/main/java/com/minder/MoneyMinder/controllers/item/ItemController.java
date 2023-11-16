@@ -1,20 +1,18 @@
 package com.minder.MoneyMinder.controllers.item;
 
+import com.minder.MoneyMinder.controllers.item.dto.*;
 import com.minder.MoneyMinder.models.ItemEntity;
 import com.minder.MoneyMinder.services.*;
 import com.minder.MoneyMinder.services.implementations.ItemServiceImpl;
 import com.minder.MoneyMinder.services.implementations.ListServiceImpl;
 import com.minder.MoneyMinder.services.mappers.ItemMapper;
-import com.minder.MoneyMinder.controllers.item.dto.CreateItemRequestBody;
-import com.minder.MoneyMinder.controllers.item.dto.ItemListResponse;
-import com.minder.MoneyMinder.controllers.item.dto.ItemResponse;
-import com.minder.MoneyMinder.controllers.item.dto.UpdateItemRequestBody;
 import com.minder.MoneyMinder.services.mappers.UserItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 
@@ -104,8 +102,8 @@ public class ItemController {
     }
 
     @PostMapping(path = "/{listId}/items/{itemId}/bought")
-    public ResponseEntity<HttpStatus>markItemAsBought(@PathVariable Long listId,
-                                                      @PathVariable Long itemId){
+    public ResponseEntity<UserItemResponse>markItemAsBought(@PathVariable Long listId,
+                                                            @PathVariable Long itemId){
         if(!checkIfListExists(listId)){
             return ResponseEntity.notFound().build();
         }
@@ -113,9 +111,8 @@ public class ItemController {
         Optional<ItemEntity> itemEntity = itemService.getItem(itemId);
 
         if (itemEntity.isPresent()) {
-            userItemService.markItemAsBought(userItemMapper.itemEntityToUserItemRecord(itemEntity.get()));
             itemService.deleteItem(itemId);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(userItemService.markItemAsBought(userItemMapper.itemEntityToUserItemRecord(itemEntity.get(), LocalDateTime.now())));
         } else {
             return ResponseEntity.notFound().build();
         }
