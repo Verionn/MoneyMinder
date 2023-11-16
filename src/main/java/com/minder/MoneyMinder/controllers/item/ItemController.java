@@ -1,30 +1,35 @@
 package com.minder.MoneyMinder.controllers.item;
 
-import com.minder.MoneyMinder.services.ItemService;
+import com.minder.MoneyMinder.models.ItemEntity;
+import com.minder.MoneyMinder.services.*;
+import com.minder.MoneyMinder.services.implementations.ItemServiceImpl;
+import com.minder.MoneyMinder.services.implementations.ListServiceImpl;
 import com.minder.MoneyMinder.services.mappers.ItemMapper;
-import com.minder.MoneyMinder.services.ItemServiceImpl;
 import com.minder.MoneyMinder.controllers.item.dto.CreateItemRequestBody;
 import com.minder.MoneyMinder.controllers.item.dto.ItemListResponse;
 import com.minder.MoneyMinder.controllers.item.dto.ItemResponse;
 import com.minder.MoneyMinder.controllers.item.dto.UpdateItemRequestBody;
-import com.minder.MoneyMinder.services.ListServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @RestController
 @RequestMapping(path = "/lists")
 public class ItemController {
     private final ItemService itemService;
-    private final ListServiceImpl listServiceImpl;
+    private final ListService listService;
+    private final UserItemService userItemService;
     private final ItemMapper itemMapper = ItemMapper.INSTANCE;
 
     @Autowired
-    public ItemController(ItemServiceImpl itemService, ListServiceImpl listServiceImpl) {
+    public ItemController(ItemServiceImpl itemService, ListServiceImpl listService, UserItemService userItemService) {
         this.itemService = itemService;
-        this.listServiceImpl = listServiceImpl;
+        this.listService = listService;
+        this.userItemService = userItemService;
     }
 
     @GetMapping("/{listId}/items")
@@ -77,8 +82,8 @@ public class ItemController {
 
     @PutMapping(path = "{listId}/items/{itemId}")
     public ResponseEntity<ItemResponse> updateItem(@PathVariable Long listId,
-                                                    @PathVariable Long itemId,
-                                                    @RequestBody UpdateItemRequestBody updateItemRequestBody) {
+                                                   @PathVariable Long itemId,
+                                                   @RequestBody UpdateItemRequestBody updateItemRequestBody) {
 
         if (!checkIfItemAndListExists(itemId, listId)) {
             return ResponseEntity.notFound().build();
@@ -96,6 +101,24 @@ public class ItemController {
                 updateItem(itemId, updateItemRequestBody)));
     }
 
+    @PostMapping(path = "/{listId}/items/{itemId}/bought")
+    public ResponseEntity<HttpStatus>markItemAsBought(@PathVariable Long listId,
+                                                      @PathVariable Long itemId){
+        if(!checkIfListExists(listId)){
+            return ResponseEntity.notFound().build();
+        }
+
+        Optional<ItemEntity> itemEntity = itemService.getItem(itemId);
+
+        if (itemEntity.isPresent()) {
+            userItemService.markItemAsBought(itemEntity.get());
+            itemService.deleteItem(itemId);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     private boolean checkIfNewItemRequestBodyIsInvalid(CreateItemRequestBody createItemRequestBody) {
         return createItemRequestBody.amount() < 0 || createItemRequestBody.name().isBlank() || createItemRequestBody.categoryId() <= 0 || createItemRequestBody.price() < 0 || createItemRequestBody.weight() < 0;
     }
@@ -105,10 +128,10 @@ public class ItemController {
     }
 
     private boolean checkIfItemAndListExists(Long itemId, Long listId) {
-        return listServiceImpl.existsById(listId) && itemService.existsById(itemId);
+        return listService.existsById(listId) && itemService.existsById(itemId);
     }
 
     private boolean checkIfListExists(Long listId) {
-        return listServiceImpl.existsById(listId);
+        return listService.existsById(listId);
     }
 }

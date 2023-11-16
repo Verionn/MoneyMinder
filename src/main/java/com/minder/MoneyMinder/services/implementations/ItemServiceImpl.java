@@ -1,10 +1,11 @@
-package com.minder.MoneyMinder.services;
+package com.minder.MoneyMinder.services.implementations;
 
 
 import com.minder.MoneyMinder.repositories.ItemRepository;
 import com.minder.MoneyMinder.controllers.item.dto.UpdateItemRequestBody;
 import com.minder.MoneyMinder.repositories.ListRepository;
 import com.minder.MoneyMinder.models.ItemEntity;
+import com.minder.MoneyMinder.services.ItemService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
