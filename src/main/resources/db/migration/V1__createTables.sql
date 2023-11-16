@@ -30,5 +30,6 @@ CREATE TABLE IF NOT EXISTS user_item_entity (
     price BIGINT NOT NULL,
     amount BIGINT NOT NULL,
     weight BIGINT NOT NULL,
-    time_created TIMESTAMP WITHOUT TIME ZONE
+    time_created TIMESTAMP WITHOUT TIME ZONE,
+    time_bought TIMESTAMP WITHOUT TIME ZONE
     );

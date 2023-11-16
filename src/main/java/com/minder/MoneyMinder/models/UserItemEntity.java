@@ -20,8 +20,9 @@ public class UserItemEntity {
     Integer amount;
     Long weight;
     LocalDateTime timeCreated;
+    LocalDateTime timeBought;
 
-    public UserItemEntity( Long itemId, Long listId, Long categoryId, String name, Double price, Integer amount, Long weight, LocalDateTime timeCreated) {
+    public UserItemEntity(Long itemId, Long listId, Long categoryId, String name, Double price, Integer amount, Long weight, LocalDateTime timeCreated, LocalDateTime timeBought) {
         this.itemId = itemId;
         this.listId = listId;
         this.categoryId = categoryId;
@@ -30,6 +31,7 @@ public class UserItemEntity {
         this.amount = amount;
         this.weight = weight;
         this.timeCreated = timeCreated;
+        this.timeBought = timeBought;
     }
 
     public void setId(Long id) {
@@ -102,5 +104,13 @@ public class UserItemEntity {
 
     public Long getId() {
         return id;
+    }
+
+    public LocalDateTime getTimeBought() {
+        return timeBought;
+    }
+
+    public void setTimeBought(LocalDateTime timeBought) {
+        this.timeBought = timeBought;
     }
 }

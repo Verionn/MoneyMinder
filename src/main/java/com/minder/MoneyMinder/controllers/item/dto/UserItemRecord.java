@@ -2,6 +2,7 @@ package com.minder.MoneyMinder.controllers.item.dto;
 
 import java.time.LocalDateTime;
 
+//Tutaj kiedys bedzie jeszcze userId
 public record UserItemRecord(Long itemId,
                              Long listId,
                              Long categoryId,
@@ -9,5 +10,6 @@ public record UserItemRecord(Long itemId,
                              Double price,
                              Integer amount,
                              Long weight,
-                             LocalDateTime timeCreated) {
+                             LocalDateTime timeCreated,
+                             LocalDateTime timeBought) {
 }
