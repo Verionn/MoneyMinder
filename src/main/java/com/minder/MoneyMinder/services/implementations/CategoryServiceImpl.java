@@ -1,8 +1,9 @@
-package com.minder.MoneyMinder.services;
+package com.minder.MoneyMinder.services.implementations;
 
 import com.minder.MoneyMinder.repositories.CategoryRepository;
 import com.minder.MoneyMinder.controllers.category.dto.UpdateCategoryRequestBody;
 import com.minder.MoneyMinder.models.CategoryEntity;
+import com.minder.MoneyMinder.services.CategoryService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

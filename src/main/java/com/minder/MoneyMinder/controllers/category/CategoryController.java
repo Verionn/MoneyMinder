@@ -2,7 +2,7 @@ package com.minder.MoneyMinder.controllers.category;
 
 import com.minder.MoneyMinder.services.CategoryService;
 import com.minder.MoneyMinder.services.mappers.CategoryMapper;
-import com.minder.MoneyMinder.services.CategoryServiceImpl;
+import com.minder.MoneyMinder.services.implementations.CategoryServiceImpl;
 import com.minder.MoneyMinder.controllers.category.dto.CategoriesResponse;
 import com.minder.MoneyMinder.controllers.category.dto.CategoryResponse;
 import com.minder.MoneyMinder.controllers.category.dto.CreateCategoryRequestBody;
