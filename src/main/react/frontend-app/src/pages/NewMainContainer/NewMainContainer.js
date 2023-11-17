@@ -9,8 +9,9 @@ import Logo from "../../ressources/logo.png";
 import HeaderMainContainer from "../HeaderMainContainer/HeaderMainContainer";
 import SettingsCanvas from "../SettingsCanvas/SettingsCanvas";
 import ListsDisplay from "./lists/ListsDisplay";
+
 function NewMainContainer() {
-  const { darkMode, toggleDarkMode } = useDarkMode();
+  const { darkMode } = useDarkMode();
 
   const [activeTab, setActiveTab] = useState("first");
   console.log(activeTab);
