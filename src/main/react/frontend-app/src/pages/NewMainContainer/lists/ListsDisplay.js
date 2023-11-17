@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Lists from "../../../components/communicationWithBackEnd/GetList";
 import "./listsDisplay.css";
+import GetDatas from "../../../components/communicationWithBackEnd/GetDatas";
 
 const listsDisplay = () => {
+
+  const link = "http://localhost:8080/lists/1/items";
+  const data = GetDatas({ link });
+  console.log(data);
   const lists = Lists();
 
   return (
