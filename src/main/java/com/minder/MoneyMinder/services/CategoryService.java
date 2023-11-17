@@ -8,15 +8,15 @@ import java.util.Optional;
 
 public interface CategoryService {
 
-    public Optional<CategoryEntity> getCategory(Long categoryId);
+    Optional<CategoryEntity> getCategory(Long categoryId);
 
-    public List<CategoryEntity> getCategories();
+    List<CategoryEntity> getCategories();
 
-    public CategoryEntity addCategory(CategoryEntity categoryEntity);
+    CategoryEntity addCategory(CategoryEntity categoryEntity);
 
-    public void deleteCategory(Long categoryId);
+    void deleteCategory(Long categoryId);
 
-    public CategoryEntity updateCategory(Long categoryId, UpdateCategoryRequestBody updateCategoryRequestBody);
+    Optional<CategoryEntity> updateCategory(Long categoryId, UpdateCategoryRequestBody updateCategoryRequestBody);
 
-    public boolean existsById(Long categoryId);
+    boolean existsById(Long categoryId);
 }
