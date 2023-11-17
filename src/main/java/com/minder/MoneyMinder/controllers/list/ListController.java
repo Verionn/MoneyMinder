@@ -70,8 +70,9 @@ public class ListController {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.status(200).body(
-                listMapper.listEntityToListResponse(listService.updateList(listId, updateListRequestBody)));
+        return listService.updateList(listId, updateListRequestBody)
+                .map(listEntity -> ResponseEntity.ok().body(listMapper.listEntityToListResponse(listEntity)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping(path = "/{listId}/fullprice")

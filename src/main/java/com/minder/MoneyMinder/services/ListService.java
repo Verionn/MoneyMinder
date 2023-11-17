@@ -16,7 +16,7 @@ public interface ListService {
 
     public void deleteList(Long listId);
 
-    public ListEntity updateList(Long listId, UpdateListRequestBody updateListRequestBody);
+    public Optional<ListEntity> updateList(Long listId, UpdateListRequestBody updateListRequestBody);
 
     public double getFullPrice(Long listId);
 

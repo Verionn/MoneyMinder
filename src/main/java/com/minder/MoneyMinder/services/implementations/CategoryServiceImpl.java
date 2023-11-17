@@ -39,8 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public Optional<CategoryEntity> updateCategory(Long categoryId, UpdateCategoryRequestBody updateCategoryRequestBody) {
         return categoryRepository.findById(categoryId)
-                        .map(categoryEntity -> updateCategoryEntity(updateCategoryRequestBody.name(), categoryEntity))
-                        .map(categoryRepository::save);
+                        .map(categoryEntity -> updateCategoryEntity(updateCategoryRequestBody.name(), categoryEntity));
     }
 
     public boolean existsById(Long categoryId) {
