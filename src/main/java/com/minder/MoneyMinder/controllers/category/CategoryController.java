@@ -65,9 +65,10 @@ public class CategoryController {
         if(!checkIfDataIsCorrect(updateCategoryRequestBody)){
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.status(200).body(
-                categoryMapper.categoryEntityToCategoryResponse(
-                        categoryService.updateCategory(categoryId, updateCategoryRequestBody)));
+
+        return categoryService.updateCategory(categoryId, updateCategoryRequestBody)
+                .map(categoryEntity -> ResponseEntity.ok().body(categoryMapper.categoryEntityToCategoryResponse(categoryEntity)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     private boolean checkIfCategoryExits(Long categoryId) {

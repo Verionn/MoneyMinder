@@ -37,15 +37,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Transactional
-    public CategoryEntity updateCategory(Long categoryId, UpdateCategoryRequestBody updateCategoryRequestBody) {
-        CategoryEntity categoryEntity = categoryRepository.findById(categoryId).orElseThrow();
-
-        categoryEntity.setName(updateCategoryRequestBody.name());
-
-        return categoryEntity;
+    public Optional<CategoryEntity> updateCategory(Long categoryId, UpdateCategoryRequestBody updateCategoryRequestBody) {
+        return categoryRepository.findById(categoryId)
+                        .map(categoryEntity -> updateCategoryEntity(updateCategoryRequestBody.name(), categoryEntity))
+                        .map(categoryRepository::save);
     }
 
     public boolean existsById(Long categoryId) {
         return categoryRepository.existsById(categoryId);
+    }
+
+    private CategoryEntity updateCategoryEntity(String newCategoryName, CategoryEntity categoryEntity){
+        categoryEntity.setName(newCategoryName);
+        return categoryEntity;
     }
 }
