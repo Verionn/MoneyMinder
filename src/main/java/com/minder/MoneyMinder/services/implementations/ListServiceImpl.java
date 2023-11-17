@@ -39,13 +39,9 @@ public class ListServiceImpl implements ListService {
     }
 
     @Transactional
-    public ListEntity updateList(Long listId, UpdateListRequestBody updateListRequestBody) {
-        ListEntity listEntity = listRepository.findById(listId).
-                orElseThrow();
-
-        listEntity.setName(updateListRequestBody.name());
-
-        return listEntity;
+    public Optional<ListEntity> updateList(Long listId, UpdateListRequestBody updateListRequestBody) {
+        return listRepository.findById(listId)
+                        .map(listEntity -> updateListEntity(listEntity, updateListRequestBody));
     }
 
     public double getFullPrice(Long listId) {
@@ -54,5 +50,10 @@ public class ListServiceImpl implements ListService {
 
     public boolean existsById(Long listId) {
         return listRepository.existsById(listId);
+    }
+
+    private ListEntity updateListEntity(ListEntity listEntity, UpdateListRequestBody updateListRequestBody){
+        listEntity.setName(updateListRequestBody.name());
+        return listEntity;
     }
 }
