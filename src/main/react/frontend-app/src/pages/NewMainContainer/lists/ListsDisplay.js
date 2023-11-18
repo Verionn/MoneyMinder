@@ -5,7 +5,7 @@ import GetDatas from "../../../components/communicationWithBackEnd/GetDatas";
 
 const listsDisplay = () => {
 
-  const link = "http://localhost:8080/lists/1/items";
+  const link = "http://localhost:8080/lists";
   const data = GetDatas({ link });
   console.log(data);
   const lists = Lists();
@@ -29,7 +29,7 @@ const listsDisplay = () => {
       </div>
     ))}
   </div>
-  );
+          );
 };
 
 export default listsDisplay;
