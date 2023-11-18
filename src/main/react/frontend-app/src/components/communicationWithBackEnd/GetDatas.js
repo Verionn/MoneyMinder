@@ -1,24 +1,41 @@
-import { useState, useEffect } from "react";
+// DataFetcher.js
+import  { useState, useEffect } from 'react';
 
-const fetchData = async (url, setData) => {
+const fetchDataFromApi = async (url) => {
   try {
     const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
     const result = await response.json();
-    setData(result);
-    console.log('list : '+ result.items);
+    return result;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    throw new Error(`Error fetching data: ${error.message}`);
   }
 };
 
-const GetDatas = ({ link }) => {
-  const [data, setData] = useState([]);
+const GetDatas = ({ apiUrl }) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchData(link, setData);
-  }, [link]); 
+    const fetchData = async () => {
+      try {
+        const result = await fetchDataFromApi(apiUrl);
+        setData(result);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  return data;
+    fetchData();
+  }, [apiUrl]);
+
+  
+  return { data, loading, error };
 };
 
 export default GetDatas;

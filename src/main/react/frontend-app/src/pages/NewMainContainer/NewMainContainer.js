@@ -8,9 +8,14 @@ import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
 import Logo from "../../ressources/logo.png";
 import HeaderMainContainer from "../HeaderMainContainer/HeaderMainContainer";
 import SettingsCanvas from "../SettingsCanvas/SettingsCanvas";
-import ListsDisplay from "./lists/ListsDisplay";
+import DisplayAllLists from "../DisplayDatas/DisplayAllLists/DisplayAllLists";
+
+
+{/*import ListsDisplay from "./lists/ListsDisplay";*/}
+
 
 function NewMainContainer() {
+  console.log("NewMainContainer");
   const { darkMode } = useDarkMode();
 
   const [activeTab, setActiveTab] = useState("first");
@@ -202,7 +207,8 @@ function NewMainContainer() {
               <Tab.Pane eventKey="first">
                 <HeaderMainContainer></HeaderMainContainer>
                 <div className="mainContainerBody">
-                  <ListsDisplay></ListsDisplay>
+                <DisplayAllLists></DisplayAllLists>
+                 {/*<ListsDisplay></ListsDisplay>*/} 
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey="second">Second tab content</Tab.Pane>

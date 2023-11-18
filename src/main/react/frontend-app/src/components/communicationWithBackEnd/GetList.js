@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 
 const GetList = () => {
-  // Declare 'lists' and 'setLists' using the useState hook
+  
   const [lists, setLists] = useState([]);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const GetList = () => {
       console.error("Error fetching data:", error);
     }
   };
-
+  console.log("datas ======> "+lists);
   return lists;
 };
 
