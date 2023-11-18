@@ -16,7 +16,7 @@ public interface ItemService {
 
     public void deleteItem(Long itemID);
 
-    public ItemEntity updateItem(Long itemId, UpdateItemRequestBody updateItemRequestBody);
+    public Optional<ItemEntity> updateItem(Long itemId, UpdateItemRequestBody updateItemRequestBody);
 
     public boolean existsById(Long itemId);
 
