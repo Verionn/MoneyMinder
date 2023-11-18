@@ -8,17 +8,17 @@ import java.util.Optional;
 
 public interface ListService {
 
-    public Optional<ListEntity> getList(Long listId);
+    Optional<ListEntity> getList(Long listId);
 
-    public List<ListEntity> getLists();
+    List<ListEntity> getLists();
 
-    public ListEntity addList(ListEntity listEntity);
+    ListEntity addList(ListEntity listEntity);
 
-    public void deleteList(Long listId);
+    void deleteList(Long listId);
 
-    public Optional<ListEntity> updateList(Long listId, UpdateListRequestBody updateListRequestBody);
+    Optional<ListEntity> updateList(Long listId, UpdateListRequestBody updateListRequestBody);
 
-    public double getFullPrice(Long listId);
+    double getFullPrice(Long listId);
 
-    public boolean existsById(Long listId);
+    boolean existsById(Long listId);
 }

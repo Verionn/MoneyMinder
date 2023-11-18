@@ -36,10 +36,10 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.deleteById(categoryId);
     }
 
-    @Transactional
     public Optional<CategoryEntity> updateCategory(Long categoryId, UpdateCategoryRequestBody updateCategoryRequestBody) {
         return categoryRepository.findById(categoryId)
-                .map(categoryEntity -> updateCategoryEntity(updateCategoryRequestBody.name(), categoryEntity));
+                .map(categoryEntity -> updateCategoryEntity(updateCategoryRequestBody.name(), categoryEntity))
+                .map(categoryRepository::save);
     }
 
     public boolean existsById(Long categoryId) {

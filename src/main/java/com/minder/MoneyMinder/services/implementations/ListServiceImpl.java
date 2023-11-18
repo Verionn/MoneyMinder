@@ -38,10 +38,10 @@ public class ListServiceImpl implements ListService {
         listRepository.deleteById(listId);
     }
 
-    @Transactional
     public Optional<ListEntity> updateList(Long listId, UpdateListRequestBody updateListRequestBody) {
         return listRepository.findById(listId)
-                .map(listEntity -> updateListEntity(listEntity, updateListRequestBody));
+                .map(listEntity -> updateListEntity(listEntity, updateListRequestBody))
+                .map(listRepository::save);
     }
 
     public double getFullPrice(Long listId) {

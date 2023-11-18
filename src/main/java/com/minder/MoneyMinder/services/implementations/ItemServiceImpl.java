@@ -51,7 +51,8 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Optional<ItemEntity> updateItem(Long itemId, UpdateItemRequestBody updateItemRequestBody) {
         return itemRepository.findById(itemId)
-                .map(itemEntity -> updateItemEntity(itemEntity, updateItemRequestBody));
+                .map(itemEntity -> updateItemEntity(itemEntity, updateItemRequestBody))
+                .map(itemRepository::save);
     }
 
     @Override

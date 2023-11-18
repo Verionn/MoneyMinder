@@ -8,17 +8,17 @@ import java.util.Optional;
 
 public interface ItemService {
 
-    public ItemEntity addItem(ItemEntity itemEntity, Long listId);
+    ItemEntity addItem(ItemEntity itemEntity, Long listId);
 
-    public Optional<ItemEntity> getItem(Long itemId);
+    Optional<ItemEntity> getItem(Long itemId);
 
-    public List<ItemEntity> getItemsOnSpecificList(Long listId);
+    List<ItemEntity> getItemsOnSpecificList(Long listId);
 
-    public void deleteItem(Long itemID);
+    void deleteItem(Long itemID);
 
-    public Optional<ItemEntity> updateItem(Long itemId, UpdateItemRequestBody updateItemRequestBody);
+    Optional<ItemEntity> updateItem(Long itemId, UpdateItemRequestBody updateItemRequestBody);
 
-    public boolean existsById(Long itemId);
+    boolean existsById(Long itemId);
 
     void deleteItemsByListId(Long listId);
 }
