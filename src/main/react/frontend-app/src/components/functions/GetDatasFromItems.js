@@ -2,12 +2,10 @@
 import React from "react";
 import GetItemsFromList from "../communicationWithBackEnd/GetItemsFromList";
 
-const GetNumberOfItems = ({ listID,operation }) => {
+const GetDatasFromItems = ({ listID,operation }) => {
   const apiUrl = `http://localhost:8080/lists/${listID}/items`;
 
   let { items, loading, error } = GetItemsFromList({ apiUrl });
-  
-  
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -21,7 +19,7 @@ const GetNumberOfItems = ({ listID,operation }) => {
   
 };
 
-export default GetNumberOfItems;
+export default GetDatasFromItems;
 
 const calculateTotalPrice = ( items) => {
 
