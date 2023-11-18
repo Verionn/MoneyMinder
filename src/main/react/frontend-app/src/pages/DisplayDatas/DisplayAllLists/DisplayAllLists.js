@@ -5,11 +5,10 @@ import ListDescription from "../../../components/listDescription/listDescription
 import "./DisplayAllLists.css";
 import GetNumberOfItems from "../../../components/functions/GetDatasFromItems";
 
-
 const DisplayAllLists = () => {
   const apiUrl = "http://localhost:8080/lists";
   let { data, loading, error } = GetDatas({ apiUrl });
-  
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -27,13 +26,20 @@ const DisplayAllLists = () => {
               <div className="listTitle">{list.name}</div>
               <div className={"listHeader"}>
                 <span className="NumberOfItems">
-                  Number of Items : <GetNumberOfItems listID={list.listId} operation={"count"}/>
+                  Number of Items :{" "}
+                  <GetNumberOfItems listID={list.listId} operation={"count"} />
                 </span>
-                <span className="FullPrice">Total Price : <GetNumberOfItems listID={list.listId} operation={"price"}/> $</span>
+                <span className="FullPrice">
+                  Total Price :{" "}
+                  <GetNumberOfItems listID={list.listId} operation={"price"} />{" "}
+                  $
+                </span>
               </div>
               <div className="Description">
                 <ListDescription
-                  Description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed d"}
+                  Description={
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed d"
+                  }
                 ></ListDescription>
               </div>
             </li>
@@ -42,10 +48,7 @@ const DisplayAllLists = () => {
       ) : (
         <p>No data available.</p>
       )}
-      
     </div>
-
-    
   );
 };
 
