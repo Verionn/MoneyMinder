@@ -10,16 +10,11 @@ import HeaderMainContainer from "../HeaderMainContainer/HeaderMainContainer";
 import SettingsCanvas from "../SettingsCanvas/SettingsCanvas";
 import DisplayAllLists from "../DisplayDatas/DisplayAllLists/DisplayAllLists";
 
-
-{/*import ListsDisplay from "./lists/ListsDisplay";*/}
-
-
 function NewMainContainer() {
-  console.log("NewMainContainer");
   const { darkMode } = useDarkMode();
 
   const [activeTab, setActiveTab] = useState("first");
-  console.log(activeTab);
+
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
@@ -207,8 +202,7 @@ function NewMainContainer() {
               <Tab.Pane eventKey="first">
                 <HeaderMainContainer></HeaderMainContainer>
                 <div className="mainContainerBody">
-                <DisplayAllLists></DisplayAllLists>
-                 {/*<ListsDisplay></ListsDisplay>*/} 
+                  <DisplayAllLists></DisplayAllLists>
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey="second">Second tab content</Tab.Pane>
