@@ -97,14 +97,15 @@ public class ItemController {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok().body(itemMapper.itemToItemResponse(itemService.
-                updateItem(itemId, updateItemRequestBody)));
+        return itemService.updateItem(itemId, updateItemRequestBody)
+                .map(itemEntity -> ResponseEntity.ok().body(itemMapper.itemToItemResponse(itemEntity)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping(path = "/{listId}/items/{itemId}/bought")
-    public ResponseEntity<UserItemResponse>markItemAsBought(@PathVariable Long listId,
-                                                            @PathVariable Long itemId){
-        if(!checkIfListExists(listId)){
+    public ResponseEntity<UserItemResponse> markItemAsBought(@PathVariable Long listId,
+                                                             @PathVariable Long itemId) {
+        if (!checkIfListExists(listId)) {
             return ResponseEntity.notFound().build();
         }
 

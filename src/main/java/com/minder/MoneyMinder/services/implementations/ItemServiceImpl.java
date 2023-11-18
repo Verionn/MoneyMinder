@@ -7,6 +7,7 @@ import com.minder.MoneyMinder.repositories.ListRepository;
 import com.minder.MoneyMinder.models.ItemEntity;
 import com.minder.MoneyMinder.services.ItemService;
 import jakarta.transaction.Transactional;
+import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,18 +49,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemEntity updateItem(Long itemId, UpdateItemRequestBody updateItemRequestBody) {
-        ItemEntity itemEntity = itemRepository.findById(itemId).
-                orElseThrow();
-
-        itemEntity.setName(updateItemRequestBody.name());
-        itemEntity.setCategoryId(updateItemRequestBody.categoryId());
-        itemEntity.setPrice(updateItemRequestBody.price());
-        itemEntity.setAmount(updateItemRequestBody.amount());
-        itemEntity.setWeight(updateItemRequestBody.weight());
-        itemEntity.setListId(updateItemRequestBody.listId());
-
-        return itemEntity;
+    public Optional<ItemEntity> updateItem(Long itemId, UpdateItemRequestBody updateItemRequestBody) {
+        return itemRepository.findById(itemId)
+                .map(itemEntity -> updateItemEntity(itemEntity, updateItemRequestBody));
     }
 
     @Override
@@ -71,5 +63,15 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public void deleteItemsByListId(Long listId) {
         itemRepository.deleteAllByListId(listId);
+    }
+
+    private ItemEntity updateItemEntity(ItemEntity itemEntity, UpdateItemRequestBody updateItemRequestBody) {
+        itemEntity.setName(updateItemRequestBody.name());
+        itemEntity.setCategoryId(updateItemRequestBody.categoryId());
+        itemEntity.setPrice(updateItemRequestBody.price());
+        itemEntity.setAmount(updateItemRequestBody.amount());
+        itemEntity.setWeight(updateItemRequestBody.weight());
+        itemEntity.setListId(updateItemRequestBody.listId());
+        return itemEntity;
     }
 }

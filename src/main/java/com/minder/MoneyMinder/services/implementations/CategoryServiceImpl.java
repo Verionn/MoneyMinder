@@ -39,14 +39,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public Optional<CategoryEntity> updateCategory(Long categoryId, UpdateCategoryRequestBody updateCategoryRequestBody) {
         return categoryRepository.findById(categoryId)
-                        .map(categoryEntity -> updateCategoryEntity(updateCategoryRequestBody.name(), categoryEntity));
+                .map(categoryEntity -> updateCategoryEntity(updateCategoryRequestBody.name(), categoryEntity));
     }
 
     public boolean existsById(Long categoryId) {
         return categoryRepository.existsById(categoryId);
     }
 
-    private CategoryEntity updateCategoryEntity(String newCategoryName, CategoryEntity categoryEntity){
+    private CategoryEntity updateCategoryEntity(String newCategoryName, CategoryEntity categoryEntity) {
         categoryEntity.setName(newCategoryName);
         return categoryEntity;
     }
