@@ -153,3 +153,10 @@
 .NavLinks:not(.active):hover {
   background-color: #ededed !important;
 }
+
+.mainContainerBody{
+  border: solid 1px #d6d6d6;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
