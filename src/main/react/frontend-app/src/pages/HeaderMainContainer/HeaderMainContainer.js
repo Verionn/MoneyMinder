@@ -4,6 +4,7 @@ import "boxicons";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
+import CreateNewList from "../../components/communicationWithBackEnd/createNewList";
 
 
 const HeaderMainContainer = () => {
@@ -17,7 +18,7 @@ const HeaderMainContainer = () => {
     <div className="header">
       <h3 style={{color : darkMode ? "#fff" : ""}}>Your Shopping lists</h3>
       <div className="headerRight">
-        <button className="createListButton">Create a new List</button>
+        <button className="createListButton"><CreateNewList></CreateNewList></button>
 
         <Dropdown
           className="viewDisplay"
