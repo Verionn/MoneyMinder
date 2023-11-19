@@ -42,6 +42,11 @@ public class ListController {
 
     @PostMapping
     public ResponseEntity<ListResponse> addList(@RequestBody CreateListRequestBody createListRequestBody) {
+
+        if(!checkIfDataIsCorrect(createListRequestBody)){
+            return ResponseEntity.badRequest().build();
+        }
+
         return ResponseEntity.status(201).body(
                 listMapper.listEntityToListResponse(listService.addList(listMapper.createListRequestBodyToListEntity(createListRequestBody))));
     }
@@ -86,6 +91,10 @@ public class ListController {
 
     private boolean checkIfDataIsCorrect(UpdateListRequestBody updateListRequestBody) {
         return !updateListRequestBody.name().isBlank();
+    }
+
+    private boolean checkIfDataIsCorrect(CreateListRequestBody createListRequestBody) {
+        return !createListRequestBody.name().isBlank();
     }
 
     private boolean checkIfListExits(Long listId) {
