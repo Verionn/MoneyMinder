@@ -66,6 +66,7 @@ public class ListServiceImpl implements ListService {
         if (listEntity.getDescription() == null) {
             listEntity.setDescription("");
         }
+        listEntity.setDescription(updateListRequestBody.description());
         return listEntity;
     }
 }
