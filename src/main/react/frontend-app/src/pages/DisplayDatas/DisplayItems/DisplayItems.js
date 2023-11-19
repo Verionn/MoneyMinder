@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import GetItemsFromList from "../../../components/communicationWithBackEnd/GetItemsFromList";
 import "boxicons";
 import "./DisplayItems.css";
@@ -58,6 +58,3 @@ const calculateTotalPrice = (items) => {
     .toFixed(2);
 };
 
-const closeItemsList = () => {
-  console.log("closeItemsList");
-};
