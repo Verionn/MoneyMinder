@@ -31,7 +31,7 @@ public class ListServiceImpl implements ListService {
     }
 
     public ListEntity addList(ListEntity listEntity) {
-        return listRepository.save(listEntity);
+        return listRepository.save(updateListEntity(listEntity));
     }
 
     public void deleteList(Long listId) {
@@ -54,7 +54,18 @@ public class ListServiceImpl implements ListService {
 
     private ListEntity updateListEntity(ListEntity listEntity, UpdateListRequestBody updateListRequestBody) {
         listEntity.setName(updateListRequestBody.name());
-        listEntity.setDescription(updateListRequestBody.description());
+        if (updateListRequestBody.description() == null) {
+            listEntity.setDescription("");
+        } else {
+            listEntity.setDescription(updateListRequestBody.description());
+        }
+        return listEntity;
+    }
+
+    private ListEntity updateListEntity(ListEntity listEntity) {
+        if (listEntity.getDescription() == null) {
+            listEntity.setDescription("");
+        }
         return listEntity;
     }
 }

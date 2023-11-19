@@ -1,17 +1,17 @@
 CREATE TABLE IF NOT EXISTS category_entity (
     category_id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(15) NOT NULL
     );
 
 CREATE TABLE IF NOT EXISTS list_entity (
     list_id SERIAL PRIMARY KEY,
-    name VARCHAR(40) NOT NULL,
-    description VARCHAR(300) NOT NULL DEFAULT ''
+    name VARCHAR(30) NOT NULL,
+    description VARCHAR(300) DEFAULT ''
     );
 
 CREATE TABLE IF NOT EXISTS item_entity (
     item_id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(20) NOT NULL,
     price DECIMAL(10, 2) NOT NULL default 0,
     amount INT NOT NULL default 1,
     category_id BIGINT NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS user_item_entity (
     item_id BIGINT NOT NULL,
     list_id BIGINT NOT NULL,
     category_id BIGINT NOT NULL,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(20) NOT NULL,
     price BIGINT NOT NULL,
     amount BIGINT NOT NULL,
     weight BIGINT NOT NULL,
