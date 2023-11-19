@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS category_entity (
 
 CREATE TABLE IF NOT EXISTS list_entity (
     list_id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(40) NOT NULL,
+    description VARCHAR(300) NOT NULL DEFAULT ''
     );
 
 CREATE TABLE IF NOT EXISTS item_entity (
