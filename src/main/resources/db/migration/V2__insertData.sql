@@ -1,7 +1,7 @@
 INSERT INTO category_entity (name) VALUES ('Food');
 INSERT INTO category_entity (name) VALUES ('Sweets');
 
-INSERT INTO list_entity (name) VALUES ('Na jutro');
+INSERT INTO list_entity (name, description) VALUES ('Na jutro', 'we idz do lidla bo tam promka na kurczaka jest wariatku');
 INSERT INTO list_entity (name) VALUES ('Na weekend');
 
 INSERT INTO item_entity (name, price, amount, category_id, list_id, weight, time_created)

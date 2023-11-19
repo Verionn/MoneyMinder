@@ -48,6 +48,7 @@ public class CreateListTests extends MoneyMinderApplicationTests {
         assertThat(getListResponse.getStatusCode(), equalTo(OK));
         assertNotNull(getListResponse.getBody());
         assertEquals(FIRST_LIST_NAME, getListResponse.getBody().name());
+        assertEquals(LIST_DESCRIPTION, getListResponse.getBody().description());
         assertEquals(createListResponse.listId(), getListResponse.getBody().listId());
     }
 

@@ -54,6 +54,7 @@ public class ListServiceImpl implements ListService {
 
     private ListEntity updateListEntity(ListEntity listEntity, UpdateListRequestBody updateListRequestBody) {
         listEntity.setName(updateListRequestBody.name());
+        listEntity.setDescription(updateListRequestBody.description());
         return listEntity;
     }
 }
