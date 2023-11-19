@@ -20,7 +20,7 @@ public class UpdateListTests extends MoneyMinderApplicationTests {
         //given
         var createListResponse = createList(FIRST_LIST_NAME);
         var createdListId = createListResponse.listId();
-        var updateListRequestBody = new UpdateListRequestBody(NEW_LIST_NAME);
+        var updateListRequestBody = new UpdateListRequestBody(NEW_LIST_NAME, NEW_LIST_DESCRIPTION);
         HttpEntity<UpdateListRequestBody> requestEntity = new HttpEntity<>(updateListRequestBody);
 
         //when
@@ -28,6 +28,7 @@ public class UpdateListTests extends MoneyMinderApplicationTests {
 
         //then
         assertThat(updateListResponse.getBody().name(), equalTo(NEW_LIST_NAME));
+        assertThat(updateListResponse.getBody().description(), equalTo(NEW_LIST_DESCRIPTION));
         assertThat(updateListResponse.getStatusCode(), equalTo(OK));
     }
 

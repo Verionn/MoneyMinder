@@ -29,6 +29,8 @@ public abstract class MoneyMinderApplicationTests {
     protected static final String ITEMS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d";
     protected static final String MARK_ITEM_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d/bought";
     protected static final String FULL_PRICE_PATH_FORMAT = LISTS_RESOURCE + "/%d/fullprice";
+    public static final String LIST_DESCRIPTION = "GO TO THE LIDL BCS OF PROMOTIONS";
+    public static final String NEW_LIST_DESCRIPTION = "GO TO THE BIEDRONKA BCS DZIK GRAPE IS THERE";
     public static final String FIRST_LIST_NAME = "NEXT WEEK";
     public static final String SECOND_LIST_NAME = "PARTY";
     public static final String NEW_LIST_NAME = "CHRISTMAS";
@@ -92,7 +94,7 @@ public abstract class MoneyMinderApplicationTests {
 
     protected ListResponse createList(String listName) {
         //given
-        var createListRequestBody = new CreateListRequestBody(listName);
+        var createListRequestBody = new CreateListRequestBody(listName, LIST_DESCRIPTION);
 
         //when
         var createListResponse = client.postForEntity(prepareUrl(LISTS_RESOURCE),
