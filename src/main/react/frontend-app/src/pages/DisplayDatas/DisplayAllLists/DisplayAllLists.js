@@ -64,7 +64,7 @@ const DisplayAllLists = () => {
               <div className="Description">
                 <ListDescription
                   Description={
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed d"
+                    list.description === "" ? "No description" : list.description
                   }
                   onClick={() => console.log("Clicked on description")}
                 ></ListDescription>
