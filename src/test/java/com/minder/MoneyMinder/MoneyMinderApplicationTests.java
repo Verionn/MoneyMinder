@@ -98,8 +98,11 @@ public abstract class MoneyMinderApplicationTests {
         return prepareUrl(String.format(FULL_PRICE_PATH_FORMAT, listId));
     }
 
-    protected String categoryPath(long categoryId) {
+    protected String categoriesPath(long categoryId) {
         return prepareUrl(String.format(CATEGORY_DETAILS_PATH_FORMAT, categoryId));
+    }
+    protected String categoriesPath() {
+        return prepareUrl(String.format(CATEGORIES_RESOURCE));
     }
     protected ListResponse createList(String listName) {
         //given
