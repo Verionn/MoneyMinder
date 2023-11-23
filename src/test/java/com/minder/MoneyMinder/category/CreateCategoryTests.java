@@ -3,7 +3,6 @@ package com.minder.MoneyMinder.category;
 import com.minder.MoneyMinder.MoneyMinderApplicationTests;
 import com.minder.MoneyMinder.controllers.category.dto.CategoriesResponse;
 import com.minder.MoneyMinder.controllers.category.dto.CategoryResponse;
-import com.minder.MoneyMinder.controllers.list.dto.ListsResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +40,7 @@ public class CreateCategoryTests extends MoneyMinderApplicationTests {
         var createdCategoryResponse = createCategory(FIRST_CATEGORY_NAME);
 
         //when
-        var getCategoryResponse = client.getForEntity(categoryPath(createdCategoryResponse.categoryId()),
+        var getCategoryResponse = client.getForEntity(categoriesPath(createdCategoryResponse.categoryId()),
                 CategoryResponse.class);
 
         //then
@@ -55,7 +54,7 @@ public class CreateCategoryTests extends MoneyMinderApplicationTests {
     public void ShouldNotGetCategoryAndReturn404() {
 
         //when
-        var getCategoryResponse = client.getForEntity(categoryPath(WRONG_CATEGORY_ID),
+        var getCategoryResponse = client.getForEntity(categoriesPath(WRONG_CATEGORY_ID),
                 CategoryResponse.class);
 
         //then

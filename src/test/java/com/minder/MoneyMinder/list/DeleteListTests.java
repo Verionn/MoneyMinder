@@ -38,8 +38,8 @@ public class DeleteListTests extends MoneyMinderApplicationTests {
     }
 
     @Test
-    @DisplayName("Should return 404 when given wrong category id")
-    public void shouldNotDeleteCategoryAndReturnNotFound() {
+    @DisplayName("Should return 404 when given wrong list id")
+    public void shouldNotDeleteListAndReturnNotFound() {
         //when
         client.delete(listsPath(WRONG_LIST_ID));
 
