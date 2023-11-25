@@ -45,6 +45,8 @@ public abstract class MoneyMinderApplicationTests {
     public static final int WRONG_LIST_ID = -12;
     public static final String FIRST_CATEGORY_NAME = "Food";
     public static final String SECOND_CATEGORY_NAME = "Sweets";
+    public static final String NEW_CATEGORY_NAME = "Drinks";
+    public static final String WRONG_CATEGORY_NAME = "";
     public static final Long RANDOM_CATEGORY_ID = 1L;
     public static final Long NEW_CATEGORY_ID = 3L;
     public static final Long WRONG_CATEGORY_ID = -1L;
