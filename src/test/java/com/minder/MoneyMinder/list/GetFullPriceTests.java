@@ -30,8 +30,8 @@ public class GetFullPriceTests extends MoneyMinderApplicationTests {
     }
 
     @Test
-    @DisplayName("Should return not found when given bad list id")
-    public void shouldReturnNotFoundWhenGivenBadData(){
+    @DisplayName("Should return not found when given wrong list id")
+    public void shouldReturnNotFoundWhenGivenWrongData(){
 
         //when
         var getFullPriceResponse = client.getForEntity(fullPricePath(WRONG_LIST_ID),
