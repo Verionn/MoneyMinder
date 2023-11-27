@@ -1,0 +1,556 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: MoneyMinder - Rest api
+  description: "Api for MoneyMinder project"
+tags:
+  - name: Categories
+    description: All available requests related to categories
+    
+  - name: Lists
+    description: All available requests related to lists
+    
+  - name: Items
+    description: All available requests related to items
+paths:
+  /categories:
+    get:
+      tags:
+        - categories
+      description: Returns all available categories
+      operationId: getCategories
+      responses:
+        '200':
+          description: Returned all available categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  categories:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+                      
+                      
+    post:
+      tags:
+        - categories
+      description: create new category
+      operationId: addCategory
+      requestBody:
+        description: Create a new category
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequestBody'
+      responses:
+        '201':
+          description: Created new category
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Category'
+        '404':
+          description: Wrong request body
+          
+          
+  /categories/{categoryId}:  
+    put:
+      tags:
+        - categories
+      description: Update category
+      operationId: updateCategory
+      requestBody:
+        description: Update category body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequestBody'
+      parameters: 
+      - in: path
+        name: categoryId
+        schema:
+          type: integer
+        required: true
+        description: ID of the category
+      responses:
+        '200':
+          description: Category updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: Category not found
+        '404':
+          description: Wrong request body
+          
+    delete:
+      tags:
+        - categories
+      description: Delete specific category
+      operationId: deleteCategory
+      parameters: 
+      - in: path
+        name: categoryId
+        schema:
+          type: integer
+        required: true
+        description: ID of the category
+      responses:
+        '200':
+          description: Category deleted successfully
+        '404':
+          description: Category not found
+    
+    
+    get:
+      tags:
+        - categories
+      description: Get specific category
+      operationId: getSpecificCategory
+      parameters: 
+      - in: path
+        name: categoryId
+        schema:
+          type: integer
+        required: true
+        description: ID of the category
+      responses:
+        '200':
+          description: Returned specific category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: Category not found
+        '404':
+          description: Wrong request body
+          
+          
+  /lists:
+    get:
+      tags:
+        - lists
+      description: Get all lists
+      operationId: getAllLists
+      responses:
+        '200':
+          description: Returned all lists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lists:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/List'
+                      
+                      
+    post:
+      tags:
+        - lists
+      description: Create new list
+      operationId: createNewList
+      responses:
+        '200':
+          description: Successfully created new list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+        '400':
+          description: Bad request body
+          
+          
+  /lists/{listId}:
+    get:
+      tags:
+        - lists
+      description: Return specific list
+      operationId: getSpecificList
+      parameters:
+      - in: path
+        name: listId
+        schema:
+          type: integer
+        required: true
+        description: ID of the list
+      responses:
+        '200':
+          description: Successfully returned specific list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+        '404':
+          description: List not found
+        
+        
+    delete:
+      tags:
+        - lists
+      description: Delete specific list
+      operationId: deleteSpecificList
+      parameters:
+      - in: path
+        name: listId
+        schema:
+          type: integer
+        required: true
+        description: ID of the list
+      responses:
+        '200':
+          description: Successfully deleted specific list
+        '404':
+          description: List not found
+          
+          
+    put:
+      tags:
+        - lists
+      description: Update specific list
+      operationId: updateSpecificList
+      requestBody:
+        description: Update list body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListRequestBody'
+      parameters:
+      - in: path
+        name: listId
+        schema:
+          type: integer
+        required: true
+        description: ID of the list
+      responses:
+        '200':
+          description: Successfully updated specific list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/List'
+        '400':
+          description: Wrong request body
+        '404':
+          description: List not found
+          
+    
+  /lists/{listId}/items:
+    get:
+      tags:
+        - items
+      description: Return all items from specific list
+      operationId: getAllItemsFromSpecificList
+      parameters:
+        - in: path
+          name: listId
+          schema:
+            type: integer
+          required: true
+          description: ID of the list
+      responses:
+        '200':
+          description: Successfully returned all items from specific list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Item'
+        '404':
+          description: List not found
+    post:
+      tags:
+        - items
+      description: Add new item to specific list
+      operationId: addNewItemToSpecificList
+      requestBody:
+        description: Add new item body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateItemRequestBody'
+      parameters:
+        - in: path
+          name: listId
+          schema:
+            type: integer
+          required: true
+          description: ID of the list
+      responses:
+        '200':
+          description: Successfully added new item to specific list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: List not found
+  /lists/{listId}/items/{itemId}:
+    get:
+      tags:
+        - items
+      description: Return specific item from specific list
+      operationId: returnSpecificItemFromSpecificList
+      parameters:
+        - in: path
+          name: listId
+          schema:
+            type: integer
+          required: true
+          description: ID of the list
+        - in: path
+          name: itemId
+          schema:
+            type: integer
+          required: true
+          description: ID of the item
+      responses:
+        '200':
+          description: Successfully returned item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: List or Item not found
+
+
+    put:
+      tags:
+        - items
+      description: Update specific item from specific list
+      operationId: UpdateSpecificItemFromSpecificList
+      requestBody:
+        description: Update item body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemRequestBody'
+      parameters:
+        - in: path
+          name: listId
+          schema:
+            type: integer
+          required: true
+          description: ID of the list
+        - in: path
+          name: itemId
+          schema:
+            type: integer
+          required: true
+          description: ID of the item
+      responses:
+        '200':
+          description: Successfully updated item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          description: Wrong request body
+        '404':
+          description: List or Item not found
+      
+    
+    delete:
+      tags:
+        - items
+      description: Delete specific item from specific list
+      operationId: deleteSpecificItemFromSpecificList
+      parameters:
+        - in: path
+          name: listId
+          schema:
+            type: integer
+          required: true
+          description: ID of the list
+        - in: path
+          name: itemId
+          schema:
+            type: integer
+          required: true
+          description: ID of the item
+      responses:
+        '200':
+          description: Successfully deleted item
+        '404':
+          description: List or Item not found
+          
+          
+  /lists/{listId}/items/{itemId}/bought:
+    post:
+      tags:
+        - items
+      description: Mark item as bought
+      operationId: markItemAsBought
+      parameters:
+        - in: path
+          name: listId
+          schema:
+            type: integer
+          required: true
+          description: ID of the list
+        - in: path
+          name: itemId
+          schema:
+            type: integer
+          required: true
+          description: ID of the item
+      responses:
+        '200':
+          description: Successfully bought item - item has been moved to another table
+        '404':
+          description: List or Item not found
+      
+      
+components:
+  schemas:
+  
+    Category:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: 'Food'
+          
+    List:
+      required: 
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: 'Weekly'
+      
+    Item:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 2
+        categoryId:
+          type: integer
+          format: int64
+          example: 3
+        listId:
+          type: integer
+          format: int64
+          example: 4
+        name:
+          type: string
+          example: 'Cola'
+        amount:
+          type: integer
+          format: int64
+          example: 3
+        price:
+          type: number
+          format: double
+          example: 7.45
+        weight:
+          type: integer
+          format: int64
+          example: 150
+        timeCreated:
+          type: string
+          format: date
+          example: "2023-11-27"
+      
+    CategoryRequestBody:
+      required: 
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Sweets'
+          
+    ListRequestBody:
+      required: 
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Daily'
+          
+    ItemRequestBody:
+      required: 
+        - name
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int64
+          example: 2
+        listId:
+          type: integer
+          format: int64
+          example: 3
+        name:
+          type: string
+          example: 'Cola'
+        amount:
+          type: integer
+          format: int64
+          example: 5
+        price:
+          type: number
+          format: double
+          example: 4.30
+        weight:
+          type: integer
+          format: int64
+          example: 350
+
+    CreateItemRequestBody:
+      required: 
+        - name
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int64
+          example: 2
+        name:
+          type: string
+          example: 'Cola'
+        amount:
+          type: integer
+          format: int64
+          example: 5
+        price:
+          type: number
+          format: double
+          example: 4.30
+        weight:
+          type: integer
+          format: int64
+          example: 350
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MoneyMinder/MoneyMinder/1.0.0
