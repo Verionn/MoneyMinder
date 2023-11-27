@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import "./HeaderMainContainer.css"
+import "./HeaderMainContainer.css";
 import "boxicons";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
-import CreateNewList from "../../components/communicationWithBackEnd/createNewList";
-
+import CreateNewList from "../../components/CreateNewList/createNewList";
 
 const HeaderMainContainer = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -16,10 +15,9 @@ const HeaderMainContainer = () => {
 
   return (
     <div className="header">
-      <h3 style={{color : darkMode ? "#fff" : ""}}>Your Shopping lists</h3>
+      <h3 style={{ color: darkMode ? "#fff" : "" }}>Your Shopping lists</h3>
       <div className="headerRight">
-        <button className="createListButton"><CreateNewList></CreateNewList></button>
-
+        <CreateNewList></CreateNewList>
         <Dropdown
           className="viewDisplay"
           show={showDropdown}
