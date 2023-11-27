@@ -8,6 +8,7 @@ const CreateNewList = ({ onClose }) => {
   const [description, setDescription] = useState("");
   const [descriptionCount, setDescriptionCount] = useState(0);
   const maxDescriptionLength = 3;
+  const maxListNameLength = 5; // Adjust this according to your requirement
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -17,12 +18,14 @@ const CreateNewList = ({ onClose }) => {
       setListName(value);
     } else if (name === "description") {
       setDescription(value);
+      setDescriptionCount(value.length);
     }
   };
+
   const handleCreateNewList = async () => {
     try {
       // Send a request to create a new list
-      if (listName.length > 0) {
+      if (listName.length > 0 && listName.length <= maxListNameLength) {
         const response = await fetch("http://localhost:8080/lists", {
           method: "POST",
           headers: {
@@ -70,6 +73,13 @@ const CreateNewList = ({ onClose }) => {
               value={listName}
               onChange={handleInputChange}
             />
+            {(listName.length === 0 || listName.length > maxListNameLength) && (
+              <div className="errorMessage">
+                {listName.length === 0
+                  ? "Please enter a name"
+                  : `Name should be less than ${maxListNameLength} characters`}
+              </div>
+            )}
           </Form.Group>
           <Form.Group controlId="formListDescription">
             <Form.Label>Description</Form.Label>
@@ -81,8 +91,7 @@ const CreateNewList = ({ onClose }) => {
               onChange={handleInputChange}
               className="writeDescription"
             />
-          </Form.Group>
-          <div className="characterCount">
+            <div className="characterCount">
               {descriptionCount}/{maxDescriptionLength}
             </div>
             {description.length > maxDescriptionLength && (
@@ -90,12 +99,13 @@ const CreateNewList = ({ onClose }) => {
                 Description should be less than {maxDescriptionLength} characters.
               </div>
             )}
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleCreateNewList} >
+          <Button variant="primary" onClick={handleCreateNewList} disabled={listName.length === 0 || listName.length > maxListNameLength}>
             Save changes
           </Button>
         </Modal.Footer>
