@@ -1,5 +1,7 @@
 package com.minder.MoneyMinder;
 
+import com.minder.MoneyMinder.controllers.category.dto.CategoryResponse;
+import com.minder.MoneyMinder.controllers.category.dto.CreateCategoryRequestBody;
 import com.minder.MoneyMinder.controllers.item.dto.CreateItemRequestBody;
 import com.minder.MoneyMinder.controllers.item.dto.ItemResponse;
 import com.minder.MoneyMinder.controllers.list.dto.CreateListRequestBody;
@@ -24,7 +26,9 @@ public abstract class MoneyMinderApplicationTests {
 
     private final static String BASE_URL_FORMAT = "http://localhost:%d%s";
     protected static final String LISTS_RESOURCE = "/lists";
+    protected static final String CATEGORIES_RESOURCE = "/categories";
     protected static final String LISTS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d";
+    protected static final String CATEGORY_DETAILS_PATH_FORMAT = CATEGORIES_RESOURCE + "/%d";
     protected static final String ITEMS_RESOURCE = LISTS_RESOURCE + "/%d/items";
     protected static final String ITEMS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d";
     protected static final String MARK_ITEM_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d/bought";
@@ -39,6 +43,10 @@ public abstract class MoneyMinderApplicationTests {
     public static final String NEW_ITEM_NAME = "Sprite";
     public static final String WRONG_LIST_NAME = "";
     public static final int WRONG_LIST_ID = -12;
+    public static final String FIRST_CATEGORY_NAME = "Food";
+    public static final String SECOND_CATEGORY_NAME = "Sweets";
+    public static final String NEW_CATEGORY_NAME = "Drinks";
+    public static final String WRONG_CATEGORY_NAME = "";
     public static final Long RANDOM_CATEGORY_ID = 1L;
     public static final Long NEW_CATEGORY_ID = 3L;
     public static final Long WRONG_CATEGORY_ID = -1L;
@@ -92,6 +100,12 @@ public abstract class MoneyMinderApplicationTests {
         return prepareUrl(String.format(FULL_PRICE_PATH_FORMAT, listId));
     }
 
+    protected String categoriesPath(long categoryId) {
+        return prepareUrl(String.format(CATEGORY_DETAILS_PATH_FORMAT, categoryId));
+    }
+    protected String categoriesPath() {
+        return prepareUrl(String.format(CATEGORIES_RESOURCE));
+    }
     protected ListResponse createList(String listName) {
         //given
         var createListRequestBody = new CreateListRequestBody(listName, LIST_DESCRIPTION);
@@ -125,5 +139,20 @@ public abstract class MoneyMinderApplicationTests {
         assertThat(addItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
         assertThat(addItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
         return addItemResponse.getBody();
+    }
+
+    protected CategoryResponse createCategory(String categoryName) {
+        //given
+        var createCategoryRequestBody = new CreateCategoryRequestBody(categoryName);
+
+        //when
+        var createCategoryResponse = client.postForEntity(prepareUrl(CATEGORIES_RESOURCE),
+                createCategoryRequestBody, CategoryResponse.class);
+
+        //then
+        assertThat(createCategoryResponse.getStatusCode(), equalTo(CREATED));
+        assertThat(createCategoryResponse.getBody(), is(not(nullValue())));
+        assertThat(createCategoryResponse.getBody().name(), is(equalTo(categoryName)));
+        return createCategoryResponse.getBody();
     }
 }
