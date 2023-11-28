@@ -155,8 +155,9 @@
 }
 
 .mainContainerBody{
-  border: solid 1px #d6d6d6;
+ 
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
   gap: 10px;
 }
