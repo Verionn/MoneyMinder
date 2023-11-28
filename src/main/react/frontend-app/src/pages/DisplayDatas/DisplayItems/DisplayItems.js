@@ -2,6 +2,7 @@ import React from "react";
 import GetItemsFromList from "../../../components/communicationWithBackEnd/GetItemsFromList";
 import "boxicons";
 import "./DisplayItems.css";
+import DisplayCategory from "../DisplayCategory/DisplayCategory";
 
 const GetDatasFromItems = ({ listID, operation,onClose }) => {
   const apiUrl = `http://localhost:8080/lists/${listID}/items`;
@@ -41,7 +42,7 @@ const GetDatasFromItems = ({ listID, operation,onClose }) => {
             <div className="itemBody">
               <div className="itemAmount">{item.amount}</div>
               <div className="itemPrice">{(item.price * item.amount).toFixed(2)}$</div>
-              <div className="itemCategory">{item.categoryId}</div>
+              <div className="itemCategory"><DisplayCategory CategoryID={item.categoryId}></DisplayCategory></div>
             </div>
           </div>
         ))}
