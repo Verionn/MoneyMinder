@@ -28,6 +28,7 @@ ul {
 
 .listBox {
   width: 100%;
+  overflow: hidden;
   height: auto;
   display: flex;
   flex-direction: row;
@@ -36,9 +37,28 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 
-.userLists {
-}
 
+.userLists {
+    list-style-type: none !important;
+    font-family: "Courier New", Courier, monospace;
+    overflow-y: auto; /* Add this property for scroll behavior */
+    max-height: 600px; /* Set a max height to enable scrolling */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: transparent transparent; /* For Firefox */
+  }
+  
+  .userLists::-webkit-scrollbar {
+    width: 2px;
+    
+  }
+  
+  .userLists::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+  
+  .userLists:hover::-webkit-scrollbar-thumb {
+    background-color: #d6d6d6; /* Adjust the color as needed */
+  }
 .singleList {
   border: solid 1px #d6d6d6;
   background-color: #f5f5f5;
