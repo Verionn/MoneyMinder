@@ -1,0 +1,25 @@
+.createListButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  width: 110px;
+  height: 50px;
+  border-radius: 15px;
+  font-size: 15px;
+}
+
+.formListName {
+  height: 100px;
+}
+.errorMessage {
+  color: red;
+}
+
+.descriptionHint,
+.listNameHints {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+}

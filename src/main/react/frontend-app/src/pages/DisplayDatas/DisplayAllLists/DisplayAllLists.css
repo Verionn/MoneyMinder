@@ -1,65 +1,95 @@
-ul{
-    list-style-type: none !important;
-    font-family: 'Courier New', Courier, monospace;
+ul {
+  list-style-type: none !important;
+  font-family: "Courier New", Courier, monospace;
+}
+.listDropdown {
+  width: 100% !important;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  margin: 10px;
 }
 
-.listBox{
-  
-    width: 600px;
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-}   
-
-.singleList{
-    border: solid 1px #d6d6d6;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    width: 550px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
+.listBoxSelectItems {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px;
+  opacity: 1; /* Reset opacity when transitioning back */
+  transform: translateY(0);
+  transition: all 0.3s ease-in-out;
 }
 
-.listTitle{
-    font-size: 20px;
-    font-weight: bold;
-    margin: 10px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding-left: 10px;
+
+.listBox {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
 }
 
-.listHeader{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    padding: 10px;
-    margin-right: 15px;
+.userLists {
 }
 
-.Description{
-    font-size: 15px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
+.singleList {
+  border: solid 1px #d6d6d6;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  width: 550px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
 }
 
-.NumberOfItems{
-    display: flex;
-    gap: 10px;
+.listTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 10px;
 }
 
-.FullPrice{
-    display: flex;
-    gap: 10px;
+.listHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 10px;
+  margin-right: 15px;
+}
+
+.Description {
+  font-size: 15px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.NumberOfItems {
+  display: flex;
+  gap: 10px;
+}
+
+.FullPrice {
+  display: flex;
+  gap: 10px;
+}
+
+.writeDescription {
+  height: 100px;
 }
