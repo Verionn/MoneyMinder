@@ -36,33 +36,41 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
             <box-icon name="dots-vertical-rounded"></box-icon>
           </div>
         </div>
-        <Container fluid>
+        <Container>
           <Row className="itemLists">
             <Col className="textCentered"></Col>
-            <Col className="textCentered">Name</Col>
+            <Col className="itemName">Name</Col>
             <Col className="textCentered">Amount</Col>
             <Col className="textCentered">Price</Col>
             <Col className="textCentered">Category</Col>
             <Col className="textCentered">Weigth</Col>
           </Row>
-
+          </Container>
+          <Container fluid className="allItems">
           {items.map((item) => (
             <Row className="itemLists" key={item.itemId}>
               <Col className="textCentered">
                 <box-icon name="radio-circle"></box-icon>
               </Col>
-              <Col className="textCentered">{item.name}</Col>
+              <Col className="itemName">{item.name}</Col>
               <Col className="textCentered">{item.amount}</Col>
               <Col className="textCentered">
-                {(item.price * item.amount).toFixed(2)}$
+                {(item.price * item.amount).toFixed(2)} $
               </Col>
               <Col className="textCentered">
                 <DisplayCategory CategoryID={item.categoryId}></DisplayCategory>
               </Col>
-              <Col className="textCentered">{item.weight > 0 ? item.weight : ""}</Col>
+              <Col className="textCentered">
+                {item.weight > 0 ? item.weight : ""}
+              </Col>
             </Row>
           ))}
         </Container>
+        <div className="Horizontal-line"></div>
+        <div className={"TotalPrice"}>
+          <span className="priceTitle">Total price :</span>
+          <span className="calculatedPrice">{calculateTotalPrice(items)} $</span>
+           </div>
       </div>
     );
   }

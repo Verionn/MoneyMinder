@@ -3,21 +3,22 @@ ul {
   font-family: "Courier New", Courier, monospace;
 }
 .listDropdown {
-  width: 100% !important;
+  width: 20% !important;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
   gap: 10px;
   margin: 10px;
+  border: solid 1px #d6d6d6;
 }
 
 .listBoxSelectItems {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 10px;
   margin: 10px;
   opacity: 1; /* Reset opacity when transitioning back */
