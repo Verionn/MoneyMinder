@@ -41,12 +41,10 @@ const DisplayAllLists = () => {
   return (
     <div className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}>
       {ItemsID === -1 && data && data.lists && data.lists.length > 0 ? null : (
-        <div className="listDropdown">   <ListDropdown
-        
-        lists={data.lists}
-        onSelect={handleListClick}
-      /></div>
-     
+        <div className="listDropdown">
+          {" "}
+          <ListDropdown lists={data.lists} onSelect={handleListClick} />
+        </div>
       )}
 
       {ItemsID === -1 ? (

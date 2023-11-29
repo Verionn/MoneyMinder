@@ -2,8 +2,12 @@ import React from "react";
 import GetItemsFromList from "../../../components/communicationWithBackEnd/GetItemsFromList";
 import "boxicons";
 import "./DisplayItems.css";
+import DisplayCategory from "../DisplayCategory/DisplayCategory";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-const GetDatasFromItems = ({ listID, operation,onClose }) => {
+const GetDatasFromItems = ({ listID, operation, onClose }) => {
   const apiUrl = `http://localhost:8080/lists/${listID}/items`;
 
   let { items, loading, error } = GetItemsFromList({ apiUrl });
@@ -22,7 +26,9 @@ const GetDatasFromItems = ({ listID, operation,onClose }) => {
   if (operation) {
     return (
       <div className="Items">
-        <div className="closeItemsList" ><box-icon name='x'onClick={onClose} ></box-icon></div>
+        <div className="closeItemsList">
+          <box-icon name="x" onClick={onClose}></box-icon>
+        </div>
         <div className="ItemsHeader">
           <div className="ListName">{listName}</div>
           <div className="itemHeaderRight">
@@ -30,21 +36,33 @@ const GetDatasFromItems = ({ listID, operation,onClose }) => {
             <box-icon name="dots-vertical-rounded"></box-icon>
           </div>
         </div>
-        {items.map((item) => (
-          <div className="itemLists" key={item.itemId}>
-            <div className="itemName">
-              <div>
+        <Container fluid>
+          <Row className="itemLists">
+            <Col className="textCentered"></Col>
+            <Col className="textCentered">Name</Col>
+            <Col className="textCentered">Amount</Col>
+            <Col className="textCentered">Price</Col>
+            <Col className="textCentered">Category</Col>
+            <Col className="textCentered">Weigth</Col>
+          </Row>
+
+          {items.map((item) => (
+            <Row className="itemLists" key={item.itemId}>
+              <Col className="textCentered">
                 <box-icon name="radio-circle"></box-icon>
-              </div>
-              <div>{item.name}</div>
-            </div>
-            <div className="itemBody">
-              <div className="itemAmount">{item.amount}</div>
-              <div className="itemPrice">{(item.price * item.amount).toFixed(2)}$</div>
-              <div className="itemCategory">{item.categoryId}</div>
-            </div>
-          </div>
-        ))}
+              </Col>
+              <Col className="textCentered">{item.name}</Col>
+              <Col className="textCentered">{item.amount}</Col>
+              <Col className="textCentered">
+                {(item.price * item.amount).toFixed(2)}$
+              </Col>
+              <Col className="textCentered">
+                <DisplayCategory CategoryID={item.categoryId}></DisplayCategory>
+              </Col>
+              <Col className="textCentered">{item.weight > 0 ? item.weight : ""}</Col>
+            </Row>
+          ))}
+        </Container>
       </div>
     );
   }
@@ -57,4 +75,3 @@ const calculateTotalPrice = (items) => {
     .reduce((total, item) => total + item.price * item.amount, 0)
     .toFixed(2);
 };
-
