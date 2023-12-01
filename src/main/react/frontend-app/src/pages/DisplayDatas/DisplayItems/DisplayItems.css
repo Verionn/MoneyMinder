@@ -65,6 +65,21 @@
   justify-content: center !important;
   align-items: center !important;
 }
+.textAlignedLeft {
+  text-align: center !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+}
+
+.textAlignedRight {
+  text-align: center !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+}
+
+
 
 .Horizontal-line {
   border: 1px solid black;
