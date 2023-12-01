@@ -31,11 +31,12 @@ const DisplayAllLists = () => {
     return "List";
   };
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}><box-icon name='loader-alt'animation='spin' color="#002a4e" size="lg"></box-icon></p>;
+
   }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return <p className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}>Error: Failed to load Lists</p>;
   }
 
   return (
