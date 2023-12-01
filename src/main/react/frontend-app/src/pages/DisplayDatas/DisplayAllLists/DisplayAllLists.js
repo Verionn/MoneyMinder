@@ -7,19 +7,17 @@ import GetDatasFromItems from "../../../components/functions/GetDatasFromItems";
 import DisplayItems from "../DisplayItems/DisplayItems";
 import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList";
 
-const DisplayAllLists = () => {
+const DisplayAllLists = ({onClickList,onCloseList}) => {
   const [ItemsID, setItemsID] = useState(-1);
-  console.log("ItemsID is : " + ItemsID);
 
   const handleListClick = (listId) => {
-    // Do something with the list ID, such as logging or triggering another action
-    console.log(`List clicked with ID: ${listId}`);
     setItemsID(listId);
+    onClickList(listId);
   };
 
   const handleCloseItemsList = () => {
-    console.log("closeItemsList");
     setItemsID(-1);
+    onCloseList();
   };
 
   const apiUrl = "http://localhost:8080/lists";

@@ -12,11 +12,19 @@ import DisplayAllLists from "../DisplayDatas/DisplayAllLists/DisplayAllLists";
 
 function NewMainContainer() {
   const { darkMode } = useDarkMode();
-
+  const [ItemsID, setItemsID] = useState(-1);
   const [activeTab, setActiveTab] = useState("first");
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+
+  const handleListClick = (listId) => {
+    setItemsID(listId);
+  };
+
+  const handleCloseItemsList = () => {
+    setItemsID(-1);
   };
 
   return (
@@ -200,9 +208,9 @@ function NewMainContainer() {
           <Col sm={9} className="mainContainerNavBarsContents">
             <Tab.Content>
               <Tab.Pane eventKey="first">
-                <HeaderMainContainer></HeaderMainContainer>
+                {ItemsID === -1 ? (<HeaderMainContainer/>) : (<p>{console.log("test")}</p>) }
                 <div className="mainContainerBody">
-                  <DisplayAllLists></DisplayAllLists>
+                  <DisplayAllLists onClickList={handleListClick} onCloseList={handleCloseItemsList}></DisplayAllLists>
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey="second">Second tab content</Tab.Pane>

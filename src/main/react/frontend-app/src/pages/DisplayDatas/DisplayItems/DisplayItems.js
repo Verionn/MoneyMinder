@@ -12,11 +12,11 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
 
   let { items, loading, error } = GetItemsFromList({ apiUrl });
   if (loading) {
-    return <p>Loading...</p>;
+    <p className={"Items"}><box-icon name='loader-alt'animation='spin' color="#002a4e" size="lg"></box-icon></p>;
   }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return <p className={"Items"}>Error: {error.message}</p>;
   }
   if (operation === "count") return <div>{items.length}</div>;
   else if (operation === "price")
@@ -54,7 +54,7 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
               </Col>
               <Col className="itemName">{item.name}</Col>
               <Col className="textCentered">{item.amount}</Col>
-              <Col className="textCentered">
+              <Col className="textAlignedRight">
                 {(item.price * item.amount).toFixed(2)} $
               </Col>
               <Col className="textCentered">

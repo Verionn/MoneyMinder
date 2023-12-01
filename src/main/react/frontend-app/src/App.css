@@ -5,6 +5,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   color: black;
+  transition: all 0.3s ease-in-out;
 }
 
 .App-logo {
