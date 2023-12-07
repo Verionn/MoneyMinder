@@ -12,11 +12,18 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
 
   let { items, loading, error } = GetItemsFromList({ apiUrl });
   if (loading) {
-    <p className={"Items"}><box-icon name='loader-alt'animation='spin' color="#002a4e" size="lg"></box-icon></p>;
+    <p className={"Items"}>
+      <box-icon
+        name="loader-alt"
+        animation="spin"
+        color="#002a4e"
+        size="lg"
+      ></box-icon>
+    </p>;
   }
 
   if (error) {
-    return <p className={"Items"}>Error: {error.message}</p>;
+    return <p className={"Items"}>Error: {"List Not Found"}</p>;
   }
   if (operation === "count") return <div>{items.length}</div>;
   else if (operation === "price")
@@ -26,6 +33,7 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
   if (operation) {
     return (
       <div className="Items">
+        {console.log(items.length)}
         <div className="closeItemsList">
           <box-icon name="x" onClick={onClose}></box-icon>
         </div>
@@ -36,41 +44,83 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
             <box-icon name="dots-vertical-rounded"></box-icon>
           </div>
         </div>
-        <Container>
-          <Row className="itemLists">
-            <Col className="textCentered"></Col>
-            <Col className="itemName">Name</Col>
-            <Col className="textCentered">Amount</Col>
-            <Col className="textCentered">Price</Col>
-            <Col className="textCentered">Category</Col>
-            <Col className="textCentered">Weigth</Col>
-          </Row>
-          </Container>
-          <Container fluid className="allItems">
-          {items.map((item) => (
-            <Row className="itemLists" key={item.itemId}>
-              <Col className="textCentered">
-                <box-icon name="radio-circle"></box-icon>
-              </Col>
-              <Col className="itemName">{item.name}</Col>
-              <Col className="textCentered">{item.amount}</Col>
-              <Col className="textAlignedRight">
-                {(item.price * item.amount).toFixed(2)} $
-              </Col>
-              <Col className="textCentered">
-                <DisplayCategory CategoryID={item.categoryId}></DisplayCategory>
-              </Col>
-              <Col className="textCentered">
-                {item.weight > 0 ? item.weight : ""}
-              </Col>
-            </Row>
-          ))}
-        </Container>
-        <div className="Horizontal-line"></div>
-        <div className={"TotalPrice"}>
-          <span className="priceTitle">Total price :</span>
-          <span className="calculatedPrice">{calculateTotalPrice(items)} $</span>
-           </div>
+        {items.length > 0 ? (
+          <>
+            <Container>
+              <Row className="itemLists">
+                <Col className="textCentered"></Col>
+                <Col className="itemName">Name</Col>
+                <Col className="textCentered">Amount</Col>
+                <Col className="textCentered">Price</Col>
+                <Col className="textCentered">Category</Col>
+                <Col className="textCentered">Weigth</Col>
+              </Row>
+            </Container>
+            <Container fluid className="allItems">
+              {items.map((item) => (
+                <Row className="itemLists" key={item.itemId}>
+                  <Col className="textCentered">
+                    <box-icon name="radio-circle"></box-icon>
+                  </Col>
+                  <Col className="itemName">{item.name}</Col>
+                  <Col className="textCentered">{item.amount}</Col>
+                  <Col className="textAlignedRight">
+                    {(item.price * item.amount).toFixed(2)} $
+                  </Col>
+                  <Col className="textCentered">
+                    <DisplayCategory
+                      CategoryID={item.categoryId}
+                    ></DisplayCategory>
+                  </Col>
+                  <Col className="textCentered">
+                    {item.weight > 0 ? item.weight : ""}
+                  </Col>
+                </Row>
+              ))}
+            </Container>
+            <div className="Horizontal-line"></div>
+            <Container>
+              <Row className="PricesTitle">
+                <Col>Unchecked</Col>
+                <Col>Checked</Col>
+                <Col className="priceTitle">Total</Col>
+                <Col></Col>
+              </Row>
+              <Row>
+                <Col className="calculatedPriceNotBold">
+                  {calculateTotalPrice(items)} $
+                </Col>
+                <Col className="calculatedPriceNotBold">0 $</Col>
+                <Col className="calculatedPrice">
+                  {calculateTotalPrice(items)} $
+                </Col>
+                <Col>
+                  <box-icon name="dots-vertical"></box-icon>
+                </Col>
+              </Row>
+            </Container>
+          </>
+        ) : (
+          <div className="ItemsEmpty">
+            <div className="Horizontal-line-bold"></div>
+            <div>
+              <lord-icon
+                src="https://cdn.lordicon.com/zfzufhzk.json"
+                trigger="hover"
+                state="hover-line"
+                style={{ width: "250px", height: "250px" }}
+              ></lord-icon>
+              <p className="infoAboutEmptyList">What do you need to buy?</p>
+              <p className="suggestionText">
+                Start searching products to add them to your list
+              </p>
+              <button className="addItemsButton">
+                <box-icon name="plus" color="#fff"></box-icon>
+                <span>Add items</span>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

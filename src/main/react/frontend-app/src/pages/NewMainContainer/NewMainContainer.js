@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
@@ -9,20 +11,16 @@ import Logo from "../../ressources/logo.png";
 import HeaderMainContainer from "../HeaderMainContainer/HeaderMainContainer";
 import SettingsCanvas from "../SettingsCanvas/SettingsCanvas";
 import DisplayAllLists from "../DisplayDatas/DisplayAllLists/DisplayAllLists";
-
 function NewMainContainer() {
   const { darkMode } = useDarkMode();
   const [ItemsID, setItemsID] = useState(-1);
   const [activeTab, setActiveTab] = useState("first");
-
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-
   const handleListClick = (listId) => {
     setItemsID(listId);
   };
-
   const handleCloseItemsList = () => {
     setItemsID(-1);
   };
@@ -208,9 +206,16 @@ function NewMainContainer() {
           <Col sm={9} className="mainContainerNavBarsContents">
             <Tab.Content>
               <Tab.Pane eventKey="first">
-                {ItemsID === -1 ? (<HeaderMainContainer/>) : (<p>{console.log("test")}</p>) }
+                {ItemsID === -1 ? (
+                  <HeaderMainContainer />
+                ) : (
+                  <p>{console.log("test")}</p>
+                )}
                 <div className="mainContainerBody">
-                  <DisplayAllLists onClickList={handleListClick} onCloseList={handleCloseItemsList}></DisplayAllLists>
+                  <DisplayAllLists
+                    onClickList={handleListClick}
+                    onCloseList={handleCloseItemsList}
+                  ></DisplayAllLists>
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey="second">Second tab content</Tab.Pane>
@@ -223,5 +228,4 @@ function NewMainContainer() {
     </div>
   );
 }
-
 export default NewMainContainer;
