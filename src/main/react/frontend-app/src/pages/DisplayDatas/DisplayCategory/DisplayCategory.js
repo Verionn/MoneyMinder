@@ -26,7 +26,7 @@ const GetDatasFromItems = ({ CategoryID }) => {
         <lord-icon
           src="https://cdn.lordicon.com/sxrnyajs.json"
           trigger="hover"
-          style={{ width: "40px", height: "40px" }}
+          style={{ width: "60px", height: "60px" }}
         ></lord-icon>
       </p>
     );
@@ -36,7 +36,7 @@ const GetDatasFromItems = ({ CategoryID }) => {
         <lord-icon
           src="https://cdn.lordicon.com/joucdxcj.json"
           trigger="hover"
-          style={{ width: "40px", height: "40px" }}
+          style={{ width: "50px", height: "50px" }}
         ></lord-icon>
       </p>
     );

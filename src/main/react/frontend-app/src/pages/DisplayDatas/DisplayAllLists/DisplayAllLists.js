@@ -7,19 +7,17 @@ import GetDatasFromItems from "../../../components/functions/GetDatasFromItems";
 import DisplayItems from "../DisplayItems/DisplayItems";
 import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList";
 
-const DisplayAllLists = () => {
+const DisplayAllLists = ({onClickList,onCloseList}) => {
   const [ItemsID, setItemsID] = useState(-1);
-  console.log("ItemsID is : " + ItemsID);
 
   const handleListClick = (listId) => {
-    // Do something with the list ID, such as logging or triggering another action
-    console.log(`List clicked with ID: ${listId}`);
     setItemsID(listId);
+    onClickList(listId);
   };
 
   const handleCloseItemsList = () => {
-    console.log("closeItemsList");
     setItemsID(-1);
+    onCloseList();
   };
 
   const apiUrl = "http://localhost:8080/lists";
@@ -31,11 +29,12 @@ const DisplayAllLists = () => {
     return "List";
   };
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}><box-icon name='loader-alt'animation='spin' color="#002a4e" size="lg"></box-icon></p>;
+
   }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return <p className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}>Error: Failed to load Lists</p>;
   }
 
   return (
