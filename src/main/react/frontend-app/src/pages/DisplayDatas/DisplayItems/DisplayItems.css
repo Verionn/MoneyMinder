@@ -79,11 +79,57 @@
   align-items: center !important;
 }
 
+.ItemsEmpty{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.infoAboutEmptyList{
+  font-size: large;
+  margin: 10px;
+}
+.suggestionText{
+  font-size: small;
+  margin: 10px;
+  font-style: italic;
+}
+
+.addItemsButton{
+  margin: 10px;
+  width: 50%;
+  height: 50px;
+  border-radius: 8px;
+  background-color: #0b5ed7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+}
+
+.addItemsButton>span{
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
 
 
 .Horizontal-line {
   border: 1px solid black;
   width: 95%;
+  margin-bottom: 10px;
+}
+.Horizontal-line-bold{
+  border: 3px solid black;
+  width: 95%;
+  margin-bottom: 10px;
 }
 .TotalPrice {
   display: flex;
@@ -98,9 +144,12 @@
 }
 
 .calculatedPrice {
-  font-weight: bold;
-  font-size: 25px;
-  color: green;
+  font-weight: bold !important;
+  font-size: 25px !important;
+  color: green !important;
+}
+.calculatedPriceNotBold{
+  font-size: 20px !important;
 }
 
 .allItems {

@@ -1,5 +1,7 @@
 import "./App.css";
 import "boxicons";
+import lottie from "lottie-web";
+import { defineElement } from "@lordicon/element";
 
 import { DarkModeProvider } from "./components/DarkModeContext/DarkModeContext";
 import NewMainContainer from "./pages/NewMainContainer/NewMainContainer";
