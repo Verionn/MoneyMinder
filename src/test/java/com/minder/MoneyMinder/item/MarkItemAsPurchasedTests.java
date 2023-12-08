@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class MarkItemAsBoughtTests extends MoneyMinderApplicationTests {
+public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
 
     @Test
     @DisplayName("Should mark item as purchased and return 200")
@@ -29,7 +29,8 @@ public class MarkItemAsBoughtTests extends MoneyMinderApplicationTests {
                 ItemListResponse.class).getBody().items().size();
 
         //when
-        var purchaseItemResponse = client.postForEntity(purchaseItemPath(createdList.listId(), addedItem.itemId()), null, PurchasedItemResponse.class);
+        var purchaseItemResponse = client.postForEntity(purchaseItemPath(
+                createdList.listId(), addedItem.itemId()), null, PurchasedItemResponse.class);
 
         //then
         int numberOfItemsInListAfterMark = client.getForEntity(itemsPath(createdList.listId()),
@@ -53,11 +54,11 @@ public class MarkItemAsBoughtTests extends MoneyMinderApplicationTests {
         var createdList = createList(FIRST_LIST_NAME);
 
         //when
-        var userItemResponse = client.postForEntity(purchaseItemPath(createdList.listId(), WRONG_ITEM_ID), null, PurchasedItemResponse.class);
+        var purchasedItemResponse = client.postForEntity(purchaseItemPath(createdList.listId(), WRONG_ITEM_ID), null, PurchasedItemResponse.class);
 
         //then
-        assertThat(userItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
-        assertNull(userItemResponse.getBody());
+        assertThat(purchasedItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
+        assertNull(purchasedItemResponse.getBody());
     }
 
     @Test
@@ -67,10 +68,10 @@ public class MarkItemAsBoughtTests extends MoneyMinderApplicationTests {
         //given
 
         //when
-        var userItemResponse = client.postForEntity(purchaseItemPath(WRONG_LIST_ID, RANDOM_ITEM_ID), null, PurchasedItemResponse.class);
+        var purchasedItemResponse = client.postForEntity(purchaseItemPath(WRONG_LIST_ID, RANDOM_ITEM_ID), null, PurchasedItemResponse.class);
 
         //then
-        assertThat(userItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
-        assertNull(userItemResponse.getBody());
+        assertThat(purchasedItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
+        assertNull(purchasedItemResponse.getBody());
     }
 }
