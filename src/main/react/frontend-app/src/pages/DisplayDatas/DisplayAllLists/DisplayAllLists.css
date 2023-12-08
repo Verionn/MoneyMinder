@@ -110,3 +110,15 @@ ul {
 .writeDescription {
   height: 100px;
 }
+
+.AddItems{
+  width: 10%;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px;
+  border: solid 1px #d6d6d6;
+}
