@@ -104,9 +104,9 @@ public class ItemController {
     }
 
     @PostMapping(path = "/{listId}/items/{itemId}/purchased")
-    public ResponseEntity<PurchasedItemResponse> markItemAsBought(@PathVariable Long listId,
+    public ResponseEntity<PurchasedItemResponse> markItemAsPurchased(@PathVariable Long listId,
                                                                   @PathVariable Long itemId) {
-        if (!checkIfListExists(listId)) {
+        if (!checkIfItemAndListExists(itemId, listId)) {
             return ResponseEntity.notFound().build();
         }
 

@@ -31,7 +31,7 @@ public abstract class MoneyMinderApplicationTests {
     protected static final String CATEGORY_DETAILS_PATH_FORMAT = CATEGORIES_RESOURCE + "/%d";
     protected static final String ITEMS_RESOURCE = LISTS_RESOURCE + "/%d/items";
     protected static final String ITEMS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d";
-    protected static final String MARK_ITEM_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d/bought";
+    protected static final String MARK_ITEM_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d/purchased";
     protected static final String FULL_PRICE_PATH_FORMAT = LISTS_RESOURCE + "/%d/fullprice";
     public static final String LIST_DESCRIPTION = "GO TO THE LIDL BCS OF PROMOTIONS";
     public static final String NEW_LIST_DESCRIPTION = "GO TO THE BIEDRONKA BCS DZIK GRAPE IS THERE";
@@ -92,7 +92,7 @@ public abstract class MoneyMinderApplicationTests {
     protected String itemsPath(long listId, long itemId){
         return prepareUrl(String.format(ITEMS_DETAILS_PATH_FORMAT, listId, itemId));
     }
-    protected String markItemPath(long listId, long itemId){
+    protected String purchaseItemPath(long listId, long itemId){
         return prepareUrl(String.format(MARK_ITEM_PATH_FORMAT, listId, itemId));
     }
 
