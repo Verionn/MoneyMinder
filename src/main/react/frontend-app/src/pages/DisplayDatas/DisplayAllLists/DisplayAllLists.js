@@ -6,9 +6,15 @@ import "./DisplayAllLists.css";
 import GetDatasFromItems from "../../../components/functions/GetDatasFromItems";
 import DisplayItems from "../DisplayItems/DisplayItems";
 import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList";
+import Button from 'react-bootstrap/Button';
 
 const DisplayAllLists = ({onClickList,onCloseList}) => {
   const [ItemsID, setItemsID] = useState(-1);
+  const [addItems, setAddItems] = useState(false);
+
+  const handleAddItems = () => {
+    setAddItems(true);
+  }
 
   const handleListClick = (listId) => {
     setItemsID(listId);
@@ -41,8 +47,8 @@ const DisplayAllLists = ({onClickList,onCloseList}) => {
     <div className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}>
       {ItemsID === -1 && data && data.lists && data.lists.length > 0 ? null : (
         <div className="listDropdown">
-          {" "}
           <ListDropdown lists={data.lists} onSelect={handleListClick} />
+
         </div>
       )}
 
@@ -99,6 +105,16 @@ const DisplayAllLists = ({onClickList,onCloseList}) => {
             operation={getListName(ItemsID)}
             onClose={handleCloseItemsList}
           />
+        </div>
+      )}
+      {ItemsID !== -1 && addItems===false && (
+        <div className="AddItems">
+         <Button variant="primary" onClick={handleAddItems}>Add Items</Button>
+        </div>
+      )}
+       {ItemsID !== -1 && addItems===true && (
+        <div className="AddItems">
+         <Button variant="primary" onClick={handleAddItems}>Add Items</Button>
         </div>
       )}
     </div>
