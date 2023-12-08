@@ -1,12 +1,13 @@
 package com.minder.MoneyMinder.controllers.item;
 
 import com.minder.MoneyMinder.controllers.item.dto.*;
+import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemResponse;
 import com.minder.MoneyMinder.models.ItemEntity;
 import com.minder.MoneyMinder.services.*;
 import com.minder.MoneyMinder.services.implementations.ItemServiceImpl;
 import com.minder.MoneyMinder.services.implementations.ListServiceImpl;
 import com.minder.MoneyMinder.services.mappers.ItemMapper;
-import com.minder.MoneyMinder.services.mappers.UserItemMapper;
+import com.minder.MoneyMinder.services.mappers.PurchasedItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,25 +22,25 @@ import java.util.Optional;
 public class ItemController {
     private final ItemService itemService;
     private final ListService listService;
-    private final UserItemService userItemService;
+    private final PurchasedItemService purchasedItemService;
     private final ItemMapper itemMapper = ItemMapper.INSTANCE;
-    private final UserItemMapper userItemMapper = UserItemMapper.INSTANCE;
+    private final PurchasedItemMapper purchasedItemMapper = PurchasedItemMapper.INSTANCE;
 
     @Autowired
-    public ItemController(ItemServiceImpl itemService, ListServiceImpl listService, UserItemService userItemService) {
+    public ItemController(ItemServiceImpl itemService, ListServiceImpl listService, PurchasedItemService purchasedItemService) {
         this.itemService = itemService;
         this.listService = listService;
-        this.userItemService = userItemService;
+        this.purchasedItemService = purchasedItemService;
     }
 
     @GetMapping("/{listId}/items")
-    public ResponseEntity<ItemListResponse> getItemsFromSpecificList(@PathVariable Long listId) {
+    public ResponseEntity<ItemListResponse> getItemsFromList(@PathVariable Long listId) {
         if (!checkIfListExists(listId)) {
             return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok(new ItemListResponse(
-                itemMapper.itemsToItemResponses(itemService.getItemsOnSpecificList(listId))));
+                itemMapper.itemsToItemResponses(itemService.getItemsByListId(listId))));
     }
 
     @GetMapping("/{listId}/items/{itemId}")
@@ -102,18 +103,21 @@ public class ItemController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping(path = "/{listId}/items/{itemId}/bought")
-    public ResponseEntity<UserItemResponse> markItemAsBought(@PathVariable Long listId,
-                                                             @PathVariable Long itemId) {
+    @PostMapping(path = "/{listId}/items/{itemId}/purchased")
+    public ResponseEntity<PurchasedItemResponse> markItemAsBought(@PathVariable Long listId,
+                                                                  @PathVariable Long itemId) {
         if (!checkIfListExists(listId)) {
             return ResponseEntity.notFound().build();
         }
+
+        //Walidacja czy jest taki itemek na takiej liscie
+        //i to na dole do serwisu wypierdolic
 
         Optional<ItemEntity> itemEntity = itemService.getItem(itemId);
 
         if (itemEntity.isPresent()) {
             itemService.deleteItem(itemId);
-            return ResponseEntity.ok().body(userItemService.markItemAsBought(userItemMapper.itemEntityToUserItemRecord(itemEntity.get(), LocalDateTime.now())));
+            return ResponseEntity.ok().body(itemService.markItemAsPurchased(purchasedItemMapper.itemEntityToPurchasedItemRecord(itemEntity.get(), LocalDateTime.now())));
         } else {
             return ResponseEntity.notFound().build();
         }

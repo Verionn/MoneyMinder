@@ -5,7 +5,7 @@ import com.minder.MoneyMinder.controllers.item.dto.ItemListResponse;
 
 import static org.hamcrest.CoreMatchers.not;
 
-import com.minder.MoneyMinder.controllers.item.dto.UserItemResponse;
+import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class MarkItemAsBoughtTests extends MoneyMinderApplicationTests {
                 ItemListResponse.class).getBody().items().size();
 
         //when
-        var userItemResponse = client.postForEntity(markItemPath(createdList.listId(), addedItem.itemId()), null, UserItemResponse.class);
+        var userItemResponse = client.postForEntity(markItemPath(createdList.listId(), addedItem.itemId()), null, PurchasedItemResponse.class);
 
         //then
         int numberOfItemsInListAfterMark = client.getForEntity(itemsPath(createdList.listId()),
@@ -53,7 +53,7 @@ public class MarkItemAsBoughtTests extends MoneyMinderApplicationTests {
         var createdList = createList(FIRST_LIST_NAME);
 
         //when
-        var userItemResponse = client.postForEntity(markItemPath(createdList.listId(), WRONG_ITEM_ID), null, UserItemResponse.class);
+        var userItemResponse = client.postForEntity(markItemPath(createdList.listId(), WRONG_ITEM_ID), null, PurchasedItemResponse.class);
 
         //then
         assertThat(userItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -67,7 +67,7 @@ public class MarkItemAsBoughtTests extends MoneyMinderApplicationTests {
         //given
 
         //when
-        var userItemResponse = client.postForEntity(markItemPath(WRONG_LIST_ID, RANDOM_ITEM_ID), null, UserItemResponse.class);
+        var userItemResponse = client.postForEntity(markItemPath(WRONG_LIST_ID, RANDOM_ITEM_ID), null, PurchasedItemResponse.class);
 
         //then
         assertThat(userItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));

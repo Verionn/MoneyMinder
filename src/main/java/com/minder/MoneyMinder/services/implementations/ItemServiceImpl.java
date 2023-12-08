@@ -1,13 +1,16 @@
 package com.minder.MoneyMinder.services.implementations;
 
 
+import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemRecord;
+import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemResponse;
 import com.minder.MoneyMinder.repositories.ItemRepository;
 import com.minder.MoneyMinder.controllers.item.dto.UpdateItemRequestBody;
 import com.minder.MoneyMinder.repositories.ListRepository;
 import com.minder.MoneyMinder.models.ItemEntity;
+import com.minder.MoneyMinder.repositories.PurchasedItemRepository;
 import com.minder.MoneyMinder.services.ItemService;
+import com.minder.MoneyMinder.services.mappers.PurchasedItemMapper;
 import jakarta.transaction.Transactional;
-import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +22,14 @@ import java.util.Optional;
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final ListRepository listRepository;
+    private final PurchasedItemMapper purchasedItemMapper = PurchasedItemMapper.INSTANCE;
+    private final PurchasedItemRepository purchasedItemRepository;
 
     @Autowired
-    public ItemServiceImpl(ItemRepository itemRepository, ListRepository listRepository) {
+    public ItemServiceImpl(ItemRepository itemRepository, ListRepository listRepository, PurchasedItemRepository purchasedItemRepository) {
         this.itemRepository = itemRepository;
         this.listRepository = listRepository;
+        this.purchasedItemRepository = purchasedItemRepository;
     }
 
     @Override
@@ -39,7 +45,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemEntity> getItemsOnSpecificList(Long listId) {
+    public List<ItemEntity> getItemsByListId(Long listId) {
         return itemRepository.findByListId(listId);
     }
 
@@ -64,6 +70,12 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public void deleteItemsByListId(Long listId) {
         itemRepository.deleteAllByListId(listId);
+    }
+
+    @Override
+    public PurchasedItemResponse markItemAsPurchased(PurchasedItemRecord purchasedItemRecord) {
+        return purchasedItemMapper.purchasedItemRecordToPurchasedItemResponse(
+                purchasedItemRepository.save(purchasedItemMapper.purchasedItemRecordToPurchasedItemEntity(purchasedItemRecord)));
     }
 
     private ItemEntity updateItemEntity(ItemEntity itemEntity, UpdateItemRequestBody updateItemRequestBody) {

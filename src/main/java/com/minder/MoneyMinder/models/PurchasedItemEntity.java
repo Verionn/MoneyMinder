@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
-public class UserItemEntity {
+public class PurchasedItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -22,7 +22,7 @@ public class UserItemEntity {
     LocalDateTime timeCreated;
     LocalDateTime timeBought;
 
-    public UserItemEntity(Long itemId, Long listId, Long categoryId, String name, Double price, Integer amount, Long weight, LocalDateTime timeCreated, LocalDateTime timeBought) {
+    public PurchasedItemEntity(Long itemId, Long listId, Long categoryId, String name, Double price, Integer amount, Long weight, LocalDateTime timeCreated, LocalDateTime timeBought) {
         this.itemId = itemId;
         this.listId = listId;
         this.categoryId = categoryId;
@@ -33,6 +33,8 @@ public class UserItemEntity {
         this.timeCreated = timeCreated;
         this.timeBought = timeBought;
     }
+
+    public PurchasedItemEntity() {}
 
     public void setId(Long id) {
         this.id = id;
