@@ -2,7 +2,6 @@ package com.minder.MoneyMinder.controllers.item;
 
 import com.minder.MoneyMinder.controllers.item.dto.*;
 import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemResponse;
-import com.minder.MoneyMinder.models.ItemEntity;
 import com.minder.MoneyMinder.services.*;
 import com.minder.MoneyMinder.services.implementations.ItemServiceImpl;
 import com.minder.MoneyMinder.services.implementations.ListServiceImpl;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 
 @RestController
@@ -45,8 +43,12 @@ public class ItemController {
 
     @GetMapping("/{listId}/items/{itemId}")
     public ResponseEntity<ItemResponse> getItem(@PathVariable Long listId, @PathVariable Long itemId) {
-        if (!checkIfListExists(listId)) {
+        if (!checkIfItemAndListExists(itemId, listId)) {
             return ResponseEntity.notFound().build();
+        }
+
+        if(!itemService.checkIfItemIsOnTheList(itemId, listId)){
+            return ResponseEntity.badRequest().build();
         }
 
         return itemService.getItem(itemId).map(itemRecord -> ResponseEntity.ok().body(
@@ -86,13 +88,15 @@ public class ItemController {
                                                    @PathVariable Long itemId,
                                                    @RequestBody UpdateItemRequestBody updateItemRequestBody) {
 
-        if (!checkIfItemAndListExists(itemId, listId)) {
+        if (!checkIfListExists(listId)) {
             return ResponseEntity.notFound().build();
         }
+        System.out.println("Czy aktualna lista istnieje: " + checkIfListExists(listId));
 
         if (!checkIfListExists(updateItemRequestBody.listId())) {
             return ResponseEntity.notFound().build();
         }
+        System.out.println("Czy nowa lista istnieje: " + checkIfListExists(updateItemRequestBody.listId()));
 
         if (checkIfUpdateItemRequestBodyIsInvalid(updateItemRequestBody)) {
             return ResponseEntity.badRequest().build();
@@ -104,23 +108,26 @@ public class ItemController {
     }
 
     @PostMapping(path = "/{listId}/items/{itemId}/purchased")
-    public ResponseEntity<PurchasedItemResponse> markItemAsBought(@PathVariable Long listId,
+    public ResponseEntity<PurchasedItemResponse> markItemAsPurchased(@PathVariable Long listId,
                                                                   @PathVariable Long itemId) {
-        if (!checkIfListExists(listId)) {
+        if (!checkIfItemAndListExists(itemId, listId)) {
             return ResponseEntity.notFound().build();
         }
 
-        //Walidacja czy jest taki itemek na takiej liscie
-        //i to na dole do serwisu wypierdolic
-
-        Optional<ItemEntity> itemEntity = itemService.getItem(itemId);
-
-        if (itemEntity.isPresent()) {
-            itemService.deleteItem(itemId);
-            return ResponseEntity.ok().body(itemService.markItemAsPurchased(purchasedItemMapper.itemEntityToPurchasedItemRecord(itemEntity.get(), LocalDateTime.now())));
-        } else {
-            return ResponseEntity.notFound().build();
+        if(!itemService.checkIfItemIsOnTheList(itemId, listId)){
+            return ResponseEntity.badRequest().build();
         }
+
+        return itemService.getItem(itemId)
+                .map(itemEntity -> {
+                    itemService.deleteItem(itemId);
+                    System.out.println(itemEntity + "\n");
+                    PurchasedItemResponse resp = itemService.markItemAsPurchased(
+                            purchasedItemMapper.itemEntityToPurchasedItemRecord(itemEntity, LocalDateTime.now()));
+                    System.out.println(resp);
+                    return ResponseEntity.ok().body(resp);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     private boolean checkIfNewItemRequestBodyIsInvalid(CreateItemRequestBody createItemRequestBody) {

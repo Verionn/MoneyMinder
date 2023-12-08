@@ -22,7 +22,8 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
         var updateItemRequestBody = new UpdateItemRequestBody(createdList.listId(),
                 NEW_ITEM_NAME,
                 NEW_PRICE,
@@ -51,7 +52,8 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
         var updateItemRequestBody = new UpdateItemRequestBody(createdList.listId(),
                 NEW_ITEM_NAME,
                 NEW_PRICE,
@@ -75,8 +77,9 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
         createList(SECOND_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
         var updateItemRequestBody = new UpdateItemRequestBody(NEW_LIST_ID,
                 NEW_ITEM_NAME,
                 NEW_PRICE,
@@ -100,8 +103,8 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
-        createList(SECOND_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
         var updateItemRequestBody = new UpdateItemRequestBody(WRONG_NEW_LIST_ID,
                 NEW_ITEM_NAME,
                 NEW_PRICE,
@@ -112,7 +115,8 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
 
         //when
-        var updateItemResponse = client.exchange(itemsPath(addedItem.listId(), addedItem.itemId()), PUT, requestEntity, ItemResponse.class);
+        var updateItemResponse = client.exchange(
+                itemsPath(addedItem.listId(), addedItem.itemId()), PUT, requestEntity, ItemResponse.class);
 
         //then
         assertThat(updateItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -125,8 +129,9 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
         createList(SECOND_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
         var updateItemRequestBody = new UpdateItemRequestBody(createdList.listId(),
                 WRONG_ITEM_NAME,
                 NEW_PRICE,
@@ -150,8 +155,9 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
         createList(SECOND_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
         var updateItemRequestBody = new UpdateItemRequestBody(createdList.listId(),
                 NEW_ITEM_NAME,
                 WRONG_PRICE,
@@ -175,8 +181,9 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
         createList(SECOND_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
         var updateItemRequestBody = new UpdateItemRequestBody(createdList.listId(),
                 NEW_ITEM_NAME,
                 NEW_PRICE,
@@ -200,8 +207,9 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
         createList(SECOND_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
         var updateItemRequestBody = new UpdateItemRequestBody(createdList.listId(),
                 NEW_ITEM_NAME,
                 NEW_PRICE,
@@ -225,8 +233,9 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
         createList(SECOND_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
         var updateItemRequestBody = new UpdateItemRequestBody(createdList.listId(),
                 NEW_ITEM_NAME,
                 NEW_PRICE,

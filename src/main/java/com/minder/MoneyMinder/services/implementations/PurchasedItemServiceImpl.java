@@ -1,7 +1,5 @@
 package com.minder.MoneyMinder.services.implementations;
 
-import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemListRecord;
-import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemRecord;
 import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemResponse;
 import com.minder.MoneyMinder.repositories.ItemRepository;
 import com.minder.MoneyMinder.repositories.PurchasedItemRepository;
