@@ -25,7 +25,7 @@ public class CategoryController {
     }
 
     @GetMapping(path = "/{categoryId}")
-    public ResponseEntity<CategoryResponse> getSpecificCategory(@PathVariable Long categoryId) {
+    public ResponseEntity<CategoryResponse> getCategory(@PathVariable Long categoryId) {
         if (!checkIfCategoryExits(categoryId)) {
             return ResponseEntity.notFound().build();
         }

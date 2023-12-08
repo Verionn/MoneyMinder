@@ -24,7 +24,7 @@ public class ListController {
     }
 
     @GetMapping(path = "/{listId}")
-    public ResponseEntity<ListResponse> getSpecificList(@PathVariable Long listId) {
+    public ResponseEntity<ListResponse> getList(@PathVariable Long listId) {
         if (!checkIfListExits(listId)) {
             return ResponseEntity.notFound().build();
         }

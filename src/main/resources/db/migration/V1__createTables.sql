@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS item_entity (
     time_created TIMESTAMP WITHOUT TIME ZONE
     );
 
-CREATE TABLE IF NOT EXISTS user_item_entity (
+CREATE TABLE IF NOT EXISTS purchased_item_entity (
     id SERIAL PRIMARY KEY,
     item_id BIGINT NOT NULL,
     list_id BIGINT NOT NULL,
