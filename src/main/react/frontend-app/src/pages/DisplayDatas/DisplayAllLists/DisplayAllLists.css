@@ -42,8 +42,6 @@ ul {
   font-family: "Courier New", Courier, monospace;
   overflow-y: auto; /* Add this property for scroll behavior */
   max-height: 600px; /* Set a max height to enable scrolling */
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: transparent transparent; /* For Firefox */
 }
 
 .userLists::-webkit-scrollbar {
