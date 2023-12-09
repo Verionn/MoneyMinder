@@ -23,7 +23,8 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
 
         int numberOfItemsInListBeforeMark = client.getForEntity(itemsPath(createdList.listId()),
                 ItemListResponse.class).getBody().items().size();
@@ -42,7 +43,7 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
         assertThat(purchaseItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
         assertThat(purchaseItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
         assertThat(purchaseItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
-        assertThat(purchaseItemResponse.getBody().categoryId(), equalTo(RANDOM_CATEGORY_ID));
+        assertThat(purchaseItemResponse.getBody().categoryId(), equalTo(createdCategory.categoryId()));
         assertThat(numberOfItemsInListAfterMark, not(equalTo(numberOfItemsInListBeforeMark)));
     }
 

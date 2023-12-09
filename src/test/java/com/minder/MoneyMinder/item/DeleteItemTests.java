@@ -21,8 +21,9 @@ public class DeleteItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
-        var firstAddedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
-        addItem(SECOND_ITEM_NAME, createdList.listId());
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        var firstAddedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
+        addItem(SECOND_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
 
         //when
         client.delete(itemsPath(createdList.listId(), firstAddedItem.itemId()));
@@ -43,7 +44,8 @@ public class DeleteItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
 
         //when
         client.delete(itemsPath(WRONG_LIST_ID, addedItem.itemId()));
@@ -64,7 +66,8 @@ public class DeleteItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
 
         //when
         client.delete(itemsPath(createdList.listId(), WRONG_ITEM_ID));

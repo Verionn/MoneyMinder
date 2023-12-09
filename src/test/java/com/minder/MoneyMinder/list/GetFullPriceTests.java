@@ -17,8 +17,9 @@ public class GetFullPriceTests extends MoneyMinderApplicationTests {
     public void shouldReturnPriceAnd200(){
         //given
         var createdList = createList(FIRST_LIST_NAME);
-        addItem(FIRST_ITEM_NAME, createdList.listId());
-        addItem(SECOND_ITEM_NAME, createdList.listId());
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
+        addItem(SECOND_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
 
         //when
         var getFullPriceResponse = client.getForEntity(fullPricePath(createdList.listId()),

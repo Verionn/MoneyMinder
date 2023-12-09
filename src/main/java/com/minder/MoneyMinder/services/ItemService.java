@@ -25,4 +25,6 @@ public interface ItemService {
     void deleteItemsByListId(Long listId);
 
     PurchasedItemResponse markItemAsPurchased(PurchasedItemRecord purchasedItemRecord);
+
+    boolean checkIfItemIsOnTheList(Long itemId, Long listId);
 }

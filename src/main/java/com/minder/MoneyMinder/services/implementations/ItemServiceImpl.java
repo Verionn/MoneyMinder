@@ -78,6 +78,11 @@ public class ItemServiceImpl implements ItemService {
                 purchasedItemRepository.save(purchasedItemMapper.purchasedItemRecordToPurchasedItemEntity(purchasedItemRecord)));
     }
 
+    @Override
+    public boolean checkIfItemIsOnTheList(Long itemId, Long listId) {
+        return itemRepository.getReferenceById(itemId).getListId().equals(listId);
+    }
+
     private ItemEntity updateItemEntity(ItemEntity itemEntity, UpdateItemRequestBody updateItemRequestBody) {
         itemEntity.setName(updateItemRequestBody.name());
         itemEntity.setCategoryId(updateItemRequestBody.categoryId());
