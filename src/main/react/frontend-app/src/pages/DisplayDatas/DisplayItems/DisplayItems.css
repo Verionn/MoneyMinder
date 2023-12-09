@@ -79,24 +79,24 @@
   align-items: center !important;
 }
 
-.ItemsEmpty{
+.ItemsEmpty {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.infoAboutEmptyList{
+.infoAboutEmptyList {
   font-size: large;
   margin: 10px;
 }
-.suggestionText{
+.suggestionText {
   font-size: small;
   margin: 10px;
   font-style: italic;
 }
 
-.addItemsButton{
+.addItemsButton {
   margin: 10px;
   width: 50%;
   height: 50px;
@@ -106,27 +106,23 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-
 }
 
-.addItemsButton>span{
+.addItemsButton > span {
   font-size: 20px;
   font-weight: bold;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
-
-
 
 .Horizontal-line {
   border: 1px solid black;
   width: 95%;
   margin-bottom: 10px;
 }
-.Horizontal-line-bold{
+.Horizontal-line-bold {
   border: 3px solid black;
   width: 95%;
   margin-bottom: 10px;
@@ -148,7 +144,7 @@
   font-size: 25px !important;
   color: green !important;
 }
-.calculatedPriceNotBold{
+.calculatedPriceNotBold {
   font-size: 20px !important;
 }
 
@@ -167,4 +163,43 @@
 
 .allItems:hover::-webkit-scrollbar-thumb {
   background-color: #d6d6d6; /* Adjust the color as needed */
+}
+
+.ItemsBox {
+  display: flex;
+  border: solid 1px black;
+  width: 70vw;
+}
+
+.AddItems {
+  width: 50%;
+  height: 80vh;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px;
+  border: solid 1px #d6d6d6;
+  padding: 5px;
+}
+
+.addItemsButtonBox {
+  width: 20%;
+  height: 70vh;
+  border: solid 1px #d6d6d6;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: #fff;
+  padding-bottom: 10px;
+}
+.ButtonAddItem {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

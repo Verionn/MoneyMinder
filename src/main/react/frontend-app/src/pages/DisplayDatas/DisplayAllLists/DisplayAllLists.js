@@ -6,15 +6,9 @@ import "./DisplayAllLists.css";
 import GetDatasFromItems from "../../../components/functions/GetDatasFromItems";
 import DisplayItems from "../DisplayItems/DisplayItems";
 import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList";
-import Button from 'react-bootstrap/Button';
 
-const DisplayAllLists = ({onClickList,onCloseList}) => {
+const DisplayAllLists = ({ onClickList, onCloseList }) => {
   const [ItemsID, setItemsID] = useState(-1);
-  const [addItems, setAddItems] = useState(false);
-
-  const handleAddItems = () => {
-    setAddItems(true);
-  }
 
   const handleListClick = (listId) => {
     setItemsID(listId);
@@ -35,12 +29,24 @@ const DisplayAllLists = ({onClickList,onCloseList}) => {
     return "List";
   };
   if (loading) {
-    return <p className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}><box-icon name='loader-alt'animation='spin' color="#002a4e" size="lg"></box-icon></p>;
-
+    return (
+      <p className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}>
+        <box-icon
+          name="loader-alt"
+          animation="spin"
+          color="#002a4e"
+          size="lg"
+        ></box-icon>
+      </p>
+    );
   }
 
   if (error) {
-    return <p className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}>Error: Failed to load Lists</p>;
+    return (
+      <p className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}>
+        Error: Failed to load Lists
+      </p>
+    );
   }
 
   return (
@@ -48,7 +54,6 @@ const DisplayAllLists = ({onClickList,onCloseList}) => {
       {ItemsID === -1 && data && data.lists && data.lists.length > 0 ? null : (
         <div className="listDropdown">
           <ListDropdown lists={data.lists} onSelect={handleListClick} />
-
         </div>
       )}
 
@@ -105,16 +110,6 @@ const DisplayAllLists = ({onClickList,onCloseList}) => {
             operation={getListName(ItemsID)}
             onClose={handleCloseItemsList}
           />
-        </div>
-      )}
-      {ItemsID !== -1 && addItems===false && (
-        <div className="AddItems">
-         <Button variant="primary" onClick={handleAddItems}>Add Items</Button>
-        </div>
-      )}
-       {ItemsID !== -1 && addItems===true && (
-        <div className="AddItems">
-         <Button variant="primary" onClick={handleAddItems}>Add Items</Button>
         </div>
       )}
     </div>
