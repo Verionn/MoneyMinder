@@ -58,7 +58,7 @@ public abstract class MoneyMinderApplicationTests {
     public static final Long WRONG_CATEGORY_ID = -1L;
     public static final String WRONG_ITEM_NAME = "";
     public static final Long NEW_LIST_ID = 2L;
-    public static final Long WRONG_NEW_LIST_ID = 22L;
+    public static final Long WRONG_NEW_LIST_ID = -25L;
     public static final Long WRONG_ITEM_ID = -13L;
     public static final Long RANDOM_ITEM_ID = 13L;
     public static final Double RANDOM_PRICE = 3.50;
@@ -116,6 +116,7 @@ public abstract class MoneyMinderApplicationTests {
     }
 
     protected String purchasedItemsByCategoryIdPath(Long categoryId){
+        System.out.println(prepareUrl(String.format(PURCHASED_ITEMS_BY_CATEGORY_ID_PATH_FORMAT, categoryId)));
         return prepareUrl(String.format(PURCHASED_ITEMS_BY_CATEGORY_ID_PATH_FORMAT, categoryId));
     }
 
@@ -138,9 +139,13 @@ public abstract class MoneyMinderApplicationTests {
         return new CreateItemRequestBody(name, RANDOM_PRICE, RANDOM_AMOUNT, RANDOM_CATEGORY_ID, RANDOM_WEIGHT, RANDOM_DATE);
     }
 
-    protected ItemResponse addItem(String itemName, Long listId){
+    protected CreateItemRequestBody createValidItemRequestBody(String name, Long categoryId){
+        return new CreateItemRequestBody(name, RANDOM_PRICE, RANDOM_AMOUNT, categoryId, RANDOM_WEIGHT, RANDOM_DATE);
+    }
+
+    protected ItemResponse addItem(String itemName, Long listId, Long categoryId){
         //given
-        var createdItemRequestBody = createValidItemRequestBody(itemName);
+        var createdItemRequestBody = createValidItemRequestBody(itemName, categoryId);
 
         //when
         var addItemResponse = client.postForEntity(itemsPath(listId), createdItemRequestBody, ItemResponse.class);
@@ -174,6 +179,9 @@ public abstract class MoneyMinderApplicationTests {
         int numberOfItemsInListBeforeMark = client.getForEntity(itemsPath(listId),
                 ItemListResponse.class).getBody().items().size();
 
+        var itemResponse = client.getForEntity(itemsPath(listId, itemId),
+                ItemResponse.class);
+
         //when
         var purchaseItemResponse = client.postForEntity(purchaseItemPath(
                 listId, itemId), null, PurchasedItemResponse.class);
@@ -188,7 +196,7 @@ public abstract class MoneyMinderApplicationTests {
         assertThat(purchaseItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
         assertThat(purchaseItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
         assertThat(purchaseItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
-        assertThat(purchaseItemResponse.getBody().categoryId(), equalTo(RANDOM_CATEGORY_ID));
+        assertThat(purchaseItemResponse.getBody().categoryId(), equalTo(itemResponse.getBody().categoryId()));
         assertThat(numberOfItemsInListAfterMark, not(equalTo(numberOfItemsInListBeforeMark)));
 
         return purchaseItemResponse.getBody();
