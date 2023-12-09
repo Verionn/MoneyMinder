@@ -3,6 +3,7 @@ import GetCategories from "../../../components/communicationWithBackEnd/GetCoteg
 import "boxicons";
 import lottie from "lottie-web";
 import { defineElement } from "@lordicon/element";
+import AddNewItem from "../../../components/addNewItems/addNewItem";
 
 // Define "lord-icon" custom element with default properties
 defineElement(lottie.loadAnimation);
@@ -20,6 +21,7 @@ const GetDatasFromItems = ({ CategoryID }) => {
     return <p>Error: {error.message}</p>;
   }
 
+  if(CategoryID === -1) return (<AddNewItem categories={categories}/>)
   if (categories[CategoryID - 1].name === "Food") {
     return (
       <p>

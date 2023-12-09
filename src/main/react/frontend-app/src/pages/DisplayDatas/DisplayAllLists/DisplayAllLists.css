@@ -3,13 +3,14 @@ ul {
   font-family: "Courier New", Courier, monospace;
 }
 .listDropdown {
-  width: 20% !important;
+  width: 12% !important;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
   gap: 10px;
   margin: 10px;
+  border: solid 1px black;
 }
 
 .listBoxSelectItems {
@@ -109,16 +110,4 @@ ul {
 
 .writeDescription {
   height: 100px;
-}
-
-.AddItems{
-  width: 10%;
-  height: 200px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 10px;
-  border: solid 1px #d6d6d6;
 }
