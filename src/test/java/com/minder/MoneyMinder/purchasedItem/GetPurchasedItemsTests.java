@@ -79,6 +79,6 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
         assertThat(purchasedItemNameListResponse.getStatusCode(), equalTo(HttpStatus.OK));
         assertNotNull(purchasedItemNameListResponse.getBody());
         assertThat(purchasedItemNameListResponse.getBody().purchasedItemNameResponses().size(), equalTo(1));
-        assertThat(purchasedItemNameListResponse.getBody().purchasedItemNameResponses().get(0).name(), equalTo(firstPurchasedItem.name()));
+        assertThat(purchasedItemNameListResponse.getBody().purchasedItemNameResponses().get(0).name(), equalTo(secondPurchasedItem.name()));
     }
 }
