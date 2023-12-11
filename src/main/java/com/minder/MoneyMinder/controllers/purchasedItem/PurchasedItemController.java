@@ -42,7 +42,7 @@ public class PurchasedItemController {
                 .getPurchasedItemsByCategoryId(categoryId)));
     }
 
-    @GetMapping("/name/{prefix}")
+    @GetMapping("/names/{prefix}")
     public ResponseEntity<PurchasedItemNameListResponse> getPurchasedItemNamesByPrefix(@PathVariable String prefix){
         System.out.println(purchasedItemService.getPurchasedItemNamesByPrefix(prefix));
         System.out.println(prefix);
