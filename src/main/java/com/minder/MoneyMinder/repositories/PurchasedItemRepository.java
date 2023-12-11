@@ -12,4 +12,7 @@ import java.util.List;
 public interface PurchasedItemRepository extends JpaRepository<PurchasedItemEntity, Long> {
     @Query("SELECT l FROM PurchasedItemEntity l WHERE l.categoryId = :categoryId")
     List<PurchasedItemEntity> findAllByCategoryId(Long categoryId);
+
+    @Query("SELECT l FROM PurchasedItemEntity l WHERE l.name LIKE :prefix || '%'")
+    List<PurchasedItemEntity> findAllByPrefix(String prefix);
 }

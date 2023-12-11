@@ -1,6 +1,7 @@
 package com.minder.MoneyMinder.controllers.purchasedItem;
 
 import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemListResponse;
+import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemNameListResponse;
 import com.minder.MoneyMinder.repositories.CategoryRepository;
 import com.minder.MoneyMinder.repositories.PurchasedItemRepository;
 import com.minder.MoneyMinder.services.ItemService;
@@ -39,6 +40,13 @@ public class PurchasedItemController {
 
         return ResponseEntity.ok().body(new PurchasedItemListResponse(purchasedItemService
                 .getPurchasedItemsByCategoryId(categoryId)));
+    }
+
+    @GetMapping("/name/{prefix}")
+    public ResponseEntity<PurchasedItemNameListResponse> getPurchasedItemNamesByPrefix(@PathVariable String prefix){
+        System.out.println(purchasedItemService.getPurchasedItemNamesByPrefix(prefix));
+        System.out.println(prefix);
+        return ResponseEntity.ok().body(purchasedItemService.getPurchasedItemNamesByPrefix(prefix));
     }
 
     private boolean checkIfCategoryExists(Long categoryId) {
