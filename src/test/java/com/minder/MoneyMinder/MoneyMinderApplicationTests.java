@@ -38,6 +38,7 @@ public abstract class MoneyMinderApplicationTests {
     protected static final String ITEMS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d";
     protected static final String MARK_ITEM_PURCHASED_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d/purchased";
     protected static final String PURCHASED_ITEMS_BY_CATEGORY_ID_PATH_FORMAT = "/purchasedItems/categories/%d";
+    protected static final String PURCHASED_ITEMS_BY_PREFIX_PATH_FORMAT = "/purchasedItems/name/%s";
     protected static final String FULL_PRICE_PATH_FORMAT = LISTS_RESOURCE + "/%d/fullprice";
     public static final String LIST_DESCRIPTION = "GO TO THE LIDL BCS OF PROMOTIONS";
     public static final String NEW_LIST_DESCRIPTION = "GO TO THE BIEDRONKA BCS DZIK GRAPE IS THERE";
@@ -56,6 +57,8 @@ public abstract class MoneyMinderApplicationTests {
     public static final Long RANDOM_CATEGORY_ID = 1L;
     public static final Long NEW_CATEGORY_ID = 3L;
     public static final Long WRONG_CATEGORY_ID = -1L;
+    public static final String GOOD_PREFIX = "B";
+    public static final String WRONG_PREFIX = "1";
     public static final String WRONG_ITEM_NAME = "";
     public static final Long NEW_LIST_ID = 2L;
     public static final Long WRONG_NEW_LIST_ID = -25L;
@@ -116,8 +119,11 @@ public abstract class MoneyMinderApplicationTests {
     }
 
     protected String purchasedItemsByCategoryIdPath(Long categoryId){
-        System.out.println(prepareUrl(String.format(PURCHASED_ITEMS_BY_CATEGORY_ID_PATH_FORMAT, categoryId)));
         return prepareUrl(String.format(PURCHASED_ITEMS_BY_CATEGORY_ID_PATH_FORMAT, categoryId));
+    }
+
+    protected String purchasedItemsByPrefixPath(String prefix){
+        return prepareUrl(String.format(PURCHASED_ITEMS_BY_PREFIX_PATH_FORMAT, prefix));
     }
 
     protected ListResponse createList(String listName) {
@@ -192,7 +198,6 @@ public abstract class MoneyMinderApplicationTests {
 
         assertThat(purchaseItemResponse.getStatusCode(), equalTo(HttpStatus.OK));
         assertNotNull(purchaseItemResponse.getBody());
-        assertThat(purchaseItemResponse.getBody().name(), equalTo(FIRST_ITEM_NAME));
         assertThat(purchaseItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
         assertThat(purchaseItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
         assertThat(purchaseItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));

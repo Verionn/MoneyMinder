@@ -2,12 +2,14 @@ package com.minder.MoneyMinder.purchasedItem;
 
 import com.minder.MoneyMinder.MoneyMinderApplicationTests;
 import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemListResponse;
+import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemNameListResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
@@ -56,5 +58,27 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
         //then
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
         assertNull(purchasedItemListResponse.getBody());
+    }
+
+    @DisplayName("Should return all item names and 200")
+    @Test
+    public void shouldReturnItemNamesAndOkWhenGivenGoodPrefix(){
+
+        //given
+        var createdList = createList(FIRST_LIST_NAME);
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        var firstAddedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
+        var secondAddedItem = addItem(SECOND_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
+        var firstPurchasedItem = markItemAsPurchased(firstAddedItem.itemId(), createdList.listId());
+        var secondPurchasedItem = markItemAsPurchased(secondAddedItem.itemId(), createdList.listId());
+
+        //when
+        var purchasedItemNameListResponse = client.getForEntity(purchasedItemsByPrefixPath(GOOD_PREFIX), PurchasedItemNameListResponse.class);
+
+        //then
+        assertThat(purchasedItemNameListResponse.getStatusCode(), equalTo(HttpStatus.OK));
+        assertNotNull(purchasedItemNameListResponse.getBody());
+        assertThat(purchasedItemNameListResponse.getBody().purchasedItemNameResponses().size(), equalTo(1));
+        assertThat(purchasedItemNameListResponse.getBody().purchasedItemNameResponses().get(0).name(), equalTo(firstPurchasedItem.name()));
     }
 }
