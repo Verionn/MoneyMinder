@@ -57,7 +57,7 @@ public abstract class MoneyMinderApplicationTests {
     public static final Long RANDOM_CATEGORY_ID = 1L;
     public static final Long NEW_CATEGORY_ID = 3L;
     public static final Long WRONG_CATEGORY_ID = -1L;
-    public static final String GOOD_PREFIX = "B";
+    public static final String GOOD_PREFIX = "P";
     public static final String WRONG_PREFIX = "1";
     public static final String WRONG_ITEM_NAME = "";
     public static final Long NEW_LIST_ID = 2L;
