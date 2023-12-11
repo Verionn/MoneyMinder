@@ -10,7 +10,6 @@ ul {
   justify-content: flex-start;
   gap: 10px;
   margin: 10px;
-  border: solid 1px black;
 }
 
 .listBoxSelectItems {
@@ -41,7 +40,7 @@ ul {
   list-style-type: none !important;
   font-family: "Courier New", Courier, monospace;
   overflow-y: auto; /* Add this property for scroll behavior */
-  max-height: 600px; /* Set a max height to enable scrolling */
+  max-height: 600px; /* Set a max height to enable scrolling */ 
 }
 
 .userLists::-webkit-scrollbar {

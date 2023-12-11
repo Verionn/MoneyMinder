@@ -1,40 +1,32 @@
+import React from "react";
 
-
-const AddCategory = ({ categoriName }) => {
- 
-
-
-
-  const handleCreateNewCategory = async (categoriName) => {
+const AddCategory = ({ categoryName }) => {
+  const handleCreateNewCategory = async (newCategoryData) => {
     try {
-      // Send a request to create a new list
-        const response = await fetch("http://localhost:8080/categories", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name: categoriName }),
-        });
+      const response = await fetch("http://localhost:8080/categories", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({name: newCategoryData.name} ),
+      });
 
-        if (!response.ok) {
-          throw new Error("Failed to create a new list");
-        }
+      if (!response.ok) {
+        throw new Error("Failed to add a new category");
+      }
 
-        // Close the modal after creating the new list
       
-        // Reload the page to fetch the updated data
-        window.location.reload(true);
-     
-
-      // Optionally, you can perform additional actions after creating the list
-      // ...
     } catch (error) {
-      console.error("Error creating a new list:", error);
+      console.error("Error adding new category:", error);
+      return false;
     }
+    
+    return true;
   };
+  const newCategory = { name: categoryName };
 
-  handleCreateNewCategory(categoriName);
+  if (handleCreateNewCategory(newCategory)) return true;
+  return false;
 };
 
- 
 export default AddCategory;

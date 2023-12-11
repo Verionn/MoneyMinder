@@ -23,45 +23,45 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
     let found = false;
     categories.forEach((category) => {
       if (category.name === categoryName) {
-        console.log(category.name + " compare to " + categoryName);
         categoryID = category.categoryId;
         found = true;
       }
     });
     if (found) return categoryID;
     else {
-      AddCategory({ categoryName });
-      console.log("new category added" + categories.length+1);
-      return categories.length;
+      if (AddCategory({ categoryName }) === false) return -1;
+      return categories.length + 1;
     }
   };
 
-  const handleAddNewItem = async (DatasToFetch) => {
-    console.log(DatasToFetch.itemName);
-    console.log(DatasToFetch.customItemName);
+  const OraganizeNewItem = (DatasToFetch) => {
     let categoryName =
       DatasToFetch.customCategoryName === ""
         ? DatasToFetch.category
         : DatasToFetch.customCategoryName;
 
     let categoryID = GetCategoriesID(categoryName);
-   
     const newItem = {
       name:
         DatasToFetch.itemName === "custom"
           ? DatasToFetch.customItemName
           : DatasToFetch.itemName,
       listId: listID,
-      price: parseFloat(DatasToFetch.price),
-      amount: parseInt(DatasToFetch.quantity),
+      price: DatasToFetch.price === "" ? 0 : parseFloat(DatasToFetch.price),
+      amount:
+        DatasToFetch.quantity === "" ? 0 : parseInt(DatasToFetch.quantity),
       categoryId: categoryID,
-      weight: parseFloat(DatasToFetch.weight),
+      weight: DatasToFetch.weight === "" ? 0 : parseFloat(DatasToFetch.weight),
       timeCreated: new Date().toISOString(),
     };
+    return newItem;
+  };
+
+  const handleAddNewItem = async (DatasToFetch) => {
+    const newItem = OraganizeNewItem(DatasToFetch);
 
     try {
-      // Send a request to create a new list
-      console.log(newItem);
+    
       const response = await fetch(ItemsUrl, {
         method: "POST",
         headers: {
@@ -69,7 +69,6 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
         },
         body: JSON.stringify(newItem),
       });
-      console.log("Response:", response);
       if (!response.ok) {
         const responseBody = await response.json();
         console.error("Failed to add a new item:", responseBody);
@@ -110,7 +109,7 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
     <div className="addingItems">
       <div className="HeaderAddItems">
         <p>Add new item</p>
-        <CloseButton onClick={onClick} />
+        <CloseButton onClick={handleOncloseclick} />
       </div>
 
       <div className="BodyAddItems">
