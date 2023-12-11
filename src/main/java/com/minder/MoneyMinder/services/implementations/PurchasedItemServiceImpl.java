@@ -1,10 +1,12 @@
 package com.minder.MoneyMinder.services.implementations;
 
+import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemNameListResponse;
 import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemResponse;
 import com.minder.MoneyMinder.repositories.ItemRepository;
 import com.minder.MoneyMinder.repositories.PurchasedItemRepository;
 import com.minder.MoneyMinder.services.PurchasedItemService;
 import com.minder.MoneyMinder.services.mappers.PurchasedItemMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,5 +25,12 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
     @Override
     public List<PurchasedItemResponse> getPurchasedItemsByCategoryId(Long categoryId) {
         return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(purchasedItemRepository.findAllByCategoryId(categoryId));
+    }
+
+    @Override
+    public PurchasedItemNameListResponse getPurchasedItemNamesByPrefix(String prefix) {
+
+        return new PurchasedItemNameListResponse(purchasedItemMapper.purchasedItemListEntityToPurchasedItemNameListResponse(
+                        purchasedItemRepository.findAllByPrefix(prefix)));
     }
 }

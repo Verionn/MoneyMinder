@@ -1,9 +1,6 @@
 package com.minder.MoneyMinder.services.mappers;
 
-import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemListRecord;
-import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemListResponse;
-import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemRecord;
-import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemResponse;
+import com.minder.MoneyMinder.controllers.purchasedItem.dto.*;
 import com.minder.MoneyMinder.models.ItemEntity;
 import com.minder.MoneyMinder.models.PurchasedItemEntity;
 import org.mapstruct.Mapper;
@@ -22,7 +19,6 @@ public interface PurchasedItemMapper {
 
     PurchasedItemResponse purchasedItemRecordToPurchasedItemResponse(PurchasedItemEntity purchasedItemEntity);
 
-    PurchasedItemListResponse purchasedItemListRecordToPurchasedItemListResponse(PurchasedItemListRecord purchasedItemListRecord);
-
     List<PurchasedItemResponse> purchasedItemListEntityToPurchasedItemListResponse(List<PurchasedItemEntity> purchasedItemsByCategoryId);
+    List<PurchasedItemNameResponse> purchasedItemListEntityToPurchasedItemNameListResponse (List<PurchasedItemEntity> purchasedItemEntities);
 }
