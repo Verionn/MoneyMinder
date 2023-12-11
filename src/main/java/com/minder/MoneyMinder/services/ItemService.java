@@ -1,6 +1,8 @@
 package com.minder.MoneyMinder.services;
 
 import com.minder.MoneyMinder.controllers.item.dto.UpdateItemRequestBody;
+import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemRecord;
+import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemResponse;
 import com.minder.MoneyMinder.models.ItemEntity;
 
 import java.util.List;
@@ -12,7 +14,7 @@ public interface ItemService {
 
     Optional<ItemEntity> getItem(Long itemId);
 
-    List<ItemEntity> getItemsOnSpecificList(Long listId);
+    List<ItemEntity> getItemsByListId(Long listId);
 
     void deleteItem(Long itemID);
 
@@ -21,4 +23,8 @@ public interface ItemService {
     boolean existsById(Long itemId);
 
     void deleteItemsByListId(Long listId);
+
+    PurchasedItemResponse markItemAsPurchased(PurchasedItemRecord purchasedItemRecord);
+
+    boolean checkIfItemIsOnTheList(Long itemId, Long listId);
 }

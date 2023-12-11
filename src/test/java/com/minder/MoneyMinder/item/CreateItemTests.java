@@ -164,8 +164,9 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
-        addItem(FIRST_ITEM_NAME, createdList.listId());
-        addItem(SECOND_ITEM_NAME, createdList.listId());
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
+        addItem(SECOND_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
 
         //when
         var getItemsResponse = client.getForEntity(itemsPath(createdList.listId()),
@@ -195,7 +196,8 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
 
         //when
         var getSpecificItemResponse = client.getForEntity(itemsPath(createdList.listId(),
@@ -208,7 +210,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         assertThat(getSpecificItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
         assertThat(getSpecificItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
         assertThat(getSpecificItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
-        assertThat(getSpecificItemResponse.getBody().categoryId(), equalTo(RANDOM_CATEGORY_ID));
+        assertThat(getSpecificItemResponse.getBody().categoryId(), equalTo(createdCategory.categoryId()));
     }
 
     @Test
@@ -217,7 +219,8 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
-        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId());
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
 
         //when
         var getSpecificItemResponse = client.getForEntity(itemsPath(WRONG_LIST_ID,
