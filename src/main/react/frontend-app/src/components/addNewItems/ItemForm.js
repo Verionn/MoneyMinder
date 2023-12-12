@@ -26,7 +26,7 @@ const ItemForm = ({ onSubmit, onChange, formData, categories, items }) => {
         >
           <option value="">Select an item name</option>
           {items.map((item) => (
-            <option key={item.id} value={item.name}>
+            <option key={item.itemId} value={item.name}>
               {item.name}
             </option>
           ))}
@@ -77,7 +77,7 @@ const ItemForm = ({ onSubmit, onChange, formData, categories, items }) => {
         >
           <option value="">Select a category</option>
           {categories.map((category) => (
-            <option key={category.id} value={category.name}>
+            <option key={category.categoryId} value={category.name}>
               {category.name}
             </option>
           ))}
