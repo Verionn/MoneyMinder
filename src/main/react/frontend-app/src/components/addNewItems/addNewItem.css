@@ -14,7 +14,7 @@
   align-items: center;
   font-size: 25px;
 }
-.HeaderAddItems>p{
+.HeaderAddItems > p {
   font-weight: bold;
 }
 
@@ -26,19 +26,40 @@
   justify-content: center;
 }
 
-.formItemName {
+.formItemName,
+.formCategory {
   margin-bottom: 10px;
 }
 
-.smallBoxNumbers{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    gap: 10px;  
+.smallBoxNumbers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
 }
 
-
 .customMarginBottom {
-    margin-bottom: 10px;
-  }
+  margin-bottom: 10px;
+}
+.customItemNameMargin{
+  margin-top: 10px;
+}
+
+.AddItemSubmitButton {
+  border-radius: 8px;
+  height: 50px;
+  background-color: #0b5ed7;
+  border: solid 1px #0b5ed7;
+  color: white;
+}
+
+.Notfication{
+  background-color: #002a4e;
+  color: #fff;
+}
+
+.custom{
+  font-style: italic;
+  font-weight: bold;
+}

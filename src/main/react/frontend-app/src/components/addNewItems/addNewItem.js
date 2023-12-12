@@ -4,6 +4,8 @@ import "./addNewItem.css";
 import GetCategories from "../communicationWithBackEnd/GetCotegories";
 import ItemForm from "./ItemForm";
 import AddCategory from "../communicationWithBackEnd/addCategory";
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
 const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
   const [FormData, setFormData] = useState({
     itemName: "",
@@ -14,6 +16,15 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
     customCategoryName: "",
     weight: "",
   });
+
+  const [NewCategory, setNewCategory] = useState(false);
+  const [message, setMessage] = useState("");
+  const [showNotification, setShowNotification] = useState(false);
+
+  const handleShowNotification = () => {
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 3000);
+  };
 
   const apiUrl = `http://localhost:8080/categories`;
   let { categories, loading, error } = GetCategories({ apiUrl });
@@ -30,6 +41,9 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
     if (found) return categoryID;
     else {
       if (AddCategory({ categoryName }) === false) return -1;
+      setNewCategory(true);
+      setMessage("New category added successfully!");
+      handleShowNotification();
       return categories.length + 1;
     }
   };
@@ -49,7 +63,7 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
       listId: listID,
       price: DatasToFetch.price === "" ? 0 : parseFloat(DatasToFetch.price),
       amount:
-        DatasToFetch.quantity === "" ? 0 : parseInt(DatasToFetch.quantity),
+        DatasToFetch.quantity === "" ? 1 : parseInt(DatasToFetch.quantity),
       categoryId: categoryID,
       weight: DatasToFetch.weight === "" ? 0 : parseFloat(DatasToFetch.weight),
       timeCreated: new Date().toISOString(),
@@ -61,8 +75,7 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
     const newItem = OraganizeNewItem(DatasToFetch);
 
     try {
-    
-      const response = await fetch(ItemsUrl, {
+      const response = await fetch(ItemsUrl + `?${new Date().getTime()}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,6 +90,9 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
     } catch (error) {
       console.error("Error adding a new item:", error);
     }
+    setNewCategory(true);
+    setMessage("New Item added successfully!");
+    handleShowNotification();
   };
 
   const handleInputChange = (e) => {
@@ -105,22 +121,40 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
     onClick();
   };
 
-  return (
-    <div className="addingItems">
-      <div className="HeaderAddItems">
-        <p>Add new item</p>
-        <CloseButton onClick={handleOncloseclick} />
-      </div>
 
-      <div className="BodyAddItems">
-        <ItemForm
-          onSubmit={handleSubmit}
-          onChange={handleInputChange}
-          formData={FormData}
-          categories={categories}
-          items={items}
-        />
+
+  return (
+    <div>
+      <div className="addingItems">
+        <div className="HeaderAddItems">
+          <p>Add new item</p>
+          <CloseButton onClick={handleOncloseclick} />
+        </div>
+
+        <div className="BodyAddItems">
+          <ItemForm
+            onSubmit={handleSubmit}
+            onChange={handleInputChange}
+            formData={FormData}
+            categories={categories}
+            items={items}
+          />
+        </div>
       </div>
+      {NewCategory && (
+        <ToastContainer
+          className="p-3"
+          position="bottom-end"
+          style={{ zIndex: 1 }}
+        >
+          <Toast
+            show={showNotification}
+            onClose={() => setShowNotification(false)}
+          >
+            <Toast.Body className="Notfication">{message}</Toast.Body>
+          </Toast>
+        </ToastContainer>
+      )}
     </div>
   );
 };

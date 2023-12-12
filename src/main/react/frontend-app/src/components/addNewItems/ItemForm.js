@@ -13,6 +13,15 @@ const ItemForm = ({ onSubmit, onChange, formData, categories, items }) => {
     customCategoryName,
     weight,
   } = formData;
+  let displayalert = false;
+  const isSubmitDisabled =
+    !itemName ||
+    (itemName === "custom" && !customItemName) ||
+    customItemName.length > 50;
+
+  const HandleOnsubmit = () => {
+    if (!isSubmitDisabled) displayalert = true;
+  };
 
   return (
     <Form onSubmit={onSubmit}>
@@ -23,25 +32,34 @@ const ItemForm = ({ onSubmit, onChange, formData, categories, items }) => {
           name="itemName"
           value={itemName}
           onChange={onChange}
+          required
         >
           <option value="">Select an item name</option>
+          <option value="custom" className="custom">Personal item Name</option>
           {items.map((item) => (
             <option key={item.itemId} value={item.name}>
               {item.name}
             </option>
           ))}
-          <option value="custom">Custom</option>
         </Form.Control>
+        {itemName === "custom" && (
+          <Form.Control
+            type="text"
+            name="customItemName"
+            placeholder="Enter Personal item Name"
+            value={customItemName}
+            onChange={onChange}
+            required
+            className="customItemNameMargin"
+            minLength={3}
+          />
+        )}
+        {customItemName && customItemName.length > 50 && (
+          <div className="text-danger">
+            Name cannot be more than 50 characters.
+          </div>
+        )}
       </Form.Group>
-      {itemName === "custom" && (
-        <Form.Control
-          type="text"
-          name="customItemName"
-          placeholder="Enter custom item name"
-          value={customItemName}
-          onChange={onChange}
-        />
-      )}
 
       <div className="smallBoxNumbers customMarginBottom">
         <Form.Group controlId="formQuantity">
@@ -76,22 +94,29 @@ const ItemForm = ({ onSubmit, onChange, formData, categories, items }) => {
           onChange={onChange}
         >
           <option value="">Select a category</option>
+          <option value="custom" className="custom">Personal Category</option>
           {categories.map((category) => (
             <option key={category.categoryId} value={category.name}>
               {category.name}
             </option>
           ))}
-          <option value="custom">Custom</option>
         </Form.Control>
       </Form.Group>
       {category === "custom" && (
         <Form.Control
           type="text"
           name="customCategoryName"
-          placeholder="Enter custom Category Name"
+          placeholder="Enter Personal Category name"
           value={customCategoryName}
           onChange={onChange}
+          minLength={3}
+          required
         />
+      )}
+      {customCategoryName && customCategoryName.length > 50 && (
+        <div className="text-danger">
+          Category name cannot be more than 50 characters.
+        </div>
       )}
 
       <Form.Group controlId="formWeight" className="customMarginBottom">
@@ -104,8 +129,18 @@ const ItemForm = ({ onSubmit, onChange, formData, categories, items }) => {
           onChange={onChange}
         />
       </Form.Group>
-
-      <button type="submit">Submit</button>
+      {displayalert && (
+        <div className="alert alert-success" role="alert">
+          You must enter at least
+        </div>
+      )}
+      <button
+        type="submit"
+        className="AddItemSubmitButton"
+        onClick={HandleOnsubmit}
+      >
+        Submit
+      </button>
     </Form>
   );
 };
