@@ -4,8 +4,9 @@ import "./addNewItem.css";
 import GetCategories from "../communicationWithBackEnd/GetCotegories";
 import ItemForm from "./ItemForm";
 import AddCategory from "../communicationWithBackEnd/addCategory";
-import Toast from 'react-bootstrap/Toast';
-import ToastContainer from 'react-bootstrap/ToastContainer';
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
+import { handleAddNewItem } from "./addItemsFunction";
 const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
   const [FormData, setFormData] = useState({
     itemName: "",
@@ -30,6 +31,7 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
   let { categories, loading, error } = GetCategories({ apiUrl });
 
   const GetCategoriesID = (categoryName) => {
+
     let categoryID = 0;
     let found = false;
     categories.forEach((category) => {
@@ -71,28 +73,60 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
     return newItem;
   };
 
-  const handleAddNewItem = async (DatasToFetch) => {
+  const handleAddNewItem = async (DatasToFetch, itemsTab) => {
     const newItem = OraganizeNewItem(DatasToFetch);
+    console.log(newItem);
+    const existingItem = itemsTab.find((item) => item.name === newItem.name);
 
-    try {
-      const response = await fetch(ItemsUrl + `?${new Date().getTime()}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newItem),
-      });
-      if (!response.ok) {
-        const responseBody = await response.json();
-        console.error("Failed to add a new item:", responseBody);
-        throw new Error("Failed to add a new item");
+    if (existingItem) {
+      // If item exists, update its details
+      const updatedItem = {
+        ...existingItem,
+      price: newItem.price === 0 ? existingItem.price : newItem.price,
+      amount: newItem.amount === 1 ? existingItem.amount + 1 : newItem.amount,
+      categoryId: newItem.categoryId,
+      weight: newItem.weight === 0 ? existingItem.weight : newItem.weight,
+      timeCreated: new Date().toISOString(),
+      };
+
+      try {
+        const response = await fetch(`${ItemsUrl}/${existingItem.itemId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedItem),
+        });
+
+        if (!response.ok) {
+          const responseBody = await response.json();
+          console.error("Failed to update the item:", responseBody);
+          throw new Error("Failed to update the item");
+        }
+      } catch (error) {
+        console.error("Error updating the item:", error);
       }
-    } catch (error) {
-      console.error("Error adding a new item:", error);
+    } else {
+      try {
+        const response = await fetch(ItemsUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newItem),
+        });
+        if (!response.ok) {
+          const responseBody = await response.json();
+          console.error("Failed to add a new item:", responseBody);
+          throw new Error("Failed to add a new item");
+        }
+      } catch (error) {
+        console.error("Error adding a new item:", error);
+      }
+      setNewCategory(true);
+      setMessage("New Item added successfully!");
+      handleShowNotification();
     }
-    setNewCategory(true);
-    setMessage("New Item added successfully!");
-    handleShowNotification();
   };
 
   const handleInputChange = (e) => {
@@ -105,7 +139,7 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleAddNewItem(FormData);
+    handleAddNewItem(FormData,items);
     setFormData({
       itemName: "",
       customItemName: "",
@@ -120,8 +154,6 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
   const handleOncloseclick = () => {
     onClick();
   };
-
-
 
   return (
     <div>
