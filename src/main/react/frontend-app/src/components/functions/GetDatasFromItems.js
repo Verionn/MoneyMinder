@@ -1,8 +1,8 @@
 // GetNumberOfItems.js
 import React from "react";
-import GetItemsFromList from "../communicationWithBackEnd/GetItemsFromList";
+import GetItemsFromList from "../communicationWithServer/GetItemsFromList";
 
-const GetDatasFromItems = ({ listID,operation }) => {
+const GetDatasFromItems = ({ listID, operation }) => {
   const apiUrl = `http://localhost:8080/lists/${listID}/items`;
 
   let { items, loading, error } = GetItemsFromList({ apiUrl });
@@ -13,15 +13,15 @@ const GetDatasFromItems = ({ listID,operation }) => {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
-  if(operation === "count") return <div>{items.length}</div>
-
-  else if(operation === "price") return <div>{calculateTotalPrice(items)}</div>
-  
+  if (operation === "count") return <div>{items.length}</div>;
+  else if (operation === "price")
+    return <div>{calculateTotalPrice(items)}</div>;
 };
 
 export default GetDatasFromItems;
 
-const calculateTotalPrice = ( items) => {
-
-  return items.reduce((total, item) => total + item.price * item.amount, 0).toFixed(2);
+const calculateTotalPrice = (items) => {
+  return items
+    .reduce((total, item) => total + item.price * item.amount, 0)
+    .toFixed(2);
 };

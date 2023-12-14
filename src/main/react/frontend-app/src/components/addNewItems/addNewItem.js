@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import CloseButton from "react-bootstrap/CloseButton";
 import "./addNewItem.css";
-import GetCategories from "../communicationWithBackEnd/GetCotegories";
+import GetCategories from "../communicationWithServer/GetCotegories";
 import ItemForm from "./ItemForm";
-import AddCategory from "../communicationWithBackEnd/addCategory";
+import AddCategory from "../communicationWithServer/addCategory";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
-import { handleAddNewItem } from "./addItemsFunction";
+
 const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
   const [FormData, setFormData] = useState({
     itemName: "",
@@ -31,7 +31,6 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
   let { categories, loading, error } = GetCategories({ apiUrl });
 
   const GetCategoriesID = (categoryName) => {
-
     let categoryID = 0;
     let found = false;
     categories.forEach((category) => {
@@ -82,11 +81,11 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
       // If item exists, update its details
       const updatedItem = {
         ...existingItem,
-      price: newItem.price === 0 ? existingItem.price : newItem.price,
-      amount: newItem.amount === 1 ? existingItem.amount + 1 : newItem.amount,
-      categoryId: newItem.categoryId,
-      weight: newItem.weight === 0 ? existingItem.weight : newItem.weight,
-      timeCreated: new Date().toISOString(),
+        price: newItem.price === 0 ? existingItem.price : newItem.price,
+        amount: newItem.amount === 1 ? existingItem.amount + 1 : newItem.amount,
+        categoryId: newItem.categoryId,
+        weight: newItem.weight === 0 ? existingItem.weight : newItem.weight,
+        timeCreated: new Date().toISOString(),
       };
 
       try {
@@ -139,7 +138,7 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleAddNewItem(FormData,items);
+    handleAddNewItem(FormData, items);
     setFormData({
       itemName: "",
       customItemName: "",
