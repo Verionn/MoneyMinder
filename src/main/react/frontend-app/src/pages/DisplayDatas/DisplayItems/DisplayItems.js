@@ -8,13 +8,67 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import AddNewItem from "../../../components/addNewItems/addNewItem";
+import { deleteItem } from "../../../components/delete/deleteItem";
+import { checkItem } from "../../../components/functions/checkItem";
 const GetDatasFromItems = ({ listID, operation, onClose }) => {
   const apiUrl = `http://localhost:8080/lists/${listID}/items`;
   const [addItems, setAddItems] = useState(false);
 
+  const [checkedItems, setCheckedItems] = useState({});
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const handleCheckboxChange = (itemId) => {
+    setCheckedItems((prevCheckedItems) => ({
+      ...prevCheckedItems,
+      [itemId]: !prevCheckedItems[itemId],
+    }));
+  };
+
+  const deleteAllSelectedItems = () => {
+    // Filter out selected items and update state
+    const newlySelectedItems = items.filter(
+      (item) => checkedItems[item.itemId]
+    );
+    // Log the selected items to the consoles
+    console.log("Selected Items:", newlySelectedItems);
+
+    for (let i = 0; i < newlySelectedItems.length; i++) {
+      const currentItem = newlySelectedItems[i];
+      console.log(`Deleting item ${currentItem.itemId}: ${currentItem.name}`);
+      deleteItem(currentItem);
+    }
+    setSelectedItems((prevSelectedItems) => [
+      ...prevSelectedItems,
+      ...newlySelectedItems,
+    ]);
+
+    // Uncheck all items after processing
+    setCheckedItems({});
+  };
+  const checkAllSelectedItems = () => {
+    const newlySelectedItems = items.filter(
+      (item) => checkedItems[item.itemId]
+    );
+  
+    console.log("Selected Items:", newlySelectedItems);
+
+    for (let i = 0; i < newlySelectedItems.length; i++) {
+      const currentItem = newlySelectedItems[i];
+      checkItem(currentItem);
+    }
+    setSelectedItems((prevSelectedItems) => [
+      ...prevSelectedItems,
+      ...newlySelectedItems,
+    ]);
+
+    // Uncheck all items after processing
+    setCheckedItems({});
+  };
+
   const handleAddItems = () => {
     setAddItems(!addItems);
   };
+
   let { items, loading, error } = GetItemsFromList({ apiUrl });
   if (loading) {
     <p className={"Items"}>
@@ -52,7 +106,7 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
           {items.length > 0 ? (
             <>
               <Container>
-                <Row className="itemLists">
+                <Row className="itemListsHeader">
                   <Col className="textCentered"></Col>
                   <Col className="itemName">Name</Col>
                   <Col className="textCentered">Amount</Col>
@@ -61,29 +115,84 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
                   <Col className="textCentered">Weigth</Col>
                 </Row>
               </Container>
-              <Container fluid className="allItems">
-                {items.map((item) => (
-                  <Row className="itemLists" key={item.itemId}>
-                    <Col className="textCentered">
-                      <box-icon name="radio-circle"></box-icon>
-                    </Col>
-                    <Col className="itemName">{item.name}</Col>
-                    <Col className="textCentered">{item.amount}</Col>
-                    <Col className="textAlignedRight">
-                      {(item.price * item.amount).toFixed(2)} $
-                    </Col>
-                    <Col className="textCentered">
-                      <DisplayCategory
-                        CategoryID={item.categoryId}
-                      ></DisplayCategory>
-                    </Col>
-                    <Col className="textCentered">
-                      {item.weight > 0 ? item.weight : ""}
-                    </Col>
-                  </Row>
-                ))}
+              <span className="uncheckAndCheckList">
+                {/*---------------------------------------------------------------*/}
+
+                <Container fluid className="allItems">
+                  {items.map((item) => (
+                    <Row className="itemLists " key={item.itemId}>
+                      <Col className="textCentered">
+                        <input
+                          className="checkbox"
+                          type="checkbox"
+                          checked={checkedItems[item.itemId] || false}
+                          onChange={() => handleCheckboxChange(item.itemId)}
+                        />
+                      </Col>
+                      <Col className="itemName">{item.name}</Col>
+                      <Col className="textCentered">{item.amount}</Col>
+                      <Col className="textAlignedRight">
+                        {(item.price * item.amount).toFixed(2)} $
+                      </Col>
+                      <Col className="textCentered">
+                        <DisplayCategory
+                          CategoryID={item.categoryId}
+                        ></DisplayCategory>
+                      </Col>
+                      <Col className="textCentered">
+                        {item.weight > 0 ? item.weight : ""}
+                      </Col>
+                    </Row>
+                  ))}
+                </Container>
+                {/*---------------------------------------------------------------*/}
+                <div className="Horizontal-line"></div>
+
+                {/*-----------------------------------------------------
+                <Container fluid className="allItems">
+                  {items.map((item) => (
+                    <Row className="itemLists " key={item.itemId}>
+                      <Col className="textCentered">
+                        <input
+                          className="checkbox"
+                          type="checkbox"
+                          checked={checkedItems[item.itemId] || false}
+                          onChange={() => handleCheckboxChange(item.itemId)}
+                        />
+                      </Col>
+                      <Col className="itemName">{item.name}</Col>
+                      <Col className="textCentered">{item.amount}</Col>
+                      <Col className="textAlignedRight">
+                        {(item.price * item.amount).toFixed(2)} $
+                      </Col>
+                      <Col className="textCentered">
+                        <DisplayCategory
+                          CategoryID={item.categoryId}
+                        ></DisplayCategory>
+                      </Col>
+                      <Col className="textCentered">
+                        {item.weight > 0 ? item.weight : ""}
+                      </Col>
+                    </Row>
+                  ))}
+                </Container>
+               ----------------------------------------------------------*/}
+              </span>
+
+              <Container>
+                <Row>
+                  <Col>
+                    <button onClick={checkAllSelectedItems}>
+                      Check selected items
+                    </button>
+                  </Col>
+                  <Col>
+                    <button onClick={deleteAllSelectedItems}>
+                      Delete selected items
+                    </button>
+                  </Col>
+                </Row>
               </Container>
-              <div className="Horizontal-line"></div>
               <Container>
                 <Row className="PricesTitle">
                   <Col>Unchecked</Col>
@@ -119,7 +228,7 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
                 <p className="suggestionText">
                   Start searching products to add them to your list
                 </p>
-                <button className="addItemsButton">
+                <button className="addItemsButton" onClick={handleAddItems}>
                   <box-icon name="plus" color="#fff"></box-icon>
                   <span>Add items</span>
                 </button>

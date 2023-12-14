@@ -5,7 +5,6 @@
   justify-content: center;
   margin: 10px;
   padding: 10px;
-  
   border-radius: 5px;
   width: 600px;
   height: auto;
@@ -13,7 +12,6 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
-  
 }
 
 .closeItemsList {
@@ -35,12 +33,17 @@
   font-weight: bold;
 }
 
-.itemLists {
+.itemLists,
+.itemListsHeader {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+}
+.itemLists:hover {
+  background-color: #d6d6d6;
+  border-radius: 5px;
 }
 
 .itemBody {
@@ -148,23 +151,6 @@
   font-size: 20px !important;
 }
 
-.allItems {
-  max-height: 400px;
-  overflow-y: scroll;
-}
-
-.allItems::-webkit-scrollbar {
-  width: 2px;
-}
-
-.allItems::-webkit-scrollbar-thumb {
-  background-color: transparent;
-}
-
-.allItems:hover::-webkit-scrollbar-thumb {
-  background-color: #d6d6d6; /* Adjust the color as needed */
-}
-
 .ItemsBox {
   display: flex;
   width: 70vw;
@@ -182,7 +168,7 @@
   padding: 5px;
   border: solid 1px #d6d6d6;
   border-radius: 8px;
-  background-color: #E6F4F1;
+  background-color: #e6f4f1;
 }
 
 .addItemsButtonBox {
@@ -202,4 +188,47 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.checkbox {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  border: solid 1px #d6d6d6;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;*/
+}
+
+.checkbox:checked {
+  content: "\2713"; /* Unicode checkmark character */
+  color: #fff; /* White color for the checkmark */
+  background-color: #4caf50;
+}
+
+.uncheckAndCheckList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-height: 410px;
+  overflow-y: scroll;
+}
+
+.uncheckAndCheckList::-webkit-scrollbar {
+  width: 2px;
+}
+
+.uncheckAndCheckList::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.uncheckAndCheckList:hover::-webkit-scrollbar-thumb {
+  background-color: #d6d6d6; /* Adjust the color as needed */
 }
