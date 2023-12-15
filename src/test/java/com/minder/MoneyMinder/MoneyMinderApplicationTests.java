@@ -38,7 +38,7 @@ public abstract class MoneyMinderApplicationTests {
     protected static final String ITEMS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d";
     protected static final String MARK_ITEM_PURCHASED_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d/purchased";
     protected static final String PURCHASED_ITEMS_BY_CATEGORY_ID_PATH_FORMAT = "/purchasedItems/categories/%d";
-    protected static final String PURCHASED_ITEMS_BY_PREFIX_PATH_FORMAT = "/purchasedItems/name/%s";
+    protected static final String PURCHASED_ITEMS_BY_PREFIX_PATH_FORMAT = "/purchasedItems/names/%s";
     protected static final String FULL_PRICE_PATH_FORMAT = LISTS_RESOURCE + "/%d/fullprice";
     public static final String LIST_DESCRIPTION = "GO TO THE LIDL BCS OF PROMOTIONS";
     public static final String NEW_LIST_DESCRIPTION = "GO TO THE BIEDRONKA BCS DZIK GRAPE IS THERE";
