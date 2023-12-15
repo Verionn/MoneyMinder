@@ -11,4 +11,6 @@ public interface PurchasedItemService {
     List<PurchasedItemResponse> getPurchasedItemsByCategoryId(Long categoryId);
 
     PurchasedItemNameListResponse getPurchasedItemNamesByPrefix(String prefix);
+
+    List<PurchasedItemResponse> getPurchasedItemsByCategoryIdInLastNDays(Long categoryId, Long days);
 }
