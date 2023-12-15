@@ -24,12 +24,19 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
 
     @Override
     public List<PurchasedItemResponse> getPurchasedItemsByCategoryId(Long categoryId) {
-        return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(purchasedItemRepository.findAllByCategoryId(categoryId));
+        return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(
+                purchasedItemRepository.findAllByCategoryId(categoryId));
     }
 
     @Override
     public PurchasedItemNameListResponse getPurchasedItemNamesByPrefix(String prefix) {
         return new PurchasedItemNameListResponse(purchasedItemMapper.purchasedItemListEntityToPurchasedItemNameListResponse(
                         purchasedItemRepository.findAllByPrefix(prefix)));
+    }
+
+    @Override
+    public List<PurchasedItemResponse> getPurchasedItemsByCategoryIdInLastNDays(Long categoryId, Long days) {
+        return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(
+                purchasedItemRepository.findAllByCategoryIdInLastNDays(categoryId, days));
     }
 }
