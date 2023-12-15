@@ -44,8 +44,6 @@ public class PurchasedItemController {
 
     @GetMapping("/names/{prefix}")
     public ResponseEntity<PurchasedItemNameListResponse> getPurchasedItemNamesByPrefix(@PathVariable String prefix){
-        System.out.println(purchasedItemService.getPurchasedItemNamesByPrefix(prefix));
-        System.out.println(prefix);
         return ResponseEntity.ok().body(purchasedItemService.getPurchasedItemNamesByPrefix(prefix));
     }
 

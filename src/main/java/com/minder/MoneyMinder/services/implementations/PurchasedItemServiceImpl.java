@@ -29,7 +29,6 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
 
     @Override
     public PurchasedItemNameListResponse getPurchasedItemNamesByPrefix(String prefix) {
-
         return new PurchasedItemNameListResponse(purchasedItemMapper.purchasedItemListEntityToPurchasedItemNameListResponse(
                         purchasedItemRepository.findAllByPrefix(prefix)));
     }
