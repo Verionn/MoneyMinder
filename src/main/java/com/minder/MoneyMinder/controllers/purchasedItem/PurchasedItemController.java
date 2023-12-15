@@ -33,7 +33,7 @@ public class PurchasedItemController {
     }
 
     @GetMapping("/categories/{categoryId}")
-    public ResponseEntity<PurchasedItemListResponse> getPurchasedItemsItemsByCategoryId(@PathVariable Long categoryId){
+    public ResponseEntity<PurchasedItemListResponse> getPurchasedItemsByCategoryId(@PathVariable Long categoryId){
         if(!checkIfCategoryExists(categoryId)){
             return ResponseEntity.notFound().build();
         }
@@ -44,7 +44,24 @@ public class PurchasedItemController {
 
     @GetMapping("/names/{prefix}")
     public ResponseEntity<PurchasedItemNameListResponse> getPurchasedItemNamesByPrefix(@PathVariable String prefix){
-        return ResponseEntity.ok().body(purchasedItemService.getPurchasedItemNamesByPrefix(prefix));
+        return ResponseEntity.ok().body(
+                purchasedItemService.getPurchasedItemNamesByPrefix(prefix));
+    }
+
+    @GetMapping("/categories/{categoryId}/days/{days}")
+    public ResponseEntity<PurchasedItemListResponse> getPurchasedItemsByCategoryIdInLastNDays(@PathVariable Long categoryId,
+                                                                                                @PathVariable Long days){
+        if(!checkIfCategoryExists(categoryId)){
+            System.out.println("tutaj wuwalam?");
+            return ResponseEntity.notFound().build();
+        }
+
+        if(days <= 0){
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().body(new PurchasedItemListResponse(
+                purchasedItemService.getPurchasedItemsByCategoryIdInLastNDays(categoryId, days)));
     }
 
     private boolean checkIfCategoryExists(Long categoryId) {
