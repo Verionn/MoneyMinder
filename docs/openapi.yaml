@@ -4,14 +4,17 @@ info:
   title: MoneyMinder - Rest api
   description: "Api for MoneyMinder project"
 tags:
-  - name: Categories
+  - name: categories
     description: All available requests related to categories
-    
-  - name: Lists
+
+  - name: lists
     description: All available requests related to lists
-    
-  - name: Items
+
+  - name: items
     description: All available requests related to items
+
+  - name: purchasedItems
+    description: All available requests related to purchased items
 paths:
   /categories:
     get:
@@ -31,8 +34,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Category'
-                      
-                      
+
+
     post:
       tags:
         - categories
@@ -54,9 +57,9 @@ paths:
                   $ref: '#/components/schemas/Category'
         '404':
           description: Wrong request body
-          
-          
-  /categories/{categoryId}:  
+
+
+  /categories/{categoryId}:
     put:
       tags:
         - categories
@@ -68,13 +71,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CategoryRequestBody'
-      parameters: 
-      - in: path
-        name: categoryId
-        schema:
-          type: integer
-        required: true
-        description: ID of the category
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: ID of the category
       responses:
         '200':
           description: Category updated successfully
@@ -86,38 +89,38 @@ paths:
           description: Category not found
         '404':
           description: Wrong request body
-          
+
     delete:
       tags:
         - categories
       description: Delete specific category
       operationId: deleteCategory
-      parameters: 
-      - in: path
-        name: categoryId
-        schema:
-          type: integer
-        required: true
-        description: ID of the category
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: ID of the category
       responses:
         '200':
           description: Category deleted successfully
         '404':
           description: Category not found
-    
-    
+
+
     get:
       tags:
         - categories
       description: Get specific category
       operationId: getSpecificCategory
-      parameters: 
-      - in: path
-        name: categoryId
-        schema:
-          type: integer
-        required: true
-        description: ID of the category
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: ID of the category
       responses:
         '200':
           description: Returned specific category
@@ -129,8 +132,8 @@ paths:
           description: Category not found
         '404':
           description: Wrong request body
-          
-          
+
+
   /lists:
     get:
       tags:
@@ -149,8 +152,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/List'
-                      
-                      
+
+
     post:
       tags:
         - lists
@@ -165,8 +168,8 @@ paths:
                 $ref: '#/components/schemas/List'
         '400':
           description: Bad request body
-          
-          
+
+
   /lists/{listId}:
     get:
       tags:
@@ -174,12 +177,12 @@ paths:
       description: Return specific list
       operationId: getSpecificList
       parameters:
-      - in: path
-        name: listId
-        schema:
-          type: integer
-        required: true
-        description: ID of the list
+        - in: path
+          name: listId
+          schema:
+            type: integer
+          required: true
+          description: ID of the list
       responses:
         '200':
           description: Successfully returned specific list
@@ -189,27 +192,27 @@ paths:
                 $ref: '#/components/schemas/List'
         '404':
           description: List not found
-        
-        
+
+
     delete:
       tags:
         - lists
       description: Delete specific list
       operationId: deleteSpecificList
       parameters:
-      - in: path
-        name: listId
-        schema:
-          type: integer
-        required: true
-        description: ID of the list
+        - in: path
+          name: listId
+          schema:
+            type: integer
+          required: true
+          description: ID of the list
       responses:
         '200':
           description: Successfully deleted specific list
         '404':
           description: List not found
-          
-          
+
+
     put:
       tags:
         - lists
@@ -222,12 +225,12 @@ paths:
             schema:
               $ref: '#/components/schemas/ListRequestBody'
       parameters:
-      - in: path
-        name: listId
-        schema:
-          type: integer
-        required: true
-        description: ID of the list
+        - in: path
+          name: listId
+          schema:
+            type: integer
+          required: true
+          description: ID of the list
       responses:
         '200':
           description: Successfully updated specific list
@@ -239,8 +242,8 @@ paths:
           description: Wrong request body
         '404':
           description: List not found
-          
-    
+
+
   /lists/{listId}/items:
     get:
       tags:
@@ -360,8 +363,8 @@ paths:
           description: Wrong request body
         '404':
           description: List or Item not found
-      
-    
+
+
     delete:
       tags:
         - items
@@ -385,14 +388,14 @@ paths:
           description: Successfully deleted item
         '404':
           description: List or Item not found
-          
-          
-  /lists/{listId}/items/{itemId}/bought:
+
+
+  /lists/{listId}/items/{itemId}/purchased:
     post:
       tags:
         - items
-      description: Mark item as bought
-      operationId: markItemAsBought
+      description: Mark item as purchased
+      operationId: markItemAsPurchased
       parameters:
         - in: path
           name: listId
@@ -408,14 +411,80 @@ paths:
           description: ID of the item
       responses:
         '200':
-          description: Successfully bought item - item has been moved to another table
+          description: Successfully purchased item - item has been moved to another table
         '404':
           description: List or Item not found
-      
-      
+
+
+  /purchasedItems/categories/{categoryId}/days/{days}:
+    get:
+      tags:
+        - purchasedItems
+      description: Get purchased items in last N days from category
+      operationId: getPurchasedItemsInNDaysByCategory
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: ID of the category
+        - in: path
+          name: days
+          schema:
+            type: integer
+          required: true
+          description: amount of days
+      responses:
+        '200':
+          description: Successfully returned purchased items from n Days
+        '404':
+          description: Category not found
+        '400':
+          description: Wrong amount of days
+
+
+  /purchasedItems/categories/{categoryId}:
+    get:
+      tags:
+        - purchasedItems
+      description: Get purchased items by categoryId
+      operationId: getPurchasedItemsByCategoryId
+      parameters:
+        - in: path
+          name: categoryId
+          schema:
+            type: integer
+          required: true
+          description: ID of the category
+      responses:
+        '200':
+          description: Successfully returned purchased items
+        '404':
+          description: Category not found
+
+
+  /purchasedItems/names/{prefix}:
+    get:
+      tags:
+        - purchasedItems
+      description: Get purchased items names by prefix
+      operationId: getPurchasedItemsNamesByPrefix
+      parameters:
+        - in: path
+          name: prefix
+          schema:
+            type: String
+          required: true
+          description: prefix
+      responses:
+        '200':
+          description: Successfully returned names
+
+
 components:
   schemas:
-  
+
     Category:
       required:
         - name
@@ -428,9 +497,9 @@ components:
         name:
           type: string
           example: 'Food'
-          
+
     List:
-      required: 
+      required:
         - name
       type: object
       properties:
@@ -441,7 +510,7 @@ components:
         name:
           type: string
           example: 'Weekly'
-      
+
     Item:
       required:
         - name
@@ -478,27 +547,27 @@ components:
           type: string
           format: date
           example: "2023-11-27"
-      
+
     CategoryRequestBody:
-      required: 
+      required:
         - name
       type: object
       properties:
         name:
           type: string
           example: 'Sweets'
-          
+
     ListRequestBody:
-      required: 
+      required:
         - name
       type: object
       properties:
         name:
           type: string
           example: 'Daily'
-          
+
     ItemRequestBody:
-      required: 
+      required:
         - name
       type: object
       properties:
@@ -527,7 +596,7 @@ components:
           example: 350
 
     CreateItemRequestBody:
-      required: 
+      required:
         - name
       type: object
       properties:
@@ -550,7 +619,3 @@ components:
           type: integer
           format: int64
           example: 350
-servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/MoneyMinder/MoneyMinder/1.0.0
