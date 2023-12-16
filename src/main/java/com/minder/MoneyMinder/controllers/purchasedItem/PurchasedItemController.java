@@ -52,7 +52,6 @@ public class PurchasedItemController {
     public ResponseEntity<PurchasedItemListResponse> getPurchasedItemsByCategoryIdInLastNDays(@PathVariable Long categoryId,
                                                                                                 @PathVariable Long days){
         if(!checkIfCategoryExists(categoryId)){
-            System.out.println("tutaj wuwalam?");
             return ResponseEntity.notFound().build();
         }
 
