@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import GetItemsFromList from "../../../components/communicationWithBackEnd/GetItemsFromList";
+import GetItemsFromList from "../../../components/communicationWithServer/GetItemsFromList";
 import "boxicons";
 import "./DisplayItems.css";
 import DisplayCategory from "../DisplayCategory/DisplayCategory";
@@ -49,7 +49,7 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
     const newlySelectedItems = items.filter(
       (item) => checkedItems[item.itemId]
     );
-  
+
     console.log("Selected Items:", newlySelectedItems);
 
     for (let i = 0; i < newlySelectedItems.length; i++) {

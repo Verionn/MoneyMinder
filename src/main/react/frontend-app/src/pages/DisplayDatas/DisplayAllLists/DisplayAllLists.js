@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import GetLists from "../../../components/communicationWithBackEnd/GetLists";
+import GetLists from "../../../components/communicationWithServer/GetLists";
 import ListDescription from "../../../components/listDescription/listDescriptions";
 import "./DisplayAllLists.css";
 import GetDatasFromItems from "../../../components/functions/GetDatasFromItems";

@@ -1,10 +1,10 @@
 import React from "react";
-import GetCategories from "../../../components/communicationWithBackEnd/GetCotegories";
+import GetCategories from "../../../components/communicationWithServer/GetCotegories";
 import "boxicons";
 import lottie from "lottie-web";
 import { defineElement } from "@lordicon/element";
 import AddNewItem from "../../../components/addNewItems/addNewItem";
-
+import * as HandleDataRequest from "../../../components/communicationWithServer/HandleDataRequest"
 // Define "lord-icon" custom element with default properties
 defineElement(lottie.loadAnimation);
 
@@ -12,7 +12,8 @@ const GetDatasFromItems = ({ CategoryID }) => {
   const apiUrl = `http://localhost:8080/categories`;
 
   let { categories, loading, error } = GetCategories({ apiUrl });
-
+  HandleDataRequest.DataRequest("categories", "GET", apiUrl, null);
+  
   if (loading) {
     return <p>Loading...</p>;
   }
