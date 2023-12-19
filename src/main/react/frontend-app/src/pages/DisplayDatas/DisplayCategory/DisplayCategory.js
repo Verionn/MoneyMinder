@@ -1,5 +1,5 @@
 import React from "react";
-import GetCategories from "../../../components/communicationWithServer/GetCotegories";
+import {GetCategoryData} from "../../../components/communicationWithServer/HandleDataRequest"
 import "boxicons";
 import lottie from "lottie-web";
 import { defineElement } from "@lordicon/element";
@@ -11,7 +11,8 @@ defineElement(lottie.loadAnimation);
 const GetDatasFromItems = ({ CategoryID }) => {
   const apiUrl = `http://localhost:8080/categories`;
 
-  let { categories, loading, error } = GetCategories({ apiUrl });
+  let { categories, loading, error } = GetCategoryData({ apiUrl });
+
   HandleDataRequest.DataRequest("categories", "GET", apiUrl, null);
   
   if (loading) {

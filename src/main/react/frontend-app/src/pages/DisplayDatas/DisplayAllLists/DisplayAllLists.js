@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-
-import GetLists from "../../../components/communicationWithServer/GetLists";
+import React, { useState, useEffect } from "react";
+import { GetListsData } from "../../../components/communicationWithServer/HandleDataRequest";
 import ListDescription from "../../../components/listDescription/listDescriptions";
 import "./DisplayAllLists.css";
 import GetDatasFromItems from "../../../components/functions/GetDatasFromItems";
@@ -9,7 +8,18 @@ import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList
 
 const DisplayAllLists = ({ onClickList, onCloseList }) => {
   const [ItemsID, setItemsID] = useState(-1);
+  useEffect(() => {
+    const savedItemsID = localStorage.getItem("ItemsID");
 
+    if (savedItemsID) {
+      setItemsID(parseInt(savedItemsID, 10));
+    }
+  }, []);
+
+  // Save state to local storage whenever the state changes
+  useEffect(() => {
+    localStorage.setItem("ItemsID", ItemsID.toString());
+  }, [ItemsID]);
   const handleListClick = (listId) => {
     setItemsID(listId);
     onClickList(listId);
@@ -21,7 +31,7 @@ const DisplayAllLists = ({ onClickList, onCloseList }) => {
   };
 
   const apiUrl = "http://localhost:8080/lists";
-  let { data, loading, error } = GetLists({ apiUrl });
+  let { data, loading, error } = GetListsData({ apiUrl });
   const getListName = (listID) => {
     if (data && data.lists && data.lists.length > 0) {
       return data.lists.find((list) => list.listId === listID).name;
