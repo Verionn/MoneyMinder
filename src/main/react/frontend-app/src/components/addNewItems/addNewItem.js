@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import CloseButton from "react-bootstrap/CloseButton";
 import "./addNewItem.css";
-import GetCategories from "../communicationWithServer/GetCotegories";
+import { GetCategoryNameID } from "../functions/GetDatasFromItems";
+import {
+  GetCategoryData,
+  PostNewItem,PostNewCategory
+} from "../communicationWithServer/HandleDataRequest";
 import ItemForm from "./ItemForm";
-import AddCategory from "../communicationWithServer/addCategory";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
 
@@ -28,7 +31,7 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
   };
 
   const apiUrl = `http://localhost:8080/categories`;
-  let { categories, loading, error } = GetCategories({ apiUrl });
+  let { categories } = GetCategoryData({ apiUrl });
 
   const GetCategoriesID = (categoryName) => {
     let categoryID = 0;
@@ -41,11 +44,13 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
     });
     if (found) return categoryID;
     else {
-      if (AddCategory({ categoryName }) === false) return -1;
+  
+      if (PostNewCategory({ categoryName }) === false) return -1;
       setNewCategory(true);
       setMessage("New category added successfully!");
       handleShowNotification();
-      return categories.length + 1;
+     // window.location.reload(true);
+      return GetCategoryNameID(categoryName, categories);
     }
   };
 
@@ -74,7 +79,7 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
 
   const handleAddNewItem = async (DatasToFetch, itemsTab) => {
     const newItem = OraganizeNewItem(DatasToFetch);
-    console.log(newItem);
+   
     const existingItem = itemsTab.find((item) => item.name === newItem.name);
 
     if (existingItem) {
@@ -106,25 +111,16 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
         console.error("Error updating the item:", error);
       }
     } else {
-      try {
-        const response = await fetch(ItemsUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newItem),
-        });
-        if (!response.ok) {
-          const responseBody = await response.json();
-          console.error("Failed to add a new item:", responseBody);
-          throw new Error("Failed to add a new item");
-        }
-      } catch (error) {
-        console.error("Error adding a new item:", error);
+      const state = await PostNewItem(newItem, ItemsUrl);
+      if (state) {
+        setNewCategory(true);
+        setMessage("New Item added successfully!");
+        handleShowNotification();
+      } else {
+        setNewCategory(true);
+        setMessage("Error adding new item!");
+        handleShowNotification();
       }
-      setNewCategory(true);
-      setMessage("New Item added successfully!");
-      handleShowNotification();
     }
   };
 

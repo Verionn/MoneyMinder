@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import "boxicons";
 import "./createNewList.css";
+import {PostNewList} from "../communicationWithServer/HandleDataRequest"
 
 const CreateNewList = ({ onClose }) => {
   const [show, setShow] = useState(false);
@@ -9,7 +10,7 @@ const CreateNewList = ({ onClose }) => {
   const [description, setDescription] = useState("");
   const [descriptionCount, setDescriptionCount] = useState(0);
   const maxDescriptionLength = 300;
-  const maxListNameLength = 50; // Adjust this according to your requirement
+  const maxListNameLength = 50; 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -24,34 +25,13 @@ const CreateNewList = ({ onClose }) => {
   };
 
   const handleCreateNewList = async () => {
-    try {
-      // Send a request to create a new list
-      if (listName.length > 0 && listName.length <= maxListNameLength) {
-        const response = await fetch("http://localhost:8080/lists", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name: listName, description: description }),
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to create a new list");
-        }
-
-        // Close the modal after creating the new list
+      if(PostNewList(listName,description,maxListNameLength)){
         handleClose();
-        // Reload the page to fetch the updated data
-        window.location.reload(true);
-      } else {
-        alert("Please enter a list name");
+        onClose();
       }
-
-      // Optionally, you can perform additional actions after creating the list
-      // ...
-    } catch (error) {
-      console.error("Error creating a new list:", error);
-    }
+      else{
+        alert("Error creating new list")
+      }
   };
 
   return (

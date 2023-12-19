@@ -1,6 +1,4 @@
-
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
@@ -15,6 +13,25 @@ function NewMainContainer() {
   const { darkMode } = useDarkMode();
   const [ItemsID, setItemsID] = useState(-1);
   const [activeTab, setActiveTab] = useState("first");
+  useEffect(() => {
+    const savedItemsID = localStorage.getItem("ItemsID");
+    const savedActiveTab = localStorage.getItem("activeTab");
+
+    if (savedItemsID) {
+      setItemsID(parseInt(savedItemsID, 10));
+    }
+
+    if (savedActiveTab) {
+      setActiveTab(savedActiveTab);
+    }
+  }, []);
+
+  // Save state to local storage whenever the state changes
+  useEffect(() => {
+    localStorage.setItem("ItemsID", ItemsID.toString());
+    localStorage.setItem("activeTab", activeTab);
+  }, [ItemsID, activeTab]);
+
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
