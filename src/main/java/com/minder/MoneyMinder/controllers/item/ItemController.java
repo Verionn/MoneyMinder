@@ -74,8 +74,12 @@ public class ItemController {
 
     @DeleteMapping(path = "{listId}/items/{itemId}")
     public ResponseEntity<HttpStatus> deleteItem(@PathVariable Long listId, @PathVariable Long itemId) {
-        if (!checkIfItemAndListExists(listId, itemId)) {
+        if (!checkIfItemAndListExists(itemId, listId)) {
             return ResponseEntity.notFound().build();
+        }
+
+        if(!itemService.checkIfItemIsOnTheList(itemId, listId)){
+            return ResponseEntity.badRequest().build();
         }
 
         itemService.deleteItem(itemId);
@@ -88,17 +92,19 @@ public class ItemController {
                                                    @PathVariable Long itemId,
                                                    @RequestBody UpdateItemRequestBody updateItemRequestBody) {
 
-        if (!checkIfListExists(listId)) {
+        if (!checkIfItemAndListExists(itemId, listId)) {
             return ResponseEntity.notFound().build();
         }
-        System.out.println("Czy aktualna lista istnieje: " + checkIfListExists(listId));
 
         if (!checkIfListExists(updateItemRequestBody.listId())) {
             return ResponseEntity.notFound().build();
         }
-        System.out.println("Czy nowa lista istnieje: " + checkIfListExists(updateItemRequestBody.listId()));
 
         if (checkIfUpdateItemRequestBodyIsInvalid(updateItemRequestBody)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        if(!itemService.checkIfItemIsOnTheList(itemId, listId)){
             return ResponseEntity.badRequest().build();
         }
 
@@ -121,11 +127,8 @@ public class ItemController {
         return itemService.getItem(itemId)
                 .map(itemEntity -> {
                     itemService.deleteItem(itemId);
-                    System.out.println(itemEntity + "\n");
-                    PurchasedItemResponse resp = itemService.markItemAsPurchased(
-                            purchasedItemMapper.itemEntityToPurchasedItemRecord(itemEntity, LocalDateTime.now()));
-                    System.out.println(resp);
-                    return ResponseEntity.ok().body(resp);
+                    return ResponseEntity.ok().body(itemService.markItemAsPurchased(
+                            purchasedItemMapper.itemEntityToPurchasedItemRecord(itemEntity, LocalDateTime.now())));
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

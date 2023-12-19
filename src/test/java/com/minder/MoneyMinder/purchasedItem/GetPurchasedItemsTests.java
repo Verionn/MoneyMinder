@@ -53,7 +53,8 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
         var purchasedItem = markItemAsPurchased(addedItem.itemId(), createdList.listId());
 
         //when
-        var purchasedItemListResponse = client.getForEntity(purchasedItemsByCategoryIdPath(WRONG_CATEGORY_ID), PurchasedItemListResponse.class);
+        var purchasedItemListResponse = client.getForEntity(
+                purchasedItemsByCategoryIdPath(WRONG_CATEGORY_ID), PurchasedItemListResponse.class);
 
         //then
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -73,12 +74,65 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
         var secondPurchasedItem = markItemAsPurchased(secondAddedItem.itemId(), createdList.listId());
 
         //when
-        var purchasedItemNameListResponse = client.getForEntity(purchasedItemsByPrefixPath(GOOD_PREFIX), PurchasedItemNameListResponse.class);
+        var purchasedItemNameListResponse = client.getForEntity(
+                purchasedItemsByPrefixPath(GOOD_PREFIX), PurchasedItemNameListResponse.class);
 
         //then
         assertThat(purchasedItemNameListResponse.getStatusCode(), equalTo(HttpStatus.OK));
         assertNotNull(purchasedItemNameListResponse.getBody());
         assertThat(purchasedItemNameListResponse.getBody().purchasedItemNameResponses().size(), equalTo(1));
         assertThat(purchasedItemNameListResponse.getBody().purchasedItemNameResponses().get(0).name(), equalTo(secondPurchasedItem.name()));
+    }
+
+    @DisplayName("Should return all purchased item in 2 last days and 200")
+    @Test
+    public void shouldReturnPurchasedItemsInLast2DaysAndOk(){
+
+        //given
+        var createdList = createList(FIRST_LIST_NAME);
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+        var firstAddedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
+        var secondAddedItem = addItem(SECOND_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
+        var firstPurchasedItem = markItemAsPurchased(firstAddedItem.itemId(), createdList.listId());
+        var secondPurchasedItem = markItemAsPurchased(secondAddedItem.itemId(), createdList.listId());
+
+        //when
+        var purchasedItemListResponse = client.getForEntity(
+                purchasedItemsByCategoryIdAndDaysPath(createdCategory.categoryId(), DAYS), PurchasedItemListResponse.class);
+
+        //then
+        assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.OK));
+        assertNotNull(purchasedItemListResponse.getBody());
+        assertThat(purchasedItemListResponse.getBody().purchasedItems().size(), equalTo(2));
+        assertThat(purchasedItemListResponse.getBody().purchasedItems().get(0).name(), equalTo(firstPurchasedItem.name()));
+        assertThat(purchasedItemListResponse.getBody().purchasedItems().get(1).name(), equalTo(secondPurchasedItem.name()));
+    }
+
+    @DisplayName("Should return bad request when given a negative number of days")
+    @Test
+    public void ShouldReturnBadRequestWhenGivenNegativeDaysNumber(){
+        //given
+        var createdCategory = createCategory(FIRST_CATEGORY_NAME);
+
+        //when
+        var purchasedItemListResponse = client.getForEntity(purchasedItemsByCategoryIdAndDaysPath(
+                createdCategory.categoryId(), WRONG_DAYS), PurchasedItemListResponse.class);
+
+        //
+        assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
+        assertNull(purchasedItemListResponse.getBody());
+    }
+
+    @DisplayName("Should return not found when given a wrong categoryu")
+    @Test
+    public void ShouldReturnBadRequestWhenGivenWrongCategory(){
+
+        //when
+        var purchasedItemListResponse = client.getForEntity(purchasedItemsByCategoryIdAndDaysPath(
+                WRONG_CATEGORY_ID, WRONG_DAYS), PurchasedItemListResponse.class);
+
+        //
+        assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
+        assertNull(purchasedItemListResponse.getBody());
     }
 }

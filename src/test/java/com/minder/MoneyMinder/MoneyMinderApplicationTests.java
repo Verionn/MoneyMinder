@@ -38,7 +38,8 @@ public abstract class MoneyMinderApplicationTests {
     protected static final String ITEMS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d";
     protected static final String MARK_ITEM_PURCHASED_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d/purchased";
     protected static final String PURCHASED_ITEMS_BY_CATEGORY_ID_PATH_FORMAT = "/purchasedItems/categories/%d";
-    protected static final String PURCHASED_ITEMS_BY_PREFIX_PATH_FORMAT = "/purchasedItems/name/%s";
+    protected static final String PURCHASED_ITEMS_BY_CATEGORY_ID_AND_DAYS_PATH_FORMAT = "/purchasedItems/categories/%d/days/%d";
+    protected static final String PURCHASED_ITEMS_BY_PREFIX_PATH_FORMAT = "/purchasedItems/names/%s";
     protected static final String FULL_PRICE_PATH_FORMAT = LISTS_RESOURCE + "/%d/fullprice";
     public static final String LIST_DESCRIPTION = "GO TO THE LIDL BCS OF PROMOTIONS";
     public static final String NEW_LIST_DESCRIPTION = "GO TO THE BIEDRONKA BCS DZIK GRAPE IS THERE";
@@ -58,7 +59,6 @@ public abstract class MoneyMinderApplicationTests {
     public static final Long NEW_CATEGORY_ID = 3L;
     public static final Long WRONG_CATEGORY_ID = -1L;
     public static final String GOOD_PREFIX = "P";
-    public static final String WRONG_PREFIX = "1";
     public static final String WRONG_ITEM_NAME = "";
     public static final Long NEW_LIST_ID = 2L;
     public static final Long WRONG_NEW_LIST_ID = -25L;
@@ -73,6 +73,8 @@ public abstract class MoneyMinderApplicationTests {
     public static final long RANDOM_WEIGHT = 123;
     public static final long NEW_WEIGHT = 353;
     public static final long WRONG_WEIGHT = -123;
+    public static final long DAYS = 2;
+    public static final long WRONG_DAYS = -2;
     public static final LocalDateTime RANDOM_DATE = LocalDateTime.parse("2023-10-15T21:15:00");
 
     @Autowired
@@ -124,6 +126,10 @@ public abstract class MoneyMinderApplicationTests {
 
     protected String purchasedItemsByPrefixPath(String prefix){
         return prepareUrl(String.format(PURCHASED_ITEMS_BY_PREFIX_PATH_FORMAT, prefix));
+    }
+
+    protected String purchasedItemsByCategoryIdAndDaysPath(Long categoryId, Long days){
+        return prepareUrl(String.format(PURCHASED_ITEMS_BY_CATEGORY_ID_AND_DAYS_PATH_FORMAT, categoryId, days));
     }
 
     protected ListResponse createList(String listName) {
