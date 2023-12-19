@@ -18,8 +18,7 @@ export const GetCategoryData = ({ apiUrl }) => {
         }
         const result = await response.json();
         setCategories(result.categories);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        updateCategories(result.categories);
+      
       } catch (error) {
         setError(error);
       } finally {
@@ -28,6 +27,7 @@ export const GetCategoryData = ({ apiUrl }) => {
     };
   
     fetchData();
+    
   }, [apiUrl]);
   
 
