@@ -65,14 +65,5 @@ function SettingsCanvas({ name, content, ...props }) {
   );
 }
 
-function Example() {
-  return (
-    <>
-      {["start", "end", "top", "bottom"].map((placement, idx) => (
-        <SettingsCanvas key={idx} placement={placement} name={placement} />
-      ))}
-    </>
-  );
-}
 
 export default SettingsCanvas;

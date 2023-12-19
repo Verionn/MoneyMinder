@@ -7,15 +7,15 @@
   width: 100%;
   justify-self: flex-start;
   margin-left: 15px !important;
-  color: #1c1c1d;
+  color: #fff;
 }
 .settingsButton {
-  background-color: #fff !important;
+  background-color: var(--primary-color) !important;
   padding-left: 2px !important;
   margin-left: 2px;
 }
 .customNameStyle > p:hover {
-  color: #ededed !important;
+  color: #fff !important;
 }
 .customNameStyle > p {
   display: flex !important;
@@ -25,22 +25,22 @@
 }
 
 .settingsButton:hover {
-  background-color: #865400 !important;
+  background-color: var(--primary-color-10-lighter) !important;
   color: #ededed !important;
   cursor: pointer;
   border-radius: 5px;
 }
 .customNameStyle:hover {
-  background-color: #865400;
+  background-color: var(--primary-color-10-lighter);
   color: #ededed;
   cursor: pointer;
   border-radius: 5px;
 }
-.customNameStyle>.NavLinkTitleDark{
+.customNameStyle > .NavLinkTitleDark {
   color: #fff !important;
 }
 .Darkmode {
-  background-color: #161616 !important;
+  background-color: var(--dark-theme-app-bar) !important;
   color: #fff !important;
 }
 .NavLinkTitleDark {

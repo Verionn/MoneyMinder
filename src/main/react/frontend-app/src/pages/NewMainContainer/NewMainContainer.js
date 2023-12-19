@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
@@ -9,31 +9,11 @@ import Logo from "../../ressources/logo.png";
 import HeaderMainContainer from "../HeaderMainContainer/HeaderMainContainer";
 import SettingsCanvas from "../SettingsCanvas/SettingsCanvas";
 import DisplayAllLists from "../DisplayDatas/DisplayAllLists/DisplayAllLists";
+import { useLocalStorageState } from "../../components/functions/GetDatasFromItems";
 function NewMainContainer() {
   const { darkMode } = useDarkMode();
-  const [ItemsID, setItemsID] = useState(-1);
-  const [activeTab, setActiveTab] = useState("first");
-  useEffect(() => {
-    let count = 0;
-    const savedItemsID = localStorage.getItem("ItemsID");
-    const savedActiveTab = localStorage.getItem("activeTab");
-   
-
-    if (savedItemsID) {
-      count++;
-      setItemsID(JSON.parse(savedItemsID));
-    }
-    console.log(ItemsID," ",count);
-    if (savedActiveTab) {
-      setActiveTab(savedActiveTab);
-    }
-  }, []);
-
-  // Save state to local storage whenever the state changes
-  useEffect(() => {
-    window.localStorage.setItem("ItemsID", JSON.stringify(ItemsID));
-    localStorage.setItem("activeTab", activeTab);
-  }, [ItemsID, activeTab]);
+  const [ItemsID, setItemsID] = useLocalStorageState("ItemsID", -1);
+  const [activeTab, setActiveTab] = useLocalStorageState("activeTab", "first");
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -45,6 +25,20 @@ function NewMainContainer() {
     setItemsID(-1);
   };
 
+  const determineColorIcon = (DarkMode, activeTab, tab) => {
+    if (DarkMode) {
+      if (activeTab === tab) return "#fff";
+      else return "#fff";
+    } else return "#fff";
+  };
+
+  const determineClassNameTabs = (activeTab, currentTab) => {
+    if (darkMode) {
+      return `NavLinks DarkLink ${activeTab === currentTab ? "active" : ""}`;
+    } else {
+      return `NavLinks ${activeTab === currentTab ? "active" : ""}`;
+    }
+  };
   return (
     <div className={darkMode ? "newMaincontainer dark" : "newMaincontainer"}>
       <Tab.Container
@@ -53,7 +47,14 @@ function NewMainContainer() {
         className="TabContainer"
       >
         <Row className="MainContainerRows">
-          <Col sm={3} className="MainContainerNavBars">
+          <Col
+            sm={3}
+            className={
+              darkMode
+                ? "MainContainerNavBars DarkSideBar"
+                : "MainContainerNavBars"
+            }
+          >
             <Nav variant="pills" className="flex-column MainContainersideBar">
               <a
                 href={"https://github.com/Verionn/MoneyMinder"}
@@ -69,32 +70,20 @@ function NewMainContainer() {
 
               <button className="loginButton">
                 <p>Log in &gt; </p>
-                <p>Access your list from any device</p>
+                <span>Access your list from any device</span>
               </button>
 
               <Nav.Item className="MainContainerNavItem">
                 <Nav.Link
                   eventKey="first"
-                  className={
-                    darkMode
-                      ? `NavLinks DarkLink ${
-                          activeTab === "first" ? "active" : ""
-                        }`
-                      : `NavLinks ${activeTab === "first" ? "active" : ""}`
-                  }
+                  className={determineClassNameTabs(activeTab, "first")}
                   onClick={() => handleTabClick("first")}
                 >
                   <div className="NavLinkTitle">
                     <box-icon
                       type="solid"
                       name="basket"
-                      color={
-                        darkMode
-                          ? "#fff"
-                          : activeTab === "first"
-                          ? "#fff"
-                          : "#1c1c1c"
-                      }
+                      color={determineColorIcon(darkMode, activeTab, "first")}
                     ></box-icon>
                     <p
                       className={
@@ -114,26 +103,14 @@ function NewMainContainer() {
               <Nav.Item className="MainContainerNavItem">
                 <Nav.Link
                   eventKey="second"
-                  className={
-                    darkMode
-                      ? `NavLinks DarkLink ${
-                          activeTab === "second" ? "active" : ""
-                        }`
-                      : `NavLinks ${activeTab === "second" ? "active" : ""}`
-                  }
+                  className={determineClassNameTabs(activeTab, "second")}
                   onClick={() => handleTabClick("second")}
                 >
                   <div className="NavLinkTitle">
                     <box-icon
                       type="solid"
                       name="trash"
-                      color={
-                        darkMode
-                          ? "#fff"
-                          : activeTab === "second"
-                          ? "#fff"
-                          : "#1c1c1c"
-                      }
+                      color={determineColorIcon(darkMode, activeTab, "second")}
                     ></box-icon>
                     <p
                       className={
@@ -153,25 +130,13 @@ function NewMainContainer() {
               <Nav.Item className="MainContainerNavItem">
                 <Nav.Link
                   eventKey="third"
-                  className={
-                    darkMode
-                      ? `NavLinks DarkLink ${
-                          activeTab === "third" ? "active" : ""
-                        }`
-                      : `NavLinks ${activeTab === "third" ? "active" : ""}`
-                  }
+                  className={determineClassNameTabs(activeTab, "third")}
                   onClick={() => handleTabClick("third")}
                 >
                   <div className="NavLinkTitle">
                     <box-icon
                       name="question-mark"
-                      color={
-                        darkMode
-                          ? "#fff"
-                          : activeTab === "third"
-                          ? "#fff"
-                          : "#1c1c1c"
-                      }
+                      color={determineColorIcon(darkMode, activeTab, "third")}
                     ></box-icon>
                     <p
                       className={
@@ -196,7 +161,7 @@ function NewMainContainer() {
                 content={
                   <box-icon
                     name="cog"
-                    color={darkMode ? "#fff" : "#1c1c1c"}
+                    color={"#fff"}
                   ></box-icon>
                 }
               ></SettingsCanvas>
@@ -206,18 +171,18 @@ function NewMainContainer() {
                   type="logo"
                   size="md"
                   name="github"
-                  color="black"
+                  color="#fff"
                 ></box-icon>
               </div>
 
               <div className="termsAndConditions">
                 <p>Privacy Policy</p>
                 <p>Terms of service</p>
-                <div className="horizontal-line"></div>
+                <div className={darkMode?"horizontal-line-Darkmode":"horizontal-line"}></div>
 
                 <p className="copyRights">
                   {" "}
-                  <box-icon name="copyright"></box-icon>2023 MoneyMinder{" "}
+                  <box-icon name="copyright"  color="#fff"></box-icon>2023 MoneyMinder{" "}
                   <br></br> All rights reserved
                 </p>
               </div>
