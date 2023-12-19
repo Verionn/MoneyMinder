@@ -4,8 +4,7 @@
   padding: 0;
 }
 .dark {
-  background-color: #161616 !important;
-  color: white !important;
+  background-color: var(--dark-theme-background) !important;
 }
 
 .MainContainerRows {
@@ -25,10 +24,17 @@
   padding-top: 10px;
   padding-left: 30px !important;
   border-right: solid 1px #d6d6d6;
-
+  background-color: var(--primary-color);
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  color: var(--light-theme-surface) !important;
+}
+
+.DarkSideBar {
+  background-color: var(--dark-theme-app-bar) !important;
+  color: var(--light-theme-surface) !important;
+  border-right: solid 1px var(--dark-theme-surfac);
 }
 
 .MainContainersideBar {
@@ -58,19 +64,22 @@
   font-weight: bold;
   margin-left: 10px;
   text-decoration: none;
-  color: #002a4e;
+  color: var(--light-theme-surface) !important;
 }
 
 .loginButton {
   width: 95%;
   border-radius: 8px;
-  font-size: 10px;
-  background-color: #865400;
+  font-size: 16px;
+  background-color: var(--secondary-color);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   padding: 10px;
+}
+.loginButton > span {
+  font-size: 12px !important;
 }
 
 .MainContainerNavItem {
@@ -103,6 +112,8 @@
   justify-content: center;
   gap: 2px;
   font-weight: bold;
+  font-size: 14px;
+  border:solid 1px #d6d6d6;
 }
 
 .termsAndConditions > p {
@@ -116,7 +127,7 @@
 }
 
 .mainContainerNavBarsContents {
-  width: 80% !important;
+  width: 70% !important;
   height: 100vh;
 }
 
@@ -126,6 +137,7 @@
 }
 .NavLinkTitle > p {
   margin-bottom: 1rem !important;
+  color: var(--light-theme-surface) !important;
 }
 
 .horizontal-line {
@@ -141,16 +153,14 @@
 }
 
 .DarkLink:hover {
-  background-color: #ededed !important;
-  color: white !important;
+  background-color: var(--primary-color-10-lighter) !important;
 }
 
 .NavLinks.active {
-  background-color: #002a4e !important;
-  color: #fff !important;
+  background-color: var(--primary-color-20-lighter) !important;
 }
 .NavLinks:not(.active):hover {
-  background-color: #ededed !important;
+  background-color: var(--primary-color-10-lighter) !important;
 }
 
 .mainContainerBody {

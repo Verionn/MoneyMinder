@@ -1,18 +1,9 @@
-import React, { createContext, useContext, useEffect } from "react";
-import {useLocalStorageState} from "../functions/GetDatasFromItems";
+import React, { createContext, useContext } from "react";
+import { useLocalStorageState } from "../functions/GetDatasFromItems";
 const DarkModeContext = createContext();
 
 export const DarkModeProviderCOntext = ({ children }) => {
-  
-
-  const [darkMode, setDarkMode] = useLocalStorageState('darkMode', false);
-
-
-
-  // Save state to local storage whenever the state changes
-  useEffect(() => {
-    window.localStorage.setItem("darkMode", JSON.stringify(darkMode));
-  }, [darkMode]);
+  const [darkMode, setDarkMode] = useLocalStorageState("darkMode", false);
 
   const toggleDarkMode = () => {
     setDarkMode((prevDarkMode) => !prevDarkMode);

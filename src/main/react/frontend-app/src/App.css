@@ -8,6 +8,17 @@
   --tertiary-color: #06a77d;
   --quaternary-color: #d5c67a;
   --quinary-color: #f1a208;
+
+  --light-theme-status-bar: #e0e0e0;
+  --light-theme-app-bar: #f5f5f5;
+  --light-theme-background: #fafafa;
+  --light-theme-surface: #ffffff;
+
+  --dark-theme-status-bar: #000000;
+  --dark-theme-app-bar: #212121;
+  --dark-theme-background: #303030;
+  --dark-theme-surface: #424242;
+  font-family: "Poppins", sans-serif !important;
 }
 .App {
   text-align: center;
@@ -17,6 +28,7 @@
   align-items: flex-start;
   color: black;
   transition: all 0.3s ease-in-out;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .App-logo {
