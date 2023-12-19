@@ -178,7 +178,7 @@ function NewMainContainer() {
               <div className="termsAndConditions">
                 <p>Privacy Policy</p>
                 <p>Terms of service</p>
-                <div className="horizontal-line"></div>
+                <div className={darkMode?"horizontal-line-Darkmode":"horizontal-line"}></div>
 
                 <p className="copyRights">
                   {" "}

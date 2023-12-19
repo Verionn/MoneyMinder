@@ -113,7 +113,7 @@
   gap: 2px;
   font-weight: bold;
   font-size: 14px;
-  border:solid 1px #d6d6d6;
+  
 }
 
 .termsAndConditions > p {
@@ -144,6 +144,14 @@
   align-self: center;
   justify-self: center;
   border: 1px solid rgb(128, 128, 128);
+  width: 85%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.horizontal-line-Darkmode {
+  align-self: center;
+  justify-self: center;
+  border: 1px solid var(--dark-theme-surface);
   width: 85%;
   margin-bottom: 10px;
   margin-top: 10px;
