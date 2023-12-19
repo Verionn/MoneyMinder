@@ -1,5 +1,5 @@
 // GetNumberOfItems.js
-import React from "react";
+import React ,{useEffect,useState} from "react";
 import {
   GetItemListData,
 } from "../communicationWithServer/HandleDataRequest";
@@ -40,4 +40,13 @@ export const GetCategoryNameID = async (categoryName, categories) => {
   });
   if (found) return categoryID;
   return -1;
+};
+
+export const useLocalStorageState = (key, initialValue) => {
+  const storedValue = JSON.parse(localStorage.getItem(key)) || initialValue;
+  const [value, setValue] = useState(storedValue);
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+  return [value, setValue];
 };

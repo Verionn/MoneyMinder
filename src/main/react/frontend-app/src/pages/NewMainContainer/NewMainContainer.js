@@ -14,13 +14,16 @@ function NewMainContainer() {
   const [ItemsID, setItemsID] = useState(-1);
   const [activeTab, setActiveTab] = useState("first");
   useEffect(() => {
+    let count = 0;
     const savedItemsID = localStorage.getItem("ItemsID");
     const savedActiveTab = localStorage.getItem("activeTab");
+   
 
     if (savedItemsID) {
-      setItemsID(parseInt(savedItemsID, 10));
+      count++;
+      setItemsID(JSON.parse(savedItemsID));
     }
-
+    console.log(ItemsID," ",count);
     if (savedActiveTab) {
       setActiveTab(savedActiveTab);
     }
@@ -28,7 +31,7 @@ function NewMainContainer() {
 
   // Save state to local storage whenever the state changes
   useEffect(() => {
-    localStorage.setItem("ItemsID", ItemsID.toString());
+    window.localStorage.setItem("ItemsID", JSON.stringify(ItemsID));
     localStorage.setItem("activeTab", activeTab);
   }, [ItemsID, activeTab]);
 
@@ -232,6 +235,7 @@ function NewMainContainer() {
                   <DisplayAllLists
                     onClickList={handleListClick}
                     onCloseList={handleCloseItemsList}
+                    ItemsID={ItemsID}
                   ></DisplayAllLists>
                 </div>
               </Tab.Pane>

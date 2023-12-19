@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { GetListsData } from "../../../components/communicationWithServer/HandleDataRequest";
 import ListDescription from "../../../components/listDescription/listDescriptions";
 import "./DisplayAllLists.css";
@@ -6,27 +6,18 @@ import GetDatasFromItems from "../../../components/functions/GetDatasFromItems";
 import DisplayItems from "../DisplayItems/DisplayItems";
 import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList";
 
-const DisplayAllLists = ({ onClickList, onCloseList }) => {
-  const [ItemsID, setItemsID] = useState(-1);
-  useEffect(() => {
-    const savedItemsID = localStorage.getItem("ItemsID");
+const DisplayAllLists = ({ onClickList, onCloseList,ItemsID }) => {
 
-    if (savedItemsID) {
-      setItemsID(parseInt(savedItemsID, 10));
-    }
-  }, []);
 
-  // Save state to local storage whenever the state changes
-  useEffect(() => {
-    localStorage.setItem("ItemsID", ItemsID.toString());
-  }, [ItemsID]);
+
+
   const handleListClick = (listId) => {
-    setItemsID(listId);
+  
     onClickList(listId);
   };
 
   const handleCloseItemsList = () => {
-    setItemsID(-1);
+  
     onCloseList();
   };
 

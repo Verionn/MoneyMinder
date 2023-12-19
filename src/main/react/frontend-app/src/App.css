@@ -1,3 +1,14 @@
+:root {
+  --primary-color: #0d3b66;
+  --primary-color-10-lighter: #254f75; /* 10% lighter */
+  --primary-color-20-lighter: #3d6285; /* 20% lighter */
+  --secondary-color: #06a77d;
+  --secondary-color-30-lighter: #51c1a4; /* 30% lighter */
+  --secondary-color-60-lighter: #9bdccb; /* 60% lighter */
+  --tertiary-color: #06a77d;
+  --quaternary-color: #d5c67a;
+  --quinary-color: #f1a208;
+}
 .App {
   text-align: center;
   display: flex;
@@ -34,7 +45,7 @@
   color: #61dafb;
 }
 
-.verticalLine{
+.verticalLine {
   border: 1px solid rgb(128, 128, 128);
   background-color: rgb(128, 128, 128);
   width: 1px;

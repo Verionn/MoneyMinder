@@ -1,10 +1,18 @@
-
-import React, { createContext, useContext, useState } from 'react';
-
+import React, { createContext, useContext, useEffect } from "react";
+import {useLocalStorageState} from "../functions/GetDatasFromItems";
 const DarkModeContext = createContext();
 
 export const DarkModeProviderCOntext = ({ children }) => {
-  const [darkMode, setDarkMode] = useState(false);
+  
+
+  const [darkMode, setDarkMode] = useLocalStorageState('darkMode', false);
+
+
+
+  // Save state to local storage whenever the state changes
+  useEffect(() => {
+    window.localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
 
   const toggleDarkMode = () => {
     setDarkMode((prevDarkMode) => !prevDarkMode);
@@ -20,7 +28,7 @@ export const DarkModeProviderCOntext = ({ children }) => {
 export const useDarkMode = () => {
   const context = useContext(DarkModeContext);
   if (!context) {
-    throw new Error('useDarkMode must be used within a DarkModeProvider');
+    throw new Error("useDarkMode must be used within a DarkModeProvider");
   }
   return context;
 };
