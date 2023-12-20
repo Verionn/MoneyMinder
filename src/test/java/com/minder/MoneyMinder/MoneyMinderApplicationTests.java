@@ -39,6 +39,7 @@ public abstract class MoneyMinderApplicationTests {
     protected static final String MARK_ITEM_PURCHASED_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d/purchased";
     protected static final String PURCHASED_ITEMS_BY_CATEGORY_ID_PATH_FORMAT = "/purchasedItems/categories/%d";
     protected static final String PURCHASED_ITEMS_BY_CATEGORY_ID_AND_DAYS_PATH_FORMAT = "/purchasedItems/categories/%d/days/%d";
+    protected static final String PURCHASED_ITEMS_BY_DAYS_PATH_FORMAT = "/purchasedItems/days/%d";
     protected static final String PURCHASED_ITEMS_BY_PREFIX_PATH_FORMAT = "/purchasedItems/names/%s";
     protected static final String FULL_PRICE_PATH_FORMAT = LISTS_RESOURCE + "/%d/fullprice";
     public static final String LIST_DESCRIPTION = "GO TO THE LIDL BCS OF PROMOTIONS";
@@ -130,6 +131,10 @@ public abstract class MoneyMinderApplicationTests {
 
     protected String purchasedItemsByCategoryIdAndDaysPath(Long categoryId, Long days){
         return prepareUrl(String.format(PURCHASED_ITEMS_BY_CATEGORY_ID_AND_DAYS_PATH_FORMAT, categoryId, days));
+    }
+
+    protected String purchasedItemsByDaysPath(Long days){
+        return prepareUrl(String.format(PURCHASED_ITEMS_BY_DAYS_PATH_FORMAT, days));
     }
 
     protected ListResponse createList(String listName) {
