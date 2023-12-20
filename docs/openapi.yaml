@@ -474,12 +474,32 @@ paths:
         - in: path
           name: prefix
           schema:
-            type: String
+            type: string
           required: true
           description: prefix
       responses:
         '200':
           description: Successfully returned names
+
+
+  /purchasedItems/days/{days}:
+    get:
+      tags:
+        - purchasedItems
+      description: Get purchased items in N Days
+      operationId: getPurchasedItemsInNDays
+      parameters:
+        - in: path
+          name: days
+          schema:
+            type: integer
+          required: true
+          description: amount od days
+      responses:
+        '200':
+          description: Successfully returned names
+        '400':
+          description: Wrong amount of days
 
 
 components:
