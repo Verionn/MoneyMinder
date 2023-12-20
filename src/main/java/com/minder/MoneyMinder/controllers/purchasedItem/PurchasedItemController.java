@@ -7,6 +7,7 @@ import com.minder.MoneyMinder.repositories.PurchasedItemRepository;
 import com.minder.MoneyMinder.services.ItemService;
 import com.minder.MoneyMinder.services.ListService;
 import com.minder.MoneyMinder.services.PurchasedItemService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -62,6 +63,16 @@ public class PurchasedItemController {
         return ResponseEntity.ok().body(new PurchasedItemListResponse(
                 purchasedItemService.getPurchasedItemsByCategoryIdInLastNDays(categoryId, days)));
     }
+
+    @GetMapping("/days/{days}")
+    public ResponseEntity<PurchasedItemListResponse> getPurchasedItemsInLastNDays(@PathVariable Long days){
+        if(days <= 0){
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().body(new PurchasedItemListResponse(purchasedItemService.getPurchasedItemsInLastNDays(days)));
+    }
+
 
     private boolean checkIfCategoryExists(Long categoryId) {
         return categoryRepository.existsById(categoryId);
