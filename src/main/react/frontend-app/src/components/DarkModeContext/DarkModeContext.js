@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { useLocalStorageState } from "../functions/GetDatasFromItems";
+import { useLocalStorageState } from "../functions/functions";
 const DarkModeContext = createContext();
 
 export const DarkModeProviderCOntext = ({ children }) => {

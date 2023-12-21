@@ -9,7 +9,7 @@ import Logo from "../../ressources/logo.png";
 import HeaderMainContainer from "../HeaderMainContainer/HeaderMainContainer";
 import SettingsCanvas from "../SettingsCanvas/SettingsCanvas";
 import DisplayAllLists from "../DisplayDatas/DisplayAllLists/DisplayAllLists";
-import { useLocalStorageState } from "../../components/functions/GetDatasFromItems";
+import { useLocalStorageState } from "../../components/functions/functions";
 function NewMainContainer() {
   const { darkMode } = useDarkMode();
   const [ItemsID, setItemsID] = useLocalStorageState("ItemsID", -1);
@@ -43,7 +43,7 @@ function NewMainContainer() {
     <div className={darkMode ? "newMaincontainer dark" : "newMaincontainer"}>
       <Tab.Container
         id="left-tabs-example"
-        defaultActiveKey="first"
+        defaultActiveKey={activeTab}
         className="TabContainer"
       >
         <Row className="MainContainerRows">
@@ -85,7 +85,7 @@ function NewMainContainer() {
                       name="basket"
                       color={determineColorIcon(darkMode, activeTab, "first")}
                     ></box-icon>
-                    <p
+                    <span
                       className={
                         darkMode
                           ? ""
@@ -95,7 +95,7 @@ function NewMainContainer() {
                       }
                     >
                       Shopping lists
-                    </p>
+                    </span>
                   </div>
                 </Nav.Link>
               </Nav.Item>
@@ -112,7 +112,7 @@ function NewMainContainer() {
                       name="trash"
                       color={determineColorIcon(darkMode, activeTab, "second")}
                     ></box-icon>
-                    <p
+                    <span
                       className={
                         darkMode
                           ? ""
@@ -122,7 +122,7 @@ function NewMainContainer() {
                       }
                     >
                       Trash
-                    </p>
+                    </span>
                   </div>
                 </Nav.Link>
               </Nav.Item>
@@ -138,7 +138,7 @@ function NewMainContainer() {
                       name="question-mark"
                       color={determineColorIcon(darkMode, activeTab, "third")}
                     ></box-icon>
-                    <p
+                    <span
                       className={
                         darkMode
                           ? ""
@@ -148,7 +148,7 @@ function NewMainContainer() {
                       }
                     >
                       help
-                    </p>
+                    </span>
                   </div>
                 </Nav.Link>
               </Nav.Item>
@@ -158,14 +158,13 @@ function NewMainContainer() {
                   <p className={darkMode ? "NavLinkTitleDark" : ""}>Settings</p>
                 }
                 placement="end"
-                content={
-                  <box-icon
-                    name="cog"
-                    color={"#fff"}
-                  ></box-icon>
-                }
+                content={<box-icon name="cog" color={"#fff"}></box-icon>}
               ></SettingsCanvas>
-              <div className="horizontal-line"></div>
+              <div
+                className={
+                  darkMode ? "horizontal-line-Darkmode" : "horizontal-line"
+                }
+              ></div>
               <div className="links">
                 <box-icon
                   type="logo"
@@ -178,12 +177,16 @@ function NewMainContainer() {
               <div className="termsAndConditions">
                 <p>Privacy Policy</p>
                 <p>Terms of service</p>
-                <div className={darkMode?"horizontal-line-Darkmode":"horizontal-line"}></div>
+                <div
+                  className={
+                    darkMode ? "horizontal-line-Darkmode" : "horizontal-line"
+                  }
+                ></div>
 
                 <p className="copyRights">
                   {" "}
-                  <box-icon name="copyright"  color="#fff"></box-icon>2023 MoneyMinder{" "}
-                  <br></br> All rights reserved
+                  <box-icon name="copyright" color="#fff"></box-icon>2023
+                  MoneyMinder <br></br> All rights reserved
                 </p>
               </div>
             </Nav>
@@ -194,7 +197,7 @@ function NewMainContainer() {
                 {ItemsID === -1 ? (
                   <HeaderMainContainer />
                 ) : (
-                  <p>{console.log("test")}</p>
+                 null
                 )}
                 <div className="mainContainerBody">
                   <DisplayAllLists

@@ -2,6 +2,7 @@
   width: 100vw;
   height: 100vh;
   padding: 0;
+  background-color: var(--light-theme-background);
 }
 .dark {
   background-color: var(--dark-theme-background) !important;
@@ -135,8 +136,8 @@
   font-size: 20px;
   font-weight: normal;
 }
-.NavLinkTitle > p {
-  margin-bottom: 1rem !important;
+.NavLinkTitle > span {
+ 
   color: var(--light-theme-surface) !important;
 }
 
