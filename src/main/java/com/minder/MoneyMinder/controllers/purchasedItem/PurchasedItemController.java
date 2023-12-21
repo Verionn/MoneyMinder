@@ -73,6 +73,13 @@ public class PurchasedItemController {
         return ResponseEntity.ok().body(new PurchasedItemListResponse(purchasedItemService.getPurchasedItemsInLastNDays(days)));
     }
 
+    @GetMapping("/items/{amountOfItems}")
+    public ResponseEntity<PurchasedItemListResponse> getLastNPurchasedItems(@PathVariable Long amountOfItems){
+        if(amountOfItems <= 0){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().body(new PurchasedItemListResponse(purchasedItemService.getLastNPurchasedItems(amountOfItems)));
+    }
 
     private boolean checkIfCategoryExists(Long categoryId) {
         return categoryRepository.existsById(categoryId);

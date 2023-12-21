@@ -45,4 +45,10 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
         return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(
                 purchasedItemRepository.findAllInLastNDays(days));
     }
+
+    @Override
+    public List<PurchasedItemResponse> getLastNPurchasedItems(Long amountOfItems) {
+        return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(
+                purchasedItemRepository.findAllByDateBought(amountOfItems));
+    }
 }
