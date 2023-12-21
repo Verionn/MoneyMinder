@@ -2,22 +2,16 @@ import React from "react";
 import { GetListsData } from "../../../components/communicationWithServer/HandleDataRequest";
 import ListDescription from "../../../components/listDescription/listDescriptions";
 import "./DisplayAllLists.css";
-import GetDatasFromItems from "../../../components/functions/GetDatasFromItems";
+import GetDatasFromItems from "../../../components/functions/functions";
 import DisplayItems from "../DisplayItems/DisplayItems";
 import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList";
 
-const DisplayAllLists = ({ onClickList, onCloseList,ItemsID }) => {
-
-
-
-
+const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
   const handleListClick = (listId) => {
-  
     onClickList(listId);
   };
 
   const handleCloseItemsList = () => {
-  
     onCloseList();
   };
 
@@ -35,7 +29,7 @@ const DisplayAllLists = ({ onClickList, onCloseList,ItemsID }) => {
         <box-icon
           name="loader-alt"
           animation="spin"
-          color="#002a4e"
+          color="var(--primary-color)"
           size="lg"
         ></box-icon>
       </p>

@@ -45,9 +45,13 @@ function SettingsCanvas({ name, content, ...props }) {
         onHide={handleClose}
         {...props}
         className="settingsBox"
-        style={{ backgroundColor: darkMode ? "#161616" : "#fff" }}
+        style={{
+          backgroundColor: darkMode
+            ? "var(--dark-theme-background, #303030)"
+            : "var(--light-theme-background, #fafafa)",
+        }}
       >
-        <Offcanvas.Header closeButton className="SettingsHeader">
+        <Offcanvas.Header closeButton className={darkMode?"SettingsHeader darkModeHeader" : "SettingsHeader"}>
           <Offcanvas.Title
             className={
               darkMode ? "settingsTitle textDarkMode" : "settingsTitle"
@@ -64,6 +68,5 @@ function SettingsCanvas({ name, content, ...props }) {
     </>
   );
 }
-
 
 export default SettingsCanvas;

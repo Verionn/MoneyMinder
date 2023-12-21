@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import CloseButton from "react-bootstrap/CloseButton";
 import "./addNewItem.css";
-import { GetCategoryNameID } from "../functions/GetDatasFromItems";
+import { GetCategoryNameID } from "../functions/functions";
 import {
   GetCategoryData,
-  PostNewItem,PostNewCategory
+  PostNewItem,
+  PostNewCategory,
 } from "../communicationWithServer/HandleDataRequest";
 import ItemForm from "./ItemForm";
 import Toast from "react-bootstrap/Toast";
@@ -44,12 +45,11 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
     });
     if (found) return categoryID;
     else {
-  
       if (PostNewCategory({ categoryName }) === false) return -1;
       setNewCategory(true);
       setMessage("New category added successfully!");
       handleShowNotification();
-     // window.location.reload(true);
+      // window.location.reload(true);
       return GetCategoryNameID(categoryName, categories);
     }
   };
@@ -79,7 +79,7 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
 
   const handleAddNewItem = async (DatasToFetch, itemsTab) => {
     const newItem = OraganizeNewItem(DatasToFetch);
-   
+
     const existingItem = itemsTab.find((item) => item.name === newItem.name);
 
     if (existingItem) {

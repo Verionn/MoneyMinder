@@ -14,23 +14,36 @@ function SettingsTabs() {
     setActiveTab(tab);
   };
 
+  const getNavLinkClassName = (darkMode, activeTab, currentTab) => {
+    const baseClassName = darkMode ? "NavLinkDark" : "NavLink";
+    const isActiveClass = activeTab === currentTab ? "active" : "";
+
+    return `${baseClassName} ${isActiveClass}`;
+  };
+
+  const getClassNameTitle = (darkMode, activeTab, currentTab) => {
+    if (darkMode) {
+      if (activeTab === currentTab) return "NavLinkTitleDarkActive";
+      else return "NavLinkTitleDarkNotActive";
+    } else {
+      if (activeTab === currentTab) return "NavLinkTitleActive";
+      else return "NavLinkTitleNotActive";
+    }
+  };
+
   return (
     <Tab.Container
       id="left-tabs-example"
       defaultActiveKey="first"
-      className="TabContainer"
+      className={darkMode ? "TabContainerDark" : "TabContainer"}
     >
-      <Row className="TabContainerRow">
+      <Row className={darkMode ? "TabContainerRowDark" : "TabContainerRow"}>
         <Col sm={3} className="NavBars">
           <Nav variant="pills" className="flex-column NavBarDisplay">
             <Nav.Item className="NavItem">
               <Nav.Link
                 eventKey="first"
-                className={
-                  darkMode
-                    ? `NavLinkDark ${activeTab === "first" ? "active" : ""}`
-                    : `NavLink ${activeTab === "first" ? "active" : ""}`
-                }
+                className={getNavLinkClassName(darkMode, activeTab, "first")}
                 onClick={() => handleTabClick("first")}
               >
                 <div className="NavLinkTitle">
@@ -45,13 +58,7 @@ function SettingsTabs() {
                     }
                   ></box-icon>
                   <p
-                    className={
-                      darkMode
-                        ? ""
-                        : activeTab === "first"
-                        ? ""
-                        : "NavLinkTitleDark"
-                    }
+                    className={getClassNameTitle(darkMode, activeTab, "first")}
                   >
                     General
                   </p>
@@ -81,13 +88,7 @@ function SettingsTabs() {
                     }
                   ></box-icon>
                   <p
-                    className={
-                      darkMode
-                        ? ""
-                        : activeTab === "second"
-                        ? ""
-                        : "NavLinkTitleDark"
-                    }
+                    className={getClassNameTitle(darkMode, activeTab, "second")}
                   >
                     List
                   </p>
@@ -118,13 +119,7 @@ function SettingsTabs() {
                     }
                   ></box-icon>
                   <p
-                    className={
-                      darkMode
-                        ? ""
-                        : activeTab === "third"
-                        ? ""
-                        : "NavLinkTitleDark"
-                    }
+                     className={getClassNameTitle(darkMode, activeTab, "third")}
                   >
                     Account
                   </p>
@@ -154,13 +149,7 @@ function SettingsTabs() {
                     }
                   ></box-icon>
                   <p
-                    className={
-                      darkMode
-                        ? ""
-                        : activeTab === "fourth"
-                        ? ""
-                        : "NavLinkTitleDark"
-                    }
+                    className={getClassNameTitle(darkMode, activeTab, "fourth")}
                   >
                     Support
                   </p>
@@ -174,7 +163,7 @@ function SettingsTabs() {
             <Tab.Pane eventKey="first">
               <button className="generalLoginButton">
                 <p>Log in &gt; </p>
-                <p>Access your list from any device</p>
+                <span>Access your list from any device</span>
               </button>
               <div className="ButtonDarkMode" onClick={toggleDarkMode}>
                 <box-icon
@@ -182,7 +171,7 @@ function SettingsTabs() {
                   name={darkMode ? "toggle-right" : "toggle-left"}
                   className={darkMode ? "DarkMode" : "LightMode"}
                   size="lg"
-                  color={darkMode ? "#002a4e" : "#1c1c1c"}
+                  color={darkMode ? "var(--primary-color)" : "#1c1c1c"}
                 ></box-icon>
                 <div className={darkMode ? "textDarkMode" : ""}>
                   {darkMode ? "Dark Mode " : "Light Mode"}
