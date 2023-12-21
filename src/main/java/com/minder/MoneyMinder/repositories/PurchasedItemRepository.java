@@ -22,4 +22,7 @@ public interface PurchasedItemRepository extends JpaRepository<PurchasedItemEnti
 
     @Query("SELECT l FROM PurchasedItemEntity l WHERE FUNCTION('DATEDIFF', DAY, l.timeBought, CURRENT_DATE()) <= :days")
     List<PurchasedItemEntity> findAllInLastNDays(Long days);
+
+    @Query("SELECT l FROM PurchasedItemEntity l ORDER BY timeBought DESC LIMIT :amountOfItems")
+    List<PurchasedItemEntity> findAllByDateBought(Long amountOfItems);
 }

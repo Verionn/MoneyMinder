@@ -15,4 +15,6 @@ public interface PurchasedItemService {
     List<PurchasedItemResponse> getPurchasedItemsByCategoryIdInLastNDays(Long categoryId, Long days);
 
     List<PurchasedItemResponse> getPurchasedItemsInLastNDays(Long days);
+
+    List<PurchasedItemResponse> getLastNPurchasedItems(Long amountOfItems);
 }
