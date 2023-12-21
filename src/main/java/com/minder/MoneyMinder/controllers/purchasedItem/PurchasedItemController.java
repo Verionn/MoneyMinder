@@ -81,7 +81,6 @@ public class PurchasedItemController {
         return null;
     }
 
-
     private boolean checkIfCategoryExists(Long categoryId) {
         return categoryRepository.existsById(categoryId);
     }
