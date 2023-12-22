@@ -185,4 +185,45 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
         assertNotNull(purchasedItemListResponse.getBody());
         assertThat(purchasedItemListResponse.getBody().purchasedItems().size(), equalTo(amountOfPurchasedItemsInLast2Days + 2));
     }
+
+    @DisplayName("Should return bad request when given a wrong amount of items")
+    @Test
+    public void ShouldReturn400WhenGivenWrongAmountOfItems(){
+
+        //when
+        var purchasedItemListResponse = client.getForEntity(purchasedItemsByAmountOfItemsPath(
+                WRONG_AMOUNT_OF_ITEMS), PurchasedItemListResponse.class);
+
+        //
+        assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
+        assertNull(purchasedItemListResponse.getBody());
+    }
+
+    @DisplayName("Should return 200 and last 2 purchased items when given a good amount of items")
+    @Test
+    public void ShouldReturn200AndItemsWhenGivenGoodAmountOfDays(){
+
+        //given
+        var createdList = createList(FIRST_LIST_NAME);
+        var createdFirstCategory = createCategory(FIRST_CATEGORY_NAME);
+        var createdSecondCategory = createCategory(SECOND_CATEGORY_NAME);
+
+        var firstAddedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdFirstCategory.categoryId());
+        var secondAddedItem = addItem(SECOND_ITEM_NAME, createdList.listId(), createdSecondCategory.categoryId());
+
+        var firstPurchasedItem = markItemAsPurchased(firstAddedItem.itemId(), createdList.listId());
+        var secondPurchasedItem = markItemAsPurchased(secondAddedItem.itemId(), createdList.listId());
+
+
+        //when
+        var purchasedItemListResponse = client.getForEntity(
+                purchasedItemsByAmountOfItemsPath(AMOUNT_OF_ITEMS), PurchasedItemListResponse.class);
+
+        //then
+        assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.OK));
+        assertNotNull(purchasedItemListResponse.getBody());
+        assertThat(purchasedItemListResponse.getBody().purchasedItems().size(), equalTo(2));
+        assertThat(purchasedItemListResponse.getBody().purchasedItems().get(0).name(), equalTo(SECOND_ITEM_NAME));
+        assertThat(purchasedItemListResponse.getBody().purchasedItems().get(1).name(), equalTo(FIRST_ITEM_NAME));
+    }
 }
