@@ -40,6 +40,7 @@ public abstract class MoneyMinderApplicationTests {
     protected static final String PURCHASED_ITEMS_BY_CATEGORY_ID_PATH_FORMAT = "/purchasedItems/categories/%d";
     protected static final String PURCHASED_ITEMS_BY_CATEGORY_ID_AND_DAYS_PATH_FORMAT = "/purchasedItems/categories/%d/days/%d";
     protected static final String PURCHASED_ITEMS_BY_DAYS_PATH_FORMAT = "/purchasedItems/days/%d";
+    protected static final String PURCHASED_ITEMS_BY_AMOUNT_OF_ITEMS_PATH_FORMAT = "/purchasedItems/items/%d";
     protected static final String PURCHASED_ITEMS_BY_PREFIX_PATH_FORMAT = "/purchasedItems/names/%s";
     protected static final String FULL_PRICE_PATH_FORMAT = LISTS_RESOURCE + "/%d/fullprice";
     public static final String LIST_DESCRIPTION = "GO TO THE LIDL BCS OF PROMOTIONS";
@@ -51,7 +52,7 @@ public abstract class MoneyMinderApplicationTests {
     public static final String SECOND_ITEM_NAME = "Pepsi";
     public static final String NEW_ITEM_NAME = "Sprite";
     public static final String WRONG_LIST_NAME = "";
-    public static final int WRONG_LIST_ID = -12;
+    public static final Long WRONG_LIST_ID = -12L;
     public static final String FIRST_CATEGORY_NAME = "Food";
     public static final String SECOND_CATEGORY_NAME = "Sweets";
     public static final String NEW_CATEGORY_NAME = "Drinks";
@@ -71,11 +72,13 @@ public abstract class MoneyMinderApplicationTests {
     public static final int RANDOM_AMOUNT = 1;
     public static final int NEW_AMOUNT = 2;
     public static final int WRONG_AMOUNT = -13;
-    public static final long RANDOM_WEIGHT = 123;
-    public static final long NEW_WEIGHT = 353;
-    public static final long WRONG_WEIGHT = -123;
-    public static final long DAYS = 2;
-    public static final long WRONG_DAYS = -2;
+    public static final Long RANDOM_WEIGHT = 123L;
+    public static final Long NEW_WEIGHT = 353L;
+    public static final Long WRONG_WEIGHT = -123L;
+    public static final Long DAYS = 2L;
+    public static final Long WRONG_DAYS = -2L;
+    public static final Long WRONG_AMOUNT_OF_ITEMS = -2L;
+    public static final long AMOUNT_OF_ITEMS = 2;
     public static final LocalDateTime RANDOM_DATE = LocalDateTime.parse("2023-10-15T21:15:00");
 
     @Autowired
@@ -135,6 +138,10 @@ public abstract class MoneyMinderApplicationTests {
 
     protected String purchasedItemsByDaysPath(Long days){
         return prepareUrl(String.format(PURCHASED_ITEMS_BY_DAYS_PATH_FORMAT, days));
+    }
+
+    protected String purchasedItemsByAmountOfItemsPath(Long amountOfItems){
+        return prepareUrl(String.format(PURCHASED_ITEMS_BY_AMOUNT_OF_ITEMS_PATH_FORMAT, amountOfItems));
     }
 
     protected ListResponse createList(String listName) {
