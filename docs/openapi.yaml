@@ -502,6 +502,26 @@ paths:
           description: Wrong amount of days
 
 
+  /purchasedItems/items/{amountOfItems}:
+    get:
+      tags:
+        - purchasedItems
+      description: Get last N purchased items
+      operationId: getLastNPurchasedItems
+      parameters:
+        - in: path
+          name: amountOfItems
+          schema:
+            type: integer
+          required: true
+          description: amount of items
+      responses:
+        '200':
+          description: Successfully returned items
+        '400':
+          description: Wrong amount of items
+
+
 components:
   schemas:
 
