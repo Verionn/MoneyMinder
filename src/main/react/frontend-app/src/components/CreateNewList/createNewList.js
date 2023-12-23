@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import "boxicons";
 import "./createNewList.css";
-import {PostNewList} from "../communicationWithServer/HandleDataRequest"
+import { PostNewList } from "../communicationWithServer/HandleDataRequest";
 import { useDarkMode } from "../DarkModeContext/DarkModeContext";
+import {
+  CreateNotification,
+  useLocalStorageState,
+} from "../functions/functions";
 
 const CreateNewList = ({ onClose }) => {
   const { darkMode } = useDarkMode();
@@ -12,9 +16,20 @@ const CreateNewList = ({ onClose }) => {
   const [description, setDescription] = useState("");
   const [descriptionCount, setDescriptionCount] = useState(0);
   const maxDescriptionLength = 300;
-  const maxListNameLength = 50; 
+  const maxListNameLength = 50;
+  const [notification, setNotification] = useLocalStorageState(
+    "notification",
+    null
+  );
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    if (notification) {
+      CreateNotification(notification.type, notification.message);
+      setNotification(null);
+    }
+  }, [notification]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -27,13 +42,19 @@ const CreateNewList = ({ onClose }) => {
   };
 
   const handleCreateNewList = async () => {
-      if(PostNewList(listName,description,maxListNameLength)){
-        handleClose();
-        window.location.reload(true);
-      }
-      else{
-        alert("Error creating new list")
-      }
+    if (PostNewList(listName, description, maxListNameLength)) {
+      handleClose();
+      window.location.reload(true);
+      setNotification({
+        type: "success",
+        message: "New list created successfully",
+      });
+    } else {
+      setNotification({
+        type: "error",
+        message: "Error creating a new list",
+      });
+    }
   };
 
   return (
@@ -48,11 +69,16 @@ const CreateNewList = ({ onClose }) => {
         <p>New list</p>
       </Button>
 
-      <Modal show={show} onHide={handleClose} centered >
-        <Modal.Header closeButton className={darkMode?"CreateListFormDark": "CreateListForm"}>
+      <Modal show={show} onHide={handleClose} centered>
+        <Modal.Header
+          closeButton
+          className={darkMode ? "CreateListFormDark" : "CreateListForm"}
+        >
           <Modal.Title>Create a new list</Modal.Title>
         </Modal.Header>
-        <Modal.Body className={darkMode?"CreateListFormDarkBody": "CreateListFormBody"}>
+        <Modal.Body
+          className={darkMode ? "CreateListFormDarkBody" : "CreateListFormBody"}
+        >
           <Form.Group controlId="formListName" className="formListName">
             <Form.Label>List Name</Form.Label>
             <Form.Control
@@ -61,7 +87,7 @@ const CreateNewList = ({ onClose }) => {
               placeholder="Enter list name"
               value={listName}
               onChange={handleInputChange}
-              className={darkMode?"writeListNameDark": "writeListName"}
+              className={darkMode ? "writeListNameDark" : "writeListName"}
             />
             <div className="listNameHints">
               <div className="characterCount">
@@ -88,7 +114,7 @@ const CreateNewList = ({ onClose }) => {
               placeholder="Enter list description"
               value={description}
               onChange={handleInputChange}
-              className={darkMode?"writeDescriptionDark": "writeDescription"}
+              className={darkMode ? "writeDescriptionDark" : "writeDescription"}
             />
             <div className="descriptionHint">
               <div className="characterCount">
@@ -103,7 +129,11 @@ const CreateNewList = ({ onClose }) => {
             </div>
           </Form.Group>
         </Modal.Body>
-        <Modal.Footer className={darkMode?"CreateListFormFooterDark": "CreateListFormFooter"}>
+        <Modal.Footer
+          className={
+            darkMode ? "CreateListFormFooterDark" : "CreateListFormFooter"
+          }
+        >
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>

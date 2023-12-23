@@ -21,7 +21,11 @@
   --dark-theme-surface: #424242;
   --dark-theme-hover: #1c1c1d;
 
-  
+  --sucess: #51a351;
+  --error: #bd362f; 
+  --warning: #f89406;
+  --info: #2f96b4;
+  --notification-background: #2f96b4;
   font-family: "Poppins", sans-serif !important;
 }
 .App {
