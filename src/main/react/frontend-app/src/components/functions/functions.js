@@ -1,8 +1,10 @@
 // GetNumberOfItems.js
-import React ,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
+import { GetItemListData } from "../communicationWithServer/HandleDataRequest";
 import {
-  GetItemListData,
-} from "../communicationWithServer/HandleDataRequest";
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 const GetDatasFromItems = ({ listID, operation }) => {
   const apiUrl = `http://localhost:8080/lists/${listID}/items`;
@@ -44,7 +46,7 @@ export const GetCategoryNameID = async (categoryName, categories) => {
 
 export const useLocalStorageState = (key, initialValue) => {
   const storedValue = JSON.parse(localStorage.getItem(key)) || initialValue;
-  console.log(`Key: ${key}, Stored Value: ${storedValue}`);
+  // console.log(`Key: ${key}, Stored Value: ${storedValue}`);
   const [value, setValue] = useState(storedValue);
 
   useEffect(() => {
@@ -59,4 +61,27 @@ export const useLocalStorageState = (key, initialValue) => {
   }, [key, value]);
 
   return [value, setValue];
+};
+
+export const CreateNotification = (type, message) => {
+  switch (type) {
+    case "info":
+      NotificationManager.info(message);
+      break;
+    case "success":
+      console.log("success");
+      NotificationManager.success(message);
+
+      break;
+    case "warning":
+      NotificationManager.warning(message, "Close after 3000ms", 3000);
+      break;
+    case "error":
+      NotificationManager.error(message, "Close after 5000ms", 5000, () => {
+        alert("callback");
+      });
+      break;
+    default:
+      break;
+  }
 };
