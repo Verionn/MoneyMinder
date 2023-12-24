@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import "./SettingsTabs.css";
-import { useDarkMode } from "../../../components/DarkModeContext/DarkModeContext";
+import { useDarkMode } from "../../../components/Context/Contexts";
 function SettingsTabs() {
   const { darkMode, toggleDarkMode } = useDarkMode();
 
@@ -119,7 +119,7 @@ function SettingsTabs() {
                     }
                   ></box-icon>
                   <p
-                     className={getClassNameTitle(darkMode, activeTab, "third")}
+                    className={getClassNameTitle(darkMode, activeTab, "third")}
                   >
                     Account
                   </p>

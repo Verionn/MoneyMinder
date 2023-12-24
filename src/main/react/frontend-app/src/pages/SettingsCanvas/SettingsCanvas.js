@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import "boxicons";
 import "./SettingsCanvas.css";
-import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
+import { useDarkMode } from "../../components/Context/Contexts";
 import SettingsTabs from "./SettingsTabs/SettingsTabs";
 
 function SettingsCanvas({ name, content, ...props }) {
@@ -51,7 +51,12 @@ function SettingsCanvas({ name, content, ...props }) {
             : "var(--light-theme-background, #fafafa)",
         }}
       >
-        <Offcanvas.Header closeButton className={darkMode?"SettingsHeader darkModeHeader" : "SettingsHeader"}>
+        <Offcanvas.Header
+          closeButton
+          className={
+            darkMode ? "SettingsHeader darkModeHeader" : "SettingsHeader"
+          }
+        >
           <Offcanvas.Title
             className={
               darkMode ? "settingsTitle textDarkMode" : "settingsTitle"

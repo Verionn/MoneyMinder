@@ -3,7 +3,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import "boxicons";
 import "./createNewList.css";
 import { PostNewList } from "../communicationWithServer/HandleDataRequest";
-import { useDarkMode } from "../DarkModeContext/DarkModeContext";
+import { useDarkMode, useListArray } from "../Context/Contexts";
 import {
   CreateNotification,
   useLocalStorageState,
@@ -11,6 +11,7 @@ import {
 
 const CreateNewList = ({ onClose }) => {
   const { darkMode } = useDarkMode();
+  const { addElement } = useListArray();
   const [show, setShow] = useState(false);
   const [listName, setListName] = useState("");
   const [description, setDescription] = useState("");
@@ -42,9 +43,8 @@ const CreateNewList = ({ onClose }) => {
   };
 
   const handleCreateNewList = async () => {
-    if (PostNewList(listName, description, maxListNameLength)) {
+    if (PostNewList(listName, description, maxListNameLength, addElement)) {
       handleClose();
-      window.location.reload(true);
       setNotification({
         type: "success",
         message: "New list created successfully",

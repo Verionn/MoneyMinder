@@ -1,10 +1,9 @@
-import { useState, useEffect,useContext } from "react";
-import DataContext from "../context/DataContext";
+import { useState, useEffect } from "react";
+import { useListArray } from "../Context/Contexts";
 const endpoint = "http://localhost:8080";
 const categoriesUrl = `http://localhost:8080/categories`;
 //GET DATA FROM SERVER
 export const GetCategoryData = ({ apiUrl }) => {
-  const{Categories,updateCategories } = useContext(DataContext);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,19 +16,17 @@ export const GetCategoryData = ({ apiUrl }) => {
           throw new Error("Network response was not ok");
         }
         const result = await response.json();
+
         setCategories(result.categories);
-      
       } catch (error) {
         setError(error);
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchData();
-    
   }, [apiUrl]);
-  
 
   return { categories, loading, error };
 };
@@ -38,7 +35,7 @@ export const GetListsData = ({ apiUrl }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { initializeArray } = useListArray();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,6 +46,7 @@ export const GetListsData = ({ apiUrl }) => {
         }
         const result = await response.json();
         setData(result);
+        initializeArray(result.lists);
       } catch (error) {
         setError(error);
       } finally {
@@ -57,8 +55,9 @@ export const GetListsData = ({ apiUrl }) => {
     };
 
     fetchData();
-  }, [apiUrl]);
-
+  }, [apiUrl,initializeArray]);
+  //addElement(data);
+  //console.log("listArray : ",data);
   return { data, loading, error };
 };
 
@@ -91,7 +90,12 @@ export const GetItemListData = ({ apiUrl }) => {
 
 //POST DATA TO SERVER
 
-export const PostNewList = async (listName, description, maxListNameLength) => {
+export const PostNewList = async (
+  listName,
+  description,
+  maxListNameLength,
+  addElement
+) => {
   try {
     if (listName.length > 0 && listName.length <= maxListNameLength) {
       const response = await fetch("http://localhost:8080/lists", {
@@ -101,7 +105,8 @@ export const PostNewList = async (listName, description, maxListNameLength) => {
         },
         body: JSON.stringify({ name: listName, description: description }),
       });
-
+      const result = await response.json();
+      addElement(result.lists);
       if (!response.ok) {
         throw new Error("Failed to create a new list");
       }
@@ -110,7 +115,6 @@ export const PostNewList = async (listName, description, maxListNameLength) => {
     } else {
       alert("Please enter a list name");
     }
-    
   } catch (error) {
     console.error("Error creating a new list:", error);
     return false;
@@ -148,18 +152,16 @@ export const PostNewCategory = async ({ NewCategoryName }) => {
       },
       body: JSON.stringify({ name: newCategory.name }),
     });
-      UpdateCategories();
+
     if (!response.ok) {
       throw new Error("Failed to add a new category");
     }
-   
+
     return true;
   } catch (error) {
     console.error("Error adding new category:", error);
     return false;
   }
-
-
 };
 
 const getByText = (method, type, message) => {
@@ -272,7 +274,6 @@ export const HandleDataRequest = ({
   methodTobeUsed,
 }) => {
   const fetchReceivedDatas = async (method, type, datas, url) => {
-
     if (method === "GET") {
       return await GetDatas(type, method, datas, url);
     }
@@ -281,22 +282,11 @@ export const HandleDataRequest = ({
 };
 
 export async function DataRequest(typeOfdataRequested, method, url, datas) {
-
   if (method === "GET") {
-    let { categories } = await GetDatas(
-      typeOfdataRequested,
-      url
-    );
-  
+    let { categories } = await GetDatas(typeOfdataRequested, url);
+
     return { categories };
   }
-}
-
-
-const UpdateCategories = () => {
-  const {updateCategories } = useContext(DataContext);
-  let { categories} = GetCategoryData( {categoriesUrl} );
-  updateCategories(categories);
 }
 
 //export default HandleDataRequest;
