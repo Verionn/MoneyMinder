@@ -81,7 +81,20 @@ public class PurchasedItemController {
         return ResponseEntity.ok().body(new PurchasedItemListResponse(purchasedItemService.getLastNPurchasedItems(amountOfItems)));
     }
 
+    @GetMapping("/lists/{listId}")
+    public ResponseEntity<PurchasedItemListResponse> getPurchasedItemsFromList(@PathVariable Long listId){
+        if(!checkIfListExists(listId)){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(new PurchasedItemListResponse(purchasedItemService.getPurchasedItemsFromList(listId)));
+    }
+
     private boolean checkIfCategoryExists(Long categoryId) {
         return categoryRepository.existsById(categoryId);
+    }
+
+    private boolean checkIfListExists(Long listId) {
+        return listService.existsById(listId);
     }
 }
