@@ -6,7 +6,6 @@ import com.minder.MoneyMinder.repositories.ItemRepository;
 import com.minder.MoneyMinder.repositories.PurchasedItemRepository;
 import com.minder.MoneyMinder.services.PurchasedItemService;
 import com.minder.MoneyMinder.services.mappers.PurchasedItemMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,5 +49,10 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
     public List<PurchasedItemResponse> getLastNPurchasedItems(Long amountOfItems) {
         return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(
                 purchasedItemRepository.findAllByDateBought(amountOfItems));
+    }
+
+    @Override
+    public List<PurchasedItemResponse> getPurchasedItemsFromList(Long listId) {
+        return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(purchasedItemRepository.findAllByListId(listId));
     }
 }
