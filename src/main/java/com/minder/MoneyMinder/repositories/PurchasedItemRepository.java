@@ -1,6 +1,5 @@
 package com.minder.MoneyMinder.repositories;
 
-import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemResponse;
 import com.minder.MoneyMinder.models.PurchasedItemEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +24,7 @@ public interface PurchasedItemRepository extends JpaRepository<PurchasedItemEnti
 
     @Query("SELECT l FROM PurchasedItemEntity l ORDER BY timeBought DESC LIMIT :amountOfItems")
     List<PurchasedItemEntity> findAllByDateBought(Long amountOfItems);
+
+    @Query("SELECT l FROM PurchasedItemEntity l WHERE l.listId = :listId")
+    List<PurchasedItemEntity> findAllByListId(Long listId);
 }
