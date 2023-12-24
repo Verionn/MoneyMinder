@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import "./newMainContainer.css";
-import { useDarkMode } from "../../components/DarkModeContext/DarkModeContext";
+import { useDarkMode } from "../../components/Context/Contexts";
 import Logo from "../../ressources/logo.png";
 import HeaderMainContainer from "../HeaderMainContainer/HeaderMainContainer";
 import SettingsCanvas from "../SettingsCanvas/SettingsCanvas";
@@ -194,11 +194,7 @@ function NewMainContainer() {
           <Col sm={9} className="mainContainerNavBarsContents">
             <Tab.Content>
               <Tab.Pane eventKey="first">
-                {ItemsID === -1 ? (
-                  <HeaderMainContainer />
-                ) : (
-                 null
-                )}
+                {ItemsID === -1 ? <HeaderMainContainer /> : null}
                 <div className="mainContainerBody">
                   <DisplayAllLists
                     onClickList={handleListClick}

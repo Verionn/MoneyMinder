@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GetListsData } from "../../../components/communicationWithServer/HandleDataRequest";
 import ListDescription from "../../../components/listDescription/listDescriptions";
 import "./DisplayAllLists.css";
 import GetDatasFromItems from "../../../components/functions/functions";
 import DisplayItems from "../DisplayItems/DisplayItems";
 import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList";
-
+import { useListArray } from "../../../components/Context/Contexts";
 const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
+  const { listArray } = useListArray();
   const handleListClick = (listId) => {
     onClickList(listId);
   };
@@ -14,6 +15,10 @@ const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
   const handleCloseItemsList = () => {
     onCloseList();
   };
+
+  useEffect(() => {
+   //console.log("listArray : ", listArray);
+  }, [listArray]);
 
   const apiUrl = "http://localhost:8080/lists";
   let { data, loading, error } = GetListsData({ apiUrl });
