@@ -1,11 +1,8 @@
 // GetNumberOfItems.js
 import React, { useEffect, useState } from "react";
 import { GetItemListData } from "../communicationWithServer/HandleDataRequest";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
-
+import { NotificationManager } from "react-notifications";
+import ProgressBar from "react-bootstrap/ProgressBar";
 const GetDatasFromItems = ({ listID, operation }) => {
   const apiUrl = `http://localhost:8080/lists/${listID}/items`;
 
@@ -17,13 +14,30 @@ const GetDatasFromItems = ({ listID, operation }) => {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
-  if (operation === "count") return <div>{items.length}</div>;
-  else if (operation === "price")
-    return <div>{calculateTotalPrice(items)}</div>;
+  if (operation === "count") return items.length;
+  else if (operation === "countBought") {
+    return listID;
+  } else if (operation === "price")
+    return calculateTotalPrice(items);
 };
-
 export default GetDatasFromItems;
 
+export const getItemDatas = ({ listID, operation }) => {
+  const apiUrl = `http://localhost:8080/lists/${listID}/items`;
+
+  let { items, loading, error } = GetItemListData({ apiUrl });
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+  if (operation === "count") return items.length;
+  else if (operation === "countBought") {
+    return listID;
+  } else if (operation === "price") return calculateTotalPrice(items);
+};
 const calculateTotalPrice = (items) => {
   return items
     .reduce((total, item) => total + item.price * item.amount, 0)
@@ -85,3 +99,21 @@ export const CreateNotification = (type, message) => {
       break;
   }
 };
+
+function getPercentForProgressBar( bought,items) {
+  if (items === 0) return 0;
+  return parseInt((bought / items) * 100,10);
+}
+
+export function ProgressBarFunction(ListID) {
+ 
+  const now = getPercentForProgressBar(ListID, 3);
+  return (
+    <ProgressBar
+      now={now}
+      label={`${now}%`}
+      className="ProgessBarInside"
+      variant="customVariant"
+    />
+  );
+}

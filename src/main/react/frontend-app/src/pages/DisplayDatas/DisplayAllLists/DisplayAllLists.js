@@ -6,8 +6,14 @@ import GetDatasFromItems from "../../../components/functions/functions";
 import DisplayItems from "../DisplayItems/DisplayItems";
 import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList";
 import { useListArray } from "../../../components/Context/Contexts";
+import { useDarkMode } from "../../../components/Context/Contexts";
+import {
+  ProgressBarFunction,
+  getItemDatas,
+} from "../../../components/functions/functions";
 const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
   const { listArray } = useListArray();
+  const { darkMode } = useDarkMode();
   const handleListClick = (listId) => {
     onClickList(listId);
   };
@@ -17,20 +23,38 @@ const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
   };
 
   useEffect(() => {
-   //console.log("listArray : ", listArray);
+    //console.log("listArray : ", listArray);
   }, [listArray]);
 
   const apiUrl = "http://localhost:8080/lists";
   let { data, loading, error } = GetListsData({ apiUrl });
+
   const getListName = (listID) => {
     if (data && data.lists && data.lists.length > 0) {
       return data.lists.find((list) => list.listId === listID).name;
     }
     return "List";
   };
+
+  const getListClassName = (itemsID, darkMode) => {
+    if (darkMode) {
+      if (itemsID === -1) {
+        return "listBox listDarkMode";
+      } else {
+        return "listBoxSelectItems listDarkMode";
+      }
+    } else {
+      if (itemsID === -1) {
+        return "listBox";
+      } else {
+        return "listBoxSelectItems";
+      }
+    }
+  };
+
   if (loading) {
     return (
-      <p className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}>
+      <p className={getListClassName(ItemsID, darkMode)}>
         <box-icon
           name="loader-alt"
           animation="spin"
@@ -43,14 +67,14 @@ const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
 
   if (error) {
     return (
-      <p className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}>
+      <p className={getListClassName(ItemsID, darkMode)}>
         Error: Failed to load Lists
       </p>
     );
   }
 
   return (
-    <div className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}>
+    <div className={getListClassName(ItemsID, darkMode)}>
       {ItemsID === -1 && data && data.lists && data.lists.length > 0 ? null : (
         <div className="listDropdown">
           <ListDropdown lists={data.lists} onSelect={handleListClick} />
@@ -63,13 +87,20 @@ const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
             {data.lists.map((list) => (
               <li
                 key={list.listId}
-                className="singleList"
+                className={
+                  darkMode ? "singleList singleListDark" : "singleList"
+                }
                 onClick={() => handleListClick(list.listId)}
               >
                 <div className="listTitle">{list.name}</div>
                 <div className={"listHeader"}>
                   <span className="NumberOfItems">
-                    Number of Items :{" "}
+                    Items boughts :{" "}
+                    <GetDatasFromItems
+                      listID={list.listId}
+                      operation={"countBought"}
+                    />
+                    /
                     <GetDatasFromItems
                       listID={list.listId}
                       operation={"count"}
@@ -83,6 +114,9 @@ const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
                     />{" "}
                     $
                   </span>
+                </div>
+                <div className="progressBar">
+                  {ProgressBarFunction(list.listId)}
                 </div>
                 <div className="Description">
                   <ListDescription
