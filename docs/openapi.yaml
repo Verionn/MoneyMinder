@@ -522,6 +522,26 @@ paths:
           description: Wrong amount of items
 
 
+  /purchasedItems/lists/{listId}:
+    get:
+      tags:
+        - purchasedItems
+      description: Return purchased items from list
+      operationId: getLastPurchasedItemsFromList
+      parameters:
+        - in: path
+          name: listId
+          schema:
+            type: integer
+          required: true
+          description: List id
+      responses:
+        '200':
+          description: Successfully returned items
+        '400':
+          description: Wrong list id
+
+
 components:
   schemas:
 

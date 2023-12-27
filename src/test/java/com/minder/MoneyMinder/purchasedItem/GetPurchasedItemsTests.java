@@ -226,4 +226,75 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
         assertThat(purchasedItemListResponse.getBody().purchasedItems().get(0).name(), equalTo(SECOND_ITEM_NAME));
         assertThat(purchasedItemListResponse.getBody().purchasedItems().get(1).name(), equalTo(FIRST_ITEM_NAME));
     }
+
+    @DisplayName("Should return 200 and purchased items from list when given good list")
+    @Test
+    public void ShouldReturn200AndItemsFromList(){
+
+        //given
+        var createdList = createList(FIRST_LIST_NAME);
+        var createdFirstCategory = createCategory(FIRST_CATEGORY_NAME);
+        var createdSecondCategory = createCategory(SECOND_CATEGORY_NAME);
+
+        var firstAddedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdFirstCategory.categoryId());
+        var secondAddedItem = addItem(SECOND_ITEM_NAME, createdList.listId(), createdSecondCategory.categoryId());
+
+        var firstPurchasedItem = markItemAsPurchased(firstAddedItem.itemId(), createdList.listId());
+        var secondPurchasedItem = markItemAsPurchased(secondAddedItem.itemId(), createdList.listId());
+
+
+        //when
+        var purchasedItemListResponse = client.getForEntity(
+                purchasedItemsByListId(createdList.listId()), PurchasedItemListResponse.class);
+
+        //then
+        assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.OK));
+        assertNotNull(purchasedItemListResponse.getBody());
+        assertThat(purchasedItemListResponse.getBody().purchasedItems().size(), equalTo(2));
+        assertThat(purchasedItemListResponse.getBody().purchasedItems().get(0).name(), equalTo(FIRST_ITEM_NAME));
+        assertThat(purchasedItemListResponse.getBody().purchasedItems().get(1).name(), equalTo(SECOND_ITEM_NAME));
+    }
+
+    @DisplayName("Should return 400 when given bad list id")
+    @Test
+    public void ShouldReturn400WhenGivenBadListId(){
+
+
+        //when
+        var purchasedItemListResponse = client.getForEntity(
+                purchasedItemsByListId(WRONG_LIST_ID), PurchasedItemListResponse.class);
+
+        //then
+        assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
+        assertNull(purchasedItemListResponse.getBody());
+    }
+
+    @DisplayName("Should return 200 and items from 1 list when bought 2 items from different lists")
+    @Test
+    public void ShouldReturn200AndItemFromList(){
+
+        //given
+        var firstCreatedList = createList(FIRST_LIST_NAME);
+        var secondCreatedList = createList(FIRST_LIST_NAME);
+
+        var createdFirstCategory = createCategory(FIRST_CATEGORY_NAME);
+        var createdSecondCategory = createCategory(SECOND_CATEGORY_NAME);
+
+        var firstAddedItem = addItem(FIRST_ITEM_NAME, firstCreatedList.listId(), createdFirstCategory.categoryId());
+        var secondAddedItem = addItem(SECOND_ITEM_NAME, secondCreatedList.listId(), createdSecondCategory.categoryId());
+
+        var firstPurchasedItem = markItemAsPurchased(firstAddedItem.itemId(), firstCreatedList.listId());
+        var secondPurchasedItem = markItemAsPurchased(secondAddedItem.itemId(), secondCreatedList.listId());
+
+
+        //when
+        var purchasedItemListResponse = client.getForEntity(
+                purchasedItemsByListId(firstCreatedList.listId()), PurchasedItemListResponse.class);
+
+        //then
+        assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.OK));
+        assertNotNull(purchasedItemListResponse.getBody());
+        assertThat(purchasedItemListResponse.getBody().purchasedItems().size(), equalTo(1));
+        assertThat(purchasedItemListResponse.getBody().purchasedItems().get(0).name(), equalTo(FIRST_ITEM_NAME));
+    }
 }
