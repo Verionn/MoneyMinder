@@ -1,13 +1,20 @@
 package com.minder.MoneyMinder.services;
 
-import com.minder.MoneyMinder.controllers.user.dto.AuthenticationRequest;
-import com.minder.MoneyMinder.controllers.user.dto.AuthenticationResponse;
+import com.minder.MoneyMinder.controllers.user.dto.LoginRequest;
+import com.minder.MoneyMinder.controllers.user.dto.LoginResponse;
 import com.minder.MoneyMinder.controllers.user.dto.RegisterUserRequest;
+import com.minder.MoneyMinder.controllers.user.dto.UserResponse;
+import com.minder.MoneyMinder.models.UserEntity;
+import io.vavr.control.Either;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public interface UserService {
-    AuthenticationResponse register(RegisterUserRequest registerUserRequest);
+    LoginResponse register(RegisterUserRequest registerUserRequest);
 
-    AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest);
+    LoginResponse login(LoginRequest loginRequest);
+
+    Either<UserResponse, Integer> getUserByEmail(String string);
 }
