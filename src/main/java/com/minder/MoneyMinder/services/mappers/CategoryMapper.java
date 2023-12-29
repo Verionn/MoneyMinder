@@ -16,6 +16,6 @@ public interface CategoryMapper {
 
     List<CategoryResponse> listOfCategoryEntityToListOfCategoryResponse(List<CategoryEntity> category);
 
-    CategoryEntity createCategoryRequestBodyToCategoryEntity(CreateCategoryRequestBody createCategoryRequestBody);
+    CategoryEntity createCategoryRequestBodyToCategoryEntity(CreateCategoryRequestBody createCategoryRequestBody, Long userId);
 
 }

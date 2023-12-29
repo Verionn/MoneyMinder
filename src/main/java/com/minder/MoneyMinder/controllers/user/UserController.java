@@ -1,7 +1,7 @@
 package com.minder.MoneyMinder.controllers.user;
 
-import com.minder.MoneyMinder.controllers.user.dto.AuthenticationRequest;
-import com.minder.MoneyMinder.controllers.user.dto.AuthenticationResponse;
+import com.minder.MoneyMinder.controllers.user.dto.LoginRequest;
+import com.minder.MoneyMinder.controllers.user.dto.LoginResponse;
 import com.minder.MoneyMinder.controllers.user.dto.RegisterUserRequest;
 import com.minder.MoneyMinder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +23,16 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
+    public ResponseEntity<LoginResponse> register(
             @RequestBody RegisterUserRequest registerUserRequest){
 
         return ResponseEntity.ok(userService.register(registerUserRequest));
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest authenticationRequest){
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(
+            @RequestBody LoginRequest loginRequest){
 
-        return ResponseEntity.ok(userService.authenticate(authenticationRequest));
+        return ResponseEntity.ok(userService.login(loginRequest));
     }
 }

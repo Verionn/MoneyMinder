@@ -8,6 +8,7 @@ import com.minder.MoneyMinder.controllers.item.dto.ItemResponse;
 import com.minder.MoneyMinder.controllers.list.dto.CreateListRequestBody;
 import com.minder.MoneyMinder.controllers.list.dto.ListResponse;
 import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -31,6 +32,8 @@ public abstract class MoneyMinderApplicationTests {
     private final static String BASE_URL_FORMAT = "http://localhost:%d%s";
     protected static final String LISTS_RESOURCE = "/lists";
     protected static final String USERS_RESOURCE = "/users";
+    protected static final String LOGIN_PATH = USERS_RESOURCE + "/login";
+    protected static final String REGISTER_PATH = USERS_RESOURCE + "/register";
     protected static final String CATEGORIES_RESOURCE = "/categories";
     protected static final String LISTS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d";
     protected static final String CATEGORY_DETAILS_PATH_FORMAT = CATEGORIES_RESOURCE + "/%d";
@@ -58,7 +61,7 @@ public abstract class MoneyMinderApplicationTests {
     public static final String SECOND_CATEGORY_NAME = "Sweets";
     public static final String NEW_CATEGORY_NAME = "Drinks";
     public static final String WRONG_CATEGORY_NAME = "";
-    public static final Long RANDOM_CATEGORY_ID = 1L;
+    public static final Long VALID_CATEGORY_ID = 1L;
     public static final Long NEW_CATEGORY_ID = 3L;
     public static final Long WRONG_CATEGORY_ID = -1L;
     public static final String GOOD_PREFIX = "P";
@@ -66,21 +69,27 @@ public abstract class MoneyMinderApplicationTests {
     public static final Long NEW_LIST_ID = 2L;
     public static final Long WRONG_NEW_LIST_ID = -25L;
     public static final Long WRONG_ITEM_ID = -13L;
-    public static final Long RANDOM_ITEM_ID = 13L;
-    public static final Double RANDOM_PRICE = 3.50;
+    public static final Long VALID_ITEM_ID = 13L;
+    public static final Double VALID_PRICE = 3.50;
     public static final Double NEW_PRICE = 5.50;
     public static final Double WRONG_PRICE = -3.50;
-    public static final int RANDOM_AMOUNT = 1;
+    public static final int VALID_AMOUNT = 1;
     public static final int NEW_AMOUNT = 2;
     public static final int WRONG_AMOUNT = -13;
-    public static final Long RANDOM_WEIGHT = 123L;
+    public static final Long VALID_WEIGHT = 123L;
     public static final Long NEW_WEIGHT = 353L;
     public static final Long WRONG_WEIGHT = -123L;
     public static final Long DAYS = 2L;
     public static final Long WRONG_DAYS = -2L;
     public static final Long WRONG_AMOUNT_OF_ITEMS = -2L;
     public static final long AMOUNT_OF_ITEMS = 2;
-    public static final LocalDateTime RANDOM_DATE = LocalDateTime.parse("2023-10-15T21:15:00");
+    public static final LocalDateTime VALID_DATE = LocalDateTime.parse("2023-10-15T21:15:00");
+    public static final String VALID_USER_EMAIL = "testowy.email@gmail.com";
+    public static final String VALID_USER_PASSWORD = "12345";
+    public static final String VALID_ADMIN_EMAIL = "bijacik.adam@gmail.com";
+    public static final String VALID_ADMIN_PASSWORD = "123";
+    protected String userToken;
+    protected String adminToken;
 
     @Autowired
     protected TestRestTemplate client;
@@ -88,6 +97,19 @@ public abstract class MoneyMinderApplicationTests {
     @LocalServerPort
     protected int port;
 
+    @BeforeEach
+    public void registerAndLogin() {
+        //userToken = getToken(VALID_USER_EMAIL, VALID_USER_PASSWORD);
+    }
+
+//    private String getToken(String email, String password) {
+//        var loginUserRequest = client.postForEntity(
+//                prepareUrl(LOGIN_PATH),
+//                new LoginRequest(email, password),
+//                LoginResponse.class
+//        );
+//        return loginUserRequest.getBody().token();
+//    }
 
     protected String prepareUrl(String resource) {
         return String.format(BASE_URL_FORMAT, port, resource);
@@ -165,11 +187,15 @@ public abstract class MoneyMinderApplicationTests {
     }
 
     protected CreateItemRequestBody createValidItemRequestBody(String name){
-        return new CreateItemRequestBody(name, RANDOM_PRICE, RANDOM_AMOUNT, RANDOM_CATEGORY_ID, RANDOM_WEIGHT, RANDOM_DATE);
+        return new CreateItemRequestBody(name, VALID_PRICE, VALID_AMOUNT, VALID_CATEGORY_ID, VALID_WEIGHT, VALID_DATE);
     }
 
     protected CreateItemRequestBody createValidItemRequestBody(String name, Long categoryId){
-        return new CreateItemRequestBody(name, RANDOM_PRICE, RANDOM_AMOUNT, categoryId, RANDOM_WEIGHT, RANDOM_DATE);
+        return new CreateItemRequestBody(name, VALID_PRICE, VALID_AMOUNT, categoryId, VALID_WEIGHT, VALID_DATE);
+    }
+
+    protected void runAsUser() {
+        //addAuthorizationToken(userToken);
     }
 
     protected ItemResponse addItem(String itemName, Long listId, Long categoryId){
@@ -182,9 +208,9 @@ public abstract class MoneyMinderApplicationTests {
         //then
         assertThat(addItemResponse.getStatusCode(), equalTo(HttpStatus.CREATED));
         assertThat(addItemResponse.getBody().name(), equalTo(itemName));
-        assertThat(addItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
-        assertThat(addItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
-        assertThat(addItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
+        assertThat(addItemResponse.getBody().price(), equalTo(VALID_PRICE));
+        assertThat(addItemResponse.getBody().amount(), equalTo(VALID_AMOUNT));
+        assertThat(addItemResponse.getBody().weight(), equalTo(VALID_WEIGHT));
         return addItemResponse.getBody();
     }
 
@@ -221,9 +247,9 @@ public abstract class MoneyMinderApplicationTests {
 
         assertThat(purchaseItemResponse.getStatusCode(), equalTo(HttpStatus.OK));
         assertNotNull(purchaseItemResponse.getBody());
-        assertThat(purchaseItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
-        assertThat(purchaseItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
-        assertThat(purchaseItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
+        assertThat(purchaseItemResponse.getBody().price(), equalTo(VALID_PRICE));
+        assertThat(purchaseItemResponse.getBody().weight(), equalTo(VALID_WEIGHT));
+        assertThat(purchaseItemResponse.getBody().amount(), equalTo(VALID_AMOUNT));
         assertThat(purchaseItemResponse.getBody().categoryId(), equalTo(itemResponse.getBody().categoryId()));
         assertThat(numberOfItemsInListAfterMark, not(equalTo(numberOfItemsInListBeforeMark)));
 

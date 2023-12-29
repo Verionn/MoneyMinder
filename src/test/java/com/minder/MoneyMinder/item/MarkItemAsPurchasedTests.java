@@ -40,9 +40,9 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
         assertThat(purchaseItemResponse.getStatusCode(), equalTo(HttpStatus.OK));
         assertNotNull(purchaseItemResponse.getBody());
         assertThat(purchaseItemResponse.getBody().name(), equalTo(FIRST_ITEM_NAME));
-        assertThat(purchaseItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
-        assertThat(purchaseItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
-        assertThat(purchaseItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
+        assertThat(purchaseItemResponse.getBody().price(), equalTo(VALID_PRICE));
+        assertThat(purchaseItemResponse.getBody().weight(), equalTo(VALID_WEIGHT));
+        assertThat(purchaseItemResponse.getBody().amount(), equalTo(VALID_AMOUNT));
         assertThat(purchaseItemResponse.getBody().categoryId(), equalTo(createdCategory.categoryId()));
         assertThat(numberOfItemsInListAfterMark, not(equalTo(numberOfItemsInListBeforeMark)));
     }
@@ -69,7 +69,7 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
         //given
 
         //when
-        var purchasedItemResponse = client.postForEntity(purchaseItemPath(WRONG_LIST_ID, RANDOM_ITEM_ID), null, PurchasedItemResponse.class);
+        var purchasedItemResponse = client.postForEntity(purchaseItemPath(WRONG_LIST_ID, VALID_ITEM_ID), null, PurchasedItemResponse.class);
 
         //then
         assertThat(purchasedItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));

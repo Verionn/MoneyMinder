@@ -27,7 +27,7 @@ public class GetFullPriceTests extends MoneyMinderApplicationTests {
 
         //then
         assertThat(getFullPriceResponse.getStatusCode(), equalTo(HttpStatus.OK));
-        assertThat(getFullPriceResponse.getBody().fullPrice(), equalTo( 2*RANDOM_PRICE));
+        assertThat(getFullPriceResponse.getBody().fullPrice(), equalTo( 2* VALID_PRICE));
     }
 
     @Test

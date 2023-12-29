@@ -1,16 +1,19 @@
 CREATE TABLE IF NOT EXISTS category_entity (
     category_id SERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL,
     name VARCHAR(25) NOT NULL
     );
 
 CREATE TABLE IF NOT EXISTS list_entity (
     list_id SERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL,
     name VARCHAR(30) NOT NULL,
     description VARCHAR(300) DEFAULT ''
     );
 
 CREATE TABLE IF NOT EXISTS item_entity (
     item_id SERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL,
     list_id BIGINT NOT NULL,
     name VARCHAR(20) NOT NULL,
     price DECIMAL(10, 2) NOT NULL default 0,
@@ -24,6 +27,7 @@ CREATE TABLE IF NOT EXISTS item_entity (
 
 CREATE TABLE IF NOT EXISTS purchased_item_entity (
     id SERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL,
     item_id BIGINT NOT NULL,
     list_id BIGINT NOT NULL,
     category_id BIGINT,
@@ -37,7 +41,7 @@ CREATE TABLE IF NOT EXISTS purchased_item_entity (
 
 CREATE TABLE IF NOT EXISTS user_entity (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     role VARCHAR(20) NOT NULL
