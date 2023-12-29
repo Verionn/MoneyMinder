@@ -32,9 +32,9 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         assertThat(addItemResponse.getStatusCode(), equalTo(HttpStatus.CREATED));
         assertNotNull(addItemResponse.getBody());
         assertThat(addItemResponse.getBody().name(), equalTo(FIRST_ITEM_NAME));
-        assertThat(addItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
-        assertThat(addItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
-        assertThat(addItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
+        assertThat(addItemResponse.getBody().price(), equalTo(VALID_PRICE));
+        assertThat(addItemResponse.getBody().amount(), equalTo(VALID_AMOUNT));
+        assertThat(addItemResponse.getBody().weight(), equalTo(VALID_WEIGHT));
     }
 
     @Test
@@ -78,9 +78,9 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         var createdList = createList(FIRST_LIST_NAME);
         var createdItemRequestBody = new CreateItemRequestBody(FIRST_ITEM_NAME,
                 WRONG_PRICE,
-                RANDOM_AMOUNT,
-                RANDOM_CATEGORY_ID,
-                RANDOM_WEIGHT,
+                VALID_AMOUNT,
+                VALID_CATEGORY_ID,
+                VALID_WEIGHT,
                 LocalDateTime.now());
 
         //when
@@ -99,9 +99,9 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         //given
         var createdList = createList(FIRST_LIST_NAME);
         var createdItemRequestBody = new CreateItemRequestBody(FIRST_ITEM_NAME,
-                RANDOM_PRICE,
-                RANDOM_AMOUNT,
-                RANDOM_CATEGORY_ID,
+                VALID_PRICE,
+                VALID_AMOUNT,
+                VALID_CATEGORY_ID,
                 WRONG_WEIGHT,
                 LocalDateTime.now());
 
@@ -121,10 +121,10 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         //given
         var createdList = createList(FIRST_LIST_NAME);
         var createdItemRequestBody = new CreateItemRequestBody(FIRST_ITEM_NAME,
-                RANDOM_PRICE,
+                VALID_PRICE,
                 WRONG_AMOUNT,
-                RANDOM_CATEGORY_ID,
-                RANDOM_WEIGHT,
+                VALID_CATEGORY_ID,
+                VALID_WEIGHT,
                 LocalDateTime.now());
 
         //when
@@ -143,10 +143,10 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         //given
         var createdList = createList(FIRST_LIST_NAME);
         var createdItemRequestBody = new CreateItemRequestBody(FIRST_ITEM_NAME,
-                RANDOM_PRICE,
-                RANDOM_AMOUNT,
+                VALID_PRICE,
+                VALID_AMOUNT,
                 WRONG_CATEGORY_ID,
-                RANDOM_WEIGHT,
+                VALID_WEIGHT,
                 LocalDateTime.now());
 
         //when
@@ -207,9 +207,9 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         assertThat(getSpecificItemResponse.getStatusCode(), equalTo(HttpStatus.OK));
         assertNotNull(getSpecificItemResponse.getBody());
         assertThat(getSpecificItemResponse.getBody().name(), equalTo(FIRST_ITEM_NAME));
-        assertThat(getSpecificItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
-        assertThat(getSpecificItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
-        assertThat(getSpecificItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
+        assertThat(getSpecificItemResponse.getBody().price(), equalTo(VALID_PRICE));
+        assertThat(getSpecificItemResponse.getBody().weight(), equalTo(VALID_WEIGHT));
+        assertThat(getSpecificItemResponse.getBody().amount(), equalTo(VALID_AMOUNT));
         assertThat(getSpecificItemResponse.getBody().categoryId(), equalTo(createdCategory.categoryId()));
     }
 

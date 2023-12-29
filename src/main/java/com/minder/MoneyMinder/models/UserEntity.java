@@ -14,7 +14,7 @@ public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+    private String name;
     private String password;
     private String email;
     @Enumerated(EnumType.STRING)
@@ -24,8 +24,8 @@ public class UserEntity implements UserDetails {
 
     }
 
-    public UserEntity(String username, String password, String email, Role role) {
-        this.username = username;
+    public UserEntity(String name, String password, String email, Role role) {
+        this.name = name;
         this.password = password;
         this.email = email;
         this.role = role;
@@ -66,8 +66,12 @@ public class UserEntity implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPassword(String password) {
@@ -88,5 +92,18 @@ public class UserEntity implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return email;
     }
 }
