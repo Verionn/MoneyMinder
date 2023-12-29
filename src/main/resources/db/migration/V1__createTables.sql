@@ -34,3 +34,11 @@ CREATE TABLE IF NOT EXISTS purchased_item_entity (
     time_created TIMESTAMP WITHOUT TIME ZONE,
     time_bought TIMESTAMP WITHOUT TIME ZONE
     );
+
+CREATE TABLE IF NOT EXISTS user_entity (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL
+    );
