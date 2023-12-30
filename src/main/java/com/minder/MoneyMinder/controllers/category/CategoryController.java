@@ -1,7 +1,6 @@
 package com.minder.MoneyMinder.controllers.category;
 
 import com.minder.MoneyMinder.controllers.user.dto.UserResponse;
-import com.minder.MoneyMinder.models.UserEntity;
 import com.minder.MoneyMinder.services.CategoryService;
 import com.minder.MoneyMinder.services.UserService;
 import com.minder.MoneyMinder.services.mappers.CategoryMapper;
@@ -18,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping(path = "/categories")
@@ -36,18 +35,16 @@ public class CategoryController {
     @RolesAllowed({"ADMIN", "USER"})
     @GetMapping(path = "/{categoryId}")
     public ResponseEntity<?> getCategory(@PathVariable Long categoryId) {
-
         var user = getUserByEmailFromSecurityContext();
 
-        if(user.isEmpty()){
-            return ResponseEntity.badRequest().build();
-        }
-
-        //user.get().
-
-        if (!checkIfCategoryExits(categoryId)) {
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
+
+        if (!checkIfCategoryExits(categoryId, user.getLeft().id())) {
+            return ResponseEntity.notFound().build();
+        }
+
         return categoryService.getCategory(categoryId).map(listRecord -> ResponseEntity.ok().body(
                         categoryMapper.categoryEntityToCategoryResponse(listRecord)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -55,26 +52,28 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<CategoriesResponse> getCategories() {
+        var user = getUserByEmailFromSecurityContext();
+
+        if (user.isRight()) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok().body(
                 new CategoriesResponse(categoryMapper
-                        .listOfCategoryEntityToListOfCategoryResponse(categoryService.getCategories())));
+                        .listOfCategoryEntityToListOfCategoryResponse(categoryService.getCategories(user.getLeft().id()))));
     }
 
     @PostMapping
     public ResponseEntity<CategoryResponse> addCategory(@RequestBody CreateCategoryRequestBody createCategoryRequestBody) {
-
         var user = getUserByEmailFromSecurityContext();
 
-//        if(user.isEmpty()){
-//            return ResponseEntity.badRequest().build();
-//        }
+        if (user.isRight()) {
+            return ResponseEntity.notFound().build();
+        }
 
-        System.out.println("Czy jest blad: " + user.isRight());
-
-        System.out.println("USER_ID: " + user);
-        System.out.println("USER_ID: " + user.getLeft().id());
-        System.out.println("USER_ID: " + user.getLeft().email());
-        System.out.println("USER_ID: " + user.getLeft().name());
+        if(!checkIfCreateCategoryRequestBodyIsInvalid(createCategoryRequestBody)){
+            return ResponseEntity.badRequest().build();
+        }
 
         return ResponseEntity.status(201).body(
                 categoryMapper.categoryEntityToCategoryResponse(categoryService.addCategory(
@@ -83,7 +82,13 @@ public class CategoryController {
 
     @DeleteMapping(path = "/{categoryId}")
     public ResponseEntity<HttpStatus> deleteCategory(@PathVariable("categoryId") Long categoryId) {
-        if (!checkIfCategoryExits(categoryId)) {
+        var user = getUserByEmailFromSecurityContext();
+
+        if (user.isRight()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (!checkIfCategoryExits(categoryId, user.getLeft().id())) {
             return ResponseEntity.notFound().build();
         }
 
@@ -95,10 +100,17 @@ public class CategoryController {
     @PutMapping(path = "/{categoryId}")
     public ResponseEntity<CategoryResponse> updateCategory(@PathVariable("categoryId") Long categoryId,
                                                            @RequestBody UpdateCategoryRequestBody updateCategoryRequestBody) {
-        if (!checkIfCategoryExits(categoryId)) {
+        var user = getUserByEmailFromSecurityContext();
+
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
-        if (!checkIfDataIsCorrect(updateCategoryRequestBody)) {
+
+        if (!checkIfCategoryExits(categoryId, user.getLeft().id())) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (!checkIfUpdateCategoryRequestBodyIsInvalid(updateCategoryRequestBody)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -107,11 +119,15 @@ public class CategoryController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    private boolean checkIfCategoryExits(Long categoryId) {
-        return categoryService.existsById(categoryId);
+    private boolean checkIfCategoryExits(Long categoryId, Long userId) {
+        System.out.println(categoryId + " | " + userId);
+        return categoryService.existsById(categoryId, userId);
     }
 
-    private boolean checkIfDataIsCorrect(UpdateCategoryRequestBody updateCategoryRequestBody) {
+    private boolean checkIfCreateCategoryRequestBodyIsInvalid(CreateCategoryRequestBody createCategoryRequestBody){
+        return !createCategoryRequestBody.name().isBlank();
+    }
+    private boolean checkIfUpdateCategoryRequestBodyIsInvalid(UpdateCategoryRequestBody updateCategoryRequestBody) {
         return !updateCategoryRequestBody.name().isBlank();
     }
 
