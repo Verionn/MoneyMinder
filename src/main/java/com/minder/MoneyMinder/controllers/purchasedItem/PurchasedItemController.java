@@ -10,7 +10,6 @@ import com.minder.MoneyMinder.services.PurchasedItemService;
 import com.minder.MoneyMinder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,8 +38,8 @@ public class PurchasedItemController {
     @GetMapping("/categories/{categoryId}")
     public ResponseEntity<PurchasedItemListResponse> getPurchasedItemsByCategoryId(@PathVariable Long categoryId) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        if(user.isRight()){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -55,8 +54,8 @@ public class PurchasedItemController {
     @GetMapping("/names/{prefix}")
     public ResponseEntity<PurchasedItemNameListResponse> getPurchasedItemNamesByPrefix(@PathVariable String prefix) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        if(user.isRight()){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -68,8 +67,8 @@ public class PurchasedItemController {
     public ResponseEntity<PurchasedItemListResponse> getPurchasedItemsByCategoryIdInLastNDays(@PathVariable Long categoryId,
                                                                                               @PathVariable Long days) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        if(user.isRight()){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -88,8 +87,8 @@ public class PurchasedItemController {
     @GetMapping("/days/{days}")
     public ResponseEntity<PurchasedItemListResponse> getPurchasedItemsInLastNDays(@PathVariable Long days) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        if(user.isRight()){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -104,8 +103,8 @@ public class PurchasedItemController {
     @GetMapping("/items/{amountOfItems}")
     public ResponseEntity<PurchasedItemListResponse> getLastNPurchasedItems(@PathVariable Long amountOfItems) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        if(user.isRight()){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -120,8 +119,8 @@ public class PurchasedItemController {
     @GetMapping("/lists/{listId}")
     public ResponseEntity<PurchasedItemListResponse> getPurchasedItemsFromList(@PathVariable Long listId) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        if(user.isRight()){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 

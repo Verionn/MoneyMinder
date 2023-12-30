@@ -10,7 +10,6 @@ import com.minder.MoneyMinder.services.mappers.PurchasedItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -37,32 +36,34 @@ public class ItemController {
     @GetMapping("/{listId}/items")
     public ResponseEntity<ItemListResponse> getItemsFromList(@PathVariable Long listId) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        if(user.isRight()){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
+        var userId = user.getLeft().userId();
 
-        if (!checkIfListExists(listId, user.getLeft().userId())) {
+        if (!checkIfListExists(listId, userId)) {
             return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok(new ItemListResponse(
-                itemMapper.itemsToItemResponses(itemService.getItemsByListIdAndUserId(listId, user.getLeft().userId()))));
+                itemMapper.itemsToItemResponses(itemService.getItemsByListIdAndUserId(listId, userId))));
     }
 
     @GetMapping("/{listId}/items/{itemId}")
     public ResponseEntity<ItemResponse> getItem(@PathVariable Long listId, @PathVariable Long itemId) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        if(user.isRight()){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
+            return ResponseEntity.notFound().build();
+        }
+        var userId = user.getLeft().userId();
+
+        if (!checkIfItemAndListExists(itemId, listId, userId)) {
             return ResponseEntity.notFound().build();
         }
 
-        if (!checkIfItemAndListExists(itemId, listId, user.getLeft().userId())) {
-            return ResponseEntity.notFound().build();
-        }
-
-        if(!itemService.checkIfItemIsOnTheList(itemId, listId)){
+        if (!itemService.checkIfItemIsOnTheList(itemId, listId)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -74,12 +75,13 @@ public class ItemController {
     @PostMapping("/{listId}/items")
     public ResponseEntity<ItemResponse> addItem(@PathVariable Long listId, @RequestBody CreateItemRequestBody createItemRequestBody) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        if(user.isRight()){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
+        var userId = user.getLeft().userId();
 
-        if (!checkIfListExists(listId, user.getLeft().userId())) {
+        if (!checkIfListExists(listId, userId)) {
             return ResponseEntity.notFound().build();
         }
 
@@ -87,25 +89,26 @@ public class ItemController {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.status(201).body(itemMapper.itemToItemResponse(
+        return ResponseEntity.status(HttpStatus.CREATED).body(itemMapper.itemToItemResponse(
                 itemService.addItem(itemMapper.
-                        createItemRequestBodyToItemEntity(createItemRequestBody), listId, user.getLeft().userId()))
+                        createItemRequestBodyToItemEntity(createItemRequestBody), listId, userId))
         );
     }
 
     @DeleteMapping(path = "{listId}/items/{itemId}")
     public ResponseEntity<HttpStatus> deleteItem(@PathVariable Long listId, @PathVariable Long itemId) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        if(user.isRight()){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
+            return ResponseEntity.notFound().build();
+        }
+        var userId = user.getLeft().userId();
+
+        if (!checkIfItemAndListExists(itemId, listId, userId)) {
             return ResponseEntity.notFound().build();
         }
 
-        if (!checkIfItemAndListExists(itemId, listId, user.getLeft().userId())) {
-            return ResponseEntity.notFound().build();
-        }
-
-        if(!itemService.checkIfItemIsOnTheList(itemId, listId)){
+        if (!itemService.checkIfItemIsOnTheList(itemId, listId)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -119,16 +122,17 @@ public class ItemController {
                                                    @PathVariable Long itemId,
                                                    @RequestBody UpdateItemRequestBody updateItemRequestBody) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        if(user.isRight()){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
+            return ResponseEntity.notFound().build();
+        }
+        var userId = user.getLeft().userId();
+
+        if (!checkIfItemAndListExists(itemId, listId, userId)) {
             return ResponseEntity.notFound().build();
         }
 
-        if (!checkIfItemAndListExists(itemId, listId, user.getLeft().userId())) {
-            return ResponseEntity.notFound().build();
-        }
-
-        if (!checkIfListExists(updateItemRequestBody.listId(), user.getLeft().userId())) {
+        if (!checkIfListExists(updateItemRequestBody.listId(), userId)) {
             return ResponseEntity.notFound().build();
         }
 
@@ -136,7 +140,7 @@ public class ItemController {
             return ResponseEntity.badRequest().build();
         }
 
-        if(!itemService.checkIfItemIsOnTheList(itemId, listId)){
+        if (!itemService.checkIfItemIsOnTheList(itemId, listId)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -147,25 +151,26 @@ public class ItemController {
 
     @PostMapping(path = "/{listId}/items/{itemId}/purchased")
     public ResponseEntity<PurchasedItemResponse> markItemAsPurchased(@PathVariable Long listId,
-                                                                  @PathVariable Long itemId) {
+                                                                     @PathVariable Long itemId) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        if(user.isRight()){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
+            return ResponseEntity.notFound().build();
+        }
+        var userId = user.getLeft().userId();
+
+        if (!checkIfItemAndListExists(itemId, listId, userId)) {
             return ResponseEntity.notFound().build();
         }
 
-        if (!checkIfItemAndListExists(itemId, listId, user.getLeft().userId())) {
-            return ResponseEntity.notFound().build();
-        }
-
-        if(!itemService.checkIfItemIsOnTheList(itemId, listId)){
+        if (!itemService.checkIfItemIsOnTheList(itemId, listId)) {
             return ResponseEntity.badRequest().build();
         }
 
         return itemService.getItem(itemId)
                 .map(itemEntity -> {
                     itemService.deleteItem(itemId);
-                    itemEntity.setUserId(user.getLeft().userId());
+                    itemEntity.setUserId(userId);
                     return ResponseEntity.ok().body(itemService.markItemAsPurchased(
                             purchasedItemMapper.itemEntityToPurchasedItemRecord(itemEntity, LocalDateTime.now())));
                 })
