@@ -3,6 +3,7 @@ package com.minder.MoneyMinder.controllers.list;
 import com.minder.MoneyMinder.controllers.list.dto.*;
 import com.minder.MoneyMinder.services.ItemService;
 import com.minder.MoneyMinder.services.ListService;
+import com.minder.MoneyMinder.services.UserService;
 import com.minder.MoneyMinder.services.mappers.ListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,45 +16,73 @@ import org.springframework.web.bind.annotation.*;
 public class ListController {
     private final ListService listService;
     private final ItemService itemService;
+    private final UserService userService;
     private final ListMapper listMapper = ListMapper.INSTANCE;
 
     @Autowired
-    public ListController(ListService listService, ItemService itemService) {
+    public ListController(ListService listService, ItemService itemService, UserService userService) {
         this.itemService = itemService;
         this.listService = listService;
+        this.userService = userService;
     }
 
     @GetMapping(path = "/{listId}")
     public ResponseEntity<ListResponse> getList(@PathVariable Long listId) {
-        if (!checkIfListExits(listId)) {
+
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
-        return listService.getList(listId).map(listRecord -> ResponseEntity.ok().body(
-                        listMapper.listEntityToListResponse(listRecord)))
+        if (!checkIfListExists(listId, user.getLeft().userId())) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return listService.getList(listId)
+                .map(listRecord -> ResponseEntity.ok().body(listMapper.listEntityToListResponse(listRecord)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping
     public ResponseEntity<ListsResponse> getLists() {
+
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok().body(
-                new ListsResponse(listMapper.listOfListEntityToListOfListResponse(listService.getLists())));
+                new ListsResponse(listMapper.listOfListEntityToListOfListResponse(
+                        listService.getLists(user.getLeft().userId()))));
     }
 
     @PostMapping
     public ResponseEntity<ListResponse> addList(@RequestBody CreateListRequestBody createListRequestBody) {
 
-        if(!checkIfDataIsCorrect(createListRequestBody)){
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (!checkIfCreateListRequestBodyIsValid(createListRequestBody)) {
             return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity.status(201).body(
-                listMapper.listEntityToListResponse(listService.addList(listMapper.createListRequestBodyToListEntity(createListRequestBody))));
+                listMapper.listEntityToListResponse(
+                        listService.addList(
+                                listMapper.createListRequestBodyToListEntity(createListRequestBody), user.getLeft().userId())));
     }
 
     @DeleteMapping(path = "/{listId}")
     public ResponseEntity<HttpStatus> deleteList(@PathVariable("listId") Long listId) {
-        if (!checkIfListExits(listId)) {
+
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (!checkIfListExists(listId, user.getLeft().userId())) {
             return ResponseEntity.notFound().build();
         }
 
@@ -67,11 +96,17 @@ public class ListController {
     @PutMapping(path = "/{listId}")
     public ResponseEntity<ListResponse> updateList(@PathVariable("listId") Long listId,
                                                    @RequestBody UpdateListRequestBody updateListRequestBody) {
-        if (!checkIfListExits(listId)) {
+
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
-        if (!checkIfDataIsCorrect(updateListRequestBody)) {
+        if (!checkIfListExists(listId, user.getLeft().userId())) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (!checkIfUpdateListRequestBodyIsValid(updateListRequestBody)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -82,22 +117,28 @@ public class ListController {
 
     @GetMapping(path = "/{listId}/fullprice")
     public ResponseEntity<FullPriceResponse> getFullPrice(@PathVariable Long listId) {
-        if (!checkIfListExits(listId)) {
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok().body(new FullPriceResponse(listService.getFullPrice(listId)));
+        if (!checkIfListExists(listId, user.getLeft().userId())) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(new FullPriceResponse(
+                listService.getFullPrice(listId, user.getLeft().userId())));
     }
 
-    private boolean checkIfDataIsCorrect(UpdateListRequestBody updateListRequestBody) {
+    private boolean checkIfUpdateListRequestBodyIsValid(UpdateListRequestBody updateListRequestBody) {
         return !updateListRequestBody.name().isBlank();
     }
 
-    private boolean checkIfDataIsCorrect(CreateListRequestBody createListRequestBody) {
+    private boolean checkIfCreateListRequestBodyIsValid(CreateListRequestBody createListRequestBody) {
         return !createListRequestBody.name().isBlank();
     }
 
-    private boolean checkIfListExits(Long listId) {
-        return listService.existsById(listId);
+    private boolean checkIfListExists(Long listId, Long userId) {
+        return listService.existsByListIdAndUserId(listId, userId);
     }
 }

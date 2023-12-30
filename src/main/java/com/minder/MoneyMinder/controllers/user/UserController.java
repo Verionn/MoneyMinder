@@ -5,6 +5,7 @@ import com.minder.MoneyMinder.controllers.user.dto.LoginResponse;
 import com.minder.MoneyMinder.controllers.user.dto.RegisterUserRequest;
 import com.minder.MoneyMinder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,16 +24,14 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<LoginResponse> register(
-            @RequestBody RegisterUserRequest registerUserRequest){
-
+    public ResponseEntity<LoginResponse> register(@RequestBody RegisterUserRequest registerUserRequest) {
         return ResponseEntity.ok(userService.register(registerUserRequest));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(
-            @RequestBody LoginRequest loginRequest){
-
-        return ResponseEntity.ok(userService.login(loginRequest));
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+        return userService.login(loginRequest)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 }

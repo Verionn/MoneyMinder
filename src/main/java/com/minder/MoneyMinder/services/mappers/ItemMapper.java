@@ -12,7 +12,7 @@ import java.util.List;
 public interface ItemMapper {
     ItemMapper INSTANCE = Mappers.getMapper(ItemMapper.class);
 
-    ItemEntity createItemRequestBodyToItem(CreateItemRequestBody createItemRequestBody);
+    ItemEntity createItemRequestBodyToItemEntity(CreateItemRequestBody createItemRequestBody);
 
     ItemResponse itemToItemResponse(ItemEntity itemEntity);
 

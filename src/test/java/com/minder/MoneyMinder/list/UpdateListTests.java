@@ -17,6 +17,8 @@ public class UpdateListTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should update list and return 200")
     public void shouldUpdateListAndReturnOk(){
+        runAsUser();
+
         //given
         var createListResponse = createList(FIRST_LIST_NAME);
         var createdListId = createListResponse.listId();
@@ -35,6 +37,8 @@ public class UpdateListTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update list and return not found when given wrong listId")
     public void shouldNotUpdateListAndReturnNotFound(){
+        runAsUser();
+
         //given
         var updateListRequestBody = new UpdateListRequestBody(NEW_LIST_NAME);
 
@@ -50,6 +54,8 @@ public class UpdateListTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update list and return 400 when given bad data")
     public void shouldNotUpdateListAndReturnBadRequestWhenEmptyNewName(){
+        runAsUser();
+
         //given
         var createdListResponse = createList(FIRST_LIST_NAME);
         var listId = createdListResponse.listId();

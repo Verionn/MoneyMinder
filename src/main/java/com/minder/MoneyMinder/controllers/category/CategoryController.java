@@ -14,9 +14,7 @@ import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 
 
 @RestController
@@ -35,13 +33,13 @@ public class CategoryController {
     @RolesAllowed({"ADMIN", "USER"})
     @GetMapping(path = "/{categoryId}")
     public ResponseEntity<?> getCategory(@PathVariable Long categoryId) {
-        var user = getUserByEmailFromSecurityContext();
 
+        var user = getUserByEmailFromSecurityContext();
         if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
-        if (!checkIfCategoryExits(categoryId, user.getLeft().id())) {
+        if (!checkIfCategoryExits(categoryId, user.getLeft().userId())) {
             return ResponseEntity.notFound().build();
         }
 
@@ -52,43 +50,45 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<CategoriesResponse> getCategories() {
-        var user = getUserByEmailFromSecurityContext();
 
+        var user = getUserByEmailFromSecurityContext();
         if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok().body(
                 new CategoriesResponse(categoryMapper
-                        .listOfCategoryEntityToListOfCategoryResponse(categoryService.getCategories(user.getLeft().id()))));
+                        .listOfCategoryEntityToListOfCategoryResponse(
+                                categoryService.getCategories(user.getLeft().userId()))));
     }
 
     @PostMapping
     public ResponseEntity<CategoryResponse> addCategory(@RequestBody CreateCategoryRequestBody createCategoryRequestBody) {
-        var user = getUserByEmailFromSecurityContext();
 
+        var user = getUserByEmailFromSecurityContext();
         if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
-        if(!checkIfCreateCategoryRequestBodyIsInvalid(createCategoryRequestBody)){
+        if (!checkIfCreateCategoryRequestBodyIsValid(createCategoryRequestBody)) {
             return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity.status(201).body(
                 categoryMapper.categoryEntityToCategoryResponse(categoryService.addCategory(
-                        categoryMapper.createCategoryRequestBodyToCategoryEntity(createCategoryRequestBody, user.getLeft().id()))));
+                        categoryMapper.createCategoryRequestBodyToCategoryEntity(
+                                createCategoryRequestBody, user.getLeft().userId()))));
     }
 
     @DeleteMapping(path = "/{categoryId}")
     public ResponseEntity<HttpStatus> deleteCategory(@PathVariable("categoryId") Long categoryId) {
-        var user = getUserByEmailFromSecurityContext();
 
+        var user = getUserByEmailFromSecurityContext();
         if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
-        if (!checkIfCategoryExits(categoryId, user.getLeft().id())) {
+        if (!checkIfCategoryExits(categoryId, user.getLeft().userId())) {
             return ResponseEntity.notFound().build();
         }
 
@@ -100,17 +100,17 @@ public class CategoryController {
     @PutMapping(path = "/{categoryId}")
     public ResponseEntity<CategoryResponse> updateCategory(@PathVariable("categoryId") Long categoryId,
                                                            @RequestBody UpdateCategoryRequestBody updateCategoryRequestBody) {
-        var user = getUserByEmailFromSecurityContext();
 
+        var user = getUserByEmailFromSecurityContext();
         if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
 
-        if (!checkIfCategoryExits(categoryId, user.getLeft().id())) {
+        if (!checkIfCategoryExits(categoryId, user.getLeft().userId())) {
             return ResponseEntity.notFound().build();
         }
 
-        if (!checkIfUpdateCategoryRequestBodyIsInvalid(updateCategoryRequestBody)) {
+        if (!checkIfUpdateCategoryRequestBodyIsValid(updateCategoryRequestBody)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -120,18 +120,18 @@ public class CategoryController {
     }
 
     private boolean checkIfCategoryExits(Long categoryId, Long userId) {
-        System.out.println(categoryId + " | " + userId);
         return categoryService.existsById(categoryId, userId);
     }
 
-    private boolean checkIfCreateCategoryRequestBodyIsInvalid(CreateCategoryRequestBody createCategoryRequestBody){
+    private boolean checkIfCreateCategoryRequestBodyIsValid(CreateCategoryRequestBody createCategoryRequestBody) {
         return !createCategoryRequestBody.name().isBlank();
     }
-    private boolean checkIfUpdateCategoryRequestBodyIsInvalid(UpdateCategoryRequestBody updateCategoryRequestBody) {
+
+    private boolean checkIfUpdateCategoryRequestBodyIsValid(UpdateCategoryRequestBody updateCategoryRequestBody) {
         return !updateCategoryRequestBody.name().isBlank();
     }
 
     private Either<UserResponse, Integer> getUserByEmailFromSecurityContext() {
-        return userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        return userService.getUserByEmail();
     }
 }

@@ -7,6 +7,7 @@ public class ListEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long listId;
+    Long userId;
     String name;
     String description;
 
@@ -37,8 +38,11 @@ public class ListEntity {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "Nazwa listy: " + name + "\n";
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

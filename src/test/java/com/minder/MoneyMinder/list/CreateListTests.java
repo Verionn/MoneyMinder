@@ -19,6 +19,8 @@ public class CreateListTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should get lists")
     public void shouldGetListsAndReturnOk() {
+        runAsUser();
+
         //given
         createList(FIRST_LIST_NAME);
         createList(SECOND_LIST_NAME);
@@ -37,6 +39,8 @@ public class CreateListTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should get specific list")
     public void ShouldGetSpecificListAndReturnOk(){
+        runAsUser();
+
         //given
         var createListResponse = createList(FIRST_LIST_NAME);
 
@@ -55,6 +59,9 @@ public class CreateListTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not get list and return 404 when given wrong id")
     public void ShouldNotGetListAndReturn404(){
+        runAsUser();
+
+        //given
 
         //when
         var getListResponse = client.getForEntity(listsPath(WRONG_LIST_ID),
