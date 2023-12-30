@@ -14,9 +14,7 @@ import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 
 
 @RestController
@@ -72,7 +70,7 @@ public class CategoryController {
             return ResponseEntity.notFound().build();
         }
 
-        if(!checkIfCreateCategoryRequestBodyIsValid(createCategoryRequestBody)){
+        if (!checkIfCreateCategoryRequestBodyIsValid(createCategoryRequestBody)) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -125,14 +123,15 @@ public class CategoryController {
         return categoryService.existsById(categoryId, userId);
     }
 
-    private boolean checkIfCreateCategoryRequestBodyIsValid(CreateCategoryRequestBody createCategoryRequestBody){
+    private boolean checkIfCreateCategoryRequestBodyIsValid(CreateCategoryRequestBody createCategoryRequestBody) {
         return !createCategoryRequestBody.name().isBlank();
     }
+
     private boolean checkIfUpdateCategoryRequestBodyIsValid(UpdateCategoryRequestBody updateCategoryRequestBody) {
         return !updateCategoryRequestBody.name().isBlank();
     }
 
     private Either<UserResponse, Integer> getUserByEmailFromSecurityContext() {
-        return userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        return userService.getUserByEmail();
     }
 }

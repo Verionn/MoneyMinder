@@ -8,7 +8,6 @@ import com.minder.MoneyMinder.services.mappers.ListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -30,7 +29,7 @@ public class ListController {
     @GetMapping(path = "/{listId}")
     public ResponseEntity<ListResponse> getList(@PathVariable Long listId) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        var user = userService.getUserByEmail();
         if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
@@ -47,7 +46,7 @@ public class ListController {
     @GetMapping
     public ResponseEntity<ListsResponse> getLists() {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        var user = userService.getUserByEmail();
         if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
@@ -60,7 +59,7 @@ public class ListController {
     @PostMapping
     public ResponseEntity<ListResponse> addList(@RequestBody CreateListRequestBody createListRequestBody) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        var user = userService.getUserByEmail();
         if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
@@ -78,7 +77,7 @@ public class ListController {
     @DeleteMapping(path = "/{listId}")
     public ResponseEntity<HttpStatus> deleteList(@PathVariable("listId") Long listId) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        var user = userService.getUserByEmail();
         if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
@@ -98,7 +97,7 @@ public class ListController {
     public ResponseEntity<ListResponse> updateList(@PathVariable("listId") Long listId,
                                                    @RequestBody UpdateListRequestBody updateListRequestBody) {
 
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        var user = userService.getUserByEmail();
         if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
@@ -118,7 +117,7 @@ public class ListController {
 
     @GetMapping(path = "/{listId}/fullprice")
     public ResponseEntity<FullPriceResponse> getFullPrice(@PathVariable Long listId) {
-        var user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        var user = userService.getUserByEmail();
         if (user.isRight()) {
             return ResponseEntity.notFound().build();
         }
