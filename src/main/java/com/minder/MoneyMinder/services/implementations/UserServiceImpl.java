@@ -48,6 +48,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
+
+        //TODO:
+        //dodac walidacje pol
+        //obsluzyc wyjatek albo cos z nim zrobic ;))
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.email(),

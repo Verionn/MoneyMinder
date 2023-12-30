@@ -10,17 +10,17 @@ import java.util.Optional;
 
 public interface ItemService {
 
-    ItemEntity addItem(ItemEntity itemEntity, Long listId);
+    ItemEntity addItem(ItemEntity itemEntity, Long listId, Long userId);
 
     Optional<ItemEntity> getItem(Long itemId);
 
-    List<ItemEntity> getItemsByListId(Long listId);
+    List<ItemEntity> getItemsByListIdAndUserId(Long listId, Long userId);
 
     void deleteItem(Long itemID);
 
     Optional<ItemEntity> updateItem(Long itemId, UpdateItemRequestBody updateItemRequestBody);
 
-    boolean existsById(Long itemId);
+    boolean existsById(Long itemId, Long userId);
 
     void deleteItemsByListId(Long listId);
 

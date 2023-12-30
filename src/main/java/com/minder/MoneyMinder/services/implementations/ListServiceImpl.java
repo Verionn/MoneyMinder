@@ -25,12 +25,12 @@ public class ListServiceImpl implements ListService {
         return listRepository.findById(listId);
     }
 
-    public List<ListEntity> getLists() {
-        return listRepository.findAll();
+    public List<ListEntity> getLists(Long userId) {
+        return listRepository.findAllByUserId(userId);
     }
 
-    public ListEntity addList(ListEntity listEntity) {
-        return listRepository.save(updateListEntity(listEntity));
+    public ListEntity addList(ListEntity listEntity, Long userId) {
+        return listRepository.save(updateListEntity(listEntity, userId));
     }
 
     public void deleteList(Long listId) {
@@ -43,12 +43,12 @@ public class ListServiceImpl implements ListService {
                 .map(listRepository::save);
     }
 
-    public double getFullPrice(Long listId) {
-        return listRepository.findTotalAmountByListId(listId);
+    public double getFullPrice(Long listId, Long userId) {
+        return listRepository.findTotalAmountByListIdAndUserId(listId, userId);
     }
 
-    public boolean existsById(Long listId) {
-        return listRepository.existsById(listId);
+    public boolean existsByListIdAndUserId(Long listId, Long userId) {
+        return listRepository.existsByListIdAndUserId(listId, userId);
     }
 
     private ListEntity updateListEntity(ListEntity listEntity, UpdateListRequestBody updateListRequestBody) {
@@ -61,11 +61,12 @@ public class ListServiceImpl implements ListService {
         return listEntity;
     }
 
-    private ListEntity updateListEntity(ListEntity listEntity) {
-        if (listEntity.getDescription() == null) {
-            listEntity.setDescription("");
+    private ListEntity updateListEntity(ListEntity listEntity, Long userId) {
+        if (listEntity.getDescription() == null) { //TODO:
+            listEntity.setDescription("");          //idk po co to jest, walidacja w liscie powinna byc zeby to nie przeszlo i u gory tak samo
         }
         listEntity.setDescription(listEntity.getDescription());
+        listEntity.setUserId(userId);
         return listEntity;
     }
 }

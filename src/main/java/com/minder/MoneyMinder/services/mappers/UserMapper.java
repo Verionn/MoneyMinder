@@ -15,5 +15,6 @@ public interface UserMapper {
     default UserEntity registerUserRequestToUserEntity(RegisterUserRequest registerUserRequest, String encodedPassword, Role role) {
         return new UserEntity(registerUserRequest.name(), encodedPassword, registerUserRequest.email(), role);
     }
+
     UserResponse userEntityToUserResponse(UserEntity userEntity);
 }

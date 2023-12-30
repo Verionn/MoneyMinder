@@ -1,7 +1,7 @@
 package com.minder.MoneyMinder.controllers.user.dto;
 
 public record UserResponse(
-        long id,
+        Long userId,
         String email,
         String name,
         String role) {

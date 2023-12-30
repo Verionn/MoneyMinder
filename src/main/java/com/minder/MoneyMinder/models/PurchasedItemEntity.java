@@ -11,29 +11,21 @@ import java.time.LocalDateTime;
 public class PurchasedItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    Long itemId;
-    Long listId;
-    Long categoryId;
-    String name;
-    Double price;
-    Integer amount;
-    Long weight;
-    LocalDateTime timeCreated;
-    LocalDateTime timeBought;
+    private Long id;
+    private Long userId;
+    private Long listId;
+    private Long categoryId;
+    private String name;
+    private Double price;
+    private Integer amount;
+    private Long weight;
+    private LocalDateTime timeCreated;
+    private LocalDateTime timeBought;
 
     public PurchasedItemEntity() {}
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
     }
 
     public Long getListId() {
@@ -102,5 +94,13 @@ public class PurchasedItemEntity {
 
     public void setTimeBought(LocalDateTime timeBought) {
         this.timeBought = timeBought;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
