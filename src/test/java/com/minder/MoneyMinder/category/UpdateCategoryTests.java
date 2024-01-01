@@ -44,7 +44,7 @@ public class UpdateCategoryTests extends MoneyMinderApplicationTests {
         HttpEntity<UpdateCategoryRequestBody> requestEntity = new HttpEntity<>(updateCategoryRequestBody);
 
         //when
-        var updateCategoryResponse = client.exchange(categoriesPath(WRONG_CATEGORY_ID), PUT, requestEntity, CategoryResponse.class);
+        var updateCategoryResponse = client.exchange(categoriesPath(INVALID_CATEGORY_ID), PUT, requestEntity, CategoryResponse.class);
 
         //then
         assertThat(updateCategoryResponse.getStatusCode(), equalTo(NOT_FOUND));
@@ -58,7 +58,7 @@ public class UpdateCategoryTests extends MoneyMinderApplicationTests {
         //given
         var createdCategoryResponse = createCategory(FIRST_CATEGORY_NAME);
         var categoryId = createdCategoryResponse.categoryId();
-        var updateCategoryRequestBody = new UpdateCategoryRequestBody(WRONG_CATEGORY_NAME);
+        var updateCategoryRequestBody = new UpdateCategoryRequestBody(INVALID_CATEGORY_NAME);
         HttpEntity<UpdateCategoryRequestBody> requestEntity = new HttpEntity<>(updateCategoryRequestBody);
 
         //when

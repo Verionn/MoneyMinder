@@ -45,10 +45,10 @@ public class DeleteListTests extends MoneyMinderApplicationTests {
         runAsUser();
 
         //when
-        client.delete(listsPath(WRONG_LIST_ID));
+        client.delete(listsPath(INVALID_LIST_ID));
 
         //then
-        assertThat(client.getForEntity(listsPath(WRONG_LIST_ID),
+        assertThat(client.getForEntity(listsPath(INVALID_LIST_ID),
                 ListsResponse.class).getStatusCode(), equalTo(NOT_FOUND));
     }
 }

@@ -59,7 +59,7 @@ public class CreateCategoryTests extends MoneyMinderApplicationTests {
         runAsUser();
 
         //when
-        var getCategoryResponse = client.getForEntity(categoriesPath(WRONG_CATEGORY_ID),
+        var getCategoryResponse = client.getForEntity(categoriesPath(INVALID_CATEGORY_ID),
                 CategoryResponse.class);
 
         //then

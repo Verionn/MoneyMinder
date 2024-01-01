@@ -57,7 +57,7 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
         var createdList = createList(FIRST_LIST_NAME);
 
         //when
-        var purchasedItemResponse = client.postForEntity(purchaseItemPath(createdList.listId(), WRONG_ITEM_ID), null, PurchasedItemResponse.class);
+        var purchasedItemResponse = client.postForEntity(purchaseItemPath(createdList.listId(), INVALID_ITEM_ID), null, PurchasedItemResponse.class);
 
         //then
         assertThat(purchasedItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -72,7 +72,7 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
         //given
 
         //when
-        var purchasedItemResponse = client.postForEntity(purchaseItemPath(WRONG_LIST_ID, VALID_ITEM_ID), null, PurchasedItemResponse.class);
+        var purchasedItemResponse = client.postForEntity(purchaseItemPath(INVALID_LIST_ID, VALID_ITEM_ID), null, PurchasedItemResponse.class);
 
         //then
         assertThat(purchasedItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));

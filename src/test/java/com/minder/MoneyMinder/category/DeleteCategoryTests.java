@@ -45,10 +45,10 @@ public class DeleteCategoryTests extends MoneyMinderApplicationTests {
         runAsUser();
 
         //when
-        client.delete(categoriesPath(WRONG_CATEGORY_ID));
+        client.delete(categoriesPath(INVALID_CATEGORY_ID));
 
         //then
-        assertThat(client.getForEntity(categoriesPath(WRONG_CATEGORY_ID),
+        assertThat(client.getForEntity(categoriesPath(INVALID_CATEGORY_ID),
                 CategoryResponse.class).getStatusCode(), equalTo(NOT_FOUND));
     }
 }

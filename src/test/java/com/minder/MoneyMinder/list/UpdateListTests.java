@@ -45,7 +45,7 @@ public class UpdateListTests extends MoneyMinderApplicationTests {
         HttpEntity<UpdateListRequestBody> requestEntity = new HttpEntity<>(updateListRequestBody);
 
         //when
-        var updateListResponse = client.exchange(listsPath(WRONG_LIST_ID), PUT, requestEntity, ListResponse.class);
+        var updateListResponse = client.exchange(listsPath(INVALID_LIST_ID), PUT, requestEntity, ListResponse.class);
 
         //then
         assertThat(updateListResponse.getStatusCode(), equalTo(NOT_FOUND));
@@ -59,7 +59,7 @@ public class UpdateListTests extends MoneyMinderApplicationTests {
         //given
         var createdListResponse = createList(FIRST_LIST_NAME);
         var listId = createdListResponse.listId();
-        var updateListRequestBody = new UpdateListRequestBody(WRONG_LIST_NAME);
+        var updateListRequestBody = new UpdateListRequestBody(INVALID_LIST_NAME);
         HttpEntity<UpdateListRequestBody> requestEntity = new HttpEntity<>(updateListRequestBody);
 
         //when

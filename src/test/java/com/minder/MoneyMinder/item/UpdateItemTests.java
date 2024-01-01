@@ -66,7 +66,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
 
         //when
-        var updateItemResponse = client.exchange(itemsPath(createdList.listId(), WRONG_ITEM_ID), PUT, requestEntity, ItemResponse.class);
+        var updateItemResponse = client.exchange(itemsPath(createdList.listId(), INVALID_ITEM_ID), PUT, requestEntity, ItemResponse.class);
 
         //then
         assertThat(updateItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -93,7 +93,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
 
         //when
-        var updateItemResponse = client.exchange(itemsPath(WRONG_LIST_ID, addedItem.itemId()), PUT, requestEntity, ItemResponse.class);
+        var updateItemResponse = client.exchange(itemsPath(INVALID_LIST_ID, addedItem.itemId()), PUT, requestEntity, ItemResponse.class);
 
         //then
         assertThat(updateItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -109,7 +109,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
         var createdList = createList(FIRST_LIST_NAME);
         var createdCategory = createCategory(FIRST_CATEGORY_NAME);
         var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
-        var updateItemRequestBody = new UpdateItemRequestBody(WRONG_NEW_LIST_ID,
+        var updateItemRequestBody = new UpdateItemRequestBody(INVALID_NEW_LIST_ID,
                 NEW_ITEM_NAME,
                 NEW_PRICE,
                 NEW_AMOUNT,
@@ -138,7 +138,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
         createList(SECOND_LIST_NAME);
         var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
         var updateItemRequestBody = new UpdateItemRequestBody(createdList.listId(),
-                WRONG_ITEM_NAME,
+                INVALID_ITEM_NAME,
                 NEW_PRICE,
                 NEW_AMOUNT,
                 NEW_CATEGORY_ID,
@@ -166,7 +166,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
         var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
         var updateItemRequestBody = new UpdateItemRequestBody(createdList.listId(),
                 NEW_ITEM_NAME,
-                WRONG_PRICE,
+                INVALID_PRICE,
                 NEW_AMOUNT,
                 NEW_CATEGORY_ID,
                 NEW_WEIGHT);
@@ -194,7 +194,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
         var updateItemRequestBody = new UpdateItemRequestBody(createdList.listId(),
                 NEW_ITEM_NAME,
                 NEW_PRICE,
-                WRONG_AMOUNT,
+                INVALID_AMOUNT,
                 NEW_CATEGORY_ID,
                 NEW_WEIGHT);
 
@@ -223,7 +223,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
                 NEW_PRICE,
                 NEW_AMOUNT,
                 NEW_CATEGORY_ID,
-                WRONG_WEIGHT);
+                INVALID_WEIGHT);
 
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
 
@@ -249,7 +249,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
                 NEW_ITEM_NAME,
                 NEW_PRICE,
                 NEW_AMOUNT,
-                WRONG_CATEGORY_ID,
+                INVALID_CATEGORY_ID,
                 NEW_WEIGHT);
 
         HttpEntity<UpdateItemRequestBody> requestEntity = new HttpEntity<>(updateItemRequestBody);
