@@ -19,6 +19,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should post item and return created")
     public void shouldPostItemAndReturnCreated() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -40,6 +41,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not post item when given bad list id wrong return not found")
     public void shouldNotPostItemAndReturnNotFoundWhenGivenWrongListId() {
+        runAsUser();
 
         //given
         var createdItemRequestBody = createValidItemRequestBody(FIRST_ITEM_NAME);
@@ -56,6 +58,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not post item when item name is blank and return bad request")
     public void shouldNotPostItemAndReturnBadRequestWhenGivenWrongItemName() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -73,6 +76,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not post item when item price is below 0 and return bad request")
     public void shouldNotPostItemAndReturnBadRequestWhenGivenWrongItemPrice() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -95,6 +99,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not post item when item weight is below 0 and return bad request")
     public void shouldNotPostItemAndReturnBadRequestWhenGivenWrongItemWeight() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -117,6 +122,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not post item when item amount is below 0 and return bad request")
     public void shouldNotPostItemAndReturnBadRequestWhenGivenWrongItemAmount() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -139,6 +145,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not post item when item category is blank and return bad request")
     public void shouldNotPostItemAndReturnBadRequestWhenGivenWrongItemCategory() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -161,6 +168,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should get items and return OK")
     public void shouldGetItemsAndReturnOK() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -181,6 +189,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should return not found when given wrong list id")
     public void shouldReturnNotFoundWhenGivenWrongListId() {
+        runAsUser();
 
         //when
         var getItemsResponse = client.getForEntity(itemsPath(WRONG_LIST_ID), ItemListResponse.class);
@@ -193,6 +202,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should return specific item from specific list and status 200")
     public void ShouldReturnSpecificItemFromSpecficiListAndOk() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -216,6 +226,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not get specific item when given bad listId")
     public void ShouldNotGetItemWhenGivenBadListId() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -233,6 +244,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not get specific item when given bad itemId")
     public void ShouldNotGetItemWhenGivenBadItemId() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);

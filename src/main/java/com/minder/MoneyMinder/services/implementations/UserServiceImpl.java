@@ -41,7 +41,6 @@ public class UserServiceImpl implements UserService {
                 registerUserRequest,
                 passwordEncoder.encode(registerUserRequest.password()),
                 Role.USER);
-
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return new LoginResponse(jwtToken);
@@ -49,6 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<LoginResponse> login(LoginRequest loginRequest) {
+        System.out.println(loginRequest.email() + " | " + loginRequest.password() + " | " + passwordEncoder.encode(loginRequest.password()));
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.email(),

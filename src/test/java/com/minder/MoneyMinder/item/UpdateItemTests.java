@@ -19,6 +19,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should update item and return OK")
     public void shouldUpdateItemAndReturnOK(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -49,6 +50,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update item when given wrong item id")
     public void shouldNotUpdateWhenGivenWrongItemIdAndReturnNotFound(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -74,6 +76,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update item when given wrong list id")
     public void shouldNotUpdateWhenGivenWrongListIdAndReturnNotFound(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -100,6 +103,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update item when given new wrong list id")
     public void shouldNotUpdateWhenGivenWrongNewListId(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -126,6 +130,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update item when given new wrong name")
     public void shouldNotUpdateWhenGivenWrongNewName(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -152,6 +157,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update item when given new wrong price")
     public void shouldNotUpdateWhenGivenWrongNewPrice(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -178,6 +184,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update item when given new wrong amount")
     public void shouldNotUpdateWhenGivenWrongNewAmount(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -204,6 +211,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update item when given new wrong weight")
     public void shouldNotUpdateWhenGivenWrongNewWeight(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -230,6 +238,7 @@ public class UpdateItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update item when given new wrong category")
     public void shouldNotUpdateWhenGivenWrongNewCategory(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);

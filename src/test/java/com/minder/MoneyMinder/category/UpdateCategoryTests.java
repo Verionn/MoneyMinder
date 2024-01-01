@@ -17,6 +17,8 @@ public class UpdateCategoryTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should update category and return 200")
     public void shouldUpdateCategoryAndReturnOk(){
+        runAsUser();
+
         //given
         var createCategoryResponse = createCategory(FIRST_CATEGORY_NAME);
         var createdCategoryId = createCategoryResponse.categoryId();
@@ -34,6 +36,8 @@ public class UpdateCategoryTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update category and return not found when given wrong categoryId")
     public void shouldNotUpdateCategoryAndReturnNotFound(){
+        runAsUser();
+
         //given
         var updateCategoryRequestBody = new UpdateCategoryRequestBody(NEW_CATEGORY_NAME);
 
@@ -49,6 +53,8 @@ public class UpdateCategoryTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update category and return 400 when given bad data")
     public void shouldNotUpdateCategoryAndReturnBadRequestWhenEmptyNewName(){
+        runAsUser();
+
         //given
         var createdCategoryResponse = createCategory(FIRST_CATEGORY_NAME);
         var categoryId = createdCategoryResponse.categoryId();
