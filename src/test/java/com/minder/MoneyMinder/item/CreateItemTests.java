@@ -47,7 +47,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         var createdItemRequestBody = createValidItemRequestBody(FIRST_ITEM_NAME);
 
         //when
-        var addItemResponse = client.postForEntity(itemsPath(WRONG_LIST_ID),
+        var addItemResponse = client.postForEntity(itemsPath(INVALID_LIST_ID),
                 createdItemRequestBody, ItemResponse.class);
 
         //then
@@ -62,7 +62,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
-        var createdItemRequestBody = createValidItemRequestBody(WRONG_ITEM_NAME);
+        var createdItemRequestBody = createValidItemRequestBody(INVALID_ITEM_NAME);
 
         //when
         var addItemResponse = client.postForEntity(itemsPath(createdList.listId()),
@@ -81,7 +81,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         //given
         var createdList = createList(FIRST_LIST_NAME);
         var createdItemRequestBody = new CreateItemRequestBody(FIRST_ITEM_NAME,
-                WRONG_PRICE,
+                INVALID_PRICE,
                 VALID_AMOUNT,
                 VALID_CATEGORY_ID,
                 VALID_WEIGHT,
@@ -107,7 +107,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
                 VALID_PRICE,
                 VALID_AMOUNT,
                 VALID_CATEGORY_ID,
-                WRONG_WEIGHT,
+                INVALID_WEIGHT,
                 LocalDateTime.now());
 
         //when
@@ -128,7 +128,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         var createdList = createList(FIRST_LIST_NAME);
         var createdItemRequestBody = new CreateItemRequestBody(FIRST_ITEM_NAME,
                 VALID_PRICE,
-                WRONG_AMOUNT,
+                INVALID_AMOUNT,
                 VALID_CATEGORY_ID,
                 VALID_WEIGHT,
                 LocalDateTime.now());
@@ -152,7 +152,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         var createdItemRequestBody = new CreateItemRequestBody(FIRST_ITEM_NAME,
                 VALID_PRICE,
                 VALID_AMOUNT,
-                WRONG_CATEGORY_ID,
+                INVALID_CATEGORY_ID,
                 VALID_WEIGHT,
                 LocalDateTime.now());
 
@@ -192,7 +192,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         runAsUser();
 
         //when
-        var getItemsResponse = client.getForEntity(itemsPath(WRONG_LIST_ID), ItemListResponse.class);
+        var getItemsResponse = client.getForEntity(itemsPath(INVALID_LIST_ID), ItemListResponse.class);
 
         //then
         assertThat(getItemsResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -234,7 +234,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
         var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
 
         //when
-        var getSpecificItemResponse = client.getForEntity(itemsPath(WRONG_LIST_ID,
+        var getSpecificItemResponse = client.getForEntity(itemsPath(INVALID_LIST_ID,
                 addedItem.itemId()), ItemResponse.class);
 
         //then
@@ -251,7 +251,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
 
         //when
         var getSpecificItemResponse = client.getForEntity(itemsPath(createdList.listId(),
-                WRONG_ITEM_ID), ItemResponse.class);
+                INVALID_ITEM_ID), ItemResponse.class);
 
         //then
         assertThat(getSpecificItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
