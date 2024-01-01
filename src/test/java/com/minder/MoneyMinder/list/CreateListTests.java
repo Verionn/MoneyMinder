@@ -64,7 +64,7 @@ public class CreateListTests extends MoneyMinderApplicationTests {
         //given
 
         //when
-        var getListResponse = client.getForEntity(listsPath(WRONG_LIST_ID),
+        var getListResponse = client.getForEntity(listsPath(INVALID_LIST_ID),
                 ListResponse.class);
 
         //then

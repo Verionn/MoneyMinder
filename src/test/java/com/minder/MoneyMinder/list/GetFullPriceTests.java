@@ -38,7 +38,7 @@ public class GetFullPriceTests extends MoneyMinderApplicationTests {
         runAsUser();
 
         //when
-        var getFullPriceResponse = client.getForEntity(fullPricePath(WRONG_LIST_ID),
+        var getFullPriceResponse = client.getForEntity(fullPricePath(INVALID_LIST_ID),
                 FullPriceResponse.class);
 
         //then

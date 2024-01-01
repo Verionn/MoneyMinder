@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<LoginResponse> login(LoginRequest loginRequest) {
-        System.out.println(loginRequest.email() + " | " + loginRequest.password() + " | " + passwordEncoder.encode(loginRequest.password()));
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.email(),

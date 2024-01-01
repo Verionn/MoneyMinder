@@ -60,44 +60,44 @@ public abstract class MoneyMinderApplicationTests {
     public static final String FIRST_ITEM_NAME = "Bread";
     public static final String SECOND_ITEM_NAME = "Pepsi";
     public static final String NEW_ITEM_NAME = "Sprite";
-    public static final String WRONG_LIST_NAME = "";
-    public static final Long WRONG_LIST_ID = -12L;
+    public static final String INVALID_LIST_NAME = "";
+    public static final Long INVALID_LIST_ID = -12L;
     public static final String FIRST_CATEGORY_NAME = "Food";
     public static final String SECOND_CATEGORY_NAME = "Sweets";
     public static final String NEW_CATEGORY_NAME = "Drinks";
-    public static final String WRONG_CATEGORY_NAME = "";
+    public static final String INVALID_CATEGORY_NAME = "";
     public static final Long VALID_CATEGORY_ID = 1L;
     public static final Long NEW_CATEGORY_ID = 3L;
-    public static final Long WRONG_CATEGORY_ID = -1L;
+    public static final Long INVALID_CATEGORY_ID = -1L;
     public static final String VALID_PREFIX = "P";
-    public static final String WRONG_ITEM_NAME = "";
+    public static final String INVALID_ITEM_NAME = "";
     public static final Long NEW_LIST_ID = 2L;
-    public static final Long WRONG_NEW_LIST_ID = -25L;
-    public static final Long WRONG_ITEM_ID = -13L;
+    public static final Long INVALID_NEW_LIST_ID = -25L;
+    public static final Long INVALID_ITEM_ID = -13L;
     public static final Long VALID_ITEM_ID = 13L;
     public static final Double VALID_PRICE = 3.50;
     public static final Double NEW_PRICE = 5.50;
-    public static final Double WRONG_PRICE = -3.50;
+    public static final Double INVALID_PRICE = -3.50;
     public static final int VALID_AMOUNT = 1;
     public static final int NEW_AMOUNT = 2;
-    public static final int WRONG_AMOUNT = -13;
+    public static final int INVALID_AMOUNT = -13;
     public static final Long VALID_WEIGHT = 123L;
     public static final Long NEW_WEIGHT = 353L;
-    public static final Long WRONG_WEIGHT = -123L;
+    public static final Long INVALID_WEIGHT = -123L;
     public static final Long DAYS = 2L;
-    public static final Long WRONG_DAYS = -2L;
-    public static final Long WRONG_AMOUNT_OF_ITEMS = -2L;
+    public static final Long INVALID_DAYS = -2L;
+    public static final Long INVALID_AMOUNT_OF_ITEMS = -2L;
     public static final long AMOUNT_OF_ITEMS = 2;
     public static final LocalDateTime VALID_DATE = LocalDateTime.parse("2023-10-15T21:15:00");
-    public static final String VALID_USER_EMAIL = "verion@gmail.com";
+    public static final String REGISTERED_USER_EMAIL = "verion@gmail.com";
+    public static final String REGISTERED_USER_PASSWORD = "12345";
+    public static final String VALID_USER_EMAIL = "cebulaczek@gmail.com";
     public static final String VALID_USER_NAME = "cebulaczek";
-    public static final String VALID_USER_PASSWORD = "12345";
-    public static final String INVALID_USER_EMAIL = "invalidmail.com";
-    public static final String INVALID_USER_PASSWORD = "123456";
-    public static final String VALID_ADMIN_EMAIL = "bajcik@gmail.com";
-    public static final String VALID_ADMIN_PASSWORD = "123";
+    public static final String VALID_USER_PASSWORD = "997";
+    public static final String INVALID_USER_EMAIL = "";
+    public static final String INVALID_USER_PASSWORD = "";
+    public static final String INVALID_USER_NAME = "";
     protected String userToken;
-    protected String adminToken;
 
     @Autowired
     protected TestRestTemplate client;
@@ -107,12 +107,21 @@ public abstract class MoneyMinderApplicationTests {
 
     @BeforeEach
     public void loginUser() {
-        userToken = getToken(VALID_USER_EMAIL, VALID_USER_PASSWORD);
+        userToken = getToken(REGISTERED_USER_EMAIL, REGISTERED_USER_PASSWORD);
     }
 
     private void registerUser(String email, String name, String password){
         var response = client.postForEntity(prepareUrl(REGISTER_PATH), new RegisterUserRequest(name, password, email), RegisterUserRequest.class);
-        System.out.println(response);
+    }
+
+    protected void runWithoutToken() {
+        client.getRestTemplate().setInterceptors(
+                Collections.emptyList()
+        );
+    }
+
+    protected void runWithInvalidToken() {
+        addAuthorizationToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0b3d5Lm1haWxAZ21haWwuY29tIiwiaWF0IjoxNzAzODk1OTg0LCJleHAiOjE3MDM5MTc1ODR9.Ubh9XvZvp9qbu624AtiRBPXj1BzscGVC1MyqfHL5s60");
     }
 
     private String getToken(String email, String password) {

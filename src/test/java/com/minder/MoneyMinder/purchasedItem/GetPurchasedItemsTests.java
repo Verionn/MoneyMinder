@@ -61,7 +61,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
 
         //when
         var purchasedItemListResponse = client.getForEntity(
-                purchasedItemsByCategoryIdPath(WRONG_CATEGORY_ID), PurchasedItemListResponse.class);
+                purchasedItemsByCategoryIdPath(INVALID_CATEGORY_ID), PurchasedItemListResponse.class);
 
         //then
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -131,7 +131,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
 
         //when
         var purchasedItemListResponse = client.getForEntity(purchasedItemsByCategoryIdAndDaysPath(
-                createdCategory.categoryId(), WRONG_DAYS), PurchasedItemListResponse.class);
+                createdCategory.categoryId(), INVALID_DAYS), PurchasedItemListResponse.class);
 
         //
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
@@ -145,7 +145,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
 
         //when
         var purchasedItemListResponse = client.getForEntity(purchasedItemsByCategoryIdAndDaysPath(
-                WRONG_CATEGORY_ID, WRONG_DAYS), PurchasedItemListResponse.class);
+                INVALID_CATEGORY_ID, INVALID_DAYS), PurchasedItemListResponse.class);
 
         //then
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -159,7 +159,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
 
         //when
         var purchasedItemListResponse = client.getForEntity(purchasedItemsByDaysPath(
-                WRONG_DAYS), PurchasedItemListResponse.class);
+                INVALID_DAYS), PurchasedItemListResponse.class);
 
         //
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
@@ -202,7 +202,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
 
         //when
         var purchasedItemListResponse = client.getForEntity(purchasedItemsByAmountOfItemsPath(
-                WRONG_AMOUNT_OF_ITEMS), PurchasedItemListResponse.class);
+                INVALID_AMOUNT_OF_ITEMS), PurchasedItemListResponse.class);
 
         //
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
@@ -274,7 +274,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
 
         //when
         var purchasedItemListResponse = client.getForEntity(
-                purchasedItemsByListId(WRONG_LIST_ID), PurchasedItemListResponse.class);
+                purchasedItemsByListId(INVALID_LIST_ID), PurchasedItemListResponse.class);
 
         //then
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
