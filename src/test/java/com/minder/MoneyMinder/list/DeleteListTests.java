@@ -18,6 +18,8 @@ public class DeleteListTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should delete list and return 200")
     public void shouldDeleteListAndReturn200(){
+        runAsUser();
+
         //given
         var createListResponse = createList(FIRST_LIST_NAME);
         var listId = createListResponse.listId();
@@ -40,6 +42,8 @@ public class DeleteListTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should return 404 when given wrong list id")
     public void shouldNotDeleteListAndReturnNotFound() {
+        runAsUser();
+
         //when
         client.delete(listsPath(WRONG_LIST_ID));
 

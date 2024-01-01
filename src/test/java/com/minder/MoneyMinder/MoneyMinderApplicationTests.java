@@ -1,5 +1,6 @@
 package com.minder.MoneyMinder;
 
+import com.minder.MoneyMinder.configuration.security.JwtAuthenticationFilter;
 import com.minder.MoneyMinder.controllers.category.dto.CategoryResponse;
 import com.minder.MoneyMinder.controllers.category.dto.CreateCategoryRequestBody;
 import com.minder.MoneyMinder.controllers.item.dto.CreateItemRequestBody;
@@ -8,6 +9,9 @@ import com.minder.MoneyMinder.controllers.item.dto.ItemResponse;
 import com.minder.MoneyMinder.controllers.list.dto.CreateListRequestBody;
 import com.minder.MoneyMinder.controllers.list.dto.ListResponse;
 import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemResponse;
+import com.minder.MoneyMinder.controllers.user.dto.LoginRequest;
+import com.minder.MoneyMinder.controllers.user.dto.LoginResponse;
+import com.minder.MoneyMinder.controllers.user.dto.RegisterUserRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -64,7 +69,7 @@ public abstract class MoneyMinderApplicationTests {
     public static final Long VALID_CATEGORY_ID = 1L;
     public static final Long NEW_CATEGORY_ID = 3L;
     public static final Long WRONG_CATEGORY_ID = -1L;
-    public static final String GOOD_PREFIX = "P";
+    public static final String VALID_PREFIX = "P";
     public static final String WRONG_ITEM_NAME = "";
     public static final Long NEW_LIST_ID = 2L;
     public static final Long WRONG_NEW_LIST_ID = -25L;
@@ -84,9 +89,12 @@ public abstract class MoneyMinderApplicationTests {
     public static final Long WRONG_AMOUNT_OF_ITEMS = -2L;
     public static final long AMOUNT_OF_ITEMS = 2;
     public static final LocalDateTime VALID_DATE = LocalDateTime.parse("2023-10-15T21:15:00");
-    public static final String VALID_USER_EMAIL = "testowy.email@gmail.com";
+    public static final String VALID_USER_EMAIL = "verion@gmail.com";
+    public static final String VALID_USER_NAME = "cebulaczek";
     public static final String VALID_USER_PASSWORD = "12345";
-    public static final String VALID_ADMIN_EMAIL = "bijacik.adam@gmail.com";
+    public static final String INVALID_USER_EMAIL = "invalidmail.com";
+    public static final String INVALID_USER_PASSWORD = "123456";
+    public static final String VALID_ADMIN_EMAIL = "bajcik@gmail.com";
     public static final String VALID_ADMIN_PASSWORD = "123";
     protected String userToken;
     protected String adminToken;
@@ -98,18 +106,36 @@ public abstract class MoneyMinderApplicationTests {
     protected int port;
 
     @BeforeEach
-    public void registerAndLogin() {
-        //userToken = getToken(VALID_USER_EMAIL, VALID_USER_PASSWORD);
+    public void loginUser() {
+        userToken = getToken(VALID_USER_EMAIL, VALID_USER_PASSWORD);
     }
 
-//    private String getToken(String email, String password) {
-//        var loginUserRequest = client.postForEntity(
-//                prepareUrl(LOGIN_PATH),
-//                new LoginRequest(email, password),
-//                LoginResponse.class
-//        );
-//        return loginUserRequest.getBody().token();
-//    }
+    private void registerUser(String email, String name, String password){
+        var response = client.postForEntity(prepareUrl(REGISTER_PATH), new RegisterUserRequest(name, password, email), RegisterUserRequest.class);
+        System.out.println(response);
+    }
+
+    private String getToken(String email, String password) {
+        var loginUserRequest = client.postForEntity(prepareUrl(LOGIN_PATH), new LoginRequest(email, password),
+                LoginResponse.class
+        );
+        return loginUserRequest.getBody().token();
+    }
+
+    protected void addAuthorizationToken(String token) {
+        client.getRestTemplate().setInterceptors(
+                Collections.singletonList((request, body, execution) -> {
+                    request.getHeaders()
+                            .add("Authorization",
+                                    String.format("%s%s",
+                                            JwtAuthenticationFilter.BEARER_PREFIX,
+                                            token
+                                    )
+                            );
+                    return execution.execute(request, body);
+                })
+        );
+    }
 
     protected String prepareUrl(String resource) {
         return String.format(BASE_URL_FORMAT, port, resource);
@@ -195,7 +221,7 @@ public abstract class MoneyMinderApplicationTests {
     }
 
     protected void runAsUser() {
-        //addAuthorizationToken(userToken);
+        addAuthorizationToken(userToken);
     }
 
     protected ItemResponse addItem(String itemName, Long listId, Long categoryId){

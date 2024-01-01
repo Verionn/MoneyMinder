@@ -20,6 +20,7 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should mark item as purchased and return 200")
     public void shouldMarkItemAsPurchasedAndReturn200() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -50,6 +51,7 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should return not found when given wrong item id")
     public void shouldReturnNotFoundWhenGivenWrongItemId() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -65,6 +67,7 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should return not found when given wrong list id")
     public void shouldReturnNotFoundWhenGivenWrongListId() {
+        runAsUser();
 
         //given
 

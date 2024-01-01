@@ -18,6 +18,8 @@ public class CreateCategoryTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should get categories")
     public void shouldGetCategoriesAndReturnOk() {
+        runAsUser();
+
         //given
         createCategory(FIRST_CATEGORY_NAME);
         createCategory(SECOND_CATEGORY_NAME);
@@ -36,6 +38,8 @@ public class CreateCategoryTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should get specific category")
     public void shouldGetSpecificCategoryAndReturnOk() {
+        runAsUser();
+
         //given
         var createdCategoryResponse = createCategory(FIRST_CATEGORY_NAME);
 
@@ -52,6 +56,7 @@ public class CreateCategoryTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not get category and return 404 when given wrong id")
     public void ShouldNotGetCategoryAndReturn404() {
+        runAsUser();
 
         //when
         var getCategoryResponse = client.getForEntity(categoriesPath(WRONG_CATEGORY_ID),
