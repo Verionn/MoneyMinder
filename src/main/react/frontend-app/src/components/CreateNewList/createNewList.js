@@ -3,7 +3,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import "boxicons";
 import "./createNewList.css";
 import { PostNewList } from "../communicationWithServer/HandleDataRequest";
-import { useDarkMode, useListArray } from "../Context/Contexts";
+import { useDarkMode, UseListArray } from "../Context/Contexts";
 import {
   CreateNotification,
   useLocalStorageState,
@@ -11,7 +11,7 @@ import {
 
 const CreateNewList = ({ onClose }) => {
   const { darkMode } = useDarkMode();
-  const { addElement } = useListArray();
+  const { addElement } = UseListArray();
   const [show, setShow] = useState(false);
   const [listName, setListName] = useState("");
   const [description, setDescription] = useState("");

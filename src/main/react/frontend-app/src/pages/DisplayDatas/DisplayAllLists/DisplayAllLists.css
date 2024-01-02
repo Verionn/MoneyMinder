@@ -41,6 +41,7 @@ ul {
 }
 
 .userLists {
+  display: flex;
   list-style-type: none !important;
   font-family: "Courier New", Courier, monospace;
   overflow-y: auto; /* Add this property for scroll behavior */

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useListArray } from "../Context/Contexts";
+import { UseListArray } from "../Context/Contexts";
 
 const endpoint = "http://localhost:8080";
 const categoriesUrl = `http://localhost:8080/categories`;
@@ -36,7 +36,7 @@ export const GetListsData = ({ apiUrl }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { initializeArray, listArray,allListAndItesm } = useListArray();
+  const { initializeArray, listArray,allListAndItesm } = UseListArray();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,7 +69,7 @@ export const GetItemListData = ({ apiUrl }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { initializeArray, addElement, allListAndItesm, itemsArray } =
-    useListArray();
+    UseListArray();
   useEffect(() => {
     const fetchData = async () => {
       try {

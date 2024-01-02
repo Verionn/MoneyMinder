@@ -7,13 +7,13 @@ import {
   PostNewItem,
   PostNewCategory,
 } from "../communicationWithServer/HandleDataRequest";
-import { useListArray } from "../Context/Contexts";
+import { UseListArray } from "../Context/Contexts";
 import ItemForm from "./ItemForm";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
 
 const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
-  const { addElement } = useListArray();
+  const { addElement } = UseListArray();
   const [FormData, setFormData] = useState({
     itemName: "",
     customItemName: "",

@@ -5,12 +5,14 @@ import "./DisplayAllLists.css";
 import GetDatasFromItems from "../../../components/functions/functions";
 import DisplayItems from "../DisplayItems/DisplayItems";
 import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList";
-import { useDarkMode,useListArray } from "../../../components/Context/Contexts";
+import { useDarkMode,UseListArray,UseViewList } from "../../../components/Context/Contexts";
 import { ProgressBarFunction } from "../../../components/functions/functions";
+
 const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
-  const { listArray } = useListArray();
+  const { listArray,allListAndItesm } = UseListArray();
   const { darkMode } = useDarkMode();
   const [listLenght ] = useState(-1);
+  const {view}=UseViewList();
 
 
   const handleListClick = (listId) => {
@@ -22,8 +24,8 @@ const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
   };
 
   useEffect(() => {
-    //console.log("listArray : ", listArray);
-  }, [listArray]);
+    console.log("view: ", view);
+  }, [listArray,allListAndItesm,view]);
 
   const apiUrl = "http://localhost:8080/lists";
   let { data, loading, error } = GetListsData({ apiUrl });
@@ -82,8 +84,8 @@ const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
 
       {ItemsID === -1 ? (
         data && data.lists && data.lists.length > 0 ? (
-          <ul className="userLists">
-            {data.lists.map((list) => (
+          <ul className="userLists" style={{ flexDirection: view === "list" ? "column" : "row" }}>
+            {allListAndItesm.lists.map((list) => (
               <li
                 key={list.listId}
                 className={
@@ -116,7 +118,7 @@ const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
                 </div>
                 <div className="progressBar">
                   
-                  {ProgressBarFunction(list)}
+                  {ProgressBarFunction(list.listId)}
                 </div>
                 <div className="Description">
                   <ListDescription

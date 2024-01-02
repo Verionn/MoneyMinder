@@ -3,7 +3,7 @@ import "./HeaderMainContainer.css";
 import "boxicons";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useDarkMode } from "../../components/Context/Contexts";
+import { useDarkMode,UseViewList } from "../../components/Context/Contexts";
 import CreateNewList from "../../components/CreateNewList/createNewList";
 import { useLocalStorageState } from "../../components/functions/functions";
 
@@ -17,19 +17,22 @@ const HeaderMainContainer = () => {
     "showContentView",
     false
   );
+  const{handleView} = UseViewList();
   const { darkMode } = useDarkMode();
   const handleToggle = (isOpen, event, metadata) => {
     setShowDropdown(isOpen);
   };
 
   const handleViews = (type) => {
-    if (type === "view") {
+    if (type === "list") {
       setShowListView(true);
       setShowContentView(false);
+      handleView(type);
     }
     if (type === "content") {
       setShowListView(false);
       setShowContentView(true);
+      handleView(type);
     }
   };
 
@@ -64,7 +67,7 @@ const HeaderMainContainer = () => {
           <Dropdown.Menu>
             <Dropdown.Item
               href="#/action-1"
-              onClick={() => handleViews("view")}
+              onClick={() => handleViews("list")}
             >
               <box-icon name="list-ul"></box-icon>
             </Dropdown.Item>

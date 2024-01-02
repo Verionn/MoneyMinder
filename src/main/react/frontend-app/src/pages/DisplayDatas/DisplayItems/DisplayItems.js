@@ -10,10 +10,10 @@ import Button from "react-bootstrap/Button";
 import AddNewItem from "../../../components/addNewItems/addNewItem";
 import { deleteItem } from "../../../components/delete/deleteItem";
 import { checkItem } from "../../../components/functions/checkItem";
-import { useListArray } from "../../../components/Context/Contexts";
+import { UseListArray } from "../../../components/Context/Contexts";
 
 const GetDatasFromItems = ({ listID, operation, onClose }) => {
-  const {itemsArray,allItemsArray} = useListArray();
+  const {itemsArray,allItemsArray} = UseListArray();
   const apiUrl = `http://localhost:8080/lists/${listID}/items`;
   const [addItems, setAddItems] = useState(false);
   
