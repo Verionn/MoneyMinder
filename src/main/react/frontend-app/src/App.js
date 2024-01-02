@@ -5,6 +5,7 @@ import { defineElement } from "@lordicon/element";
 import {
   DarkModeProviderCOntext,
   ListArrayProviderContext,
+  ViewListProviderContext,
 } from "./components/Context/Contexts";
 import NewMainContainer from "./pages/NewMainContainer/NewMainContainer";
 import { NotificationContainer } from "react-notifications";
@@ -13,9 +14,11 @@ function App() {
   return (
     <div className="App">
       <DarkModeProviderCOntext>
+        <ViewListProviderContext>
         <ListArrayProviderContext>
           <NewMainContainer></NewMainContainer>
         </ListArrayProviderContext>
+        </ViewListProviderContext>
         <NotificationContainer />
       </DarkModeProviderCOntext>
     </div>

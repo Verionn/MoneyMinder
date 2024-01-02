@@ -14,9 +14,11 @@ function NewMainContainer() {
   const { darkMode } = useDarkMode();
   const [ItemsID, setItemsID] = useLocalStorageState("ItemsID", -1);
   const [activeTab, setActiveTab] = useLocalStorageState("activeTab", "first");
+  
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+   
   };
   const handleListClick = (listId) => {
     setItemsID(listId);

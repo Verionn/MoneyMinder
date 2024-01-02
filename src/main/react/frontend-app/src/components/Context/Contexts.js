@@ -111,10 +111,47 @@ export const ListArrayProviderContext = ({ children }) => {
   );
 };
 
-export const useListArray = () => {
+export const UseListArray = () => {
   const context = useContext(ListArrayContext);
   if (!context) {
     throw new Error("useMyArray must be used within a MyArrayProvider");
   }
   return context;
 };
+
+
+/*-------------ViewList----------------*/
+const viewListContext = createContext({
+  view:[],
+  handleViewList: () => {},
+  handleViewContent: () => {},
+});
+
+export const ViewListProviderContext = ({ children }) => {
+  const [view, setView] = useState("list");
+
+ const handleView = (view) => {
+    setView(view);
+  };
+
+ 
+  return (
+    <viewListContext.Provider
+      value={{
+        view,
+        handleView,
+      }}
+    >
+      {children}
+    </viewListContext.Provider>
+  );
+};
+
+export const UseViewList = () => {
+  const context = useContext(viewListContext);
+  if (!context) {
+    throw new Error("useMyArray must be used within a MyArrayProvider");
+  }
+  return context;
+};
+
