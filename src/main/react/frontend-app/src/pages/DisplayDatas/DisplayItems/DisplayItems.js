@@ -10,8 +10,10 @@ import Button from "react-bootstrap/Button";
 import AddNewItem from "../../../components/addNewItems/addNewItem";
 import { deleteItem } from "../../../components/delete/deleteItem";
 import { checkItem } from "../../../components/functions/checkItem";
+import { useListArray } from "../../../components/Context/Contexts";
 
 const GetDatasFromItems = ({ listID, operation, onClose }) => {
+  const {itemsArray,allItemsArray} = useListArray();
   const apiUrl = `http://localhost:8080/lists/${listID}/items`;
   const [addItems, setAddItems] = useState(false);
   
@@ -24,6 +26,12 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
   useEffect(() => {
     localStorage.setItem('addItems', addItems.toString());
   }, [addItems]);
+
+  useEffect(() => {
+    //console.log("itemsArray : ", itemsArray);
+    console.log("allItemsArray : ", allItemsArray);
+  }, [itemsArray,allItemsArray]);
+
   const handleCheckboxChange = (itemId) => {
     setCheckedItems((prevCheckedItems) => ({
       ...prevCheckedItems,

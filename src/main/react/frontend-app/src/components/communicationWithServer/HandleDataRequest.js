@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useListArray } from "../Context/Contexts";
+
 const endpoint = "http://localhost:8080";
 const categoriesUrl = `http://localhost:8080/categories`;
 //GET DATA FROM SERVER
@@ -35,7 +36,7 @@ export const GetListsData = ({ apiUrl }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { initializeArray } = useListArray();
+  const { initializeArray, listArray,allListAndItesm } = useListArray();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,7 +47,9 @@ export const GetListsData = ({ apiUrl }) => {
         }
         const result = await response.json();
         setData(result);
-        initializeArray(result.lists);
+        await initializeArray(result.lists, "list");
+        //console.log("allListAndItesm :",allListAndItesm);
+        //console.log("result.lists :", listArray);
       } catch (error) {
         setError(error);
       } finally {
@@ -55,9 +58,9 @@ export const GetListsData = ({ apiUrl }) => {
     };
 
     fetchData();
-  }, [apiUrl,initializeArray]);
-  //addElement(data);
-  //console.log("listArray : ",data);
+  }, [apiUrl, initializeArray]);
+
+
   return { data, loading, error };
 };
 
@@ -65,7 +68,8 @@ export const GetItemListData = ({ apiUrl }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { initializeArray, addElement, allListAndItesm, itemsArray } =
+    useListArray();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -75,6 +79,8 @@ export const GetItemListData = ({ apiUrl }) => {
         }
         const result = await response.json();
         setItems(result.items);
+        await initializeArray(result.items, "items");
+       console.log("Items in list:", allListAndItesm.lists);
       } catch (error) {
         setError(error);
       } finally {
@@ -106,7 +112,7 @@ export const PostNewList = async (
         body: JSON.stringify({ name: listName, description: description }),
       });
       const result = await response.json();
-      addElement(result.lists);
+      addElement(result.lists, "list");
       if (!response.ok) {
         throw new Error("Failed to create a new list");
       }
@@ -121,7 +127,7 @@ export const PostNewList = async (
   }
 };
 
-export const PostNewItem = async (newItem, ItemsUrl) => {
+export const PostNewItem = async (newItem, ItemsUrl, addElement) => {
   try {
     const response = await fetch(ItemsUrl, {
       method: "POST",
@@ -135,6 +141,7 @@ export const PostNewItem = async (newItem, ItemsUrl) => {
       console.error("Failed to add a new item:", responseBody);
       throw new Error("Failed to add a new item");
     }
+    addElement(newItem, "items");
   } catch (error) {
     console.error("Error adding a new item:", error);
     return false;

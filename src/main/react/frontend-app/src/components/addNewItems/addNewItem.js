@@ -7,11 +7,13 @@ import {
   PostNewItem,
   PostNewCategory,
 } from "../communicationWithServer/HandleDataRequest";
+import { useListArray } from "../Context/Contexts";
 import ItemForm from "./ItemForm";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
 
 const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
+  const { addElement } = useListArray();
   const [FormData, setFormData] = useState({
     itemName: "",
     customItemName: "",
@@ -111,7 +113,7 @@ const AddNewItem = ({ listID, onClick, ItemsUrl, items }) => {
         console.error("Error updating the item:", error);
       }
     } else {
-      const state = await PostNewItem(newItem, ItemsUrl);
+      const state = await PostNewItem(newItem, ItemsUrl,addElement);
       if (state) {
         setNewCategory(true);
         setMessage("New Item added successfully!");

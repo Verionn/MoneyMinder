@@ -1,16 +1,18 @@
-import React, { useEffect } from "react";
-import { GetListsData } from "../../../components/communicationWithServer/HandleDataRequest";
+import React, { useEffect, useState } from "react";
+import { GetListsData,GetItemListData } from "../../../components/communicationWithServer/HandleDataRequest";
 import ListDescription from "../../../components/listDescription/listDescriptions";
 import "./DisplayAllLists.css";
 import GetDatasFromItems from "../../../components/functions/functions";
 import DisplayItems from "../DisplayItems/DisplayItems";
 import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList";
-import { useListArray } from "../../../components/Context/Contexts";
-import { useDarkMode } from "../../../components/Context/Contexts";
+import { useDarkMode,useListArray } from "../../../components/Context/Contexts";
 import { ProgressBarFunction } from "../../../components/functions/functions";
 const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
   const { listArray } = useListArray();
   const { darkMode } = useDarkMode();
+  const [listLenght ] = useState(-1);
+
+
   const handleListClick = (listId) => {
     onClickList(listId);
   };
@@ -113,7 +115,8 @@ const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
                   </span>
                 </div>
                 <div className="progressBar">
-                  {ProgressBarFunction(list.listId)}
+                  
+                  {ProgressBarFunction(list)}
                 </div>
                 <div className="Description">
                   <ListDescription

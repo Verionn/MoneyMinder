@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { GetItemListData } from "../communicationWithServer/HandleDataRequest";
 import { NotificationManager } from "react-notifications";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import { useListArray } from "../Context/Contexts";
+
 const GetDatasFromItems = ({ listID, operation }) => {
   const apiUrl = `http://localhost:8080/lists/${listID}/items`;
 
@@ -17,11 +19,9 @@ const GetDatasFromItems = ({ listID, operation }) => {
   if (operation === "count") return items.length;
   else if (operation === "countBought") {
     return listID;
-  } else if (operation === "price")
-    return calculateTotalPrice(items);
+  } else if (operation === "price") return calculateTotalPrice(items);
 };
 export default GetDatasFromItems;
-
 
 const calculateTotalPrice = (items) => {
   return items
@@ -85,14 +85,25 @@ export const CreateNotification = (type, message) => {
   }
 };
 
-function getPercentForProgressBar( bought,items) {
+function getPercentForProgressBar(bought, items) {
   if (items === 0) return 0;
-  return parseInt((bought / items) * 100,10);
+  return parseInt((bought / items) * 100, 10);
 }
 
-export function ProgressBarFunction(ListID) {
- 
-  const now = getPercentForProgressBar(ListID, 3);
+/*const getItemsByListId = (targetListId, allItemsArray) => {
+  if(allItemsArray.length === 0) return console.log("allItemsArray is empty");
+  for (let i = 0; i < allItemsArray.length; i++) {
+
+    if (allItemsArray[i].items.itemId === targetListId) {
+      return allItemsArray[i];
+    }
+  }
+};*/
+
+export function ProgressBarFunction(list) {
+  const { allItemsArray } = useListArray();
+//console.log("checking :", getItemsByListId(list.listId, allItemsArray));
+  const now = getPercentForProgressBar(1, 3);
   return (
     <ProgressBar
       now={now}
