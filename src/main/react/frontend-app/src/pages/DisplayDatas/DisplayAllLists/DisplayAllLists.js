@@ -7,10 +7,7 @@ import DisplayItems from "../DisplayItems/DisplayItems";
 import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList";
 import { useListArray } from "../../../components/Context/Contexts";
 import { useDarkMode } from "../../../components/Context/Contexts";
-import {
-  ProgressBarFunction,
-  getItemDatas,
-} from "../../../components/functions/functions";
+import { ProgressBarFunction } from "../../../components/functions/functions";
 const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
   const { listArray } = useListArray();
   const { darkMode } = useDarkMode();
