@@ -1,5 +1,12 @@
 import React, { createContext, useContext, useState } from "react";
 import { useLocalStorageState } from "../functions/functions";
+import {
+  addList,
+  removeItemFromList,
+  addItemToList,
+  removeList,
+  arraysAreEqual,
+} from "./ContextsFunctions";
 const DarkModeContext = createContext();
 
 export const DarkModeProviderCOntext = ({ children }) => {
@@ -27,32 +34,77 @@ export const useDarkMode = () => {
 /*------------MyArray----------------*/
 const ListArrayContext = createContext({
   listArray: [],
+  itemsArray: [],
+  allListAndItesm: { lists: [] },
   addElement: () => {},
   removeElement: () => {},
 });
 
 export const ListArrayProviderContext = ({ children }) => {
   const [listArray, setListArray] = useState([]);
-  const arraysAreEqual = (arr1, arr2) =>
-    JSON.stringify(arr1) === JSON.stringify(arr2);
-  const initializeArray = (array) => {
-    if (!arraysAreEqual(listArray, array)) {
-      setListArray(array);
+  const [itemsArray, setItemsArray] = useState([]);
+ const [allListAndItesm, setallListAndItesm] = useState({ lists: [] });
+
+
+  const initializeArray = async (array, type) => {
+    if (type === "list") {
+      if (!arraysAreEqual(listArray, array)) {
+        for (let i = 0; i < array.length; i++) {
+          const updatedList = addList(allListAndItesm, array[i]);
+          setallListAndItesm(updatedList);
+        }
+        setListArray(array);
+      }
+    } else if (type === "items") {
+      if (!arraysAreEqual(itemsArray, array)) {
+        const ItemListID = array[0].listId;
+        for (let i = 0; i < array.length; i++) {
+          const updatedList = addItemToList(allListAndItesm, ItemListID, array);
+          setallListAndItesm(updatedList);
+        }
+        setItemsArray(array);
+      }
     }
   };
-  const addElement = (element) => {
-    setListArray((prevlistArray) => [...prevlistArray, element]);
+  const addElement = async (element, type) => {
+    if (type === "list") {
+      for (let i = 0; i < element.length; i++) {
+        const updatedList = addList(allListAndItesm, element);
+        setallListAndItesm(updatedList);
+      }
+      setListArray((prevlistArray) => [...prevlistArray, element]);
+    } else if (type === "items") {
+      const ItemListID = element[0].listId;
+      for (let i = 0; i < element.length; i++) {
+        const updatedList = addItemToList(allListAndItesm, ItemListID, element);
+        setallListAndItesm(updatedList);
+      }
+      setItemsArray((prevItemsArray) => [...prevItemsArray, element]);
+    }
   };
 
-  const removeElement = (element) => {
-    setListArray((prevlistArray) =>
-      prevlistArray.filter((item) => item !== element)
-    );
+  const removeElement = (element, type) => {
+    if (type === "list") {
+      setListArray((prevlistArray) =>
+        prevlistArray.filter((item) => item !== element)
+      );
+    } else if (type === "items") {
+      setItemsArray((prevlistArray) =>
+        prevlistArray.filter((item) => item !== element)
+      );
+    }
   };
 
   return (
     <ListArrayContext.Provider
-      value={{ listArray, addElement, removeElement, initializeArray }}
+      value={{
+        listArray,
+        itemsArray,
+        allListAndItesm,
+        addElement,
+        removeElement,
+        initializeArray,
+      }}
     >
       {children}
     </ListArrayContext.Provider>
