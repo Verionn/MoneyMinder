@@ -22,22 +22,7 @@ const GetDatasFromItems = ({ listID, operation }) => {
 };
 export default GetDatasFromItems;
 
-export const getItemDatas = ({ listID, operation }) => {
-  const apiUrl = `http://localhost:8080/lists/${listID}/items`;
 
-  let { items, loading, error } = GetItemListData({ apiUrl });
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
-  if (operation === "count") return items.length;
-  else if (operation === "countBought") {
-    return listID;
-  } else if (operation === "price") return calculateTotalPrice(items);
-};
 const calculateTotalPrice = (items) => {
   return items
     .reduce((total, item) => total + item.price * item.amount, 0)
