@@ -15,9 +15,15 @@ tags:
 
   - name: purchasedItems
     description: All available requests related to purchased items
+
+  - name: users
+    description: All available request related to users
+
 paths:
   /categories:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - categories
       description: Returns all available categories
@@ -37,6 +43,8 @@ paths:
 
 
     post:
+      security:
+        - bearerAuth: []
       tags:
         - categories
       description: create new category
@@ -61,6 +69,8 @@ paths:
 
   /categories/{categoryId}:
     put:
+      security:
+        - bearerAuth: []
       tags:
         - categories
       description: Update category
@@ -91,6 +101,8 @@ paths:
           description: Wrong request body
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - categories
       description: Delete specific category
@@ -110,6 +122,8 @@ paths:
 
 
     get:
+      security:
+        - bearerAuth: []
       tags:
         - categories
       description: Get specific category
@@ -136,6 +150,8 @@ paths:
 
   /lists:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - lists
       description: Get all lists
@@ -155,6 +171,8 @@ paths:
 
 
     post:
+      security:
+        - bearerAuth: []
       tags:
         - lists
       description: Create new list
@@ -172,6 +190,8 @@ paths:
 
   /lists/{listId}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - lists
       description: Return specific list
@@ -195,6 +215,8 @@ paths:
 
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - lists
       description: Delete specific list
@@ -214,6 +236,8 @@ paths:
 
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - lists
       description: Update specific list
@@ -246,6 +270,8 @@ paths:
 
   /lists/{listId}/items:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - items
       description: Return all items from specific list
@@ -272,6 +298,8 @@ paths:
         '404':
           description: List not found
     post:
+      security:
+        - bearerAuth: []
       tags:
         - items
       description: Add new item to specific list
@@ -300,6 +328,8 @@ paths:
           description: List not found
   /lists/{listId}/items/{itemId}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - items
       description: Return specific item from specific list
@@ -329,6 +359,8 @@ paths:
 
 
     put:
+      security:
+        - bearerAuth: []
       tags:
         - items
       description: Update specific item from specific list
@@ -366,6 +398,8 @@ paths:
 
 
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - items
       description: Delete specific item from specific list
@@ -392,6 +426,8 @@ paths:
 
   /lists/{listId}/items/{itemId}/purchased:
     post:
+      security:
+        - bearerAuth: []
       tags:
         - items
       description: Mark item as purchased
@@ -418,6 +454,8 @@ paths:
 
   /purchasedItems/categories/{categoryId}/days/{days}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - purchasedItems
       description: Get purchased items in last N days from category
@@ -446,6 +484,8 @@ paths:
 
   /purchasedItems/categories/{categoryId}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - purchasedItems
       description: Get purchased items by categoryId
@@ -466,6 +506,8 @@ paths:
 
   /purchasedItems/names/{prefix}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - purchasedItems
       description: Get purchased items names by prefix
@@ -484,6 +526,8 @@ paths:
 
   /purchasedItems/days/{days}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - purchasedItems
       description: Get purchased items in N Days
@@ -504,6 +548,8 @@ paths:
 
   /purchasedItems/items/{amountOfItems}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - purchasedItems
       description: Get last N purchased items
@@ -524,6 +570,8 @@ paths:
 
   /purchasedItems/lists/{listId}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - purchasedItems
       description: Return purchased items from list
@@ -540,7 +588,51 @@ paths:
           description: Successfully returned items
         '400':
           description: Wrong list id
+  /users/register:
+    post:
+      tags:
+        - users
+      description: Register user
+      operationId: registerUser
+      requestBody:
+        description: User details to register new user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequestBody'
+        required: true
+      responses:
+        '201':
+          description: Successfully registered user
+        '400':
+          description: Bad request
+        '409':
+          description: User already exists
 
+
+  /users/login:
+    post:
+      tags:
+        - users
+      description: login user
+      operationId: loginUser
+      requestBody:
+        description: User details to login to the account
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUserRequestBody'
+        required: true
+      responses:
+        '200':
+          description: logged in successfully
+          headers:
+            JsonWebToken:
+              $ref: '#/components/headers/JsonWebToken'
+        '400':
+          description: Bad request
+        '403':
+          description: User couldn't be authenticated
 
 components:
   schemas:
@@ -679,3 +771,51 @@ components:
           type: integer
           format: int64
           example: 350
+
+    CreateUserRequestBody:
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'verion'
+        email:
+          type: string
+          example: 'verion@gmail.com'
+        password:
+          type: string
+          example: 'K#lasdf&82z'
+
+    LoginUserRequestBody:
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+          example: 'verion@gmail.com'
+        password:
+          type: string
+          example: 'K#lasdf&82z'
+
+  headers:
+    JsonWebToken:
+      schema:
+        description: JsonWebToken
+        type: string
+        format: application/jwt
+        pattern: ^([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_\-\+\/=]+)$
+        example: "eyJhbGciOiJIUzI1NiJ9
+        .eyJzdWIiOiJ0ZXN0b3d5Lm1haWxAZ21haWwuY29tIiwiaWF0IjoxN
+        zAzODk1OTg0LCJleHAiOjE3MDM5MTc1ODR9
+        .Ubh9XvZvp9qbu624AtiRBPXj1BzscGVC1MyqfHL5s60"
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
