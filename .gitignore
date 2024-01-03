@@ -31,16 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-
-
-# Ignore build artifacts and other Java-related files
-/target/
-*.class
-*.jar
-
-# Ignore node_modules and other React-related files
-/node_modules/
-/frontend-app/
-*.log
-

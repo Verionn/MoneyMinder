@@ -1,0 +1,89 @@
+.headerMainContainerBody {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 10vh;
+  width: 100%;
+}
+
+.headerMainContainerBody > h3 {
+  font-size: 2em;
+  word-wrap: none;
+  width: 40%;
+  padding: 5px;
+  text-align: start;
+}
+.headerRight{
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#dropdown-basic {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 15px;
+  background-color: var(--secondary-color);
+}
+#dropdown-basic:hover {
+  font-size: 18px;
+}
+
+.listView {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: #0856b2;
+}
+.contentView {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.contentView>p{
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-bottom: 0rem !important;
+}
+p{
+  margin-bottom: 0rem !important;
+}
+
+.createListButton {
+  height: 4em;
+  width: 12em;
+  border: solid;
+  background-color: var(--primary-color-10-lighter) !important;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+.createListButton:active{
+  background-color: var(--primary-color-20-lighter) !important;
+  transform: scale(1.05);
+}
+/*.createListButton:hover {
+  width: 12.5em;
+  height: 4.5em;
+  font-size: 16px;
+}*/
+
+.viewDisplay {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 10em;
+}
