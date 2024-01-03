@@ -631,8 +631,11 @@ paths:
               $ref: '#/components/headers/JsonWebToken'
         '400':
           description: Bad request
+        '401':
+          description: User with that email does not exists
         '403':
           description: User couldn't be authenticated
+
 
 components:
   schemas:

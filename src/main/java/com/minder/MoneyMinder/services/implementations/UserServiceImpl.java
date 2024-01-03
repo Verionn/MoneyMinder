@@ -71,4 +71,9 @@ public class UserServiceImpl implements UserService {
                 .orElseGet(() -> Either.right(404));
     }
 
+    @Override
+    public boolean checkIfEmailExists(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
 }
