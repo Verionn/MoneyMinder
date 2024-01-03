@@ -10,21 +10,21 @@ import java.util.List;
 
 @Repository
 public interface PurchasedItemRepository extends JpaRepository<PurchasedItemEntity, Long> {
-    @Query("SELECT l FROM PurchasedItemEntity l WHERE l.categoryId = :categoryId")
-    List<PurchasedItemEntity> findAllByCategoryId(Long categoryId);
+    @Query("SELECT l FROM PurchasedItemEntity l WHERE l.categoryId = :categoryId AND l.userId = :userId")
+    List<PurchasedItemEntity> findAllByCategoryIdAndUserId(Long categoryId, Long userId);
 
-    @Query("SELECT DISTINCT l FROM PurchasedItemEntity l WHERE l.name LIKE :prefix || '%'")
-    List<PurchasedItemEntity> findAllByPrefix(String prefix);
+    @Query("SELECT DISTINCT l FROM PurchasedItemEntity l WHERE l.name LIKE :prefix || '%' AND l.userId = :userId")
+    List<PurchasedItemEntity> findAllByPrefixAndUserId(String prefix, Long userId);
 
-    @Query("SELECT l FROM PurchasedItemEntity l WHERE l.categoryId = :categoryId AND FUNCTION('DATEDIFF', DAY, l.timeBought, CURRENT_DATE()) <= :days")
-    List<PurchasedItemEntity> findAllByCategoryIdInLastNDays(Long categoryId, Long days);
+    @Query("SELECT l FROM PurchasedItemEntity l WHERE l.categoryId = :categoryId AND l.userId = :userId AND FUNCTION('DATEDIFF', DAY, l.timeBought, CURRENT_DATE()) <= :days")
+    List<PurchasedItemEntity> findAllByCategoryIdAndUserIdInLastNDays(Long categoryId, Long days, Long userId);
 
-    @Query("SELECT l FROM PurchasedItemEntity l WHERE FUNCTION('DATEDIFF', DAY, l.timeBought, CURRENT_DATE()) <= :days")
-    List<PurchasedItemEntity> findAllInLastNDays(Long days);
+    @Query("SELECT l FROM PurchasedItemEntity l WHERE FUNCTION('DATEDIFF', DAY, l.timeBought, CURRENT_DATE()) <= :days AND l.userId = :userId")
+    List<PurchasedItemEntity> findAllInLastNDaysAndByUserId(Long days, Long userId);
 
-    @Query("SELECT l FROM PurchasedItemEntity l ORDER BY timeBought DESC LIMIT :amountOfItems")
-    List<PurchasedItemEntity> findAllByDateBought(Long amountOfItems);
+    @Query("SELECT l FROM PurchasedItemEntity l WHERE l.userId = :userId ORDER BY timeBought DESC LIMIT :amountOfItems")
+    List<PurchasedItemEntity> findAllByDateBoughtAndUserId(Long amountOfItems, Long userId);
 
-    @Query("SELECT l FROM PurchasedItemEntity l WHERE l.listId = :listId")
-    List<PurchasedItemEntity> findAllByListId(Long listId);
+    @Query("SELECT l FROM PurchasedItemEntity l WHERE l.listId = :listId AND l.userId = :userId")
+    List<PurchasedItemEntity> findAllByListIdAndUserId(Long listId, Long userId);
 }

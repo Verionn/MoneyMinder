@@ -10,7 +10,7 @@ public interface CategoryService {
 
     Optional<CategoryEntity> getCategory(Long categoryId);
 
-    List<CategoryEntity> getCategories();
+    List<CategoryEntity> getCategories(Long userId);
 
     CategoryEntity addCategory(CategoryEntity categoryEntity);
 
@@ -18,5 +18,5 @@ public interface CategoryService {
 
     Optional<CategoryEntity> updateCategory(Long categoryId, UpdateCategoryRequestBody updateCategoryRequestBody);
 
-    boolean existsById(Long categoryId);
+    boolean existsById(Long categoryId, Long userId);
 }

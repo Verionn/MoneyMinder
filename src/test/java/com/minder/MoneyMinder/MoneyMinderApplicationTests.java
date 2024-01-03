@@ -1,5 +1,6 @@
 package com.minder.MoneyMinder;
 
+import com.minder.MoneyMinder.configuration.security.JwtAuthenticationFilter;
 import com.minder.MoneyMinder.controllers.category.dto.CategoryResponse;
 import com.minder.MoneyMinder.controllers.category.dto.CreateCategoryRequestBody;
 import com.minder.MoneyMinder.controllers.item.dto.CreateItemRequestBody;
@@ -8,6 +9,10 @@ import com.minder.MoneyMinder.controllers.item.dto.ItemResponse;
 import com.minder.MoneyMinder.controllers.list.dto.CreateListRequestBody;
 import com.minder.MoneyMinder.controllers.list.dto.ListResponse;
 import com.minder.MoneyMinder.controllers.purchasedItem.dto.PurchasedItemResponse;
+import com.minder.MoneyMinder.controllers.user.dto.LoginRequest;
+import com.minder.MoneyMinder.controllers.user.dto.LoginResponse;
+import com.minder.MoneyMinder.controllers.user.dto.RegisterUserRequest;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -16,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,6 +37,8 @@ public abstract class MoneyMinderApplicationTests {
     private final static String BASE_URL_FORMAT = "http://localhost:%d%s";
     protected static final String LISTS_RESOURCE = "/lists";
     protected static final String USERS_RESOURCE = "/users";
+    protected static final String LOGIN_PATH = USERS_RESOURCE + "/login";
+    protected static final String REGISTER_PATH = USERS_RESOURCE + "/register";
     protected static final String CATEGORIES_RESOURCE = "/categories";
     protected static final String LISTS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d";
     protected static final String CATEGORY_DETAILS_PATH_FORMAT = CATEGORIES_RESOURCE + "/%d";
@@ -52,35 +60,44 @@ public abstract class MoneyMinderApplicationTests {
     public static final String FIRST_ITEM_NAME = "Bread";
     public static final String SECOND_ITEM_NAME = "Pepsi";
     public static final String NEW_ITEM_NAME = "Sprite";
-    public static final String WRONG_LIST_NAME = "";
-    public static final Long WRONG_LIST_ID = -12L;
+    public static final String INVALID_LIST_NAME = "";
+    public static final Long INVALID_LIST_ID = -12L;
     public static final String FIRST_CATEGORY_NAME = "Food";
     public static final String SECOND_CATEGORY_NAME = "Sweets";
     public static final String NEW_CATEGORY_NAME = "Drinks";
-    public static final String WRONG_CATEGORY_NAME = "";
-    public static final Long RANDOM_CATEGORY_ID = 1L;
+    public static final String INVALID_CATEGORY_NAME = "";
+    public static final Long VALID_CATEGORY_ID = 1L;
     public static final Long NEW_CATEGORY_ID = 3L;
-    public static final Long WRONG_CATEGORY_ID = -1L;
-    public static final String GOOD_PREFIX = "P";
-    public static final String WRONG_ITEM_NAME = "";
+    public static final Long INVALID_CATEGORY_ID = -1L;
+    public static final String VALID_PREFIX = "P";
+    public static final String INVALID_ITEM_NAME = "";
     public static final Long NEW_LIST_ID = 2L;
-    public static final Long WRONG_NEW_LIST_ID = -25L;
-    public static final Long WRONG_ITEM_ID = -13L;
-    public static final Long RANDOM_ITEM_ID = 13L;
-    public static final Double RANDOM_PRICE = 3.50;
+    public static final Long INVALID_NEW_LIST_ID = -25L;
+    public static final Long INVALID_ITEM_ID = -13L;
+    public static final Long VALID_ITEM_ID = 13L;
+    public static final Double VALID_PRICE = 3.50;
     public static final Double NEW_PRICE = 5.50;
-    public static final Double WRONG_PRICE = -3.50;
-    public static final int RANDOM_AMOUNT = 1;
+    public static final Double INVALID_PRICE = -3.50;
+    public static final int VALID_AMOUNT = 1;
     public static final int NEW_AMOUNT = 2;
-    public static final int WRONG_AMOUNT = -13;
-    public static final Long RANDOM_WEIGHT = 123L;
+    public static final int INVALID_AMOUNT = -13;
+    public static final Long VALID_WEIGHT = 123L;
     public static final Long NEW_WEIGHT = 353L;
-    public static final Long WRONG_WEIGHT = -123L;
+    public static final Long INVALID_WEIGHT = -123L;
     public static final Long DAYS = 2L;
-    public static final Long WRONG_DAYS = -2L;
-    public static final Long WRONG_AMOUNT_OF_ITEMS = -2L;
+    public static final Long INVALID_DAYS = -2L;
+    public static final Long INVALID_AMOUNT_OF_ITEMS = -2L;
     public static final long AMOUNT_OF_ITEMS = 2;
-    public static final LocalDateTime RANDOM_DATE = LocalDateTime.parse("2023-10-15T21:15:00");
+    public static final LocalDateTime VALID_DATE = LocalDateTime.parse("2023-10-15T21:15:00");
+    public static final String REGISTERED_USER_EMAIL = "verion@gmail.com";
+    public static final String REGISTERED_USER_PASSWORD = "12345";
+    public static final String VALID_USER_EMAIL = "cebulaczek@gmail.com";
+    public static final String VALID_USER_NAME = "cebulaczek";
+    public static final String VALID_USER_PASSWORD = "997";
+    public static final String INVALID_USER_EMAIL = "";
+    public static final String INVALID_USER_PASSWORD = "";
+    public static final String INVALID_USER_NAME = "";
+    protected String userToken;
 
     @Autowired
     protected TestRestTemplate client;
@@ -88,6 +105,46 @@ public abstract class MoneyMinderApplicationTests {
     @LocalServerPort
     protected int port;
 
+    @BeforeEach
+    public void loginUser() {
+        userToken = getToken(REGISTERED_USER_EMAIL, REGISTERED_USER_PASSWORD);
+    }
+
+    private void registerUser(String email, String name, String password){
+        var response = client.postForEntity(prepareUrl(REGISTER_PATH), new RegisterUserRequest(name, password, email), RegisterUserRequest.class);
+    }
+
+    protected void runWithoutToken() {
+        client.getRestTemplate().setInterceptors(
+                Collections.emptyList()
+        );
+    }
+
+    protected void runWithInvalidToken() {
+        addAuthorizationToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0b3d5Lm1haWxAZ21haWwuY29tIiwiaWF0IjoxNzAzODk1OTg0LCJleHAiOjE3MDM5MTc1ODR9.Ubh9XvZvp9qbu624AtiRBPXj1BzscGVC1MyqfHL5s60");
+    }
+
+    private String getToken(String email, String password) {
+        var loginUserRequest = client.postForEntity(prepareUrl(LOGIN_PATH), new LoginRequest(email, password),
+                LoginResponse.class
+        );
+        return loginUserRequest.getBody().token();
+    }
+
+    protected void addAuthorizationToken(String token) {
+        client.getRestTemplate().setInterceptors(
+                Collections.singletonList((request, body, execution) -> {
+                    request.getHeaders()
+                            .add("Authorization",
+                                    String.format("%s%s",
+                                            JwtAuthenticationFilter.BEARER_PREFIX,
+                                            token
+                                    )
+                            );
+                    return execution.execute(request, body);
+                })
+        );
+    }
 
     protected String prepareUrl(String resource) {
         return String.format(BASE_URL_FORMAT, port, resource);
@@ -165,11 +222,15 @@ public abstract class MoneyMinderApplicationTests {
     }
 
     protected CreateItemRequestBody createValidItemRequestBody(String name){
-        return new CreateItemRequestBody(name, RANDOM_PRICE, RANDOM_AMOUNT, RANDOM_CATEGORY_ID, RANDOM_WEIGHT, RANDOM_DATE);
+        return new CreateItemRequestBody(name, VALID_PRICE, VALID_AMOUNT, VALID_CATEGORY_ID, VALID_WEIGHT, VALID_DATE);
     }
 
     protected CreateItemRequestBody createValidItemRequestBody(String name, Long categoryId){
-        return new CreateItemRequestBody(name, RANDOM_PRICE, RANDOM_AMOUNT, categoryId, RANDOM_WEIGHT, RANDOM_DATE);
+        return new CreateItemRequestBody(name, VALID_PRICE, VALID_AMOUNT, categoryId, VALID_WEIGHT, VALID_DATE);
+    }
+
+    protected void runAsUser() {
+        addAuthorizationToken(userToken);
     }
 
     protected ItemResponse addItem(String itemName, Long listId, Long categoryId){
@@ -182,9 +243,9 @@ public abstract class MoneyMinderApplicationTests {
         //then
         assertThat(addItemResponse.getStatusCode(), equalTo(HttpStatus.CREATED));
         assertThat(addItemResponse.getBody().name(), equalTo(itemName));
-        assertThat(addItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
-        assertThat(addItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
-        assertThat(addItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
+        assertThat(addItemResponse.getBody().price(), equalTo(VALID_PRICE));
+        assertThat(addItemResponse.getBody().amount(), equalTo(VALID_AMOUNT));
+        assertThat(addItemResponse.getBody().weight(), equalTo(VALID_WEIGHT));
         return addItemResponse.getBody();
     }
 
@@ -221,9 +282,9 @@ public abstract class MoneyMinderApplicationTests {
 
         assertThat(purchaseItemResponse.getStatusCode(), equalTo(HttpStatus.OK));
         assertNotNull(purchaseItemResponse.getBody());
-        assertThat(purchaseItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
-        assertThat(purchaseItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
-        assertThat(purchaseItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
+        assertThat(purchaseItemResponse.getBody().price(), equalTo(VALID_PRICE));
+        assertThat(purchaseItemResponse.getBody().weight(), equalTo(VALID_WEIGHT));
+        assertThat(purchaseItemResponse.getBody().amount(), equalTo(VALID_AMOUNT));
         assertThat(purchaseItemResponse.getBody().categoryId(), equalTo(itemResponse.getBody().categoryId()));
         assertThat(numberOfItemsInListAfterMark, not(equalTo(numberOfItemsInListBeforeMark)));
 

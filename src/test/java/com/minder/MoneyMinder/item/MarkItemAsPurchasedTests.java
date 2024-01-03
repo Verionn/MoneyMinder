@@ -20,6 +20,7 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should mark item as purchased and return 200")
     public void shouldMarkItemAsPurchasedAndReturn200() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -40,9 +41,9 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
         assertThat(purchaseItemResponse.getStatusCode(), equalTo(HttpStatus.OK));
         assertNotNull(purchaseItemResponse.getBody());
         assertThat(purchaseItemResponse.getBody().name(), equalTo(FIRST_ITEM_NAME));
-        assertThat(purchaseItemResponse.getBody().price(), equalTo(RANDOM_PRICE));
-        assertThat(purchaseItemResponse.getBody().weight(), equalTo(RANDOM_WEIGHT));
-        assertThat(purchaseItemResponse.getBody().amount(), equalTo(RANDOM_AMOUNT));
+        assertThat(purchaseItemResponse.getBody().price(), equalTo(VALID_PRICE));
+        assertThat(purchaseItemResponse.getBody().weight(), equalTo(VALID_WEIGHT));
+        assertThat(purchaseItemResponse.getBody().amount(), equalTo(VALID_AMOUNT));
         assertThat(purchaseItemResponse.getBody().categoryId(), equalTo(createdCategory.categoryId()));
         assertThat(numberOfItemsInListAfterMark, not(equalTo(numberOfItemsInListBeforeMark)));
     }
@@ -50,12 +51,13 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should return not found when given wrong item id")
     public void shouldReturnNotFoundWhenGivenWrongItemId() {
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
 
         //when
-        var purchasedItemResponse = client.postForEntity(purchaseItemPath(createdList.listId(), WRONG_ITEM_ID), null, PurchasedItemResponse.class);
+        var purchasedItemResponse = client.postForEntity(purchaseItemPath(createdList.listId(), INVALID_ITEM_ID), null, PurchasedItemResponse.class);
 
         //then
         assertThat(purchasedItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -65,11 +67,12 @@ public class MarkItemAsPurchasedTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should return not found when given wrong list id")
     public void shouldReturnNotFoundWhenGivenWrongListId() {
+        runAsUser();
 
         //given
 
         //when
-        var purchasedItemResponse = client.postForEntity(purchaseItemPath(WRONG_LIST_ID, RANDOM_ITEM_ID), null, PurchasedItemResponse.class);
+        var purchasedItemResponse = client.postForEntity(purchaseItemPath(INVALID_LIST_ID, VALID_ITEM_ID), null, PurchasedItemResponse.class);
 
         //then
         assertThat(purchasedItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));

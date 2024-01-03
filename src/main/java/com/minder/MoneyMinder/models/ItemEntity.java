@@ -8,14 +8,15 @@ import java.time.LocalDateTime;
 public class ItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long itemId;
-    Long listId;
-    String name;
-    Double price;
-    Integer amount;
-    Long categoryId;
-    Long weight;
-    LocalDateTime timeCreated;
+    private Long itemId;
+    private Long listId;
+    private Long categoryId;
+    private Long userId;
+    private String name;
+    private Double price;
+    private Integer amount;
+    private Long weight;
+    private LocalDateTime timeCreated;
 
     public ItemEntity() {
     }
@@ -80,8 +81,11 @@ public class ItemEntity {
         this.timeCreated = creationDate;
     }
 
-    @Override
-    public String toString() {
-        return "Item: " + name + "\nID: " + itemId + "\nLista: " + listId + "\nIlosc: " + amount + "\nCena: " + price + "\nKategoria: " + categoryId + "\n\n";
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

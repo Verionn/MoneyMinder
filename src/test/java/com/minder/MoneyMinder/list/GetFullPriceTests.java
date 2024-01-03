@@ -15,6 +15,8 @@ public class GetFullPriceTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should return value and 200")
     public void shouldReturnPriceAnd200(){
+        runAsUser();
+
         //given
         var createdList = createList(FIRST_LIST_NAME);
         var createdCategory = createCategory(FIRST_CATEGORY_NAME);
@@ -27,15 +29,16 @@ public class GetFullPriceTests extends MoneyMinderApplicationTests {
 
         //then
         assertThat(getFullPriceResponse.getStatusCode(), equalTo(HttpStatus.OK));
-        assertThat(getFullPriceResponse.getBody().fullPrice(), equalTo( 2*RANDOM_PRICE));
+        assertThat(getFullPriceResponse.getBody().fullPrice(), equalTo( 2* VALID_PRICE));
     }
 
     @Test
     @DisplayName("Should return not found when given wrong list id")
     public void shouldReturnNotFoundWhenGivenWrongData(){
+        runAsUser();
 
         //when
-        var getFullPriceResponse = client.getForEntity(fullPricePath(WRONG_LIST_ID),
+        var getFullPriceResponse = client.getForEntity(fullPricePath(INVALID_LIST_ID),
                 FullPriceResponse.class);
 
         //then

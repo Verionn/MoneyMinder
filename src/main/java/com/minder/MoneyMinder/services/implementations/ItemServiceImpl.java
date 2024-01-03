@@ -33,9 +33,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemEntity addItem(ItemEntity itemEntity, Long listId) {
+    public ItemEntity addItem(ItemEntity itemEntity, Long listId, Long userId) {
         itemEntity.setListId(listId);
         itemEntity.setTimeCreated(LocalDateTime.now());
+        itemEntity.setUserId(userId);
         return itemRepository.save(itemEntity);
     }
 
@@ -45,8 +46,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemEntity> getItemsByListId(Long listId) {
-        return itemRepository.findByListId(listId);
+    public List<ItemEntity> getItemsByListIdAndUserId(Long listId, Long userId) {
+        return itemRepository.findAllByListIdAndUserId(listId, userId);
     }
 
     @Override
@@ -62,8 +63,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public boolean existsById(Long itemId) {
-        return itemRepository.existsById(itemId);
+    public boolean existsById(Long itemId, Long userId) {
+        return itemRepository.existsByItemIdAndUserId(itemId, userId);
     }
 
     @Override

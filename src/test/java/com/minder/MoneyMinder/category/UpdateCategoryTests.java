@@ -17,6 +17,8 @@ public class UpdateCategoryTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should update category and return 200")
     public void shouldUpdateCategoryAndReturnOk(){
+        runAsUser();
+
         //given
         var createCategoryResponse = createCategory(FIRST_CATEGORY_NAME);
         var createdCategoryId = createCategoryResponse.categoryId();
@@ -34,13 +36,15 @@ public class UpdateCategoryTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update category and return not found when given wrong categoryId")
     public void shouldNotUpdateCategoryAndReturnNotFound(){
+        runAsUser();
+
         //given
         var updateCategoryRequestBody = new UpdateCategoryRequestBody(NEW_CATEGORY_NAME);
 
         HttpEntity<UpdateCategoryRequestBody> requestEntity = new HttpEntity<>(updateCategoryRequestBody);
 
         //when
-        var updateCategoryResponse = client.exchange(categoriesPath(WRONG_CATEGORY_ID), PUT, requestEntity, CategoryResponse.class);
+        var updateCategoryResponse = client.exchange(categoriesPath(INVALID_CATEGORY_ID), PUT, requestEntity, CategoryResponse.class);
 
         //then
         assertThat(updateCategoryResponse.getStatusCode(), equalTo(NOT_FOUND));
@@ -49,10 +53,12 @@ public class UpdateCategoryTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not update category and return 400 when given bad data")
     public void shouldNotUpdateCategoryAndReturnBadRequestWhenEmptyNewName(){
+        runAsUser();
+
         //given
         var createdCategoryResponse = createCategory(FIRST_CATEGORY_NAME);
         var categoryId = createdCategoryResponse.categoryId();
-        var updateCategoryRequestBody = new UpdateCategoryRequestBody(WRONG_CATEGORY_NAME);
+        var updateCategoryRequestBody = new UpdateCategoryRequestBody(INVALID_CATEGORY_NAME);
         HttpEntity<UpdateCategoryRequestBody> requestEntity = new HttpEntity<>(updateCategoryRequestBody);
 
         //when

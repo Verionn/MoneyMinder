@@ -17,6 +17,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return all purchased items by category and status 200")
     @Test
     public void shouldReturnAllPurchasedItemsByCategoryIdAndOk(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -38,7 +39,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.OK));
         assertNotNull(purchasedItemListResponse.getBody());
         assertThat(purchasedItemListResponse.getBody().purchasedItems().size(), equalTo(amountOfPurchasedItemsByCategoryId + 2));
-        assertThat(purchasedItemListResponse.getBody().purchasedItems().get(0).itemId(), equalTo(firstPurchasedItem.itemId()));
+        assertThat(purchasedItemListResponse.getBody().purchasedItems().get(0).id(), equalTo(firstPurchasedItem.id()));
         assertThat(purchasedItemListResponse.getBody().purchasedItems().get(0).listId(), equalTo(firstPurchasedItem.listId()));
         assertThat(purchasedItemListResponse.getBody().purchasedItems().get(0).categoryId(), equalTo(firstPurchasedItem.categoryId()));
         assertThat(purchasedItemListResponse.getBody().purchasedItems().get(0).name(), equalTo(firstPurchasedItem.name()));
@@ -50,6 +51,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return not found when given wrong categoryId")
     @Test
     public void shouldReturnNotFoundWhenGivenWrongCategoryId(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -59,7 +61,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
 
         //when
         var purchasedItemListResponse = client.getForEntity(
-                purchasedItemsByCategoryIdPath(WRONG_CATEGORY_ID), PurchasedItemListResponse.class);
+                purchasedItemsByCategoryIdPath(INVALID_CATEGORY_ID), PurchasedItemListResponse.class);
 
         //then
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -69,6 +71,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return all item names and 200")
     @Test
     public void shouldReturnItemNamesAndOkWhenGivenGoodPrefix(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -80,7 +83,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
 
         //when
         var purchasedItemNameListResponse = client.getForEntity(
-                purchasedItemsByPrefixPath(GOOD_PREFIX), PurchasedItemNameListResponse.class);
+                purchasedItemsByPrefixPath(VALID_PREFIX), PurchasedItemNameListResponse.class);
 
         //then
         assertThat(purchasedItemNameListResponse.getStatusCode(), equalTo(HttpStatus.OK));
@@ -92,6 +95,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return all purchased item by category in 2 last days and 200")
     @Test
     public void shouldReturnPurchasedItemsByCategoryInLast2DaysAndOk(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -120,12 +124,14 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return bad request when given wrong number of days when trying to get purchased items by categoryId and days")
     @Test
     public void ShouldReturnBadRequestWhenGivenWrongDaysNumber(){
+        runAsUser();
+
         //given
         var createdCategory = createCategory(FIRST_CATEGORY_NAME);
 
         //when
         var purchasedItemListResponse = client.getForEntity(purchasedItemsByCategoryIdAndDaysPath(
-                createdCategory.categoryId(), WRONG_DAYS), PurchasedItemListResponse.class);
+                createdCategory.categoryId(), INVALID_DAYS), PurchasedItemListResponse.class);
 
         //
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
@@ -135,10 +141,11 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return not found when given a wrong category")
     @Test
     public void ShouldReturnBadRequestWhenGivenWrongCategory(){
+        runAsUser();
 
         //when
         var purchasedItemListResponse = client.getForEntity(purchasedItemsByCategoryIdAndDaysPath(
-                WRONG_CATEGORY_ID, WRONG_DAYS), PurchasedItemListResponse.class);
+                INVALID_CATEGORY_ID, INVALID_DAYS), PurchasedItemListResponse.class);
 
         //then
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -148,10 +155,11 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return bad request when given a negative number of days when trying to get purchased items in last n days")
     @Test
     public void ShouldReturn400WhenGivenNegativeDaysNumber(){
+        runAsUser();
 
         //when
         var purchasedItemListResponse = client.getForEntity(purchasedItemsByDaysPath(
-                WRONG_DAYS), PurchasedItemListResponse.class);
+                INVALID_DAYS), PurchasedItemListResponse.class);
 
         //
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
@@ -161,6 +169,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return all purchased item in 2 last days and 200")
     @Test
     public void shouldReturnPurchasedItemsInLast2DaysAndOk(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -189,10 +198,11 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return bad request when given a wrong amount of items")
     @Test
     public void ShouldReturn400WhenGivenWrongAmountOfItems(){
+        runAsUser();
 
         //when
         var purchasedItemListResponse = client.getForEntity(purchasedItemsByAmountOfItemsPath(
-                WRONG_AMOUNT_OF_ITEMS), PurchasedItemListResponse.class);
+                INVALID_AMOUNT_OF_ITEMS), PurchasedItemListResponse.class);
 
         //
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
@@ -202,6 +212,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return 200 and last 2 purchased items when given a good amount of items")
     @Test
     public void ShouldReturn200AndItemsWhenGivenGoodAmountOfDays(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -230,6 +241,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return 200 and purchased items from list when given good list")
     @Test
     public void ShouldReturn200AndItemsFromList(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -258,11 +270,11 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return 400 when given bad list id")
     @Test
     public void ShouldReturn400WhenGivenBadListId(){
-
+        runAsUser();
 
         //when
         var purchasedItemListResponse = client.getForEntity(
-                purchasedItemsByListId(WRONG_LIST_ID), PurchasedItemListResponse.class);
+                purchasedItemsByListId(INVALID_LIST_ID), PurchasedItemListResponse.class);
 
         //then
         assertThat(purchasedItemListResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
@@ -272,6 +284,7 @@ public class GetPurchasedItemsTests extends MoneyMinderApplicationTests {
     @DisplayName("Should return 200 and items from 1 list when bought 2 items from different lists")
     @Test
     public void ShouldReturn200AndItemFromList(){
+        runAsUser();
 
         //given
         var firstCreatedList = createList(FIRST_LIST_NAME);

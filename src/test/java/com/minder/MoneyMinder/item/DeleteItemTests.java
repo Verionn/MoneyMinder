@@ -18,6 +18,7 @@ public class DeleteItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should delete specific item from specific list")
     public void shouldDeleteItemFromList(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -41,6 +42,7 @@ public class DeleteItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not delete item when given wrong list Id")
     public void shouldNotDeleteItemWhenGivenWrongListId(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -48,7 +50,7 @@ public class DeleteItemTests extends MoneyMinderApplicationTests {
         var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
 
         //when
-        client.delete(itemsPath(WRONG_LIST_ID, addedItem.itemId()));
+        client.delete(itemsPath(INVALID_LIST_ID, addedItem.itemId()));
 
         //then
         var itemResponse = client.getForEntity(itemsPath(createdList.listId(),
@@ -63,6 +65,7 @@ public class DeleteItemTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not delete item when given wrong item Id")
     public void shouldNotDeleteItemWhenGivenWrongItemId(){
+        runAsUser();
 
         //given
         var createdList = createList(FIRST_LIST_NAME);
@@ -70,7 +73,7 @@ public class DeleteItemTests extends MoneyMinderApplicationTests {
         var addedItem = addItem(FIRST_ITEM_NAME, createdList.listId(), createdCategory.categoryId());
 
         //when
-        client.delete(itemsPath(createdList.listId(), WRONG_ITEM_ID));
+        client.delete(itemsPath(createdList.listId(), INVALID_ITEM_ID));
 
         //then
         var itemResponse = client.getForEntity(itemsPath(createdList.listId(),

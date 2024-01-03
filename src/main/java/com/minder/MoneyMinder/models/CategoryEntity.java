@@ -9,8 +9,10 @@ import jakarta.persistence.Id;
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long categoryId;
-    String name;
+    private Long categoryId;
+    private Long userId;
+    private String name;
+
     public CategoryEntity(){}
 
     public Long getCategoryId() {
@@ -28,8 +30,12 @@ public class CategoryEntity {
     public void setName(String name) {
         this.name = name;
     }
-    @Override
-    public String toString(){
-        return "Nazwa kategorii: " + name + "\n";
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

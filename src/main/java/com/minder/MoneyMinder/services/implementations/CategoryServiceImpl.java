@@ -4,7 +4,6 @@ import com.minder.MoneyMinder.repositories.CategoryRepository;
 import com.minder.MoneyMinder.controllers.category.dto.UpdateCategoryRequestBody;
 import com.minder.MoneyMinder.models.CategoryEntity;
 import com.minder.MoneyMinder.services.CategoryService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +23,8 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findById(categoryId);
     }
 
-    public List<CategoryEntity> getCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryEntity> getCategories(Long userId) {
+        return categoryRepository.findAllByUserId(userId);
     }
 
     public CategoryEntity addCategory(CategoryEntity categoryEntity) {
@@ -42,8 +41,8 @@ public class CategoryServiceImpl implements CategoryService {
                 .map(categoryRepository::save);
     }
 
-    public boolean existsById(Long categoryId) {
-        return categoryRepository.existsById(categoryId);
+    public boolean existsById(Long categoryId, Long userId) {
+        return categoryRepository.existsByCategoryIdAndUserId(categoryId, userId);
     }
 
     private CategoryEntity updateCategoryEntity(String newCategoryName, CategoryEntity categoryEntity) {

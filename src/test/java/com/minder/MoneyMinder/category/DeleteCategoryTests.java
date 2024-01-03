@@ -17,6 +17,8 @@ public class DeleteCategoryTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should delete category and return 200")
     public void shouldDeleteCategoryAndReturn200(){
+        runAsUser();
+
         //given
         var createCategoryResponse = createCategory(FIRST_CATEGORY_NAME);
         var categoryId = createCategoryResponse.categoryId();
@@ -40,11 +42,13 @@ public class DeleteCategoryTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should return 404 when given wrong category id")
     public void shouldNotDeleteCategoryAndReturnNotFound(){
+        runAsUser();
+
         //when
-        client.delete(categoriesPath(WRONG_CATEGORY_ID));
+        client.delete(categoriesPath(INVALID_CATEGORY_ID));
 
         //then
-        assertThat(client.getForEntity(categoriesPath(WRONG_CATEGORY_ID),
+        assertThat(client.getForEntity(categoriesPath(INVALID_CATEGORY_ID),
                 CategoryResponse.class).getStatusCode(), equalTo(NOT_FOUND));
     }
 }

@@ -10,15 +10,15 @@ public interface ListService {
 
     Optional<ListEntity> getList(Long listId);
 
-    List<ListEntity> getLists();
+    List<ListEntity> getLists(Long userId);
 
-    ListEntity addList(ListEntity listEntity);
+    ListEntity addList(ListEntity listEntity, Long userId);
 
     void deleteList(Long listId);
 
     Optional<ListEntity> updateList(Long listId, UpdateListRequestBody updateListRequestBody);
 
-    double getFullPrice(Long listId);
+    double getFullPrice(Long listId, Long userId);
 
-    boolean existsById(Long listId);
+    boolean existsByListIdAndUserId(Long listId, Long userId);
 }

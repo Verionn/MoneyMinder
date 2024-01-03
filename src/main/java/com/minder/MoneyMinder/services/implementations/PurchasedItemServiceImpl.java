@@ -22,37 +22,37 @@ public class PurchasedItemServiceImpl implements PurchasedItemService {
     }
 
     @Override
-    public List<PurchasedItemResponse> getPurchasedItemsByCategoryId(Long categoryId) {
+    public List<PurchasedItemResponse> getPurchasedItemsByCategoryId(Long categoryId, Long userId) {
         return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(
-                purchasedItemRepository.findAllByCategoryId(categoryId));
+                purchasedItemRepository.findAllByCategoryIdAndUserId(categoryId, userId));
     }
 
     @Override
-    public PurchasedItemNameListResponse getPurchasedItemNamesByPrefix(String prefix) {
+    public PurchasedItemNameListResponse getPurchasedItemNamesByPrefix(String prefix, Long userId) {
         return new PurchasedItemNameListResponse(purchasedItemMapper.purchasedItemListEntityToPurchasedItemNameListResponse(
-                        purchasedItemRepository.findAllByPrefix(prefix)));
+                        purchasedItemRepository.findAllByPrefixAndUserId(prefix, userId)));
     }
 
     @Override
-    public List<PurchasedItemResponse> getPurchasedItemsByCategoryIdInLastNDays(Long categoryId, Long days) {
+    public List<PurchasedItemResponse> getPurchasedItemsByCategoryIdInLastNDays(Long categoryId, Long days, Long userId) {
         return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(
-                purchasedItemRepository.findAllByCategoryIdInLastNDays(categoryId, days));
+                purchasedItemRepository.findAllByCategoryIdAndUserIdInLastNDays(categoryId, days, userId));
     }
 
     @Override
-    public List<PurchasedItemResponse> getPurchasedItemsInLastNDays(Long days) {
+    public List<PurchasedItemResponse> getPurchasedItemsInLastNDays(Long days, Long userId) {
         return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(
-                purchasedItemRepository.findAllInLastNDays(days));
+                purchasedItemRepository.findAllInLastNDaysAndByUserId(days, userId));
     }
 
     @Override
-    public List<PurchasedItemResponse> getLastNPurchasedItems(Long amountOfItems) {
+    public List<PurchasedItemResponse> getLastNPurchasedItems(Long amountOfItems, Long userId) {
         return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(
-                purchasedItemRepository.findAllByDateBought(amountOfItems));
+                purchasedItemRepository.findAllByDateBoughtAndUserId(amountOfItems, userId));
     }
 
     @Override
-    public List<PurchasedItemResponse> getPurchasedItemsFromList(Long listId) {
-        return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(purchasedItemRepository.findAllByListId(listId));
+    public List<PurchasedItemResponse> getPurchasedItemsFromList(Long listId, Long userId) {
+        return purchasedItemMapper.purchasedItemListEntityToPurchasedItemListResponse(purchasedItemRepository.findAllByListIdAndUserId(listId, userId));
     }
 }
