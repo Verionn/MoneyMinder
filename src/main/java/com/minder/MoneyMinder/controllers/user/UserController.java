@@ -4,7 +4,6 @@ import com.minder.MoneyMinder.controllers.user.dto.LoginRequest;
 import com.minder.MoneyMinder.controllers.user.dto.LoginResponse;
 import com.minder.MoneyMinder.controllers.user.dto.RegisterUserRequest;
 import com.minder.MoneyMinder.services.UserService;
-import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import static org.springframework.http.HttpStatus.*;
 
 @Controller
 @RequestMapping("/users")
@@ -31,6 +32,10 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
 
+        if(checkIfEmailIsRegistered(registerUserRequest.email())){
+            return ResponseEntity.status(CONFLICT).build();
+        }
+
         return ResponseEntity.ok(userService.register(registerUserRequest));
     }
 
@@ -39,6 +44,10 @@ public class UserController {
 
         if(checkIfLoginRequestIsInvalid(loginRequest)){
             return ResponseEntity.badRequest().build();
+        }
+
+        if(!checkIfEmailIsRegistered(loginRequest.email())){
+            return ResponseEntity.status(UNAUTHORIZED).build();
         }
 
         return userService.login(loginRequest)
@@ -52,5 +61,9 @@ public class UserController {
 
     private boolean checkIfLoginRequestIsInvalid(LoginRequest loginRequest) {
         return loginRequest.email().isBlank() || loginRequest.password().isBlank();
+    }
+
+    private boolean checkIfEmailIsRegistered(String email) {
+        return userService.checkIfEmailExists(email);
     }
 }

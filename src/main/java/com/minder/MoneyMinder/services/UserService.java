@@ -16,4 +16,6 @@ public interface UserService {
     Optional<LoginResponse> login(LoginRequest loginRequest);
 
     Either<UserResponse, Integer> getUserByEmail();
+
+    boolean checkIfEmailExists(String email);
 }

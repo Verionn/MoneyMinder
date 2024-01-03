@@ -12,7 +12,6 @@ import org.springframework.http.HttpMethod;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.http.HttpStatus.*;
 
 public class UserControllerTests extends MoneyMinderApplicationTests {
@@ -85,6 +84,7 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should return 200 and ok when trying to login with valid Credentials")
     public void shouldReturnOkWhenGivenValidLoginCredentials(){
+        //when
         var loginResponse = client.exchange(prepareUrl(LOGIN_PATH), HttpMethod.POST,
                 new HttpEntity<>(new LoginRequest(REGISTERED_USER_EMAIL, REGISTERED_USER_PASSWORD)), LoginResponse.class);
 
@@ -96,6 +96,7 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should return 200 and ok when trying to register with valid Credentials")
     public void shouldReturnOkWhenGivenValidRegisterCredentials(){
+        //when
         var registerResponse = client.exchange(prepareUrl(REGISTER_PATH), HttpMethod.POST,
                 new HttpEntity<>(new RegisterUserRequest(VALID_USER_NAME, VALID_USER_PASSWORD, VALID_USER_EMAIL)), LoginResponse.class);
 
@@ -115,5 +116,27 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
 
         //then
         assertThat(getCategoryResponse.getStatusCode(), equalTo(FORBIDDEN));
+    }
+
+    @Test
+    @DisplayName("Should return 409 when trying to register user on already taken email")
+    public void shouldReturnConflictWhenTryingRegisterUserOnTakenEmail(){
+        var registerResponse = client.exchange(prepareUrl(REGISTER_PATH), HttpMethod.POST,
+                new HttpEntity<>(new RegisterUserRequest(VALID_USER_NAME, VALID_USER_PASSWORD, REGISTERED_USER_EMAIL)), LoginResponse.class);
+
+        //then
+        assertThat(registerResponse.getStatusCode(), is(equalTo(CONFLICT)));
+        assertThat(registerResponse.getBody(), is(nullValue()));
+    }
+
+    @Test
+    @DisplayName("Should return 401 when trying to login on unregistered email")
+    public void shouldReturnUnauthorizedWhenTryingToLoginOnUnregisteredEmail(){
+        var loginResponse = client.exchange(prepareUrl(LOGIN_PATH), HttpMethod.POST,
+                new HttpEntity<>(new LoginRequest(VALID_USER_EMAIL, REGISTERED_USER_PASSWORD)), LoginResponse.class);
+
+        //then
+        assertThat(loginResponse.getStatusCode(), is(equalTo(UNAUTHORIZED)));
+        assertThat(loginResponse.getBody(), is(nullValue()));
     }
 }
