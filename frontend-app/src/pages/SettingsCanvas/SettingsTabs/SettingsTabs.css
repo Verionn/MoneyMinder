@@ -1,0 +1,155 @@
+.TabContainer {
+  display: flex;
+  width: 100%;
+  height: auto;
+  padding: 0;
+}
+.TabContainerDark {
+  display: flex;
+  width: 100%;
+  height: auto;
+  padding: 0;
+  background-color: var(--dark-theme-background) !important;
+}
+
+.TabContainerRow {
+  display: flex !important;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px 0px 0px 0px;
+  margin-left: 1px !important;
+}
+.TabContainerRowDark {
+  display: flex !important;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px 0px 0px 0px;
+  margin-left: 1px !important;
+  background-color: var(--dark-theme-background) !important;
+}
+
+.NavBars {
+  border: solid 1px #d6d6d6;
+  margin-top: 0px;
+  height: 86vh;
+  width: 170px !important;
+  padding: 20px;
+  padding-left: 20px;
+}
+
+.NavBarsDisplay {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-self: flex-start;
+  gap: 10px;
+}
+
+.NavBarsContents {
+  border-left: solid 1px #d6d6d6;
+  margin-top: 0px;
+  height: 86vh;
+  width: 300px !important;
+  padding: 20px;
+}
+
+.NavItem {
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.NavLink {
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.NavLink:hover {
+  background-color: var(--light-theme-surface) !important;
+}
+
+.NavLink.active {
+  background-color: var(--primary-color-20-lighter) !important;
+  color: #fff !important;
+}
+.NavLink.active > p,
+.light {
+  color: #fff !important;
+}
+.NavLink:not(.active):hover {
+  background-color: var(--light-theme-hover) !important;
+}
+
+.NavLinkDark {
+  color: #fff !important;
+  margin-bottom: 10px;
+}
+
+.NavLinkDark.active {
+  background-color: var(--primary-color-20-lighter) !important;
+  color: #fff !important;
+}
+
+.NavLinkDark:not(.active):hover {
+  background-color: var(--dark-theme-hover) !important;
+}
+
+.NavLinkTitle {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.NavLinkTitle > p {
+  display: flex;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-top: 1rem !important;
+}
+
+.NavLinkTitleDark {
+  color: #1c1c1d !important;
+}
+
+.ButtonDarkMode {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.textDarkMode {
+  color: #fff;
+}
+
+.generalLoginButton {
+  font-size: 16px;
+  width: 90%;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--secondary-color);
+}
+.generalLoginButton > span {
+  font-size: 12px;
+}
+
+.textDarkMode > .NavLinkTitleDark {
+  color: #fff !important;
+}
+
+.NavLinkTitleNotActive {
+  color: var(--dark-theme-status-bar) !important;
+  margin-bottom: 1rem !important;
+}
+.NavLinkTitleActive,
+.NavLinkTitleDarkActive,
+.NavLinkTitleDarkNotActive {
+  color: var(--light-theme-surface) !important;
+  margin-bottom: 1rem !important;
+}

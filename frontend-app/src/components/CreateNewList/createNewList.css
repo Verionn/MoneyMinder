@@ -1,0 +1,87 @@
+.createListButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  width: 110px;
+  height: 50px;
+  border-radius: 15px;
+  font-size: 15px;
+  border: solid 1px var(--primary-color);
+}
+
+.CreateListFormDark{
+  background-color: var(--dark-theme-app-bar) !important;
+  color: white !important;
+}
+.CreateListForm{
+  background-color: var(--light-theme-app-bar) !important;
+  color: var( --dark-theme-status-bar) !important;
+}
+.CreateListFormDarkBody{
+  background-color: var(--dark-theme-background) !important;
+  color: white !important;
+}
+.CreateListForm{
+  background-color: var(--light-theme-background) !important;
+  color: var( --dark-theme-status-bar) !important;
+}
+
+.formListName {
+  height: 100px;
+}
+.errorMessage {
+  color: red;
+}
+
+.descriptionHint,
+.listNameHints {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.writeDescriptionDark{
+  background-color: var(--dark-theme-surface) !important;
+  border: solid 1px var(--dark-theme-hover) !important;
+  color: white !important;
+  height: 100px;
+}
+
+.writeDescription{
+  background-color: var(--light-theme-surface) !important;
+  border: solid 1px var(--light-theme-hover) !important;
+  color: var( --dark-theme-status-bar) !important;
+  height: 20px;
+}
+.writeListNameDark{
+  background-color: var(--dark-theme-surface) !important;
+  border: solid 1px var(--dark-theme-hover) !important;
+  color: white !important;
+}
+.writeListName{
+  background-color: var(--light-theme-surface) !important;
+  border: solid 1px var(--light-theme-hover) !important;
+  color: var( --dark-theme-status-bar) !important;
+}
+
+.CreateListFormFooterDark{
+  background-color: var(--dark-theme-app-bar) !important;
+  color: white !important;
+}
+.CreateListFormFooter{
+  background-color: var(--light-theme-app-bar) !important;
+  color: var( --dark-theme-status-bar) !important;
+}
+
+.createListButtonConfirm{
+  background-color: var(--primary-color) !important;
+  border: solid 1px var(--primary-color) !important;
+}
+
+.createListButtonConfirm:active{
+  background-color: var(--primary-color-10-lighter) !important;
+  border: solid 1px var(--primary-color) !important;
+  transform: scale(1.05);
+}
