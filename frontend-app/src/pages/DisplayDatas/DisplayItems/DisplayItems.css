@@ -4,14 +4,33 @@
   align-items: center;
   justify-content: center;
   margin: 10px;
-  padding: 10px;
+  padding: 0;
   border-radius: 5px;
   width: 600px;
-  height: auto;
-  background-color: #f5f5f5;
+
+  background-color: var(--light-theme-surface) !important;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+}
+.ItemsDark{
+  color: var(--light-theme-on-surface);
+  background-color: var(--dark-theme-surface) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  padding: 0;
+  border-radius: 5px;
+  width: 600px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.ContainerItems {
+  border: solid 1px #d6d6d6;
 }
 
 .closeItemsList {
@@ -19,6 +38,12 @@
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+  border: solid 1px black;
+}
+.itemHeaderRight {
+  display: flex;
+  align-items: center;
+  justify-items: flex-end;
 }
 
 .ItemsHeader {
@@ -40,6 +65,14 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+}
+
+.itemListsHeader {
+  padding: 5px;
+  border-bottom: solid 1px #d6d6d6;
+  margin-bottom: 2px;
+  font-weight: bold;
+  font-size: 18px;
 }
 .itemLists:hover {
   background-color: #d6d6d6;
@@ -128,7 +161,7 @@
 .Horizontal-line-bold {
   border: 3px solid black;
   width: 95%;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 .TotalPrice {
   display: flex;
@@ -140,6 +173,9 @@
 .priceTitle {
   font-weight: bold;
   font-size: 25px;
+}
+.PricesTitle {
+  margin-top: 5px;
 }
 
 .calculatedPrice {
@@ -154,6 +190,7 @@
 .ItemsBox {
   display: flex;
   width: 70vw;
+  overflow-y: hidden;
 }
 
 .AddItems {
@@ -178,7 +215,6 @@
   flex-direction: row;
   align-items: flex-end;
   justify-content: center;
-  background-color: #fff;
   padding-bottom: 10px;
 }
 .ButtonAddItem {
@@ -204,6 +240,33 @@
   appearance: none;*/
 }
 
+.CheckAllItems {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  border: solid 1px #d6d6d6;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.allItems {
+  padding-top: 10px;
+}
+
+.allItemsChecked {
+  opacity: 0.7; /* Adjust the opacity as needed */
+  pointer-events: none; /* Disable pointer events on the container */
+  filter: grayscale(50%); /* Apply grayscale filter to visually disable */
+  margin-bottom: 10px;
+}
+
+.allItemsChecked .itemLists:hover {
+  /* Hover effect for each item */
+  background-color: red;
+  color: #333;
+}
 .checkbox:checked {
   content: "\2713"; /* Unicode checkmark character */
   color: #fff; /* White color for the checkmark */
@@ -219,6 +282,8 @@
   width: 100%;
   max-height: 410px;
   overflow-y: scroll;
+  padding-top: 25px;
+  margin-bottom: 10px;
 }
 
 .uncheckAndCheckList::-webkit-scrollbar {
@@ -231,4 +296,16 @@
 
 .uncheckAndCheckList:hover::-webkit-scrollbar-thumb {
   background-color: #d6d6d6; /* Adjust the color as needed */
+}
+
+.DeleteItemsButton {
+  border-radius: 8px;
+  height: 40px;
+  background-color: var(--error);
+}
+
+.checkItemsButton {
+  border-radius: 8px;
+  height: 40px;
+  background-color: var(--secondary-color);
 }

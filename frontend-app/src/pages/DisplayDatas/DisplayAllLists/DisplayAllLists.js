@@ -84,7 +84,7 @@ const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
     <div className={getListClassName(ItemsID, darkMode)}>
       {ItemsID === -1 && data && data.lists && data.lists.length > 0 ? null : (
         <div className="listDropdown">
-          <ListDropdown lists={data.lists} onSelect={handleListClick} />
+          <ListDropdown lists={data.lists} onSelect={handleListClick} className="ListDropdownCSS"/>
         </div>
       )}
 

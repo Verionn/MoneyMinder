@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { GetItemListData } from "../../../components/communicationWithServer/HandleDataRequest";
+import {
+  GetItemListData,
+  GetPurchasedItemListData,
+} from "../../../components/communicationWithServer/HandleDataRequest";
 import "boxicons";
 import "./DisplayItems.css";
 import DisplayCategory from "../DisplayCategory/DisplayCategory";
@@ -12,12 +15,13 @@ import { deleteItem } from "../../../components/communicationWithServer/HandleDa
 import { PostCheckedItem } from "../../../components/communicationWithServer/HandleDataRequest";
 import { UseListArray } from "../../../components/Context/Contexts";
 import { CreateNotification } from "../../../components/functions/functions";
+import { useDarkMode } from "../../../components/Context/Contexts";
 
 const GetDatasFromItems = ({ listID, operation, onClose }) => {
   const { itemsArray, allItemsArray } = UseListArray();
   const apiUrl = `http://localhost:8080/lists/${listID}/items`;
   const [addItems, setAddItems] = useState(false);
-
+  const { darkMode } = useDarkMode();
   const [checkedItems, setCheckedItems] = useState({});
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -89,6 +93,10 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
 
   const { items, loading, error } = GetItemListData({ apiUrl });
 
+  const { purchasedItems } = GetPurchasedItemListData({ listID });
+
+  console.log("purchasedItems : ", purchasedItems);
+
   if (loading) {
     <p className={"Items"}>
       <box-icon
@@ -111,22 +119,27 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
   if (operation) {
     return (
       <div className="ItemsBox">
-        <div className="Items">
-          <div className="closeItemsList">
-            <box-icon name="x" onClick={onClose}></box-icon>
-          </div>
+        <div className={darkMode?"ItemsDark":"Items"}>
           <div className="ItemsHeader">
             <div className="ListName">{listName}</div>
             <div className="itemHeaderRight">
-              <box-icon name="search-alt-2"></box-icon>
-              <box-icon name="dots-vertical-rounded"></box-icon>
+              <box-icon name="search-alt-2" color={darkMode?'#fff':'#0000'}></box-icon>
+              <box-icon name="dots-vertical-rounded" color={darkMode?'#fff':'#0000'}></box-icon>
+              <box-icon
+                name="x"
+                onClick={onClose}
+                size="md"
+                color={darkMode?'#fff':'#0000'}
+              ></box-icon>
             </div>
           </div>
           {items.length > 0 ? (
             <>
               <Container>
                 <Row className="itemListsHeader">
-                  <Col className="textCentered"></Col>
+                  <Col className="textCentered">
+                    <input type="checkbox" className="CheckAllItems"></input>
+                  </Col>
                   <Col className="itemName">Name</Col>
                   <Col className="textCentered">Amount</Col>
                   <Col className="textCentered">Price</Col>
@@ -165,48 +178,53 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
                   ))}
                 </Container>
                 {/*---------------------------------------------------------------*/}
-                <div className="Horizontal-line"></div>
-
-                {/*-----------------------------------------------------
-                <Container fluid className="allItems">
-                  {items.map((item) => (
-                    <Row className="itemLists " key={item.itemId}>
-                      <Col className="textCentered">
-                        <input
-                          className="checkbox"
-                          type="checkbox"
-                          checked={checkedItems[item.itemId] || false}
-                          onChange={() => handleCheckboxChange(item.itemId)}
-                        />
-                      </Col>
-                      <Col className="itemName">{item.name}</Col>
-                      <Col className="textCentered">{item.amount}</Col>
-                      <Col className="textAlignedRight">
-                        {(item.price * item.amount).toFixed(2)} $
-                      </Col>
-                      <Col className="textCentered">
-                        <DisplayCategory
-                          CategoryID={item.categoryId}
-                        ></DisplayCategory>
-                      </Col>
-                      <Col className="textCentered">
-                        {item.weight > 0 ? item.weight : ""}
-                      </Col>
-                    </Row>
-                  ))}
-                </Container>
-               ----------------------------------------------------------*/}
+                {purchasedItems.length > 0 ? (
+                  <div className="Horizontal-line"></div>
+                ) : null}
+                {purchasedItems.length > 0 ? (
+                  <Container fluid className="allItemsChecked">
+                    {purchasedItems.map((item) => (
+                      <Row className="itemLists" key={item.itemId}>
+                        <Col className="textCentered">
+                          <box-icon
+                            name="check-circle"
+                            color="green"
+                          ></box-icon>
+                        </Col>
+                        <Col className="itemName">{item.name}</Col>
+                        <Col className="textCentered">{item.amount}</Col>
+                        <Col className="textAlignedRight">
+                          {(item.price * item.amount).toFixed(2)} $
+                        </Col>
+                        <Col className="textCentered">
+                          <DisplayCategory
+                            CategoryID={item.categoryId}
+                          ></DisplayCategory>
+                        </Col>
+                        <Col className="textCentered">
+                          {item.weight > 0 ? item.weight : ""}
+                        </Col>
+                      </Row>
+                    ))}
+                  </Container>
+                ) : null}
               </span>
 
               <Container>
                 <Row>
                   <Col>
-                    <button onClick={checkAllSelectedItems}>
+                    <button
+                      onClick={checkAllSelectedItems}
+                      className="checkItemsButton"
+                    >
                       Check selected items
                     </button>
                   </Col>
                   <Col>
-                    <button onClick={deleteAllSelectedItems}>
+                    <button
+                      onClick={deleteAllSelectedItems}
+                      className="DeleteItemsButton"
+                    >
                       Delete selected items
                     </button>
                   </Col>
@@ -223,9 +241,13 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
                   <Col className="calculatedPriceNotBold">
                     {calculateTotalPrice(items)} $
                   </Col>
-                  <Col className="calculatedPriceNotBold">0 $</Col>
+                  <Col className="calculatedPriceNotBold">
+                    {calculateTotalPrice(purchasedItems)} $
+                  </Col>
                   <Col className="calculatedPrice">
-                    {calculateTotalPrice(items)} $
+                    {parseFloat(calculateTotalPrice(items)) +
+                      parseFloat(calculateTotalPrice(purchasedItems))}{" "}
+                    $ 
                   </Col>
                   <Col>
                     <box-icon name="dots-vertical"></box-icon>
