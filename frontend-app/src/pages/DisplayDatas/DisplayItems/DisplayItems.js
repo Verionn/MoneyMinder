@@ -1,5 +1,5 @@
-import React, {  useState,useEffect } from "react";
-import {GetItemListData} from "../../../components/communicationWithServer/HandleDataRequest"
+import React, { useState, useEffect } from "react";
+import { GetItemListData } from "../../../components/communicationWithServer/HandleDataRequest";
 import "boxicons";
 import "./DisplayItems.css";
 import DisplayCategory from "../DisplayCategory/DisplayCategory";
@@ -8,29 +8,27 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import AddNewItem from "../../../components/addNewItems/addNewItem";
-import { deleteItem } from "../../../components/delete/deleteItem";
-import { checkItem } from "../../../components/functions/checkItem";
+import { deleteItem } from "../../../components/communicationWithServer/HandleDataRequest";
+import { PostCheckedItem } from "../../../components/communicationWithServer/HandleDataRequest";
 import { UseListArray } from "../../../components/Context/Contexts";
+import { CreateNotification } from "../../../components/functions/functions";
 
 const GetDatasFromItems = ({ listID, operation, onClose }) => {
-  const {itemsArray,allItemsArray} = UseListArray();
+  const { itemsArray, allItemsArray } = UseListArray();
   const apiUrl = `http://localhost:8080/lists/${listID}/items`;
   const [addItems, setAddItems] = useState(false);
-  
 
   const [checkedItems, setCheckedItems] = useState({});
   const [selectedItems, setSelectedItems] = useState([]);
 
-
   // Save state to local storage whenever the addItems or Items state changes
   useEffect(() => {
-    localStorage.setItem('addItems', addItems.toString());
+    localStorage.setItem("addItems", addItems.toString());
   }, [addItems]);
 
   useEffect(() => {
     //console.log("itemsArray : ", itemsArray);
-    console.log("allItemsArray : ", allItemsArray);
-  }, [itemsArray,allItemsArray]);
+  }, [itemsArray, allItemsArray]);
 
   const handleCheckboxChange = (itemId) => {
     setCheckedItems((prevCheckedItems) => ({
@@ -46,10 +44,9 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
     );
     // Log the selected items to the consoles
 
-
     for (let i = 0; i < newlySelectedItems.length; i++) {
       const currentItem = newlySelectedItems[i];
- 
+
       deleteItem(currentItem);
     }
     setSelectedItems((prevSelectedItems) => [
@@ -60,17 +57,25 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
     // Uncheck all items after processing
     setCheckedItems({});
   };
-  const checkAllSelectedItems = () => {
+
+  const checkAllSelectedItems = async () => {
     const newlySelectedItems = items.filter(
       (item) => checkedItems[item.itemId]
     );
-
-
+    for (let i = 0; i < newlySelectedItems.length; i++) {
+      const currentItem = newlySelectedItems[i];
+      if (await PostCheckedItem(currentItem)) {
+        CreateNotification("success", "Item checked successfully");
+      } else {
+        CreateNotification("error", "Error checking item");
+      }
+    }
 
     for (let i = 0; i < newlySelectedItems.length; i++) {
       const currentItem = newlySelectedItems[i];
-      checkItem(currentItem);
+      await deleteItem(currentItem);
     }
+
     setSelectedItems((prevSelectedItems) => [
       ...prevSelectedItems,
       ...newlySelectedItems,
@@ -82,7 +87,7 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
     setAddItems(!addItems);
   };
 
-const  { items, loading, error } = GetItemListData({ apiUrl });
+  const { items, loading, error } = GetItemListData({ apiUrl });
 
   if (loading) {
     <p className={"Items"}>
