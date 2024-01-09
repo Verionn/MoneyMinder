@@ -119,17 +119,23 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
   if (operation) {
     return (
       <div className="ItemsBox">
-        <div className={darkMode?"ItemsDark":"Items"}>
+        <div className={darkMode ? "ItemsDark" : "Items"}>
           <div className="ItemsHeader">
             <div className="ListName">{listName}</div>
             <div className="itemHeaderRight">
-              <box-icon name="search-alt-2" color={darkMode?'#fff':'#0000'}></box-icon>
-              <box-icon name="dots-vertical-rounded" color={darkMode?'#fff':'#0000'}></box-icon>
+              <box-icon
+                name="search-alt-2"
+                color={darkMode ? "#fff" : "var(--dark-theme-status-bar)"}
+              ></box-icon>
+              <box-icon
+                name="dots-vertical-rounded"
+                color={darkMode ? "#fff" : "var(--dark-theme-status-bar)"}
+              ></box-icon>
               <box-icon
                 name="x"
                 onClick={onClose}
                 size="md"
-                color={darkMode?'#fff':'#0000'}
+                color={darkMode ? "#fff" : "var(--dark-theme-status-bar)"}
               ></box-icon>
             </div>
           </div>
@@ -247,7 +253,7 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
                   <Col className="calculatedPrice">
                     {parseFloat(calculateTotalPrice(items)) +
                       parseFloat(calculateTotalPrice(purchasedItems))}{" "}
-                    $ 
+                    $
                   </Col>
                   <Col>
                     <box-icon name="dots-vertical"></box-icon>
