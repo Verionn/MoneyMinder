@@ -80,7 +80,7 @@ export const GetItemListData = ({ apiUrl }) => {
         const result = await response.json();
         setItems(result.items);
         await initializeArray(result.items, "items");
-       console.log("Items in list:", allListAndItesm.lists);
+      
       } catch (error) {
         setError(error);
       } finally {
@@ -170,6 +170,65 @@ export const PostNewCategory = async ({ NewCategoryName }) => {
     return false;
   }
 };
+
+export const PostCheckedItem = async (item,addElement) => {
+  try {
+    let itemId = item.itemId;
+    let listId = item.listId;
+    const checkedItemsUrl = `${endpoint}/lists/${listId}/items/${itemId}/purchased`;
+    const response = await fetch(checkedItemsUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(item),
+    });
+    if (!response.ok) {
+      const responseBody = await response.json();
+      console.error("Failed to add a new item:", responseBody);
+      throw new Error("Failed to add a new item");
+    }
+    //addElement(newItem, "items");
+  } catch (error) {
+    console.error("Error adding a new item:", error);
+    return false;
+  }
+  return true;
+}
+
+//Delete data from server
+export const deleteItem = async (item) => {
+  try {
+    
+    const response = await fetch(
+      `http://localhost:8080/lists/${item.listId}/items/${item.itemId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          // Add any other headers if required (e.g., authentication headers)
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const responseBody = await response.json();
+      console.error("Failed to delete item. Server response:", responseBody);
+      throw new Error("Failed to delete item");
+    }
+
+    // Check if the response body is not empty before attempting to parse
+    const responseBody = await response.text();
+    if (responseBody.trim()) {
+      console.log("Item deleted successfully");
+    } else {
+      console.log("Item deleted successfully (empty response body)");
+    }
+  } catch (error) {
+    console.error("Error deleting item:", error);
+  }
+};
+
 
 const getByText = (method, type, message) => {
   if (message === "success") {

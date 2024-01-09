@@ -97,7 +97,7 @@ function getPercentForProgressBar(bought, items) {
 export function ProgressBarFunction(listID) {
  //implement here the function to get the number of items and the number of items bought
  
-  const now = getPercentForProgressBar(listID, 5);
+  const now = getPercentForProgressBar(4, 5);
   return (
     <ProgressBar
       now={now}
