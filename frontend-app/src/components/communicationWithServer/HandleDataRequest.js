@@ -94,6 +94,34 @@ export const GetItemListData = ({ apiUrl }) => {
   return { items, loading, error };
 };
 
+///purchasedItems/lists/{listId}
+export const GetPurchasedItemListData = ({ listID }) => {
+  const [purchasedItems, setPurchasedItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const apiUrl = `${endpoint}/purchasedItems/lists/${listID}`;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result = await response.json();
+        setPurchasedItems(result.purchasedItems);
+      
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [apiUrl]);
+  return { purchasedItems, loading, error };
+};
+
 //POST DATA TO SERVER
 
 export const PostNewList = async (
