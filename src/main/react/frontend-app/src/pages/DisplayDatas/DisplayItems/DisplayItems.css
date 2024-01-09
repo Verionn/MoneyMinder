@@ -5,7 +5,6 @@
   justify-content: center;
   margin: 10px;
   padding: 10px;
-  border: 1px solid black;
   border-radius: 5px;
   width: 600px;
   height: auto;
@@ -13,7 +12,6 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
-  border: solid 1px black !important;
 }
 
 .closeItemsList {
@@ -35,12 +33,17 @@
   font-weight: bold;
 }
 
-.itemLists {
+.itemLists,
+.itemListsHeader {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+}
+.itemLists:hover {
+  background-color: #d6d6d6;
+  border-radius: 5px;
 }
 
 .itemBody {
@@ -79,24 +82,24 @@
   align-items: center !important;
 }
 
-.ItemsEmpty{
+.ItemsEmpty {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.infoAboutEmptyList{
+.infoAboutEmptyList {
   font-size: large;
   margin: 10px;
 }
-.suggestionText{
+.suggestionText {
   font-size: small;
   margin: 10px;
   font-style: italic;
 }
 
-.addItemsButton{
+.addItemsButton {
   margin: 10px;
   width: 50%;
   height: 50px;
@@ -106,27 +109,23 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-
 }
 
-.addItemsButton>span{
+.addItemsButton > span {
   font-size: 20px;
   font-weight: bold;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
-
-
 
 .Horizontal-line {
   border: 1px solid black;
   width: 95%;
   margin-bottom: 10px;
 }
-.Horizontal-line-bold{
+.Horizontal-line-bold {
   border: 3px solid black;
   width: 95%;
   margin-bottom: 10px;
@@ -148,23 +147,88 @@
   font-size: 25px !important;
   color: green !important;
 }
-.calculatedPriceNotBold{
+.calculatedPriceNotBold {
   font-size: 20px !important;
 }
 
-.allItems {
-  max-height: 400px;
+.ItemsBox {
+  display: flex;
+  width: 70vw;
+}
+
+.AddItems {
+  width: 50%;
+  height: 80vh;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px;
+  padding: 5px;
+  border: solid 1px #d6d6d6;
+  border-radius: 8px;
+  background-color: #e6f4f1;
+}
+
+.addItemsButtonBox {
+  width: 20%;
+  height: 70vh;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: #fff;
+  padding-bottom: 10px;
+}
+.ButtonAddItem {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  border: solid 1px #d6d6d6;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;*/
+}
+
+.checkbox:checked {
+  content: "\2713"; /* Unicode checkmark character */
+  color: #fff; /* White color for the checkmark */
+  background-color: #4caf50;
+}
+
+.uncheckAndCheckList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-height: 410px;
   overflow-y: scroll;
 }
 
-.allItems::-webkit-scrollbar {
+.uncheckAndCheckList::-webkit-scrollbar {
   width: 2px;
 }
 
-.allItems::-webkit-scrollbar-thumb {
+.uncheckAndCheckList::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
 
-.allItems:hover::-webkit-scrollbar-thumb {
+.uncheckAndCheckList:hover::-webkit-scrollbar-thumb {
   background-color: #d6d6d6; /* Adjust the color as needed */
 }

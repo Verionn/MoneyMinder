@@ -1,64 +1,107 @@
-import React, { useState } from "react";
-
-import GetLists from "../../../components/communicationWithBackEnd/GetLists";
+import React, { useEffect, useState } from "react";
+import { GetListsData,GetItemListData } from "../../../components/communicationWithServer/HandleDataRequest";
 import ListDescription from "../../../components/listDescription/listDescriptions";
 import "./DisplayAllLists.css";
-import GetDatasFromItems from "../../../components/functions/GetDatasFromItems";
+import GetDatasFromItems from "../../../components/functions/functions";
 import DisplayItems from "../DisplayItems/DisplayItems";
 import ListDropdown from "../../../components/dropdownMenuLists/DropdownMenuList";
+import { useDarkMode,UseListArray,UseViewList } from "../../../components/Context/Contexts";
+import { ProgressBarFunction } from "../../../components/functions/functions";
 
-const DisplayAllLists = ({onClickList,onCloseList}) => {
-  const [ItemsID, setItemsID] = useState(-1);
+const DisplayAllLists = ({ onClickList, onCloseList, ItemsID }) => {
+  const { listArray,allListAndItesm } = UseListArray();
+  const { darkMode } = useDarkMode();
+  const [listLenght ] = useState(-1);
+  const {view}=UseViewList();
+
 
   const handleListClick = (listId) => {
-    setItemsID(listId);
     onClickList(listId);
   };
 
   const handleCloseItemsList = () => {
-    setItemsID(-1);
     onCloseList();
   };
 
+  useEffect(() => {
+    console.log("view: ", view);
+  }, [listArray,allListAndItesm,view]);
+
   const apiUrl = "http://localhost:8080/lists";
-  let { data, loading, error } = GetLists({ apiUrl });
+  let { data, loading, error } = GetListsData({ apiUrl });
+
   const getListName = (listID) => {
     if (data && data.lists && data.lists.length > 0) {
       return data.lists.find((list) => list.listId === listID).name;
     }
     return "List";
   };
-  if (loading) {
-    return <p className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}><box-icon name='loader-alt'animation='spin' color="#002a4e" size="lg"></box-icon></p>;
 
+  const getListClassName = (itemsID, darkMode) => {
+    if (darkMode) {
+      if (itemsID === -1) {
+        return "listBox listDarkMode";
+      } else {
+        return "listBoxSelectItems listDarkMode";
+      }
+    } else {
+      if (itemsID === -1) {
+        return "listBox";
+      } else {
+        return "listBoxSelectItems";
+      }
+    }
+  };
+
+  if (loading) {
+    return (
+      <p className={getListClassName(ItemsID, darkMode)}>
+        <box-icon
+          name="loader-alt"
+          animation="spin"
+          color="var(--primary-color)"
+          size="lg"
+        ></box-icon>
+      </p>
+    );
   }
 
   if (error) {
-    return <p className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}>Error: Failed to load Lists</p>;
+    return (
+      <p className={getListClassName(ItemsID, darkMode)}>
+        Error: Failed to load Lists
+      </p>
+    );
   }
 
   return (
-    <div className={ItemsID === -1 ? "listBox" : "listBoxSelectItems"}>
+    <div className={getListClassName(ItemsID, darkMode)}>
       {ItemsID === -1 && data && data.lists && data.lists.length > 0 ? null : (
         <div className="listDropdown">
-          {" "}
           <ListDropdown lists={data.lists} onSelect={handleListClick} />
         </div>
       )}
 
       {ItemsID === -1 ? (
         data && data.lists && data.lists.length > 0 ? (
-          <ul className="userLists">
-            {data.lists.map((list) => (
+          <ul className="userLists" style={{ flexDirection: view === "list" ? "column" : "row" }}>
+            {allListAndItesm.lists.map((list) => (
               <li
                 key={list.listId}
-                className="singleList"
+                className={
+                  darkMode ? "singleList singleListDark" : "singleList"
+                }
                 onClick={() => handleListClick(list.listId)}
               >
                 <div className="listTitle">{list.name}</div>
                 <div className={"listHeader"}>
                   <span className="NumberOfItems">
-                    Number of Items :{" "}
+                    Items boughts :{" "}
+                    <GetDatasFromItems
+                      listID={list.listId}
+                      operation={"countBought"}
+                    />
+                    /
                     <GetDatasFromItems
                       listID={list.listId}
                       operation={"count"}
@@ -72,6 +115,10 @@ const DisplayAllLists = ({onClickList,onCloseList}) => {
                     />{" "}
                     $
                   </span>
+                </div>
+                <div className="progressBar">
+                  
+                  {ProgressBarFunction(list.listId)}
                 </div>
                 <div className="Description">
                   <ListDescription

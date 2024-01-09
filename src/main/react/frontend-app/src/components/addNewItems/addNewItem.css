@@ -1,0 +1,65 @@
+.addingItems {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.HeaderAddItems {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 25px;
+}
+.HeaderAddItems > p {
+  font-weight: bold;
+}
+
+.BodyAddItems {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.formItemName,
+.formCategory {
+  margin-bottom: 10px;
+}
+
+.smallBoxNumbers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.customMarginBottom {
+  margin-bottom: 10px;
+}
+.customItemNameMargin{
+  margin-top: 10px;
+}
+
+.AddItemSubmitButton {
+  border-radius: 8px;
+  height: 50px;
+  background-color: #0b5ed7;
+  border: solid 1px #0b5ed7;
+  color: white;
+}
+
+.Notfication{
+  background-color: #002a4e;
+  color: #fff;
+}
+
+.custom{
+  font-style: italic;
+  font-weight: bold;
+}
