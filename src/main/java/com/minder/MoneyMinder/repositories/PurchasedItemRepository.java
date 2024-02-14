@@ -13,7 +13,7 @@ public interface PurchasedItemRepository extends JpaRepository<PurchasedItemEnti
     @Query("SELECT l FROM PurchasedItemEntity l WHERE l.categoryId = :categoryId AND l.userId = :userId")
     List<PurchasedItemEntity> findAllByCategoryIdAndUserId(Long categoryId, Long userId);
 
-    @Query("SELECT DISTINCT l FROM PurchasedItemEntity l WHERE l.name LIKE :prefix || '%' AND l.userId = :userId")
+    @Query("SELECT DISTINCT l FROM PurchasedItemEntity l WHERE LOWER(l.name) LIKE LOWER(:prefix || '%') AND l.userId = :userId")
     List<PurchasedItemEntity> findAllByPrefixAndUserId(String prefix, Long userId);
 
     @Query("SELECT l FROM PurchasedItemEntity l WHERE l.categoryId = :categoryId AND l.userId = :userId AND FUNCTION('DATEDIFF', DAY, l.timeBought, CURRENT_DATE()) <= :days")
