@@ -5,7 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -17,6 +19,8 @@ public class UserEntity implements UserDetails {
     private String name;
     private String password;
     private String email;
+    private LocalDateTime time_created;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -105,5 +109,13 @@ public class UserEntity implements UserDetails {
     @Override
     public String toString() {
         return email;
+    }
+
+    public LocalDateTime getTime_created() {
+        return time_created;
+    }
+
+    public void setTime_created(LocalDateTime time_created) {
+        this.time_created = time_created;
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -41,6 +42,7 @@ public class UserServiceImpl implements UserService {
                 registerUserRequest,
                 passwordEncoder.encode(registerUserRequest.password()),
                 Role.USER);
+        user.setTime_created(LocalDateTime.now());
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return new LoginResponse(jwtToken);
