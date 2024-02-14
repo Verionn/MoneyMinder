@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS user_entity (
     name VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
+    time_created TIMESTAMP WITHOUT TIME ZONE,
     role VARCHAR(20) NOT NULL
     );
 
