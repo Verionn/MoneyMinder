@@ -1,6 +1,6 @@
 import SideBar from "../sideBar/sideBar";
 import "./Body.css";
-import { appInfo, loginBtn } from "../../utils/datas/appInfo";
+import { appInfo, loginBtn, Credit } from "../../utils/datas/appInfo";
 import { useContextElements } from "../../utils/hooks/customHooks";
 import { Styles } from "./styles";
 
@@ -11,7 +11,7 @@ const Body = () => {
 
   return (
     <div className="appBody" style={{ ...styles.root }}>
-      <SideBar appInfo={appInfo} login={loginBtn} />
+      <SideBar appInfo={appInfo} login={loginBtn} Credit={Credit} />
       <h1>Body</h1>
     </div>
   );

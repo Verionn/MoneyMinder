@@ -5,6 +5,12 @@ export const appInfo = {
 
 let someText = "This is a text";
 
+export const Credit = (
+  <>
+  2023 © {appInfo.name} - <br />All rights reserved
+  </>
+);
+
 export const loginBtn = (
   <>
     Login {">"}
