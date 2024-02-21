@@ -1,18 +1,58 @@
-import './sideBar.css';
-import { CustomIcon } from '../sharedComponents/icons/icons';
+import "./sideBar.css";
+import { CustomIcon } from "../sharedComponents/icons/icons";
 import Typography from "../sharedComponents/typography";
 import { Row, Col } from "react-bootstrap";
-export const RenderSideBarSection = ({ sections }) => {
+import { useContextElements } from "../../utils/hooks/customHooks";
+import { getSectionStyle } from "./sideBarHelpers";
+
+export const RenderSideBarSection = ({ sections, isCollapsed }) => {
+  const { updateActiveSection, activeSection, isDarkMode } =
+    useContextElements();
+
   return sections.map((section, index) => (
     <Row className="custom-row" key={`sidebar-${section.id}`}>
-      <button className="sideBarBtn">
+      <div
+        className="sideBarBtn"
+        onClick={() => updateActiveSection(section.id)}
+        style={{
+          background: getSectionStyle(
+            section.id,
+            activeSection,
+            "background",
+            isDarkMode
+          ),
+        }}
+      >
         <Col>
-        <CustomIcon iconName={section.icon} size='5px' />
+          <CustomIcon
+            iconName={section.icon}
+            size="5px"
+            iconColor={getSectionStyle(
+              section.id,
+              activeSection,
+              "color",
+              isDarkMode
+            )}
+          />
         </Col>
         <Col>
-          <Typography>{section.title}</Typography>
+          {isCollapsed ? null : (
+            <Typography
+            tag="h3"
+              style={{
+                color: getSectionStyle(
+                  section.id,
+                  activeSection,
+                  "color",
+                  isDarkMode
+                ),
+              }}
+            >
+              {section.title}
+            </Typography>
+          )}
         </Col>
-      </button>
+      </div>
     </Row>
   ));
 };
