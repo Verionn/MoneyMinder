@@ -6,20 +6,29 @@ export const ContextElements = createContext();
 
 //Create a provider
 export const ContextProvider = ({ children }) => {
-  const [darkMode, setDarkMode] = useLocalStorageState("darkModeMoneyMinder", false);
+  const [isDarkMode, setIsDarkMode] = useLocalStorageState(
+    "darkModeMoneyMinder",
+    false
+  );
+  const [activeSection, setActiveSection] = useLocalStorageState(
+    "activeSectionMoneyMinder",
+    "home"
+  );
+
+  const updateActiveSection = (sectionId) => {
+    setActiveSection(sectionId);
+    
+  };
 
   const updateDarkMode = () => {
-    setDarkMode((prevDarkMode) => !prevDarkMode);
+    setIsDarkMode((prevDarkMode) => !prevDarkMode);
   };
 
   return (
-    <ContextElements.Provider value={{ darkMode, updateDarkMode }}>
+    <ContextElements.Provider
+      value={{ isDarkMode, activeSection, updateDarkMode, updateActiveSection }}
+    >
       {children}
     </ContextElements.Provider>
   );
 };
-
-
-
-
-
