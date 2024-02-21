@@ -45,7 +45,6 @@ export const GetCategoryNameID = async (categoryName, categories) => {
 
 export const useLocalStorageState = (key, initialValue) => {
   const storedValue = JSON.parse(localStorage.getItem(key)) || initialValue;
-  // console.log(`Key: ${key}, Stored Value: ${storedValue}`);
   const [value, setValue] = useState(storedValue);
 
   useEffect(() => {
