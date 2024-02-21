@@ -8,7 +8,7 @@ import { Styles } from "./styles";
 import { useContextElements } from "../../utils/hooks/customHooks";
 import { ReactComponent as ChevronLeft } from "../../utils/assets/SVG/bx-chevron-left.svg";
 import { ReactComponent as ChevronRight } from "../../utils/assets/SVG/bx-chevron-right.svg";
-const SideBar = ({ appInfo, login }) => {
+const SideBar = ({ appInfo, login, Credit }) => {
   const { isDarkMode, updateDarkMode } = useContextElements();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -45,10 +45,15 @@ const SideBar = ({ appInfo, login }) => {
         <Row className="sectionSeparator">
           <div className="horizontal-Line"></div>
         </Row>
-        <Row className="custom-row">xx</Row>
+        <Row className="custom-row">
+          privacy Policy
+          <br /><br />
+          Terms of Service{/*Implement later*/}
+        </Row>
         <Row className="sectionSeparator">
           <div className="horizontal-Line"></div>
         </Row>
+        <Row className="custom-row">{!isCollapsed ? Credit : null}</Row>
       </Container>
       <div className="sideBarChevron">
         <div
