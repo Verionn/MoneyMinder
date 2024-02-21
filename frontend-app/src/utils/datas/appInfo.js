@@ -17,21 +17,21 @@ export const pageSections = [
   {
     title: "Shopping List",
     id: "shopping-list",
-    icon: "shopping-cart",
+    icon: "cartIcon",
     path: "/shopping-list",
     element: someText,
   },
   {
     title: "Trash",
     id: "trash",
-    icon: "trash",
+    icon: "trashIcon",
     path: "/trash",
     element: someText,
   },
   {
     title:"Help",
     id:"help",
-    icon:"info",
+    icon:"helpIcon",
     path:"/Help",
     element:someText
     
@@ -39,7 +39,7 @@ export const pageSections = [
   {
     title: "Settings",
     id: "settings",
-    icon: "settings",
+    icon: "settingsIcon",
     path: "/settings",
     element: someText,
   },

@@ -10,14 +10,14 @@ import {
 const DarkModeContext = createContext();
 
 export const DarkModeProviderCOntext = ({ children }) => {
-  const [darkMode, setDarkMode] = useLocalStorageState("darkMode", false);
+  const [isDarkMode, setIsDarkMode] = useLocalStorageState("darkMode", false);
 
-  const toggleDarkMode = () => {
-    setDarkMode((prevDarkMode) => !prevDarkMode);
+  const updateDarkMode = () => {
+    setIsDarkMode((prevDarkMode) => !prevDarkMode);
   };
 
   return (
-    <DarkModeContext.Provider value={{ darkMode, toggleDarkMode }}>
+    <DarkModeContext.Provider value={{ isDarkMode, updateDarkMode }}>
       {children}
     </DarkModeContext.Provider>
   );
