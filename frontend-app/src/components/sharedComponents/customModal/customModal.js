@@ -9,6 +9,7 @@ export const CustomModal = ({
   ModalTitle,
   ModalConfirmationButton,
   functionTOCall,
+  canConfirm,
 }) => {
     
     const {isDarkMode} = useContextElements();
@@ -34,6 +35,7 @@ export const CustomModal = ({
             onClick={functionTOCall}
             style={{ backgroundColor: "var(--primary-color)" }}
             className="custom-modal-footer-button"
+            disabled={!canConfirm}
           >
             {ModalConfirmationButton}
           </button>
