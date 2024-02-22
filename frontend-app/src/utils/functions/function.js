@@ -44,3 +44,16 @@ export const useLocalStorageState = (key, initialValue) => {
 
   return [value, setValue];
 };
+
+export function getActiveTitle(activeSection, sectionList) {
+  let title = "No Title";
+ sectionList.forEach((section) => {
+ 
+    if (section.id === activeSection) {
+      title =  section.title;
+    }
+  });
+  
+  return title;
+
+}
