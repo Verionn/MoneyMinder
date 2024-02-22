@@ -1,5 +1,6 @@
 
 import "./createList.css";
+import {CustomModal} from "../customModal/customModal";
 
 const CreateList = ({ show, setShow, children }) => {
   if (!show) return null;
@@ -8,25 +9,23 @@ const CreateList = ({ show, setShow, children }) => {
       console.log("show", !prevShow);
       return false;
     });
-    console.log("show", show);
+    
   };
 
   return (
-    <div className="custom-modal-backdrop">
-      <div className="custom-modal">
-        <div className="custom-modal-header">
-          <button onClick={handleClose} className="custom-modal-close-button">
-            &times;
-          </button>
-        </div>
-        <div className="custom-modal-body">{children}</div>
-        <div className="custom-modal-footer">
-          <button onClick={handleClose} className="custom-modal-footer-button">
-            Close
-          </button>
-        </div>
+    <CustomModal
+      show={show}
+      onClose={handleClose}
+      ModalTitle="Create New List"
+      ModalConfirmationButton="Create"
+      functionTOCall={handleClose}
+    >
+      <div className="createList">
+        <input type="text" placeholder="List Name" />
+        <input type="text" placeholder="List Description" />
+       
       </div>
-    </div>
+    </CustomModal>
   );
 };
 
