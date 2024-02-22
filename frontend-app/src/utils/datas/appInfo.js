@@ -1,3 +1,5 @@
+import ShoppingLists from "../../components/shoppingLists/shoppingLists";
+
 export const appInfo = {
   name: "MoneyMinder",
   logo: require("../../ressources/logo.png"),
@@ -25,7 +27,7 @@ export const pageSections = [
     id: "shopping-list",
     icon: "cartIcon",
     path: "/shopping-list",
-    element: someText+"Shopping List",
+    element: <ShoppingLists />,
   },
   {
     title: "Trash",

@@ -48,8 +48,6 @@ export const GetListsData = ({ apiUrl }) => {
         const result = await response.json();
         setData(result);
         await initializeArray(result.lists, "list");
-        //console.log("allListAndItesm :",allListAndItesm);
-        //console.log("result.lists :", listArray);
       } catch (error) {
         setError(error);
       } finally {

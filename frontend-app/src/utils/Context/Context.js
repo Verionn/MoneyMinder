@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 import { useLocalStorageState } from "../functions/function";
 
 //Create a context
@@ -15,18 +15,30 @@ export const ContextProvider = ({ children }) => {
     "home"
   );
 
+  const [listArray, setListArray] = useState([]);
+
   const updateActiveSection = (sectionId) => {
     setActiveSection(sectionId);
-    
   };
 
   const updateDarkMode = () => {
     setIsDarkMode((prevDarkMode) => !prevDarkMode);
   };
 
+  const updateListArray = (newListArray) => {
+    setListArray(newListArray);
+  };
+
   return (
     <ContextElements.Provider
-      value={{ isDarkMode, activeSection, updateDarkMode, updateActiveSection }}
+      value={{
+        isDarkMode,
+        activeSection,
+        listArray,
+        updateDarkMode,
+        updateActiveSection,
+        updateListArray,
+      }}
     >
       {children}
     </ContextElements.Provider>
