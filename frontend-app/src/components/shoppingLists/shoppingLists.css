@@ -1,0 +1,90 @@
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  flex-wrap: 1;
+  overflow-x: hidden;
+  transition: all 0.5s;
+}
+
+.singleList {
+  width: 400px;
+  border-radius: 8px;
+}
+.singleListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+
+}
+
+.singleListBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+
+}
+
+.SingleListStats {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ 
+}
+.ListProgessionBar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.listIcons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.ListDescription {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 10px;
+  transition: max-height 0.5s ease-in-out;
+}
+
+.ListDescription.active {
+  max-height: 200px;
+}
+
+.ButtonExpandList {
+  width: 100px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.listExpanded {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: justify;
+  border-radius: 8px;
+  border: 1px solid black;
+  max-width: 100%;
+  padding: 10px;
+  background-color: var(--dark-theme-hover);
+}
