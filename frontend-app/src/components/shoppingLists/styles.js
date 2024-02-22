@@ -7,6 +7,7 @@ export const Styles = ({ darMokde }) => ({
   },
   icons: {
     fill: "var(--secondary-color)",
+    cursor: "pointer",
   },
   listExpanded: {
     backgroundColor: darMokde
