@@ -3,7 +3,7 @@ import "./Body.css";
 import { appInfo, loginBtn, Credit } from "../../utils/datas/appInfo";
 import { useContextElements } from "../../utils/hooks/customHooks";
 import { Styles } from "./styles";
-
+import Section from "../sections/section";
 const Body = () => {
   const { isDarkMode } = useContextElements();
 
@@ -12,7 +12,7 @@ const Body = () => {
   return (
     <div className="appBody" style={{ ...styles.root }}>
       <SideBar appInfo={appInfo} login={loginBtn} Credit={Credit} />
-      <h1>Body</h1>
+      <Section />
     </div>
   );
 };
