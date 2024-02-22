@@ -4,16 +4,20 @@ import Typography from "../sharedComponents/typography";
 import { Row, Col } from "react-bootstrap";
 import { useContextElements } from "../../utils/hooks/customHooks";
 import { getSectionStyle } from "./sideBarHelpers";
-
+import { useNavigate } from "react-router";
 export const RenderSideBarSection = ({ sections, isCollapsed }) => {
   const { updateActiveSection, activeSection, isDarkMode } =
     useContextElements();
 
+  const navigate = useNavigate();
   return sections.map((section, index) => (
     <Row className="custom-row" key={`sidebar-${section.id}`}>
       <div
         className="sideBarBtn"
-        onClick={() => updateActiveSection(section.id)}
+        onClick={() => {
+          updateActiveSection(section.id);
+          navigate(section.path);
+        }}
         style={{
           background: getSectionStyle(
             section.id,
@@ -38,7 +42,7 @@ export const RenderSideBarSection = ({ sections, isCollapsed }) => {
         <Col>
           {isCollapsed ? null : (
             <Typography
-            tag="h3"
+              tag="h3"
               style={{
                 color: getSectionStyle(
                   section.id,

@@ -25,7 +25,7 @@ export const pageSections = [
     id: "shopping-list",
     icon: "cartIcon",
     path: "/shopping-list",
-    element: someText,
+    element: someText+"Shopping List",
   },
   {
     title: "Trash",
