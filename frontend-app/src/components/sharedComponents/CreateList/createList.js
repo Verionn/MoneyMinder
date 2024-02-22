@@ -4,7 +4,7 @@ import Typography from "../../sharedComponents/typography";
 import { useContextElements } from "../../../utils/hooks/customHooks";
 import { styles } from "./styles";
 import { useEffect, useState } from "react";
-import { PostNewList } from "../../../utils/functions/addDatasToBackend";
+import { PostNewList } from "../../../utils/functions/addDatasToApi";
 const CreateList = ({ show, setShow }) => {
   const { isDarkMode } = useContextElements();
   const [listName, setListName] = useState("");

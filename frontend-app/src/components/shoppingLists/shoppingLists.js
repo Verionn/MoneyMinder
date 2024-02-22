@@ -1,17 +1,23 @@
 import { useContextElements } from "../../utils/hooks/customHooks";
-import { GetListsData } from "../../utils/functions/getDatasFromBackEnd";
+import { GetListsData } from "../../utils/functions/getDatasFromApi";
 import { endpoint } from "../../utils/datas/serverInfo";
 import { useEffect } from "react";
 import "./shoppingLists.css";
 import { Styles } from "./styles";
 import { useState } from "react";
-import { TrashIcon, EditIcon,ChevronDown } from "../sharedComponents/icons/svgIcons";
+import {
+  TrashIcon,
+  EditIcon,
+  ChevronDown,
+} from "../sharedComponents/icons/svgIcons";
+import { ConfirmAction } from "../sharedComponents/confirmAction";
 
 const ShoppingLists = () => {
   const { listArray, updateListArray, isDarkMode } = useContextElements();
   const apiURL = `${endpoint}/lists`;
   const { data, loading, error } = GetListsData({ apiUrl: apiURL });
   const [isShowingDescription, setIsShowingDescription] = useState([]);
+  const [isDeletingList, setIsDeletingList] = useState(-1);
   useEffect(() => {
     if (data) {
       updateListArray(data);
@@ -29,7 +35,9 @@ const ShoppingLists = () => {
       return newState;
     });
   };
-
+  const toglleDeleteList = (index) => {
+    setIsDeletingList(index);
+  };
   return (
     <div className="listContainer">
       {listArray?.lists?.map((list, index) => (
@@ -42,7 +50,16 @@ const ShoppingLists = () => {
             {list.name}
             <div className="listIcons">
               <EditIcon style={{ ...styles.icons }} />
-              <TrashIcon style={{ ...styles.icons }} />
+              <TrashIcon
+                style={{ ...styles.icons }}
+                onClick={() => toglleDeleteList(index)}
+              />
+              <ConfirmAction
+                show={index === isDeletingList}
+                listName={list.name}
+                setIsDeletingList={setIsDeletingList}
+                listId={list.listId}
+              />
             </div>
           </div>
           <div className="singleListBody">
@@ -56,9 +73,16 @@ const ShoppingLists = () => {
                 isShowingDescription[index] ? "active" : ""
               }`}
             >
-              <button onClick={() => toggleDescription(index)} className="ButtonExpandList">Description <ChevronDown/> </button>
+              <button
+                onClick={() => toggleDescription(index)}
+                className="ButtonExpandList"
+              >
+                Description <ChevronDown />{" "}
+              </button>
               {isShowingDescription[index] && (
-                <p style={{...styles.listExpanded}}className="listExpanded">{list.description || "No description provided."}</p>
+                <p style={{ ...styles.listExpanded }} className="listExpanded">
+                  {list.description || "No description provided."}
+                </p>
               )}
             </div>
           </div>
