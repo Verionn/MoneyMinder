@@ -11,13 +11,15 @@ import {
   ChevronDown,
 } from "../sharedComponents/icons/svgIcons";
 import { ConfirmAction } from "../sharedComponents/confirmAction";
-
+import ModifyList from "./modifyList";
 const ShoppingLists = () => {
   const { listArray, updateListArray, isDarkMode } = useContextElements();
   const apiURL = `${endpoint}/lists`;
   const { data, loading, error } = GetListsData({ apiUrl: apiURL });
   const [isShowingDescription, setIsShowingDescription] = useState([]);
   const [isDeletingList, setIsDeletingList] = useState(-1);
+  const [isModifyingName, setIsModifyingName] = useState(-1);
+  const [isModifyingDescription, setIsModifyingDescription] = useState(-1);
   useEffect(() => {
     if (data) {
       updateListArray(data);
@@ -47,7 +49,23 @@ const ShoppingLists = () => {
           style={{ ...styles.singleList }}
         >
           <div className="singleListHeader">
-            {list.name}
+            {isModifyingName === index ? (
+              <ModifyList
+                modifying={"name"}
+                listID={list.listId}
+                listName={list.name}
+                description={list.description}
+                setDefault={setIsModifyingName}
+              />
+            ) : (
+              <div
+                onClick={() => setIsModifyingName(index)}
+                style={{ cursor: "pointer" }}
+                className="listNameInListContainer"
+              >
+                {list.name}
+              </div>
+            )}
             <div className="listIcons">
               <EditIcon style={{ ...styles.icons }} />
               <TrashIcon
@@ -79,11 +97,24 @@ const ShoppingLists = () => {
               >
                 Description <ChevronDown />{" "}
               </button>
-              {isShowingDescription[index] && (
-                <p style={{ ...styles.listExpanded }} className="listExpanded">
-                  {list.description || "No description provided."}
-                </p>
-              )}
+              {isShowingDescription[index] &&
+                (isModifyingDescription === index ? (
+                  <ModifyList
+                    modifying="description" 
+                    listID={list.listId}
+                    listName={list.name}
+                    description={list.description}
+                    setDefault={setIsModifyingDescription} 
+                  />
+                ) : (
+                  <p
+                    style={{ ...styles.listExpanded }}
+                    className="listExpanded"
+                    onClick={() => setIsModifyingDescription(index)} 
+                  >
+                    {list.description || "No description provided."}
+                  </p>
+                ))}
             </div>
           </div>
         </div>
