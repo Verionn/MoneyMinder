@@ -52,6 +52,9 @@
   align-items: center;
   gap: 10px;
 }
+.listNameInListContainer:hover{
+  font-size: larger;
+}
 
 .ListDescription {
   display: flex;
