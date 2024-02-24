@@ -1,4 +1,4 @@
-export const PostNewList = async (listName, description) => {
+export const PostNewList = async (listName, description, appendNewElement) => {
   try {
     const response = await fetch("http://localhost:8080/lists", {
       method: "POST",
@@ -7,11 +7,13 @@ export const PostNewList = async (listName, description) => {
       },
       body: JSON.stringify({ name: listName, description: description }),
     });
-     await response.json();
+    const newElement = await response.json();
+    console.log("newElement", newElement);
+    appendNewElement(newElement);
     if (!response.ok) {
       throw new Error("Failed to create a new list");
     }
-   
+
     return true;
   } catch (error) {
     console.error("Error creating a new list:", error);

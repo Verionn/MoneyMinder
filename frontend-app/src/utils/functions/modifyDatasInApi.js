@@ -1,8 +1,8 @@
 import { endpoint } from "../datas/serverInfo";
 
-export const modifyList = async (listId, updatedData) => {
+export const modifyList = async (listId, updatedData,updateListArray) => {
   try {
-    console.log("listId", `${endpoint}/lists/${listId}`);
+   
     const response = await fetch(`${endpoint}/lists/${listId}`, {
       method: "PUT",
       headers: {
@@ -12,6 +12,7 @@ export const modifyList = async (listId, updatedData) => {
     });
 
     if (response.ok) {
+      updateListArray(listId,updatedData);
       return true;
     } else {
       console.error("Failed to modify the list:", response);

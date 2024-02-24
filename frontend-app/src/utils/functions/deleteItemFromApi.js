@@ -7,11 +7,12 @@ const deleteItemFromApi = async (url) => {
   return response;
 };
 
-export const deleteList = async (listId) => {
+export const deleteList = async (listId,handleDelete) => {
   try {
     // Send a DELETE request to the backend
     const response = await deleteItemFromApi(`${endpoint}/lists/${listId}`);
     if (response.status === 200) {
+      handleDelete(listId);
       return true;
     } else {
       // Handle any unsuccessful response here
