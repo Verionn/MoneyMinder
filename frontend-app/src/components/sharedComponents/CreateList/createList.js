@@ -6,7 +6,7 @@ import { styles } from "./styles";
 import { useEffect, useState } from "react";
 import { PostNewList } from "../../../utils/functions/addDatasToApi";
 const CreateList = ({ show, setShow }) => {
-  const { isDarkMode } = useContextElements();
+  const { isDarkMode,appendNewElement } = useContextElements();
   const [listName, setListName] = useState("");
   const [description, setDescription] = useState("");
   const [canCreateList, setCanCreateList] = useState(false);
@@ -58,8 +58,7 @@ const CreateList = ({ show, setShow }) => {
   }, [listName, description]);
 
   const handleCreateNewList = async () => {
-    if (PostNewList(listName, description)) {
-      window.location.reload();
+    if (PostNewList(listName, description,appendNewElement)) {
       handleClose();
     } else {
       alert("Error creating a new list");

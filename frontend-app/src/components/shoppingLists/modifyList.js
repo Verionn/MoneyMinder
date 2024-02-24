@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { modifyList } from "../../utils/functions/modifyDatasInApi";
-
+import { useContextElements } from "../../utils/hooks/customHooks";
 const ModifyList = ({
   modifying,
   listID,
@@ -10,27 +10,32 @@ const ModifyList = ({
 }) => {
   const [editableListName, setEditableListName] = useState(listName);
   const [editableDescription, setEditableDescription] = useState(description);
+  const { modifyListArray } = useContextElements();
   const handleChange = (e) => {
     if (modifying === "description") setEditableDescription(e.target.value);
     if (modifying === "name") setEditableListName(e.target.value);
   };
 
-  const saveListName = () => {
+  const saveListName = async () => {
     if (
-      modifyList(
+      editableListName.length > 0 &&
+      editableListName.length < 50 &&
+      editableDescription.length < 300
+    ) {
+      const success = await modifyList(
         listID,
         {
           name: editableListName,
           description: editableDescription,
-        } &&
-          editableListName.lenght > 0 &&
-          editableDescription.lenght > 0 &&
-          editableListName.lenght < 50 &&
-          editableDescription.lenght < 250
-      )
-    ) {
-      window.location.reload();
-    } else alert("Error while modifying the list name");
+        },
+        modifyListArray
+      );
+      if (success) {
+      } else alert("Error while modifying the list name");
+    } else
+      alert(
+        "Error: Please ensure the name is 1-49 characters and the description is less than 300 characters."
+      );
     setDefault(-1);
   };
   const cancel = () => {
@@ -87,8 +92,12 @@ const ModifyList = ({
           type="text"
         />
       ) : null}
-      <button style={{ ...styles.saveButton }} onClick={saveListName}>Save</button>
-      <button style={{...styles.cancelButton}} onClick={cancel}>Cancel</button>
+      <button style={{ ...styles.saveButton }} onClick={saveListName}>
+        Save
+      </button>
+      <button style={{ ...styles.cancelButton }} onClick={cancel}>
+        Cancel
+      </button>
     </div>
   );
 };

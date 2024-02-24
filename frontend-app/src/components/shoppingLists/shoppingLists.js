@@ -20,11 +20,13 @@ const ShoppingLists = () => {
   const [isDeletingList, setIsDeletingList] = useState(-1);
   const [isModifyingName, setIsModifyingName] = useState(-1);
   const [isModifyingDescription, setIsModifyingDescription] = useState(-1);
+
   useEffect(() => {
-    if (data) {
+    if (data && data.lists) {
       updateListArray(data);
     }
   }, [data, updateListArray]);
+  useEffect(() => {}, [listArray]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -39,6 +41,11 @@ const ShoppingLists = () => {
   };
   const toglleDeleteList = (index) => {
     setIsDeletingList(index);
+  };
+  const toggleModifyIcon = (index) => {
+    setIsModifyingName(index);
+    setIsModifyingDescription(index);
+    toggleDescription(index);
   };
   return (
     <div className="listContainer">
@@ -67,7 +74,10 @@ const ShoppingLists = () => {
               </div>
             )}
             <div className="listIcons">
-              <EditIcon style={{ ...styles.icons }} />
+              <EditIcon
+                style={{ ...styles.icons }}
+                onClick={() => toggleModifyIcon(index)}
+              />
               <TrashIcon
                 style={{ ...styles.icons }}
                 onClick={() => toglleDeleteList(index)}
@@ -100,17 +110,17 @@ const ShoppingLists = () => {
               {isShowingDescription[index] &&
                 (isModifyingDescription === index ? (
                   <ModifyList
-                    modifying="description" 
+                    modifying="description"
                     listID={list.listId}
                     listName={list.name}
                     description={list.description}
-                    setDefault={setIsModifyingDescription} 
+                    setDefault={setIsModifyingDescription}
                   />
                 ) : (
                   <p
                     style={{ ...styles.listExpanded }}
                     className="listExpanded"
-                    onClick={() => setIsModifyingDescription(index)} 
+                    onClick={() => setIsModifyingDescription(index)}
                   >
                     {list.description || "No description provided."}
                   </p>
