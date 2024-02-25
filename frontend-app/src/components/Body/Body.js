@@ -4,8 +4,17 @@ import { appInfo, loginBtn, Credit } from "../../utils/datas/appInfo";
 import { useContextElements } from "../../utils/hooks/customHooks";
 import { Styles } from "./styles";
 import Section from "../sections/section";
+import { useEffect } from "react";
 const Body = () => {
-  const { isDarkMode } = useContextElements();
+  const { isDarkMode,handleResize } = useContextElements();
+
+  useEffect(() => {
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [handleResize]);
 
   const styles = Styles({ darkMode: isDarkMode });
 

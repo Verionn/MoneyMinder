@@ -15,10 +15,16 @@ export const ContextProvider = ({ children }) => {
     "home"
   );
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   const [listArray, setListArray] = useState({ lists: [] });
 
   const updateActiveSection = (sectionId) => {
     setActiveSection(sectionId);
+  };
+
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
   };
 
   const updateDarkMode = () => {
@@ -65,12 +71,14 @@ export const ContextProvider = ({ children }) => {
         isDarkMode,
         activeSection,
         listArray,
+        windowWidth,
         updateDarkMode,
         updateActiveSection,
         updateListArray,
         appendNewElement,
         handleDelete,
         modifyListArray,
+        handleResize,
       }}
     >
       {children}

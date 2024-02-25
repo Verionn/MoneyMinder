@@ -1,0 +1,50 @@
+.ItemContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+
+}
+
+.SelectList {
+  width: 150px;
+  height: 40px;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+ 
+  cursor: pointer;
+}
+
+.dropdownMenu{
+    height: 30px;
+    width: 100%;
+    font-size: larger;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    color:white
+}
+
+.dropdownMenu::-ms-expand {
+    display: none;
+  }
+
+  .dropdownMenu:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+  }
+
+  .dropdownMenu option {
+    background-color: white;
+    color: black; 
+    cursor: pointer;
+  }
