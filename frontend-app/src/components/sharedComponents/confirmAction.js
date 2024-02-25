@@ -2,7 +2,7 @@ import { CustomModal } from "./customModal/customModal";
 import React from "react";
 import { deleteList } from "../../utils/functions/deleteItemFromApi";
 import { useContextElements } from "../../utils/hooks/customHooks";
-export const ConfirmAction = ({ show, listName, setIsDeletingList,listId }) => {
+export const ConfirmAction = ({ show, listName, setIsDeletingList,listId,children="" }) => {
   const { handleDelete } = useContextElements();
   const handleClose = () => {
     setIsDeletingList(-1);
@@ -17,11 +17,11 @@ export const ConfirmAction = ({ show, listName, setIsDeletingList,listId }) => {
     <CustomModal
       show={show}
       onClose={handleClose}
-      ModalTitle={`Do you want to delete the list ${listName} ?`}
+      ModalTitle={`Do you want to delete  ${listName} ?`}
       confirmButtonColor="red"
       ModalConfirmationButton="Delete"
       functionTOCall={handleDeleteList}
       canConfirm={true}
-    ></CustomModal>
+    >{children}</CustomModal>
   );
 };

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { endpoint } from "../datas/serverInfo";
 import { GetDatasFromApi } from "../functions/getDatasFromApi";
+
 export function setFonSize(tag, isGoodTag) {
   if (!isGoodTag) return "inherit";
 
@@ -82,5 +83,15 @@ export const GetInfosFromPurchasedItemsList = ({ listID, operationType }) => {
     return price.toFixed(2);
   }
   if (operationType === "len") return data?.purchasedItems?.length;
+  return null;
+};
+
+export const GetInfosFromList = ({ listID, operationType }) => {
+  const apiUrl = `${endpoint}/lists/${listID}`;
+  const { data } = GetDatasFromApi({ apiUrl: apiUrl });
+  if (operationType === "name") {
+    return data?.name;
+  }
+  if (operationType === "description") return data?.description;
   return null;
 };

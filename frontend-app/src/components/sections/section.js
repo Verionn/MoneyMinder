@@ -6,7 +6,7 @@ const Section = ({ section }) => {
   return (
     <div className="sectionContainer">
         <SectionHeader />
-        <DisplayRoutes routes={pageSections} />
+        <DisplayRoutes routes={pageSections}  />
     </div>
   );
 };

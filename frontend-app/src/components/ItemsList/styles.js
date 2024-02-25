@@ -3,4 +3,8 @@ export const Styles = ({ darkMode, windowWidth }) => ({
     flexDirection: windowWidth > 900 ? "row" : "column",
     alignItems: windowWidth > 900 ? "flex-start" : "center",
   },
+
+  ItemBox: {
+    padding: 10,
+  },
 });

@@ -3,6 +3,7 @@ import { useContextElements } from "../../utils/hooks/customHooks";
 import { GetDatasFromApi } from "../../utils/functions/getDatasFromApi";
 import { endpoint } from "../../utils/datas/serverInfo";
 import { useEffect, useState } from "react";
+import { deleteItem } from "../../utils/functions/deleteItemFromApi";
 import "./ItemList.css";
 export const NavigateToSelectedList = ({ listId }) => {
   const { listArray, updateListArray } = useContextElements();
@@ -37,7 +38,11 @@ export const NavigateToSelectedList = ({ listId }) => {
   if (error) return <div>Error: {error.message}</div>;
   return (
     <div className="SelectList">
-      <select value={selectedValue} onChange={handleChange} className="dropdownMenu">
+      <select
+        value={selectedValue}
+        onChange={handleChange}
+        className="dropdownMenu"
+      >
         {listArray.lists &&
           listArray.lists.map((list, index) => (
             <option key={index} value={list.listId}>
@@ -47,4 +52,71 @@ export const NavigateToSelectedList = ({ listId }) => {
       </select>
     </div>
   );
+};
+
+export const GetListOfSelectedItems = (selectedItems, data) => {
+  let items = [];
+  selectedItems.items.forEach((itemId) => {
+    data.items.forEach((item) => {
+      if (item.itemId === itemId) {
+        items.push(item);
+      }
+    });
+  });
+
+  return (
+    <div>
+      {items.map((item, index) => (
+        <div key={`item-${item.itemId}`}>
+          <p>{item.name}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export const handleDeleteItems = (setIsDeletting, selectedItems) => {
+  if (selectedItems.items.size > 0) {
+    setIsDeletting(1);
+  } else alert("No items selected");
+};
+
+export const handleAllDelete = (
+  listId,
+  selectedItems,
+  data,
+  setSelectedItems,
+  setIsDeletting
+) => {
+  let items = [];
+  selectedItems.items.forEach((itemId) => {
+    data.items.forEach((item) => {
+      if (item.itemId === itemId) {
+        items.push(item);
+      }
+    });
+  });
+  let purchasedItems = [];
+  selectedItems.purchasedItems.forEach((itemId) => {
+    purchasedItems.items.forEach((item) => {
+      if (item.itemId === itemId) {
+        purchasedItems.push(item);
+      }
+    });
+  });
+  items.forEach((item) => {
+    handleDelete(item.itemId, listId);
+  });
+  purchasedItems.forEach((item) => {
+    handleDelete(item.itemId, listId);
+  });
+  setSelectedItems({
+    items: new Set(),
+    purchasedItems: new Set(),
+  });
+  setIsDeletting(-1);
+};
+
+export const handleDelete = (itemId, listId) => {
+  deleteItem(itemId, listId);
 };
