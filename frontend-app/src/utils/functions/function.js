@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-
+import { endpoint } from "../datas/serverInfo";
+import { GetDatasFromApi } from "../functions/getDatasFromApi";
 export function setFonSize(tag, isGoodTag) {
   if (!isGoodTag) return "inherit";
 
@@ -47,13 +48,39 @@ export const useLocalStorageState = (key, initialValue) => {
 
 export function getActiveTitle(activeSection, sectionList) {
   let title = "No Title";
- sectionList.forEach((section) => {
- 
+  sectionList.forEach((section) => {
     if (section.id === activeSection) {
-      title =  section.title;
+      title = section.title;
     }
   });
-  
-  return title;
 
+  return title;
 }
+
+export const GetInfosFromItemList = ({ listID, operationType }) => {
+  const apiUrl = `${endpoint}/lists/${listID}/items`;
+  const { data } = GetDatasFromApi({ apiUrl: apiUrl });
+  if (operationType === "price") {
+    let price = 0;
+    data?.items?.forEach((item) => {
+      price += item.price;
+    });
+    return price.toFixed(2);
+  }
+  if (operationType === "len") return data?.items?.length;
+  return null;
+};
+
+export const GetInfosFromPurchasedItemsList = ({ listID, operationType }) => {
+  const apiUrl = `${endpoint}/purchasedItems/lists/${listID}`;
+  const { data } = GetDatasFromApi({ apiUrl: apiUrl });
+  if (operationType === "price") {
+    let price = 0;
+    data?.purchasedItems?.forEach((item) => {
+      price += item.price;
+    });
+    return price.toFixed(2);
+  }
+  if (operationType === "len") return data?.purchasedItems?.length;
+  return null;
+};
