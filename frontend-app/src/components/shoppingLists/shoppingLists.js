@@ -17,6 +17,7 @@ import {
   GetInfosFromPurchasedItemsList,
 } from "../../utils/functions/function";
 import { SingleListStats } from "./singleListStats";
+import { useNavigate } from "react-router-dom";
 
 const ShoppingLists = () => {
   const { listArray, updateListArray, isDarkMode } = useContextElements();
@@ -26,6 +27,7 @@ const ShoppingLists = () => {
   const [isDeletingList, setIsDeletingList] = useState(-1);
   const [isModifyingName, setIsModifyingName] = useState(-1);
   const [isModifyingDescription, setIsModifyingDescription] = useState(-1);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (data && data.lists) {
@@ -54,6 +56,11 @@ const ShoppingLists = () => {
     setIsModifyingDescription(index);
     toggleDescription(index);
   };
+
+  const handleListClick = (listId) => {
+    navigate(`/shopping-list/${listId}`);
+  };
+
   return (
     <div className="listContainer">
       {listArray?.lists?.map((list, index) => (
@@ -61,6 +68,7 @@ const ShoppingLists = () => {
           key={`list-${list.listId}`}
           className="singleList"
           style={{ ...styles.singleList }}
+          onClick={() => handleListClick(list.listId)}
         >
           <div className="singleListHeader">
             {isModifyingName === index ? (
