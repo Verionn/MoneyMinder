@@ -1,5 +1,5 @@
 import { useContextElements } from "../../utils/hooks/customHooks";
-import { GetListsData } from "../../utils/functions/getDatasFromApi";
+import { GetDatasFromApi } from "../../utils/functions/getDatasFromApi";
 import { endpoint } from "../../utils/datas/serverInfo";
 import { useEffect } from "react";
 import "./shoppingLists.css";
@@ -12,10 +12,16 @@ import {
 } from "../sharedComponents/icons/svgIcons";
 import { ConfirmAction } from "../sharedComponents/confirmAction";
 import ModifyList from "./modifyList";
+import {
+  GetInfosFromItemList,
+  GetInfosFromPurchasedItemsList,
+} from "../../utils/functions/function";
+import { SingleListStats } from "./singleListStats";
+
 const ShoppingLists = () => {
   const { listArray, updateListArray, isDarkMode } = useContextElements();
   const apiURL = `${endpoint}/lists`;
-  const { data, loading, error } = GetListsData({ apiUrl: apiURL });
+  const { data, loading, error } = GetDatasFromApi({ apiUrl: apiURL });
   const [isShowingDescription, setIsShowingDescription] = useState([]);
   const [isDeletingList, setIsDeletingList] = useState(-1);
   const [isModifyingName, setIsModifyingName] = useState(-1);
@@ -39,6 +45,7 @@ const ShoppingLists = () => {
       return newState;
     });
   };
+
   const toglleDeleteList = (index) => {
     setIsDeletingList(index);
   };
@@ -92,10 +99,30 @@ const ShoppingLists = () => {
           </div>
           <div className="singleListBody">
             <div className="SingleListStats">
-              <p>{`Items Boughts : 1/3`}</p>
-              <p>{`Total Price : 12$`}</p>
+              <p>
+                {`Items Boughts : `}
+                <GetInfosFromPurchasedItemsList
+                  listID={list.listId}
+                  operationType={"len"}
+                />
+                {" / "}
+                <GetInfosFromItemList
+                  listID={list.listId}
+                  operationType={"len"}
+                />
+              </p>
+              <p>
+                {`Total Price : `}{" "}
+                <GetInfosFromItemList
+                  listID={list.listId}
+                  operationType={"price"}
+                />{" "}
+                $
+              </p>
             </div>
-            <div className="ListProgessionBar">Progress Bar</div>
+            <div className="ListProgessionBar">
+              <SingleListStats listID={list.listId} />
+            </div>
             <div
               className={`ListDescription ${
                 isShowingDescription[index] ? "active" : ""
