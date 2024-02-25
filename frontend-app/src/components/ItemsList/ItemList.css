@@ -1,13 +1,12 @@
-.ItemContainer{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    height: 100%;
-    margin-top: 20px;
-
+.ItemContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
 }
 
 .SelectList {
@@ -17,34 +16,172 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
- 
+
   cursor: pointer;
 }
 
-.dropdownMenu{
-    height: 30px;
-    width: 100%;
-    font-size: larger;
-    border-radius: 8px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--secondary-color);
-    color:white
+.dropdownMenu {
+  height: 30px;
+  width: 100%;
+  font-size: larger;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--secondary-color);
+  color: white;
 }
 
 .dropdownMenu::-ms-expand {
-    display: none;
-  }
+  display: none;
+}
 
-  .dropdownMenu:-moz-focusring {
-    color: transparent;
-    text-shadow: 0 0 0 #000;
-  }
+.dropdownMenu:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
 
-  .dropdownMenu option {
-    background-color: white;
-    color: black; 
-    cursor: pointer;
-  }
+.dropdownMenu option {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+.ItemBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--secondary-color);
+}
+
+.Items {
+  width: 100%;
+}
+
+.displayItems {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--secondary-color);
+  padding: 10px;
+  gap: 10px;
+}
+
+.Col {
+  border: 1px solid var(--secondary-color);
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.Col1 {
+  border: 1px solid var(--secondary-color);
+  display: flex;
+  width: 20%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.HeaderRow {
+  font-weight: bold;
+  border-bottom: 3px solid;
+}
+.itemsFirstHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid red;
+}
+
+.Title {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+
+
+.closeIcon {
+  font-size: 30px;
+
+  cursor: pointer;
+  width: 35px;
+}
+
+.allItems {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 40vh;
+  border: 1px solid blue;
+  overflow-x: hidden;
+}
+
+.ButtonsItems {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--secondary-color);
+  padding: 10px 20px 10px 20px;
+  box-sizing: border-box;
+}
+
+.ButtonItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 40px;
+  border-radius: 8px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.checkButton {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.deleteButton {
+  background-color: red;
+  color: white;
+}
+
+.TotalPrices {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+.RowPrices{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+ 
+}
+
+.RowTotalPrice{
+  font-size: larger;
+}

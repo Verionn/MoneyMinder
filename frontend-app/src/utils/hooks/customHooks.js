@@ -18,6 +18,7 @@ export const useContextElements = () => {
   
     useEffect(() => {
       const apiUrl = `${endpoint}/lists/${listID}/items`;
+      console.log(apiUrl);
       const fetchData = async () => {
         setLoading(true);
         try {
@@ -85,3 +86,27 @@ export const useContextElements = () => {
   
     return { result, loading, error };
   };
+
+
+ // Inside customHooks.js or wherever your reducer is defined
+export const selectedItemsReducer = (state, action) => {
+  switch (action.type) {
+    case 'SELECT_ITEM':
+      const newSelected = new Set(state[action.payload.isPurchased ? 'purchasedItems' : 'items']);
+      newSelected.add(action.payload.itemId);
+      return {
+        ...state,
+        [action.payload.isPurchased ? 'purchasedItems' : 'items']: newSelected,
+      };
+    case 'DESELECT_ITEM':
+      const newDeselected = new Set(state[action.payload.isPurchased ? 'purchasedItems' : 'items']);
+      newDeselected.delete(action.payload.itemId);
+      return {
+        ...state,
+        [action.payload.isPurchased ? 'purchasedItems' : 'items']: newDeselected,
+      };
+    // ... other cases ...
+    default:
+      return state;
+  }
+};
