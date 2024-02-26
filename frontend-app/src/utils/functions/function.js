@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { endpoint } from "../datas/serverInfo";
 import { GetDatasFromApi } from "../functions/getDatasFromApi";
 
+
 export function setFonSize(tag, isGoodTag) {
   if (!isGoodTag) return "inherit";
 
@@ -95,3 +96,27 @@ export const GetInfosFromList = ({ listID, operationType }) => {
   if (operationType === "description") return data?.description;
   return null;
 };
+
+/*
+export const CreateNotification = (type, message) => {
+  switch (type) {
+    case "info":
+      NotificationManager.info(message);
+      break;
+    case "success":
+      console.log("success");
+      NotificationManager.success(message);
+
+      break;
+    case "warning":
+      NotificationManager.warning(message, "Close after 3000ms", 3000);
+      break;
+    case "error":
+      NotificationManager.error(message, "Close after 5000ms", 5000, () => {
+        alert("callback");
+      });
+      break;
+    default:
+      break;
+  }
+};*/
