@@ -18,7 +18,7 @@ const ItemRow = ({ item, onSelect, isSelected }) => {
         {item.amount}
       </Col>
       <Col xs={2} className="Col">
-        {item.price}
+        {item.price*item.amount}
       </Col>
       <Col xs={2} className="Col">
         {item.categoryId}

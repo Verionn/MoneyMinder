@@ -11,9 +11,20 @@ import ItemListHeader from "./ItemListHeader";
 import ItemRow from "./itemRow";
 import { CustomModal } from "../sharedComponents/customModal/customModal";
 
-import { GetListOfSelectedItems,handleDeleteItems,handleAllDelete } from "./ItemListHelper";
+import {
+  GetListOfSelectedItems,
+  handleDeleteItems,
+  handleAllDelete,
+  handleIsChecking,
+} from "./ItemListHelper";
 const ItemBox = ({ listId }) => {
-  const { windowWidth, isDarkMode } = useContextElements();
+  const {
+    windowWidth,
+    isDarkMode,
+    itemsArray,
+    handleDeleteItemsInItemsArray,
+    updateItemsArray,
+  } = useContextElements();
   const styles = Styles({ darkMode: isDarkMode, windowWidth });
   const apiURL = `${endpoint}/lists/${listId}/items`;
   const apiUlrPurchasedItems = `${endpoint}/purchasedItems/lists/${listId}`;
@@ -29,7 +40,7 @@ const ItemBox = ({ listId }) => {
     navigation("/shopping-list");
   };
   const [isDeletting, setIsDeletting] = useState(-1);
-
+  const [isChecking, setIsChecking] = useState(-1);
   const [selectedItems, setSelectedItems] = useState({
     items: new Set(),
     purchasedItems: new Set(),
@@ -56,6 +67,15 @@ const ItemBox = ({ listId }) => {
     const key = isPurchased ? "purchasedItems" : "items";
     return selectedItems[key].has(itemId);
   };
+
+  useEffect(() => {
+    if (data?.items && !loading) {
+      updateItemsArray(data);
+    }
+  }, [data, loading, updateItemsArray]);
+  useEffect(() => {
+    console.log("itemsArray", itemsArray);
+  }, [itemsArray]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -91,17 +111,20 @@ const ItemBox = ({ listId }) => {
           </Col>
         </Row>
         <div className="allItems">
-          {data.items &&
-            data.items.map((item, index) => (
-              <ItemRow
-                key={`Item-${item.itemId}`}
-                item={item}
-                onSelect={(itemId, isSelected) =>
-                  handleSelect(itemId, isSelected, false)
-                }
-                isSelected={isItemSelected(item.itemId, false)}
-              />
-            ))}
+          {itemsArray.items &&
+            itemsArray.items.map(
+              (item, index) =>
+                item.listId === Number(listId) && (
+                  <ItemRow
+                    key={`Item-${item.itemId}`}
+                    item={item}
+                    onSelect={(itemId, isSelected) =>
+                      handleSelect(itemId, isSelected, false)
+                    }
+                    isSelected={isItemSelected(item.itemId, false)}
+                  />
+                )
+            )}
 
           {purchasedItems.items &&
             purchasedItems.items.map((item, index) => (
@@ -117,14 +140,17 @@ const ItemBox = ({ listId }) => {
         </div>
         <Row className="ButtonsItems">
           <Col xs={6} className="">
-            <button className="ButtonItem checkButton">
+            <button
+              className="ButtonItem checkButton"
+              onClick={() => handleIsChecking(setIsChecking, selectedItems)}
+            >
               Check selected Items
             </button>
           </Col>
           <Col xs={6} className="">
             <button
               className="ButtonItem deleteButton"
-              onClick={()=>handleDeleteItems(setIsDeletting,selectedItems)}
+              onClick={() => handleDeleteItems(setIsDeletting, selectedItems)}
             >
               Delete selected Items
             </button>
@@ -139,7 +165,29 @@ const ItemBox = ({ listId }) => {
           ModalTitle={`Do you want to delete selected items ?`}
           confirmButtonColor="red"
           ModalConfirmationButton="Delete"
-          functionTOCall={()=>handleAllDelete(listId,selectedItems,data,setSelectedItems,setIsDeletting)}
+          functionTOCall={() =>
+            handleAllDelete(
+              listId,
+              selectedItems,
+              data,
+              setSelectedItems,
+              setIsDeletting,
+              handleDeleteItemsInItemsArray
+            )
+          }
+          canConfirm={true}
+        >
+          {GetListOfSelectedItems(selectedItems, data)}
+        </CustomModal>
+      )}
+      {isChecking === 1 && (
+        <CustomModal
+          show={true}
+          onClose={() => setIsChecking(-1)}
+          ModalTitle={`Do you want to selected selected items ?`}
+          confirmButtonColor="var(--secondary-color)"
+          ModalConfirmationButton="check"
+          functionTOCall={console.log("isChecking", isChecking)}
           canConfirm={true}
         >
           {GetListOfSelectedItems(selectedItems, data)}

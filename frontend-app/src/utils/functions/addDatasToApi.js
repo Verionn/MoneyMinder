@@ -8,7 +8,7 @@ export const PostNewList = async (listName, description, appendNewElement) => {
       body: JSON.stringify({ name: listName, description: description }),
     });
     const newElement = await response.json();
-    console.log("newElement", newElement);
+    
     appendNewElement(newElement);
     if (!response.ok) {
       throw new Error("Failed to create a new list");
@@ -19,4 +19,30 @@ export const PostNewList = async (listName, description, appendNewElement) => {
     console.error("Error creating a new list:", error);
     return false;
   }
+};
+
+
+export  const PostNewItem = async (newItem, ItemsUrl, appendNewElement,listType) => {
+  try {
+   
+    const response = await fetch(ItemsUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newItem),
+    });
+    if (!response.ok) {
+      const responseBody = await response.json();
+      console.error("Failed to add a new item:", responseBody);
+      throw new Error("Failed to add a new item");
+    }
+    const newElement = await response.json();
+    if(listType==='purchasedItems'){}
+    else appendNewElement(newElement);
+  } catch (error) {
+    console.error("Error adding a new item:", error);
+    return false;
+  }
+  return true;
 };

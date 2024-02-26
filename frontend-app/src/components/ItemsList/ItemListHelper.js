@@ -81,42 +81,49 @@ export const handleDeleteItems = (setIsDeletting, selectedItems) => {
   } else alert("No items selected");
 };
 
-export const handleAllDelete = (
+export const handleAllDelete = async (
   listId,
   selectedItems,
   data,
   setSelectedItems,
-  setIsDeletting
+  setIsDeletting,
+  handleDeleteInItemArray
 ) => {
-  let items = [];
-  selectedItems.items.forEach((itemId) => {
-    data.items.forEach((item) => {
-      if (item.itemId === itemId) {
-        items.push(item);
+
+  let numberOfDeletedItems = 0;
+  for (const itemId of selectedItems.items) {
+    const item = data.items.find((item) => item.itemId === itemId);
+    if (item) {
+      try {
+        const success = await handleDelete(item.itemId, listId);
+        if (success) {
+          numberOfDeletedItems++;
+          const succed = await handleDeleteInItemArray(listId, item.itemId);
+          if (succed) console.log("item deleting ", item.ItemId);
+        }
+      } catch (err) {
+        console.error("Error deleting item:", item.itemId, err);
       }
-    });
-  });
-  let purchasedItems = [];
-  selectedItems.purchasedItems.forEach((itemId) => {
-    purchasedItems.items.forEach((item) => {
-      if (item.itemId === itemId) {
-        purchasedItems.push(item);
-      }
-    });
-  });
-  items.forEach((item) => {
-    handleDelete(item.itemId, listId);
-  });
-  purchasedItems.forEach((item) => {
-    handleDelete(item.itemId, listId);
-  });
+    }
+  }
   setSelectedItems({
     items: new Set(),
     purchasedItems: new Set(),
   });
+
   setIsDeletting(-1);
+  if (numberOfDeletedItems >= 2) window.location.reload();
 };
 
-export const handleDelete = (itemId, listId) => {
-  deleteItem(itemId, listId);
+export const handleDelete = async (itemId, listId) => {
+  const success = await deleteItem(itemId, listId);
+  return success;
 };
+
+
+export const handleIsChecking=(setIsChecking,selectedItems)=>{
+  if (selectedItems.items.size > 0) {
+    setIsChecking(1);
+  } else alert("No items selected");
+};
+

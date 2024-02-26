@@ -3,10 +3,7 @@ import React, { useState } from "react";
 import { useContextElements } from "../../utils/hooks/customHooks";
 import { getActiveTitle } from "../../utils/functions/function";
 import { pageSections } from "../../utils/datas/appInfo";
-import { ReactComponent as PlusIcon } from "../../utils/assets/SVG/bx-plus.svg";
-import { ReactComponent as MenuIcon } from "../../utils/assets/SVG/bx-menu.svg";
-import { ReactComponent as ContentIcon } from "../../utils/assets/SVG/bxs-book-content.svg";
-import { ReactComponent as ChevronDownSquareIcon } from "../../utils/assets/SVG/bxs-chevron-down-square.svg";
+import { PlusIcon, MenuIcon, ContentIcon, ChevronDownSquareIcon } from "../sharedComponents/icons/svgIcons";
 import { Styles } from "./styles";
 import CreateList  from "../sharedComponents/CreateList/createList";
 const SectionHeder = () => {
