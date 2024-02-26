@@ -50,7 +50,6 @@ const GetDatasFromItems = ({ listID, operation, onClose }) => {
 
     for (let i = 0; i < newlySelectedItems.length; i++) {
       const currentItem = newlySelectedItems[i];
-
       deleteItem(currentItem);
     }
     setSelectedItems((prevSelectedItems) => [

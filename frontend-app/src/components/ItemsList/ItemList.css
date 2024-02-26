@@ -185,3 +185,14 @@
 .RowTotalPrice{
   font-size: larger;
 }
+
+.AddNewItemBtn{
+  text-align: center;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  fill: white;
+  background-color: var(--primary-color);
+  cursor: pointer;
+  border-color: var(--primary-color);
+}

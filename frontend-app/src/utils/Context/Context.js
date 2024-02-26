@@ -18,6 +18,7 @@ export const ContextProvider = ({ children }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const [listArray, setListArray] = useState({ lists: [] });
+  const [itemsArray, setItemsArray] = useState({ items: [] });
 
   const updateActiveSection = (sectionId) => {
     setActiveSection(sectionId);
@@ -30,18 +31,18 @@ export const ContextProvider = ({ children }) => {
   const updateDarkMode = () => {
     setIsDarkMode((prevDarkMode) => !prevDarkMode);
   };
-  
+
   const updateListArray = useCallback((datas) => {
     setListArray(datas);
   }, []);
-  const modifyListArray = useCallback((listId,updatedData) => {
+
+  const modifyListArray = useCallback((listId, updatedData) => {
     setListArray((prevState) => {
       const newListArray = prevState.lists.map((list) => {
         if (list.listId === listId) {
-         
           return { ...list, ...updatedData };
         }
-        return list; 
+        return list;
       });
       return {
         ...prevState,
@@ -60,10 +61,42 @@ export const ContextProvider = ({ children }) => {
   const handleDelete = (listId) => {
     setListArray((prevState) => ({
       ...prevState,
-      lists: prevState.lists.filter((list) => list.listId !== listId)
+      lists: prevState.lists.filter((list) => list.listId !== listId),
     }));
   };
-  
+
+  const handleDeleteItemsInItemsArray = async (listId, itemId) => {
+    const updatedItems = itemsArray.items.filter(
+      (item) =>
+        !(
+          Number(item.itemId) === Number(itemId) &&
+          Number(item.listId) === Number(listId)
+        )
+    );
+    setItemsArray({ items: updatedItems });
+  };
+
+  const updateItemsArray = useCallback((datas) => {
+    setItemsArray(datas);
+  }, []);
+
+  const handleAddItem = useCallback((item) => {
+    const { itemId, listId } = item;
+    const existingItemIndex = itemsArray.items.findIndex(
+      (existingItem) =>
+        existingItem.itemId === itemId && existingItem.listId === Number(listId)
+    );
+    if (existingItemIndex !== -1) {
+      const updatedItems = [...itemsArray.items];
+      updatedItems[existingItemIndex] = item;
+      setItemsArray({ items: updatedItems });
+    } else {
+      setItemsArray((prevState) => ({
+        ...prevState,
+        items: [...prevState.items, item],
+      }));
+    }
+  }, [itemsArray.items]);
 
   return (
     <ContextElements.Provider
@@ -72,6 +105,7 @@ export const ContextProvider = ({ children }) => {
         activeSection,
         listArray,
         windowWidth,
+        itemsArray,
         updateDarkMode,
         updateActiveSection,
         updateListArray,
@@ -79,6 +113,9 @@ export const ContextProvider = ({ children }) => {
         handleDelete,
         modifyListArray,
         handleResize,
+        handleDeleteItemsInItemsArray,
+        handleAddItem,
+        updateItemsArray,
       }}
     >
       {children}

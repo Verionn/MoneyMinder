@@ -64,7 +64,7 @@ export const GetInfosFromItemList = ({ listID, operationType }) => {
   if (operationType === "price") {
     let price = 0;
     data?.items?.forEach((item) => {
-      price += item.price;
+      price += item.price*item.amount;
     });
     return price.toFixed(2);
   }
@@ -78,7 +78,7 @@ export const GetInfosFromPurchasedItemsList = ({ listID, operationType }) => {
   if (operationType === "price") {
     let price = 0;
     data?.purchasedItems?.forEach((item) => {
-      price += item.price;
+      price += item.price*item.amount;
     });
     return price.toFixed(2);
   }
