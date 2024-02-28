@@ -19,6 +19,7 @@ export const ContextProvider = ({ children }) => {
 
   const [listArray, setListArray] = useState({ lists: [] });
   const [itemsArray, setItemsArray] = useState({ items: [] });
+  const [purchasedItemsArray, setPurchasedItemsArray] = useState({purchasedItems: []});
 
   const updateActiveSection = (sectionId) => {
     setActiveSection(sectionId);
@@ -98,6 +99,42 @@ export const ContextProvider = ({ children }) => {
     }
   }, [itemsArray.items]);
 
+
+  //purchase items
+    const handleDeleteItemsInPurchasedItems = async (listId, itemId) => {
+    const updatedItems = itemsArray.items.filter(
+      (item) =>
+        !(
+          Number(item.itemId) === Number(itemId) &&
+          Number(item.listId) === Number(listId)
+        )
+    );
+    setPurchasedItemsArray({ items: updatedItems });
+  };
+
+  const updatePurchasedItemsArray = useCallback((datas) => {
+    setPurchasedItemsArray(datas);
+  }, []);
+
+  const handleAddPurchasedItem = useCallback((item) => {
+    const { itemId, listId } = item;
+    const existingItemIndex = purchasedItemsArray.purchasedItems.findIndex(
+      (existingItem) =>
+        existingItem.itemId === itemId && existingItem.listId === Number(listId)
+    );
+    if (existingItemIndex !== -1) {
+      const updatedItems = [...purchasedItemsArray.purchasedItems];
+      updatedItems[existingItemIndex] = item;
+      setPurchasedItemsArray({ purchasedItems: updatedItems });
+    } else {
+      setPurchasedItemsArray((prevState) => ({
+        ...prevState,
+        purchasedItems: [...prevState.purchasedItems, item],
+      }));
+    }
+  }, [purchasedItemsArray.purchasedItems]);
+
+
   return (
     <ContextElements.Provider
       value={{
@@ -106,6 +143,7 @@ export const ContextProvider = ({ children }) => {
         listArray,
         windowWidth,
         itemsArray,
+        purchasedItemsArray,
         updateDarkMode,
         updateActiveSection,
         updateListArray,
@@ -116,6 +154,9 @@ export const ContextProvider = ({ children }) => {
         handleDeleteItemsInItemsArray,
         handleAddItem,
         updateItemsArray,
+        handleDeleteItemsInPurchasedItems,
+        handleAddPurchasedItem,
+        updatePurchasedItemsArray,
       }}
     >
       {children}

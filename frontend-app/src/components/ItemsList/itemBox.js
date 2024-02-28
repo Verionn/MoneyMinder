@@ -12,18 +12,22 @@ import ItemRow from "./itemRow";
 import { CustomModal } from "../sharedComponents/customModal/customModal";
 
 import {
-  GetListOfSelectedItems,
-  handleDeleteItems,
-  handleAllDelete,
-  handleIsChecking,
+  DisplaySelectedItems,
+  initiateItemsDeletion,
+  deleteSelectedItems,
+  initiateItemsCheck,
+  checkAndProcessPurchasedItems,
 } from "./ItemListHelper";
 const ItemBox = ({ listId }) => {
   const {
     windowWidth,
     isDarkMode,
     itemsArray,
+    purchasedItemsArray,  
     handleDeleteItemsInItemsArray,
     updateItemsArray,
+    handleAddPurchasedItem,
+    updatePurchasedItemsArray,
   } = useContextElements();
   const styles = Styles({ darkMode: isDarkMode, windowWidth });
   const apiURL = `${endpoint}/lists/${listId}/items`;
@@ -34,6 +38,7 @@ const ItemBox = ({ listId }) => {
     loading: loadingPurchasedItems,
     error: errorPurchasedItems,
   } = GetDatasFromApi({ apiUrl: apiUlrPurchasedItems });
+ 
   const navigation = useNavigate();
   useEffect(() => {}, [windowWidth, isDarkMode]);
   const handleCloseItemLists = () => {
@@ -72,10 +77,13 @@ const ItemBox = ({ listId }) => {
     if (data?.items && !loading) {
       updateItemsArray(data);
     }
-  }, [data, loading, updateItemsArray]);
+    if(purchasedItems?.purchasedItems && !loadingPurchasedItems){
+      updatePurchasedItemsArray(purchasedItems);
+    }
+  }, [data, loading, updateItemsArray, purchasedItems, loadingPurchasedItems, updatePurchasedItemsArray]);
   useEffect(() => {
     console.log("itemsArray", itemsArray);
-  }, [itemsArray]);
+  }, [itemsArray, purchasedItemsArray]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -125,9 +133,10 @@ const ItemBox = ({ listId }) => {
                   />
                 )
             )}
+            <div className="PurchasedItemsTitle">Purchased Items</div>
 
-          {purchasedItems.items &&
-            purchasedItems.items.map((item, index) => (
+          {purchasedItemsArray.purchasedItems &&
+            purchasedItemsArray.purchasedItems.map((item, index) => (
               <ItemRow
                 key={`purchasedItem-${item.itemId}`}
                 item={item}
@@ -142,7 +151,7 @@ const ItemBox = ({ listId }) => {
           <Col xs={6} className="">
             <button
               className="ButtonItem checkButton"
-              onClick={() => handleIsChecking(setIsChecking, selectedItems)}
+              onClick={() => initiateItemsCheck(setIsChecking, selectedItems)}
             >
               Check selected Items
             </button>
@@ -150,7 +159,7 @@ const ItemBox = ({ listId }) => {
           <Col xs={6} className="">
             <button
               className="ButtonItem deleteButton"
-              onClick={() => handleDeleteItems(setIsDeletting, selectedItems)}
+              onClick={() => initiateItemsDeletion(setIsDeletting, selectedItems)}
             >
               Delete selected Items
             </button>
@@ -166,7 +175,7 @@ const ItemBox = ({ listId }) => {
           confirmButtonColor="red"
           ModalConfirmationButton="Delete"
           functionTOCall={() =>
-            handleAllDelete(
+            deleteSelectedItems(
               listId,
               selectedItems,
               data,
@@ -177,7 +186,7 @@ const ItemBox = ({ listId }) => {
           }
           canConfirm={true}
         >
-          {GetListOfSelectedItems(selectedItems, data)}
+          {DisplaySelectedItems(selectedItems, data)}
         </CustomModal>
       )}
       {isChecking === 1 && (
@@ -187,10 +196,20 @@ const ItemBox = ({ listId }) => {
           ModalTitle={`Do you want to selected selected items ?`}
           confirmButtonColor="var(--secondary-color)"
           ModalConfirmationButton="check"
-          functionTOCall={console.log("isChecking", isChecking)}
+          functionTOCall={() =>
+            checkAndProcessPurchasedItems(
+              setIsChecking,
+              selectedItems,
+              setSelectedItems,
+              data,
+              listId,
+              handleAddPurchasedItem,
+              handleDeleteItemsInItemsArray,
+            )
+          }
           canConfirm={true}
         >
-          {GetListOfSelectedItems(selectedItems, data)}
+          {DisplaySelectedItems(selectedItems, data)}
         </CustomModal>
       )}
     </div>
