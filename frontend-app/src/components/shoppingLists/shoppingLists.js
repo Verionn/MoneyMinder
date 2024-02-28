@@ -28,6 +28,7 @@ const ShoppingLists = () => {
   const [isModifyingName, setIsModifyingName] = useState(-1);
   const [isModifyingDescription, setIsModifyingDescription] = useState(-1);
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     if (data && data.lists) {
@@ -116,7 +117,7 @@ const ShoppingLists = () => {
                 {" / "}
                 <GetInfosFromItemList
                   listID={list.listId}
-                  operationType={"len"}
+                  operationType={"itemsCount"}
                 />
               </p>
               <p>

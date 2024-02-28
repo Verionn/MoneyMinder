@@ -18,7 +18,8 @@ export const SingleListStats = ({ listID }) => {
 
   if (itemListLoading || purchasedItemListLoading) return <div>Loading...</div>;
   if (itemListError || purchasedItemListError) return <div>Error occurred</div>;
-  const procent = (purchasedItemListLength / itemListLength) * 100;
+  const procent = (purchasedItemListLength / (itemListLength+purchasedItemListLength)) * 100;
+  console.log(purchasedItemListLength, itemListLength, procent);
   if (procent === 0)
     return <ProgressBar progress={0} color="var(--secondary-color)" />;
   return (

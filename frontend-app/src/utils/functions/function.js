@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { endpoint } from "../datas/serverInfo";
 import { GetDatasFromApi } from "../functions/getDatasFromApi";
-
+import { useGetInfosFromPurchasedItemsList } from "../hooks/customHooks";
 
 export function setFonSize(tag, isGoodTag) {
   if (!isGoodTag) return "inherit";
@@ -60,6 +60,12 @@ export function getActiveTitle(activeSection, sectionList) {
 }
 
 export const GetInfosFromItemList = ({ listID, operationType }) => {
+  const {
+    result: purchasedItemListLength,
+    loading: purchasedItemListLoading,
+    error: purchasedItemListError,
+  } = useGetInfosFromPurchasedItemsList({ listID, operationType: "len" });
+
   const apiUrl = `${endpoint}/lists/${listID}/items`;
   const { data } = GetDatasFromApi({ apiUrl: apiUrl });
   if (operationType === "price") {
@@ -70,6 +76,11 @@ export const GetInfosFromItemList = ({ listID, operationType }) => {
     return price.toFixed(2);
   }
   if (operationType === "len") return data?.items?.length;
+  if(operationType === "itemsCount"){
+    if(purchasedItemListLoading) return null;
+    if(purchasedItemListError) return null;
+    return data?.items?.length + purchasedItemListLength;
+  }
   return null;
 };
 

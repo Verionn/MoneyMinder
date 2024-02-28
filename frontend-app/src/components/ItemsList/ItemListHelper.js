@@ -4,8 +4,9 @@ import { GetDatasFromApi } from "../../utils/functions/getDatasFromApi";
 import { endpoint } from "../../utils/datas/serverInfo";
 import { useEffect, useState } from "react";
 import { deleteItem } from "../../utils/functions/deleteItemFromApi";
+import { PostNewItem } from "../../utils/functions/addDatasToApi";
 import "./ItemList.css";
-export const NavigateToSelectedList = ({ listId }) => {
+export const ListSelectionNavigator = ({ listId }) => {
   const { listArray, updateListArray } = useContextElements();
   const apiURL = `${endpoint}/lists`;
   const { data, loading, error } = GetDatasFromApi({ apiUrl: apiURL });
@@ -43,6 +44,7 @@ export const NavigateToSelectedList = ({ listId }) => {
         onChange={handleChange}
         className="dropdownMenu"
       >
+        <option value="">Select a list</option>
         {listArray.lists &&
           listArray.lists.map((list, index) => (
             <option key={index} value={list.listId}>
@@ -54,7 +56,7 @@ export const NavigateToSelectedList = ({ listId }) => {
   );
 };
 
-export const GetListOfSelectedItems = (selectedItems, data) => {
+export const DisplaySelectedItems = (selectedItems, data) => {
   let items = [];
   selectedItems.items.forEach((itemId) => {
     data.items.forEach((item) => {
@@ -75,13 +77,13 @@ export const GetListOfSelectedItems = (selectedItems, data) => {
   );
 };
 
-export const handleDeleteItems = (setIsDeletting, selectedItems) => {
+export const initiateItemsDeletion = (setIsDeletting, selectedItems) => {
   if (selectedItems.items.size > 0) {
     setIsDeletting(1);
   } else alert("No items selected");
 };
 
-export const handleAllDelete = async (
+export const deleteSelectedItems = async (
   listId,
   selectedItems,
   data,
@@ -89,13 +91,12 @@ export const handleAllDelete = async (
   setIsDeletting,
   handleDeleteInItemArray
 ) => {
-
   let numberOfDeletedItems = 0;
   for (const itemId of selectedItems.items) {
     const item = data.items.find((item) => item.itemId === itemId);
     if (item) {
       try {
-        const success = await handleDelete(item.itemId, listId);
+        const success = await performItemDeletion(item.itemId, listId);
         if (success) {
           numberOfDeletedItems++;
           const succed = await handleDeleteInItemArray(listId, item.itemId);
@@ -115,15 +116,68 @@ export const handleAllDelete = async (
   if (numberOfDeletedItems >= 2) window.location.reload();
 };
 
-export const handleDelete = async (itemId, listId) => {
+export const performItemDeletion = async (itemId, listId) => {
   const success = await deleteItem(itemId, listId);
   return success;
 };
 
-
-export const handleIsChecking=(setIsChecking,selectedItems)=>{
+export const initiateItemsCheck = (setIsChecking, selectedItems) => {
   if (selectedItems.items.size > 0) {
     setIsChecking(1);
   } else alert("No items selected");
 };
 
+export const checkAndProcessPurchasedItems = async (
+  setIsChecking,
+  selectedItems,
+  setSelectedItems,
+  data,
+  listId,
+  handleAddPurchasedItem,
+  handleDeleteInItemArray
+) => {
+
+
+  let numberOfDeletedItems = 0;
+  for (const itemId of selectedItems.items) {
+    const item = data.items.find((item) => item.itemId === itemId);
+   
+    if (item) {
+      try {
+        const success = await addItemsToPurchasedList(item, item.itemId,listId,handleAddPurchasedItem);
+        if (success) {
+         numberOfDeletedItems++;
+         let succed =  handleAddPurchasedItem(item);
+          if (succed) console.log("item checked ", item.ItemId);
+           succed =  handleDeleteInItemArray(listId, item.itemId);
+           if (succed) console.log("item checked ", item.ItemId);
+        }
+      } catch (err) {
+        console.error("Error deleting item:", item.itemId, err);
+      }
+    }
+  }
+  setSelectedItems({
+    items: new Set(),
+    purchasedItems: new Set(),
+  });
+  setIsChecking(-1);
+  if (numberOfDeletedItems >= 2) window.location.reload();
+};
+
+export const addItemsToPurchasedList = async (
+  newItem,
+  itemId,
+  listId,
+  appendNewElement
+) => {
+  // POST /lists/{listId}/items/{itemId}/purchased
+  const ItemsUrl = `${endpoint}/lists/${listId}/items/${itemId}/purchased`;
+  const success = await PostNewItem(
+    newItem,
+    ItemsUrl,
+    appendNewElement,
+    "purchasedItems"
+  );
+  return success;
+};
