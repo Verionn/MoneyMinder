@@ -44,7 +44,7 @@ export const ListSelectionNavigator = ({ listId }) => {
         onChange={handleChange}
         className="dropdownMenu"
       >
-        <option value="">Select a list</option>
+        <option value="">Select list</option>
         {listArray.lists &&
           listArray.lists.map((list, index) => (
             <option key={index} value={list.listId}>

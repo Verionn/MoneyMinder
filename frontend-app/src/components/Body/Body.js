@@ -6,17 +6,17 @@ import { Styles } from "./styles";
 import Section from "../sections/section";
 import { useEffect } from "react";
 const Body = () => {
-  const { isDarkMode,handleResize } = useContextElements();
+  const { isDarkMode, handleResize, windowWidth } = useContextElements();
+  console.log("windowWidth", windowWidth);
 
   useEffect(() => {
-
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [handleResize]);
 
-  const styles = Styles({ darkMode: isDarkMode });
+  const styles = Styles({ darkMode: isDarkMode, windowWidth: windowWidth });
 
   return (
     <div className="appBody" style={{ ...styles.root }}>

@@ -12,7 +12,7 @@ const ItemsList = () => {
   return (
     <div className="ItemContainer" style={{ ...styles.ItemsContainer }}>
       <ListSelectionNavigator listId={listId} />
-      <div style={{ }}>
+      <div style={{ ...styles.ItemBoxContainer }}>
         <ItemBox listId={listId} />
         <AddNewItem listId={listId} />
       </div>
