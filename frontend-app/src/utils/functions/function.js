@@ -66,6 +66,13 @@ export const GetInfosFromItemList = ({ listID, operationType }) => {
     error: purchasedItemListError,
   } = useGetInfosFromPurchasedItemsList({ listID, operationType: "len" });
 
+
+  const {
+    result: purchasedItemPrice,
+    loading: purchasedItemListLoadingPrice,
+    error: purchasedItemListErrorPrice,
+  } = useGetInfosFromPurchasedItemsList({ listID, operationType: "price" });
+
   const apiUrl = `${endpoint}/lists/${listID}/items`;
   const { data } = GetDatasFromApi({ apiUrl: apiUrl });
   if (operationType === "price") {
@@ -80,6 +87,15 @@ export const GetInfosFromItemList = ({ listID, operationType }) => {
     if(purchasedItemListLoading) return null;
     if(purchasedItemListError) return null;
     return data?.items?.length + purchasedItemListLength;
+  }
+  if(operationType === "allItemsPrice"){
+    let price = 0;
+    data?.items?.forEach((item) => {
+      price += item.price*item.amount;
+    });
+    if(purchasedItemListLoadingPrice) return null;
+    if(purchasedItemListErrorPrice) return null;
+    return (Number(purchasedItemPrice)+Number(price)).toFixed(2);
   }
   return null;
 };
