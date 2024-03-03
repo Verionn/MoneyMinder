@@ -161,7 +161,7 @@ public class CreateItemTests extends MoneyMinderApplicationTests {
                 createdItemRequestBody, ItemResponse.class);
 
         //then
-        assertThat(addItemResponse.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
+        assertThat(addItemResponse.getStatusCode(), equalTo(HttpStatus.NOT_FOUND));
         assertNull(addItemResponse.getBody());
     }
 
