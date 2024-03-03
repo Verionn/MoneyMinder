@@ -324,8 +324,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Item'
+        '400':
+          description: Wrong new item request body
         '404':
-          description: List not found
+          description: List or category not found
   /lists/{listId}/items/{itemId}:
     get:
       security:
