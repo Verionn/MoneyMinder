@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .map(categoryRepository::save);
     }
 
-    public boolean existsById(Long categoryId, Long userId) {
+    public boolean existsByCategoryIdAndUserId(Long categoryId, Long userId) {
         return categoryRepository.existsByCategoryIdAndUserId(categoryId, userId);
     }
 

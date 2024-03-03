@@ -21,15 +21,17 @@ public class ItemController {
     private final ItemService itemService;
     private final ListService listService;
     private final UserService userService;
+    private final CategoryService categoryService;
     private final PurchasedItemService purchasedItemService;
     private final ItemMapper itemMapper = ItemMapper.INSTANCE;
     private final PurchasedItemMapper purchasedItemMapper = PurchasedItemMapper.INSTANCE;
 
     @Autowired
-    public ItemController(ItemServiceImpl itemService, ListServiceImpl listService, UserService userService, PurchasedItemService purchasedItemService) {
+    public ItemController(ItemServiceImpl itemService, ListServiceImpl listService, UserService userService, CategoryService categoryService, PurchasedItemService purchasedItemService) {
         this.itemService = itemService;
         this.listService = listService;
         this.userService = userService;
+        this.categoryService = categoryService;
         this.purchasedItemService = purchasedItemService;
     }
 
@@ -82,6 +84,10 @@ public class ItemController {
         var userId = user.getLeft().userId();
 
         if (!checkIfListExists(listId, userId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if(!checkIfCategoryExists(createItemRequestBody.categoryId(), userId)){
             return ResponseEntity.notFound().build();
         }
 
@@ -192,4 +198,9 @@ public class ItemController {
     private boolean checkIfListExists(Long listId, Long userId) {
         return listService.existsByListIdAndUserId(listId, userId);
     }
+
+    private boolean checkIfCategoryExists(Long categoryId, Long userId) {
+        return categoryService.existsByCategoryIdAndUserId(categoryId, userId);
+    }
+
 }
