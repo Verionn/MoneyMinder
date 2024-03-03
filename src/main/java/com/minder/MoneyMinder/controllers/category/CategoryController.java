@@ -120,7 +120,7 @@ public class CategoryController {
     }
 
     private boolean checkIfCategoryExits(Long categoryId, Long userId) {
-        return categoryService.existsById(categoryId, userId);
+        return categoryService.existsByCategoryIdAndUserId(categoryId, userId);
     }
 
     private boolean checkIfCreateCategoryRequestBodyIsValid(CreateCategoryRequestBody createCategoryRequestBody) {

@@ -18,5 +18,5 @@ public interface CategoryService {
 
     Optional<CategoryEntity> updateCategory(Long categoryId, UpdateCategoryRequestBody updateCategoryRequestBody);
 
-    boolean existsById(Long categoryId, Long userId);
+    boolean existsByCategoryIdAndUserId(Long categoryId, Long userId);
 }
