@@ -5,17 +5,18 @@ import React, { useState } from 'react';
 
 const Authentication = () => {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/auth/signin', {
+      const response = await fetch('http://localhost:8080/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, email, password }),
       });
       if (!response.ok) throw new Error('Login failed');
       const data = await response.json();
@@ -35,6 +36,10 @@ const Authentication = () => {
       <div>
         <label>Username:</label>
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+      </div>
+      <div>
+        <label>Email:</label>
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
       </div>
       <div>
         <label>Password:</label>
