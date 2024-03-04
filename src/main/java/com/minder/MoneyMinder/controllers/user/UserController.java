@@ -27,7 +27,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<LoginResponse> register(@RequestBody RegisterUserRequest registerUserRequest) {
-
+        System.out.println(registerUserRequest.name()+" " +registerUserRequest.email()+" "+registerUserRequest.password());
         if(checkIfRegisterUserRequestIsInvalid(registerUserRequest)){
             return ResponseEntity.badRequest().build();
         }

@@ -60,10 +60,8 @@ export const getIconType = (iconName) => {
 export const getIconState = (iconName, currentState, iconStateMap) => {
   if (!iconStateMap[iconName]) throw new Error("Icon not found");
   const iconState = iconStateMap[iconName];
-  console.log("iconState", iconState);
   switch (iconName) {
     case "cartIcon":
-  
     case "helpIcon":
     case "settingsIcon":
       if (currentState === "clicked") {
@@ -71,13 +69,14 @@ export const getIconState = (iconName, currentState, iconStateMap) => {
       } else if (currentState === "enter") {
         return iconState.hover1;
       }
+      break;
     case "trashIcon":
       if (currentState === "clicked") {
         return iconState.clicked;
       } else if (currentState === "enter") {
         return iconState.hover2;
       }
-
+      break;
     default:
       return null;
   }
