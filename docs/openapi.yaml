@@ -639,6 +639,32 @@ paths:
           description: User couldn't be authenticated
 
 
+  /users/changePassword:
+    post:
+      tags:
+        - users
+      description: change password for user
+      operationId: changePassword
+      requestBody:
+        description: new password
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequestBody'
+        required: true
+      responses:
+        '200':
+          description: changed password successfully
+          headers:
+            JsonWebToken:
+              $ref: '#/components/headers/JsonWebToken'
+        '400':
+          description: Bad request
+        '404':
+          description: User not found
+        '403':
+          description: User couldn't be authenticated
+
 components:
   schemas:
 
@@ -787,12 +813,12 @@ components:
         name:
           type: string
           example: 'verion'
-        email:
-          type: string
-          example: 'verion@gmail.com'
         password:
           type: string
           example: 'K#lasdf&82z'
+        email:
+          type: string
+          example: 'verion@gmail.com'
 
     LoginUserRequestBody:
       required:
@@ -806,6 +832,23 @@ components:
         password:
           type: string
           example: 'K#lasdf&82z'
+
+    ChangePasswordRequestBody:
+      required:
+        - oldPassword
+        - repeatOldPassword
+        - newPassword
+      type: object
+      properties:
+        oldPassword:
+          type: string
+          example: '123456'
+        repeatOldPassword:
+          type: string
+          example: '123456'
+        newPassword:
+          type: string
+          example: 'qwerty'
 
   headers:
     JsonWebToken:
