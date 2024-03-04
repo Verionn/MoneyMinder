@@ -1,5 +1,6 @@
 package com.minder.MoneyMinder.controllers.user;
 
+import com.minder.MoneyMinder.controllers.user.dto.ChangePasswordRequest;
 import com.minder.MoneyMinder.controllers.user.dto.LoginRequest;
 import com.minder.MoneyMinder.controllers.user.dto.LoginResponse;
 import com.minder.MoneyMinder.controllers.user.dto.RegisterUserRequest;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -28,11 +31,11 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<LoginResponse> register(@RequestBody RegisterUserRequest registerUserRequest) {
 
-        if(checkIfRegisterUserRequestIsInvalid(registerUserRequest)){
+        if (checkIfRegisterUserRequestIsInvalid(registerUserRequest)) {
             return ResponseEntity.badRequest().build();
         }
 
-        if(checkIfEmailIsRegistered(registerUserRequest.email())){
+        if (checkIfEmailIsRegistered(registerUserRequest.email())) {
             return ResponseEntity.status(CONFLICT).build();
         }
 
@@ -42,17 +45,41 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
 
-        if(checkIfLoginRequestIsInvalid(loginRequest)){
+        if (checkIfLoginRequestIsInvalid(loginRequest)) {
             return ResponseEntity.badRequest().build();
         }
 
-        if(!checkIfEmailIsRegistered(loginRequest.email())){
+        if (!checkIfEmailIsRegistered(loginRequest.email())) {
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
 
         return userService.login(loginRequest)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.FORBIDDEN).build());
+    }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<LoginResponse> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
+        var user = userService.getUserByEmail();
+        if (user.isRight()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if(checkIfChangePasswordRequestIsInvalid(changePasswordRequest)){
+            return ResponseEntity.badRequest().build();
+        }
+
+        return userService.changePassword(changePasswordRequest, user.getLeft())
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(FORBIDDEN).build());
+    }
+
+    private boolean checkIfChangePasswordRequestIsInvalid(ChangePasswordRequest changePasswordRequest){
+        return changePasswordRequest.newPassword().isBlank()
+                || changePasswordRequest.oldPassword().isBlank()
+                || changePasswordRequest.repeatOldPassword().isBlank()
+                || !Objects.equals(changePasswordRequest.oldPassword(), changePasswordRequest.repeatOldPassword())
+                || changePasswordRequest.oldPassword().equals(changePasswordRequest.newPassword());
     }
 
     private boolean checkIfRegisterUserRequestIsInvalid(RegisterUserRequest registerUserRequest) {

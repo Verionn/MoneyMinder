@@ -1,15 +1,14 @@
 package com.minder.MoneyMinder.services.implementations;
 
-import com.minder.MoneyMinder.controllers.user.dto.LoginRequest;
-import com.minder.MoneyMinder.controllers.user.dto.LoginResponse;
-import com.minder.MoneyMinder.controllers.user.dto.RegisterUserRequest;
-import com.minder.MoneyMinder.controllers.user.dto.UserResponse;
+import com.minder.MoneyMinder.controllers.user.dto.*;
 import com.minder.MoneyMinder.models.Role;
+import com.minder.MoneyMinder.models.UserEntity;
 import com.minder.MoneyMinder.repositories.UserRepository;
 import com.minder.MoneyMinder.services.UserService;
 import com.minder.MoneyMinder.services.mappers.UserMapper;
 import io.vavr.control.Either;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -74,8 +73,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<LoginResponse> changePassword(ChangePasswordRequest changePasswordRequest, UserResponse user) {
+        userRepository.findById(user.userId())
+                .map(userEntity -> updateUserEntity(userEntity, changePasswordRequest))
+                .map(userRepository::save);
+
+        return login(new LoginRequest(user.email(), changePasswordRequest.newPassword()));
+    }
+
+    private UserEntity updateUserEntity(UserEntity userEntity, ChangePasswordRequest changePasswordRequest) {
+        userEntity.setPassword(passwordEncoder.encode(changePasswordRequest.newPassword()));
+        return userEntity;
+    }
+
+    @Override
     public boolean checkIfEmailExists(String email) {
         return userRepository.existsByEmail(email);
     }
-
 }
