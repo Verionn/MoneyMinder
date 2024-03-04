@@ -21,6 +21,23 @@ export const loginBtn = (
   </>
 );
 
+export const  LoginPage=[
+  {
+    title:"Login",
+    id:"login",
+    icon:"loginIcon",
+    path:"/",
+    element:"Login Page"
+  }
+  ,{
+    title: "Sign Up",
+    id: "signup",
+    icon: "signupIcon",
+    path: "/signup",
+    element: someText,
+  }
+]
+
 export const pageSections = [
   {
     title: "Shopping List",
