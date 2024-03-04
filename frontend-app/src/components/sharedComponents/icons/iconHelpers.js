@@ -1,4 +1,3 @@
-
 const iconCart = require("../../../utils/assets/jsonIcons/system-solid-6-shopping.json");
 const iconTrash = require("../../../utils/assets/jsonIcons/system-solid-39-trash.json");
 const iconHelp = require("../../../utils/assets/jsonIcons/system-solid-57-help-question.json");
@@ -27,7 +26,6 @@ export const iconStateMap = {
     hover2: "hover-cog-2",
   },
 };
-
 
 export const IconStyle = ({ size, color, boxsize, backgroundColor }) => {
   return {
@@ -62,20 +60,24 @@ export const getIconType = (iconName) => {
 export const getIconState = (iconName, currentState, iconStateMap) => {
   if (!iconStateMap[iconName]) throw new Error("Icon not found");
   const iconState = iconStateMap[iconName];
-
+  console.log("iconState", iconState);
   switch (iconName) {
     case "cartIcon":
-    case "trashIcon":
+  
     case "helpIcon":
     case "settingsIcon":
       if (currentState === "clicked") {
         return iconState.clicked;
-      } else if (currentState === "hover1") {
+      } else if (currentState === "enter") {
         return iconState.hover1;
-      } else if (currentState === "hover2") {
+      }
+    case "trashIcon":
+      if (currentState === "clicked") {
+        return iconState.clicked;
+      } else if (currentState === "enter") {
         return iconState.hover2;
       }
-      break;
+
     default:
       return null;
   }

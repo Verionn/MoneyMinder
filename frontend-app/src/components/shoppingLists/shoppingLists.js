@@ -124,7 +124,7 @@ const ShoppingLists = () => {
                 {`Total Price : `}{" "}
                 <GetInfosFromItemList
                   listID={list.listId}
-                  operationType={"price"}
+                  operationType={"allItemsPrice"}
                 />{" "}
                 $
               </p>
