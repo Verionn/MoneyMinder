@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(new AntPathRequestMatcher("/users/login"))
                         .permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/items/register"))
+                        .requestMatchers(new AntPathRequestMatcher("/users/register"))
                         .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
