@@ -6,3 +6,5 @@ export { ReactComponent as PlusIcon } from "../../../utils/assets/SVG/bx-plus.sv
 export { ReactComponent as MenuIcon } from "../../../utils/assets/SVG/bx-menu.svg";
 export { ReactComponent as ContentIcon } from "../../../utils/assets/SVG/bxs-book-content.svg";
 export { ReactComponent as ChevronDownSquareIcon } from "../../../utils/assets/SVG/bxs-chevron-down-square.svg";
+export {ReactComponent as SunIcon} from "../../../utils/assets/SVG/bxs-sun.svg";
+export {ReactComponent as MoonIcon} from "../../../utils/assets/SVG/bxs-moon.svg";

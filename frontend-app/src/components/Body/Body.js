@@ -9,7 +9,7 @@ import RenderRoutes from "../../utils/router/Routes";
 import { LoginPage } from "../../utils/datas/appInfo";
 const Body = () => {
   const { isDarkMode, handleResize, windowWidth } = useContextElements();
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin] = useState(false);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -21,14 +21,14 @@ const Body = () => {
   const styles = Styles({ darkMode: isDarkMode, windowWidth: windowWidth });
 
   return (
-    <div className="appStates">
+    <div className="appStates" style={{ ...styles.root }}>
       {isLogin ? (
-        <div className="appBody" style={{ ...styles.root }}>
+        <div className="appBody">
           <SideBar appInfo={appInfo} login={loginBtn} Credit={Credit} />
           <Section />
         </div>
       ) : (
-        <RenderRoutes routes={LoginPage} />
+        <RenderRoutes routes={LoginPage} style={{ ...styles.root }} />
       )}
     </div>
   );

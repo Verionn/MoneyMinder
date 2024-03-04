@@ -1,4 +1,5 @@
 import ShoppingLists from "../../components/shoppingLists/shoppingLists";
+import Authentication from "../../components/LoginPage/LoginPage";
 
 export const appInfo = {
   name: "MoneyMinder",
@@ -9,7 +10,8 @@ let someText = "This is a text";
 
 export const Credit = (
   <>
-  2023 © {appInfo.name} - <br />All rights reserved
+    2023 © {appInfo.name} - <br />
+    All rights reserved
   </>
 );
 
@@ -21,22 +23,22 @@ export const loginBtn = (
   </>
 );
 
-export const  LoginPage=[
+export const LoginPage = [
   {
-    title:"Login",
-    id:"login",
-    icon:"loginIcon",
-    path:"/",
-    element:"Login Page"
-  }
-  ,{
+    title: "Login",
+    id: "login",
+    icon: "loginIcon",
+    path: "/",
+    element: <Authentication />,
+  },
+  {
     title: "Sign Up",
     id: "signup",
     icon: "signupIcon",
     path: "/signup",
     element: someText,
-  }
-]
+  },
+];
 
 export const pageSections = [
   {
@@ -54,13 +56,12 @@ export const pageSections = [
     element: someText,
   },
   {
-    title:"Help",
-    id:"help",
-    icon:"helpIcon",
-    path:"/Help",
-    element:someText
-    
-},
+    title: "Help",
+    id: "help",
+    icon: "helpIcon",
+    path: "/Help",
+    element: someText,
+  },
   {
     title: "Settings",
     id: "settings",
