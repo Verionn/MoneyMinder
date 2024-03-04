@@ -5,6 +5,7 @@
   "proxy": "http://localhost:8080",
   "dependencies": {
     "@lordicon/element": "^1.4.2",
+    "@lordicon/react": "^1.4.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -13,9 +14,10 @@
     "cors": "^2.8.5",
     "lottie-web": "^5.12.2",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.9.1",
+    "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",
     "react-notifications": "^1.7.4",
+    "react-router-dom": "^6.22.1",
     "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -44,6 +46,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "^7.1.0",
+    "terser-webpack-plugin": "^5.3.10"
   }
 }

@@ -1,0 +1,20 @@
+.searchBox {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .searchInput {
+    padding: 5px 10px 5px 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+  }
+  
+  .searchIcon {
+    position: absolute;
+    left: 8px;
+    height: 20px;
+    width: 20px;
+    fill: #ccc;
+  }
