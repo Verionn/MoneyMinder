@@ -39,6 +39,7 @@ public abstract class MoneyMinderApplicationTests {
     protected static final String USERS_RESOURCE = "/users";
     protected static final String LOGIN_PATH = USERS_RESOURCE + "/login";
     protected static final String REGISTER_PATH = USERS_RESOURCE + "/register";
+    protected static final String CHANGE_PASSWORD_PATH = USERS_RESOURCE + "/changePassword";
     protected static final String CATEGORIES_RESOURCE = "/categories";
     protected static final String LISTS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d";
     protected static final String CATEGORY_DETAILS_PATH_FORMAT = CATEGORIES_RESOURCE + "/%d";
@@ -94,6 +95,7 @@ public abstract class MoneyMinderApplicationTests {
     public static final String VALID_USER_EMAIL = "cebulaczek@gmail.com";
     public static final String VALID_USER_NAME = "cebulaczek";
     public static final String VALID_USER_PASSWORD = "997";
+    public static final String VALID_NEW_USER_PASSWORD = "12345";
     public static final String INVALID_USER_EMAIL = "";
     public static final String INVALID_USER_PASSWORD = "";
     public static final String INVALID_USER_NAME = "";
