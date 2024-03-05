@@ -99,7 +99,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version> <!-- Użyj najnowszej dostępnej wersji -->
+				<version>3.8.1</version>
 				<configuration>
 					<annotationProcessorPaths>
 						<path>
@@ -108,8 +108,6 @@
 							<version>1.5.5.Final</version>
 						</path>
 					</annotationProcessorPaths>
-					<source>17</source>
-					<target>17</target>
 				</configuration>
 			</plugin>
 
