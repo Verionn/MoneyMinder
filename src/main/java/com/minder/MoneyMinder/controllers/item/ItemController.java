@@ -87,7 +87,7 @@ public class ItemController {
             return ResponseEntity.notFound().build();
         }
 
-        if(!checkIfCategoryExists(createItemRequestBody.categoryId(), userId)){
+        if (!checkIfCategoryExists(createItemRequestBody.categoryId(), userId)) {
             return ResponseEntity.notFound().build();
         }
 
