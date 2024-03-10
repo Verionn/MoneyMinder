@@ -39,6 +39,8 @@ public abstract class MoneyMinderApplicationTests {
     protected static final String USERS_RESOURCE = "/users";
     protected static final String LOGIN_PATH = USERS_RESOURCE + "/login";
     protected static final String REGISTER_PATH = USERS_RESOURCE + "/register";
+    protected static final String RESET_PASSWORD_PATH = USERS_RESOURCE + "/resetPassword";
+    protected static final String CONFIRM_RESET_PASSWORD_PATH = USERS_RESOURCE + "/confirmResetPassword%s";
     protected static final String CATEGORIES_RESOURCE = "/categories";
     protected static final String LISTS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d";
     protected static final String CATEGORY_DETAILS_PATH_FORMAT = CATEGORIES_RESOURCE + "/%d";
@@ -90,13 +92,18 @@ public abstract class MoneyMinderApplicationTests {
     public static final long AMOUNT_OF_ITEMS = 2;
     public static final LocalDateTime VALID_DATE = LocalDateTime.parse("2023-10-15T21:15:00");
     public static final String REGISTERED_USER_EMAIL = "verion@gmail.com";
+    public static final String UNREGISTERED_USER_EMAIL = "joramek@gmail.com";
     public static final String REGISTERED_USER_PASSWORD = "12345";
     public static final String VALID_USER_EMAIL = "cebulaczek@gmail.com";
     public static final String VALID_USER_NAME = "cebulaczek";
-    public static final String VALID_USER_PASSWORD = "997";
+    public static final String VALID_USER_PASSWORD = "12345";
     public static final String INVALID_USER_EMAIL = "";
     public static final String INVALID_USER_PASSWORD = "";
     public static final String INVALID_USER_NAME = "";
+    public static final String INVALID_CONFIRM_RESET_PASSWORD_TOKEN = "";
+    public static final String RANDOM_CONFIRM_RESET_PASSWORD_TOKEN = "62eJDacd-ORKa-4930-9831-eec546b91830";
+    public static final String EXPIRED_CONFIRM_RESET_PASSWORD_TOKEN = "expiredl-ORKa-4930-9831-eec546b91830";
+    public static final String VALID_CONFIRM_RESET_PASSWORD_TOKEN = "validsdl-ORKa-4930-9831-eec546b91830";
     protected String userToken;
 
     @Autowired
@@ -148,6 +155,12 @@ public abstract class MoneyMinderApplicationTests {
 
     protected String prepareUrl(String resource) {
         return String.format(BASE_URL_FORMAT, port, resource);
+    }
+
+    protected String prepareUrl(String resource, String token) {
+        String addressWithoutToken = String.format(BASE_URL_FORMAT, port, resource);
+        String fullToken = "?token=" + token;
+        return String.format(addressWithoutToken, fullToken);
     }
 
     protected String listsPath(long listId) {

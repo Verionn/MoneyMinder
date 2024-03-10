@@ -32,6 +32,10 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/users/register"))
                         .permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/users/resetPassword"))
+                        .permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/users/confirmResetPassword/**"))
+                        .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class
