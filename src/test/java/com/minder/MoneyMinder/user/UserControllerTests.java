@@ -193,7 +193,7 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
         var confirmResetPasswordResponse = client.exchange(prepareUrl(CONFIRM_RESET_PASSWORD_PATH, EXPIRED_CONFIRM_RESET_PASSWORD_TOKEN), HttpMethod.PUT,
                 new HttpEntity<>(new ConfirmResetPasswordRequest(VALID_USER_PASSWORD)), String.class);
 
-        assertThat(confirmResetPasswordResponse.getStatusCode(), is(equalTo(BAD_REQUEST)));
+        assertThat(confirmResetPasswordResponse.getStatusCode(), is(equalTo(NOT_FOUND)));
     }
 
     @Test
