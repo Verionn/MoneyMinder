@@ -665,6 +665,57 @@ paths:
         '403':
           description: User couldn't be authenticated
 
+
+  /users/resetPassword:
+    post:
+      tags:
+        - users
+      description: reset password for user
+      operationId: resetPassword
+      requestBody:
+        description: reset password
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequestBody'
+        required: true
+      responses:
+        '200':
+          description: successfully send message with link to reset password
+        '400':
+          description: Bad request
+        '404':
+          description: User not found
+
+  /users/confirmResetPassword:
+    put:
+      tags:
+        - users
+      description: set a new password for user
+      operationId: confirmResetPassword
+      requestBody:
+        description: new password
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmResetPasswordRequestBody'
+        required: true
+      parameters:
+        - name: ResetPasswordToken
+          in: query
+          description: Reset password token
+          required: true
+          schema:
+            type: string
+            example: '62eiredl-ORKa-4930-9831-eec546b91830'
+      responses:
+        '200':
+          description: successfully set a new password for user
+        '400':
+          description: password is invalid
+        '404':
+          description: Token is expired or does not exist
+
 components:
   schemas:
 
@@ -849,6 +900,24 @@ components:
         newPassword:
           type: string
           example: 'qwerty'
+
+    ResetPasswordRequestBody:
+      required:
+        - email
+      type: object
+      properties:
+        email:
+          type: string
+          example: 'verion@gmail.com'
+
+    ConfirmResetPasswordRequestBody:
+      required:
+        - newPassword
+      type: object
+      properties:
+        email:
+          type: string
+          example: '123456'
 
   headers:
     JsonWebToken:

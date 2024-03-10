@@ -106,9 +106,8 @@ public class UserController {
 
         if (checkIfTokenIsExpired(token)) {
             userService.removeToken(token);
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
-
 
         if (confirmResetPasswordRequest.password().isBlank()) {
             return ResponseEntity.badRequest().build();
