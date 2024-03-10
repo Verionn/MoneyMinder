@@ -1,8 +1,10 @@
 package com.minder.MoneyMinder.services;
 
 import com.minder.MoneyMinder.controllers.user.dto.*;
-import com.minder.MoneyMinder.models.UserEntity;
+import com.minder.MoneyMinder.models.ResetPasswordTokenEntity;
 import io.vavr.control.Either;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +21,16 @@ public interface UserService {
     boolean checkIfEmailExists(String email);
 
     Optional<LoginResponse> changePassword(ChangePasswordRequest changePasswordRequest, UserResponse user);
+
+    void resetPassword(ResetPasswordTokenEntity resetPasswordTokenEntity, HttpServletRequest request);
+
+    ResponseEntity<HttpStatus> confirmResetPassword(String token, ConfirmResetPasswordRequest confirmResetPasswordRequest);
+
+    String getNameByEmail(String email);
+
+    Boolean checkIfTokenExists(String token);
+
+    ResetPasswordTokenEntity getResetPasswordTokenEntityByToken(String token);
+
+    void removeToken(String token);
 }
