@@ -1,5 +1,6 @@
 import ShoppingLists from "../../components/shoppingLists/shoppingLists";
-import Authentication from "../../components/LoginPage/LoginPage";
+import RegisterPage from "../../components/authentification/registerPage";
+import LoginPage from "../../components/authentification/LoginPage";
 
 export const appInfo = {
   name: "MoneyMinder",
@@ -23,20 +24,20 @@ export const loginBtn = (
   </>
 );
 
-export const LoginPage = [
+export const AuthObject = [
   {
     title: "Login",
     id: "login",
     icon: "loginIcon",
-    path: "/",
-    element: <Authentication />,
+    path: "/login",
+    element: <LoginPage />,
   },
   {
     title: "Sign Up",
     id: "signup",
     icon: "signupIcon",
     path: "/signup",
-    element: someText,
+    element: <RegisterPage />,
   },
 ];
 

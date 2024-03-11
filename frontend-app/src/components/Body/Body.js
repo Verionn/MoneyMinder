@@ -6,11 +6,12 @@ import { Styles } from "./styles";
 import Section from "../sections/section";
 import { useEffect } from "react";
 import RenderRoutes from "../../utils/router/Routes";
-import { LoginPage } from "../../utils/datas/appInfo";
+import { AuthObject } from "../../utils/datas/appInfo";
 import { useNavigate } from "react-router";
 const Body = () => {
-  const { isDarkMode, handleResize, windowWidth } = useContextElements();
+  const { isDarkMode, handleResize, windowWidth,LoginType } = useContextElements();
   const Token = localStorage.getItem("token");
+
 
   const navigate = useNavigate();
 
@@ -23,10 +24,11 @@ const Body = () => {
 
   useEffect(() => {
     if (!Token) {
-      navigate("/");
+      if(LoginType === "/signup") navigate("/signup");
+      else navigate("/login");
     }
    
-  }, [Token, navigate]);
+  }, [Token, navigate,LoginType]);
 
   const styles = Styles({ darkMode: isDarkMode, windowWidth: windowWidth });
 
@@ -39,7 +41,7 @@ const Body = () => {
         </div>
       ) : (
         <>
-          <RenderRoutes routes={LoginPage} style={{ ...styles.root }} />
+          <RenderRoutes routes={AuthObject} style={{ ...styles.root }} />
         </>
       )}
     </div>

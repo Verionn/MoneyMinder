@@ -8,3 +8,6 @@ export { ReactComponent as ContentIcon } from "../../../utils/assets/SVG/bxs-boo
 export { ReactComponent as ChevronDownSquareIcon } from "../../../utils/assets/SVG/bxs-chevron-down-square.svg";
 export {ReactComponent as SunIcon} from "../../../utils/assets/SVG/bxs-sun.svg";
 export {ReactComponent as MoonIcon} from "../../../utils/assets/SVG/bxs-moon.svg";
+export {ReactComponent as LogOutIcon} from "../../../utils/assets/SVG/bx-log-out-circle.svg";
+export {ReactComponent as EnveloppeIcon} from "../../../utils/assets/SVG/bx-envelope.svg";
+export {ReactComponent as UserIcon} from "../../../utils/assets/SVG/bx-user.svg";
