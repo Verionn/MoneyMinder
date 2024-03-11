@@ -1,5 +1,3 @@
-
-
 // LISTS and ITEMS
 import { useState, useEffect, useMemo } from "react";
 
@@ -8,7 +6,8 @@ export const GetDatasFromApi = ({ apiUrl, options = {} }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
- 
+  
+
   const fetchOptions = useMemo(() => {
     const token = localStorage.getItem("token");
 
@@ -18,11 +17,10 @@ export const GetDatasFromApi = ({ apiUrl, options = {} }) => {
       ...options.headers,
     };
     return { ...options, headers };
-  }, [options, apiUrl]); 
+  }, [options, apiUrl]);
 
   useEffect(() => {
     const fetchData = async () => {
-    
       try {
         const response = await fetch(apiUrl, fetchOptions);
         if (!response.ok) {
@@ -38,9 +36,7 @@ export const GetDatasFromApi = ({ apiUrl, options = {} }) => {
     };
 
     fetchData();
-  
-  }, [apiUrl, ]);
+  }, [apiUrl]);
 
   return { data, loading, error };
 };
-

@@ -20,8 +20,10 @@ export const SingleListStats = ({ listID }) => {
   if (itemListError || purchasedItemListError) return <div>Error occurred</div>;
   const procent = (purchasedItemListLength / (itemListLength+purchasedItemListLength)) * 100;
   console.log(purchasedItemListLength, itemListLength, procent);
+  if(procent===NaN) return <ProgressBar progress={0} color="var(--secondary-color)" />;
   if (procent === 0)
     return <ProgressBar progress={0} color="var(--secondary-color)" />;
+
   return (
     <ProgressBar progress={procent.toFixed(1)} color="var(--secondary-color)" />
   );

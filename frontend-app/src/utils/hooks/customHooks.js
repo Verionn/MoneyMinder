@@ -17,11 +17,17 @@ export const useGetInfosFromItemList = ({ listID, operationType }) => {
 
   useEffect(() => {
     const apiUrl = `${endpoint}/lists/${listID}/items`;
-
+    const token = localStorage.getItem("token");
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl,{
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        
+        });
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -33,6 +39,7 @@ export const useGetInfosFromItemList = ({ listID, operationType }) => {
           setResult(price.toFixed(2));
         } else if (operationType === "len") {
           setResult(data?.items?.length || 0);
+        
           console.log(data?.items?.length);
         }
 
@@ -59,10 +66,18 @@ export const useGetInfosFromPurchasedItemsList = ({
 
   useEffect(() => {
     const apiUrl = `${endpoint}/purchasedItems/lists/${listID}`;
+    const token = localStorage.getItem("token");
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl,{
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        
+        
+        });
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

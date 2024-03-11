@@ -14,8 +14,6 @@ const Body = () => {
 
   const navigate = useNavigate();
 
- 
-
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => {
@@ -27,6 +25,7 @@ const Body = () => {
     if (!Token) {
       navigate("/");
     }
+   
   }, [Token, navigate]);
 
   const styles = Styles({ darkMode: isDarkMode, windowWidth: windowWidth });

@@ -1,8 +1,11 @@
 export const PostNewList = async (listName, description, appendNewElement) => {
   try {
+    const token = localStorage.getItem("token");
+    
     const response = await fetch("http://localhost:8080/lists", {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ name: listName, description: description }),
@@ -24,10 +27,11 @@ export const PostNewList = async (listName, description, appendNewElement) => {
 
 export  const PostNewItem = async (newItem, ItemsUrl, appendNewElement,listType) => {
   try {
-   
+    const token = localStorage.getItem("token");
     const response = await fetch(ItemsUrl, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newItem),
