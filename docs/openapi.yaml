@@ -454,7 +454,7 @@ paths:
           description: List or Item not found
 
 
-  /purchasedItems/categories/{categoryId}/days/{days}:
+  /purchased-items/categories/{categoryId}/days/{days}:
     get:
       security:
         - bearerAuth: []
@@ -484,7 +484,7 @@ paths:
           description: Wrong amount of days
 
 
-  /purchasedItems/categories/{categoryId}:
+  /purchased-items/categories/{categoryId}:
     get:
       security:
         - bearerAuth: []
@@ -506,7 +506,7 @@ paths:
           description: Category not found
 
 
-  /purchasedItems/names/{prefix}:
+  /purchased-items/names/{prefix}:
     get:
       security:
         - bearerAuth: []
@@ -526,7 +526,7 @@ paths:
           description: Successfully returned names
 
 
-  /purchasedItems/days/{days}:
+  /purchased-items/days/{days}:
     get:
       security:
         - bearerAuth: []
@@ -548,7 +548,7 @@ paths:
           description: Wrong amount of days
 
 
-  /purchasedItems/items/{amountOfItems}:
+  /purchased-items/items/{amountOfItems}:
     get:
       security:
         - bearerAuth: []
@@ -570,7 +570,7 @@ paths:
           description: Wrong amount of items
 
 
-  /purchasedItems/lists/{listId}:
+  /purchased-items/lists/{listId}:
     get:
       security:
         - bearerAuth: []
@@ -639,7 +639,7 @@ paths:
           description: User couldn't be authenticated
 
 
-  /users/changePassword:
+  /users/change-password:
     put:
       tags:
         - users
@@ -666,7 +666,7 @@ paths:
           description: User couldn't be authenticated
 
 
-  /users/resetPassword:
+  /users/reset-password:
     post:
       tags:
         - users
@@ -687,7 +687,7 @@ paths:
         '404':
           description: User not found
 
-  /users/confirmResetPassword:
+  /users/confirm-reset-password:
     put:
       tags:
         - users
@@ -912,12 +912,12 @@ components:
 
     ConfirmResetPasswordRequestBody:
       required:
-        - newPassword
+        - new password
       type: object
       properties:
-        email:
+        password:
           type: string
-          example: '123456'
+          example: '1234567'
 
   headers:
     JsonWebToken:
