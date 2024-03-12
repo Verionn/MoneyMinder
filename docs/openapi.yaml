@@ -640,7 +640,7 @@ paths:
 
 
   /users/changePassword:
-    post:
+    put:
       tags:
         - users
       description: change password for user
