@@ -2,7 +2,7 @@ import DarkModeButton from "../sharedComponents/darkModeButton/darkModeButton";
 import { MoonIcon } from "../sharedComponents/icons/svgIcons";
 import { SunIcon } from "../sharedComponents/icons/svgIcons";
 import { handleAuthentification } from "../../utils/functions/authentification";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { appInfo } from "../../utils/datas/appInfo";
 import { UserIcon } from "../sharedComponents/icons/svgIcons";
 import { EnveloppeIcon } from "../sharedComponents/icons/svgIcons";
@@ -13,14 +13,18 @@ const LoginPage = () => {
   const { updateLoginType } = useContextElements();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [error, setError] = useState(true);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleAuthentification(
+    const check = await handleAuthentification(
       { email, password },
       "http://localhost:8080/users/login"
     );
+    setError(check);
   };
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
 
   return (
     <div className="RegisterContainer">
@@ -37,10 +41,12 @@ const LoginPage = () => {
           </div>
           <input
             type="email"
+            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="inputField"
             placeholder="email"
+            autoComplete="email"
           />
         </div>
         <div className="inputFieldContainer">
@@ -55,6 +61,11 @@ const LoginPage = () => {
             placeholder="password"
           />
         </div>
+        {!error ? (
+          <p className="error">
+            You have entered an invalid username or password
+          </p>
+        ) : null}
         <button type="submit" className="RegisterButton">
           Log in
         </button>
