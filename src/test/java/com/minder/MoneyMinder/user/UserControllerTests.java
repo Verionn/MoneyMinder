@@ -2,6 +2,7 @@ package com.minder.MoneyMinder.user;
 
 import com.minder.MoneyMinder.MoneyMinderApplicationTests;
 import com.minder.MoneyMinder.controllers.category.dto.CategoryResponse;
+import com.minder.MoneyMinder.controllers.item.dto.ItemResponse;
 import com.minder.MoneyMinder.controllers.user.dto.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.http.HttpStatus.*;
 
 public class UserControllerTests extends MoneyMinderApplicationTests {
@@ -266,8 +268,8 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
     public void shouldReturn400WhenGivenOldWrongPasswords(){
         runAsUser();
 
-        var changePasswordResponse = client.exchange(prepareUrl(CHANGE_PASSWORD_PATH),
-                HttpMethod.PUT, new HttpEntity<>(new ChangePasswordRequest(INVALID_USER_PASSWORD, INVALID_USER_PASSWORD, NEW_VALID_USER_PASSWORD)), LoginResponse.class);
+        var changePasswordResponse = client.exchange(prepareUrl(CHANGE_PASSWORD_PATH), PUT,
+                new HttpEntity<>(new ChangePasswordRequest(INVALID_USER_PASSWORD, INVALID_USER_PASSWORD, NEW_VALID_USER_PASSWORD)), LoginResponse.class);
 
         assertThat(changePasswordResponse.getStatusCode(), is(equalTo(BAD_REQUEST)));
     }
