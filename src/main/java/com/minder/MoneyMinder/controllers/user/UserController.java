@@ -62,7 +62,7 @@ public class UserController {
                 .orElse(ResponseEntity.status(HttpStatus.FORBIDDEN).build());
     }
 
-    @PutMapping("/changePassword")
+    @PutMapping("/change-password")
     public ResponseEntity<LoginResponse> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
 
         var user = userService.getUserByEmail();
@@ -79,7 +79,7 @@ public class UserController {
                 .orElse(ResponseEntity.status(FORBIDDEN).build());
     }
 
-    @PostMapping("/resetPassword")
+    @PostMapping("/reset-password")
     public ResponseEntity<HttpStatus> resetPassword(HttpServletRequest request, @RequestBody ResetPasswordRequest resetPasswordRequest) {
 
         if (checkIfResetPasswordRequestIsInvalid(resetPasswordRequest)) {
@@ -95,7 +95,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/confirmResetPassword")
+    @PutMapping("/confirm-reset-password")
     public ResponseEntity<HttpStatus> confirmResetPassword(
             @RequestParam("token") String token,
             @RequestBody ConfirmResetPasswordRequest confirmResetPasswordRequest) {
