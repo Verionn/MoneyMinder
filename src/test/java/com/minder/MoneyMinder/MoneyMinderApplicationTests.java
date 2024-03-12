@@ -39,6 +39,7 @@ public abstract class MoneyMinderApplicationTests {
     protected static final String USERS_RESOURCE = "/users";
     protected static final String LOGIN_PATH = USERS_RESOURCE + "/login";
     protected static final String REGISTER_PATH = USERS_RESOURCE + "/register";
+    protected static final String CHANGE_PASSWORD_PATH = USERS_RESOURCE + "/changePassword";
     protected static final String RESET_PASSWORD_PATH = USERS_RESOURCE + "/resetPassword";
     protected static final String CONFIRM_RESET_PASSWORD_PATH = USERS_RESOURCE + "/confirmResetPassword%s";
     protected static final String CATEGORIES_RESOURCE = "/categories";
@@ -97,6 +98,7 @@ public abstract class MoneyMinderApplicationTests {
     public static final String VALID_USER_EMAIL = "cebulaczek@gmail.com";
     public static final String VALID_USER_NAME = "cebulaczek";
     public static final String VALID_USER_PASSWORD = "12345";
+    public static final String NEW_VALID_USER_PASSWORD = "123456";
     public static final String INVALID_USER_EMAIL = "";
     public static final String INVALID_USER_PASSWORD = "";
     public static final String INVALID_USER_NAME = "";
@@ -118,7 +120,8 @@ public abstract class MoneyMinderApplicationTests {
     }
 
     private void registerUser(String email, String name, String password){
-        var response = client.postForEntity(prepareUrl(REGISTER_PATH), new RegisterUserRequest(name, password, email), RegisterUserRequest.class);
+        var response = client.postForEntity(prepareUrl(REGISTER_PATH),
+                new RegisterUserRequest(name, password, email), RegisterUserRequest.class);
     }
 
     protected void runWithoutToken() {
@@ -127,11 +130,7 @@ public abstract class MoneyMinderApplicationTests {
         );
     }
 
-    protected void runWithInvalidToken() {
-        addAuthorizationToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0b3d5Lm1haWxAZ21haWwuY29tIiwiaWF0IjoxNzAzODk1OTg0LCJleHAiOjE3MDM5MTc1ODR9.Ubh9XvZvp9qbu624AtiRBPXj1BzscGVC1MyqfHL5s60");
-    }
-
-    private String getToken(String email, String password) {
+    public String getToken(String email, String password) {
         var loginUserRequest = client.postForEntity(prepareUrl(LOGIN_PATH), new LoginRequest(email, password),
                 LoginResponse.class
         );

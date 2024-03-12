@@ -5,11 +5,14 @@ import com.minder.MoneyMinder.controllers.category.dto.CategoryResponse;
 import com.minder.MoneyMinder.controllers.user.dto.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.NotNull;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.http.HttpStatus.*;
 
 public class UserControllerTests extends MoneyMinderApplicationTests {
@@ -204,5 +207,79 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
                 new HttpEntity<>(new ConfirmResetPasswordRequest(VALID_USER_PASSWORD)), String.class);
 
         assertThat(confirmResetPasswordResponse.getStatusCode(), is(equalTo(OK)));
+    }
+
+    @Test
+    @DisplayName("Should return 200 and change password")
+    public void shouldReturn200AndChangePassword(){
+        runAsUser();
+
+        var changePasswordResponse = client.exchange(prepareUrl(CHANGE_PASSWORD_PATH),
+                HttpMethod.PUT, new HttpEntity<>(new ChangePasswordRequest(VALID_USER_PASSWORD, VALID_USER_PASSWORD, NEW_VALID_USER_PASSWORD)), LoginResponse.class);
+
+        var loginWithNewPasswordToken = getToken(REGISTERED_USER_EMAIL, NEW_VALID_USER_PASSWORD);
+
+        var changePasswordToOldOneResponse = client.exchange(prepareUrl(CHANGE_PASSWORD_PATH),
+                HttpMethod.PUT, new HttpEntity<>(new ChangePasswordRequest(NEW_VALID_USER_PASSWORD, NEW_VALID_USER_PASSWORD, VALID_USER_PASSWORD)), LoginResponse.class);
+
+        assertThat(changePasswordResponse.getStatusCode(), is(equalTo(OK)));
+        assertThat(changePasswordToOldOneResponse.getStatusCode(), is(equalTo(OK)));
+        assertNotNull(loginWithNewPasswordToken);
+        assertNotNull(changePasswordResponse);
+    }
+
+    @Test
+    @DisplayName("Should return 400 when trying to change password with wrong repeat password")
+    public void shouldReturn400WhenGivenWrongPasswords(){
+        runAsUser();
+
+        var changePasswordResponse = client.exchange(prepareUrl(CHANGE_PASSWORD_PATH),
+                HttpMethod.PUT, new HttpEntity<>(new ChangePasswordRequest(VALID_USER_PASSWORD, NEW_VALID_USER_PASSWORD, NEW_VALID_USER_PASSWORD)), LoginResponse.class);
+
+        assertThat(changePasswordResponse.getStatusCode(), is(equalTo(BAD_REQUEST)));
+    }
+
+    @Test
+    @DisplayName("Should return 400 when new password is the same as old one")
+    public void shouldReturn400WhenGivenWrongNewPassword(){
+        runAsUser();
+
+        var changePasswordResponse = client.exchange(prepareUrl(CHANGE_PASSWORD_PATH),
+                HttpMethod.PUT, new HttpEntity<>(new ChangePasswordRequest(VALID_USER_PASSWORD, VALID_USER_PASSWORD, VALID_USER_PASSWORD)), LoginResponse.class);
+
+        assertThat(changePasswordResponse.getStatusCode(), is(equalTo(BAD_REQUEST)));
+    }
+
+    @Test
+    @DisplayName("Should return 400 when new password empty")
+    public void shouldReturn400WhenGivenEmptyNewPassword(){
+        runAsUser();
+
+        var changePasswordResponse = client.exchange(prepareUrl(CHANGE_PASSWORD_PATH),
+                HttpMethod.PUT, new HttpEntity<>(new ChangePasswordRequest(VALID_USER_PASSWORD, VALID_USER_PASSWORD, INVALID_USER_PASSWORD)), LoginResponse.class);
+
+        assertThat(changePasswordResponse.getStatusCode(), is(equalTo(BAD_REQUEST)));
+    }
+
+    @Test
+    @DisplayName("Should return 400 when given old wrong passwords")
+    public void shouldReturn400WhenGivenOldWrongPasswords(){
+        runAsUser();
+
+        var changePasswordResponse = client.exchange(prepareUrl(CHANGE_PASSWORD_PATH),
+                HttpMethod.PUT, new HttpEntity<>(new ChangePasswordRequest(INVALID_USER_PASSWORD, INVALID_USER_PASSWORD, NEW_VALID_USER_PASSWORD)), LoginResponse.class);
+
+        assertThat(changePasswordResponse.getStatusCode(), is(equalTo(BAD_REQUEST)));
+    }
+
+    @Test
+    @DisplayName("Should return 403 when trying to change password without token")
+    public void shouldReturn403WhenTryingToChangeWithoutToken(){
+        runWithoutToken();
+
+        var changePasswordResponse = client.exchange(prepareUrl(CHANGE_PASSWORD_PATH),
+                HttpMethod.PUT, new HttpEntity<>(new ChangePasswordRequest(INVALID_USER_PASSWORD, INVALID_USER_PASSWORD, NEW_VALID_USER_PASSWORD)), LoginResponse.class);
+
+        assertThat(changePasswordResponse.getStatusCode(), is(equalTo(FORBIDDEN)));
     }
 }

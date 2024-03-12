@@ -62,7 +62,7 @@ public class UserController {
                 .orElse(ResponseEntity.status(HttpStatus.FORBIDDEN).build());
     }
 
-    @PostMapping("/changePassword")
+    @PutMapping("/changePassword")
     public ResponseEntity<LoginResponse> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
 
         var user = userService.getUserByEmail();
