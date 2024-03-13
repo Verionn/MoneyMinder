@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS user_entity (
     name VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
+    verified BOOLEAN NOT NULL DEFAULT FALSE,
     time_created TIMESTAMP WITHOUT TIME ZONE,
     role VARCHAR(20) NOT NULL
     );
@@ -55,6 +56,14 @@ CREATE TABLE IF NOT EXISTS purchased_item_entity (
     );
 
 CREATE TABLE IF NOT EXISTS reset_password_token_entity (
+    id SERIAL PRIMARY KEY,
+    token VARCHAR(100) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    expiration_date TIMESTAMP WITHOUT TIME ZONE
+    );
+
+CREATE TABLE IF NOT EXISTS verify_email_token_entity (
     id SERIAL PRIMARY KEY,
     token VARCHAR(100) NOT NULL,
     email VARCHAR(50) NOT NULL,

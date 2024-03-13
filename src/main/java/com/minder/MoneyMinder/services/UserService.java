@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public interface UserService {
-    LoginResponse register(RegisterUserRequest registerUserRequest);
+    void register(HttpServletRequest request, RegisterUserRequest registerUserRequest);
 
     Optional<LoginResponse> login(LoginRequest loginRequest);
 
@@ -28,9 +28,15 @@ public interface UserService {
 
     String getNameByEmail(String email);
 
-    Boolean checkIfTokenExists(String token);
+    Boolean checkIfVerifyEmailTokenExists(String token);
+
+    Boolean checkIfResetPasswordTokenExists(String token);
 
     ResetPasswordTokenEntity getResetPasswordTokenEntityByToken(String token);
 
     void removeToken(String token);
+
+    void verify(String token);
+
+    boolean checkIfUserIsVerified(String email);
 }

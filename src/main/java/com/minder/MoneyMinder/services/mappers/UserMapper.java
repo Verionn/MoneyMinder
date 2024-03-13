@@ -21,7 +21,7 @@ public interface UserMapper {
 
     UserResponse userEntityToUserResponse(UserEntity userEntity);
 
-    default ResetPasswordTokenEntity resetPasswordRequestToResetPasswordTokenEntity(ResetPasswordRequest resetPasswordRequest, String name){
-        return new ResetPasswordTokenEntity(UUID.randomUUID().toString(), resetPasswordRequest.email(), name);
+    default ResetPasswordTokenEntity resetPasswordRequestToResetPasswordTokenEntity(ResetPasswordRequest resetPasswordRequest, String name, int tokenExpiration){
+        return new ResetPasswordTokenEntity(UUID.randomUUID().toString(), resetPasswordRequest.email(), name, tokenExpiration);
     }
 }

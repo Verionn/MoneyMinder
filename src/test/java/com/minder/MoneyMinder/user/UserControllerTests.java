@@ -105,7 +105,6 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
 
         //then
         assertThat(registerResponse.getStatusCode(), is(equalTo(OK)));
-        assertThat(registerResponse.getBody(), is(not(nullValue())));
     }
 
     @Test
