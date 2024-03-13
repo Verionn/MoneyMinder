@@ -138,7 +138,7 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
                 new HttpEntity<>(new LoginRequest(VALID_USER_EMAIL, REGISTERED_USER_PASSWORD)), LoginResponse.class);
 
         //then
-        assertThat(loginResponse.getStatusCode(), is(equalTo(UNAUTHORIZED)));
+        assertThat(loginResponse.getStatusCode(), is(equalTo(BAD_REQUEST)));
         assertThat(loginResponse.getBody(), is(nullValue()));
     }
 
