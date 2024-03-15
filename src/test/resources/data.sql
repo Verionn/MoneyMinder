@@ -12,3 +12,19 @@ values (
            'bajcik@gmail.com',
            'ADMIN'
        );
+
+insert into reset_password_token_entity(token, email, name, expiration_date)
+values(
+       'expiredl-ORKa-4930-9831-eec546b91830',
+       'verion@gmail.com',
+       'klocuszek',
+       '2024-03-06 18:16:00'
+      );
+insert into reset_password_token_entity(token, email, name, expiration_date)
+values(
+      'validsdl-ORKa-4930-9831-eec546b91830',
+      'verion@gmail.com',
+      'klocuszek',
+      '2324-03-06 18:16:00'
+      );
+

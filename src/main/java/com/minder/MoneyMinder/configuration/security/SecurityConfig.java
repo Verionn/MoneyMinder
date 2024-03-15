@@ -27,8 +27,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable).cors(Customizer.withDefaults())
-                .authorizeHttpRequests(request -> request.requestMatchers(new AntPathRequestMatcher("/users/**"))
+
+        http.csrf(AbstractHttpConfigurer::disable)
+
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers(new AntPathRequestMatcher("/users/login"))
+                        .permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/users/register"))
+                        .permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/users/resetPassword"))
+                        .permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/users/confirmResetPassword/**"))
+
                         .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
