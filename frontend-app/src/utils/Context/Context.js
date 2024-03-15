@@ -26,7 +26,7 @@ export const ContextProvider = ({ children }) => {
   };
 
   const updateLoginType = (type) => {
-    console.log(type);
+   
     setLoginType(type);
   };
 

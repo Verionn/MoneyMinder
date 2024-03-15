@@ -3,7 +3,7 @@ export const handleLogout = () => {
   window.location.reload();
 };
 
- export const handleAuthentification = async (credentials,url) => {
+ export const handleAuthentication = async (credentials,url) => {
   try {
     const response = await fetch(url, {
       method: "POST",

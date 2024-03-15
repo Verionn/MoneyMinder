@@ -1,25 +1,36 @@
 import DarkModeButton from "../sharedComponents/darkModeButton/darkModeButton";
 import { MoonIcon } from "../sharedComponents/icons/svgIcons";
 import { SunIcon } from "../sharedComponents/icons/svgIcons";
-import { handleAuthentification } from "../../utils/functions/authentification";
+import { handleAuthentication } from "../../utils/functions/authentication";
 import React, { useState } from "react";
 import { appInfo } from "../../utils/datas/appInfo";
-import { UserIcon } from "../sharedComponents/icons/svgIcons";
-import { EnveloppeIcon } from "../sharedComponents/icons/svgIcons";
+import {
+  EnvelopeIcon,
+  LockIcon,
+  UserIcon,
+  ArrowBackIcon,
+} from "../sharedComponents/icons/svgIcons";
 import "./auth.css";
+import { Styles } from "./styles";
+import { useContextElements } from "../../utils/hooks/customHooks";
 
 const RegisterPage = () => {
-  
+  const { isDarkMode, updateLoginType } = useContextElements();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleAuthentification(
+    await handleAuthentication(
       { name, email, password },
       "http://localhost:8080/users/register"
     );
+  };
+  const style = Styles({ darkMode: isDarkMode });
+
+  const handleGoBack = () => {
+    updateLoginType("/login");
   };
   return (
     <div className="RegisterContainer">
@@ -27,12 +38,20 @@ const RegisterPage = () => {
         {" "}
         <DarkModeButton IconDark={MoonIcon} IconLight={SunIcon} />
       </div>
+      <p
+        onClick={handleGoBack}
+        style={{ cursor: "pointer" }}
+        className="GoBack"
+      >
+        {" "}
+        <ArrowBackIcon  style={{ ...style.leftArrow }}  /> Go back to Login Page
+      </p>
       <h1>{appInfo.name} Register Page</h1>
 
       <form onSubmit={handleSubmit} className="registerForm">
         <div className="inputFieldContainer">
           <div className="labelField">
-            <UserIcon />
+            <UserIcon style={{ ...style.iconFill }} />
           </div>
           <input
             type="text"
@@ -44,7 +63,7 @@ const RegisterPage = () => {
         </div>
         <div className="inputFieldContainer">
           <div className="labelField">
-            <EnveloppeIcon />
+            <EnvelopeIcon style={{ ...style.iconFill }} />
           </div>
           <input
             type="email"
@@ -56,7 +75,7 @@ const RegisterPage = () => {
         </div>
         <div className="inputFieldContainer">
           <div className="labelField">
-            <UserIcon />
+            <LockIcon style={{ ...style.iconFill }} />
           </div>{" "}
           <input
             type="password"
@@ -66,8 +85,9 @@ const RegisterPage = () => {
             placeholder="password"
           />
         </div>
-        <button type="submit" className="RegisterButton">Register</button>
-      
+        <button type="submit" className="RegisterButton">
+          Register
+        </button>
       </form>
     </div>
   );

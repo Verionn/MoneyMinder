@@ -1,30 +1,27 @@
 import DarkModeButton from "../sharedComponents/darkModeButton/darkModeButton";
 import { MoonIcon } from "../sharedComponents/icons/svgIcons";
 import { SunIcon } from "../sharedComponents/icons/svgIcons";
-import { handleAuthentification } from "../../utils/functions/authentification";
-import React, { useEffect, useState } from "react";
+import { handleAuthentication } from "../../utils/functions/authentication";
+import React, {  useState } from "react";
 import { appInfo } from "../../utils/datas/appInfo";
-import { UserIcon } from "../sharedComponents/icons/svgIcons";
-import { EnveloppeIcon } from "../sharedComponents/icons/svgIcons";
+import { EnvelopeIcon, LockIcon } from "../sharedComponents/icons/svgIcons";
 import "./auth.css";
-
+import { Styles } from "./styles";
 import { useContextElements } from "../../utils/hooks/customHooks";
 const LoginPage = () => {
-  const { updateLoginType } = useContextElements();
+  const { updateLoginType,isDarkMode } = useContextElements();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(true);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const check = await handleAuthentification(
+    const check = await handleAuthentication(
       { email, password },
       "http://localhost:8080/users/login"
     );
     setError(check);
   };
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
+  const style = Styles({ darkMode: isDarkMode });
 
   return (
     <div className="RegisterContainer">
@@ -37,7 +34,7 @@ const LoginPage = () => {
       <form onSubmit={handleSubmit} className="registerForm">
         <div className="inputFieldContainer">
           <div className="labelField">
-            <EnveloppeIcon />
+            <EnvelopeIcon style={{...style.iconFill}} />
           </div>
           <input
             type="email"
@@ -51,7 +48,9 @@ const LoginPage = () => {
         </div>
         <div className="inputFieldContainer">
           <div className="labelField">
-            <UserIcon />
+            <LockIcon
+              style={{...style.iconFill }}
+            />
           </div>{" "}
           <input
             type="password"
@@ -69,7 +68,7 @@ const LoginPage = () => {
         <button type="submit" className="RegisterButton">
           Log in
         </button>
-        <p>
+        <p className="noAccount">
           Don't have an account yet ?{" "}
           <div
             onClick={() => updateLoginType("/signup")}

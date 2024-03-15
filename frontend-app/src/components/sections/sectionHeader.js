@@ -6,7 +6,7 @@ import { pageSections } from "../../utils/datas/appInfo";
 import { PlusIcon, MenuIcon, ContentIcon, ChevronDownSquareIcon, LogOutIcon } from "../sharedComponents/icons/svgIcons";
 import { Styles } from "./styles";
 import CreateList  from "../sharedComponents/CreateList/createList";
-import { handleLogout } from "../../utils/functions/authentification";
+import { handleLogout } from "../../utils/functions/authentication";
 const SectionHeder = () => {
   const [show, setShow] = useState(false);
   const { activeSection, isDarkMode } = useContextElements();

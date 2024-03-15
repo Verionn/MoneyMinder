@@ -1,5 +1,5 @@
 .RegisterContainer {
-  border: 1px solid red;
+  
   width: 100%;
   height: 100vh;
   box-sizing: border-box;
@@ -44,7 +44,7 @@
 .labelField {
   font-size: 1.5rem;
   white-space: nowrap;
-  border: 3px solid black;
+  border: 3px solid var(--primary-color);
   width: 60px;
   height: 60px;
   display: flex;
@@ -64,7 +64,7 @@
 }
 .linkButton{
     text-decoration: none;
-    color: var(--primary-color);
+    color: var(--primary-color-10-lighter);
     font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
@@ -73,4 +73,20 @@
     color: red;
     
     font-weight: bold;
+}
+
+.noAccount{
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.GoBack{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
 }
