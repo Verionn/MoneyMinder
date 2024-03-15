@@ -50,7 +50,7 @@ import org.openapitools.client.JSON;
 /**
  * GetCategories200Response
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-15T18:35:55.326132500+01:00[Europe/Warsaw]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T00:31:43.951428+01:00[Europe/Warsaw]")
 public class GetCategories200Response {
   public static final String SERIALIZED_NAME_CATEGORIES = "categories";
   @SerializedName(SERIALIZED_NAME_CATEGORIES)

@@ -2,7 +2,7 @@
 
 MoneyMinder - Rest api
 - API version: 1.0.0
-  - Build date: 2024-03-15T18:35:55.326132500+01:00[Europe/Warsaw]
+  - Build date: 2024-03-16T00:31:43.951428+01:00[Europe/Warsaw]
 
 Api for MoneyMinder project
 

@@ -47,7 +47,7 @@ import org.openapitools.client.JSON;
 /**
  * CreateUserRequestBody
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-15T18:35:55.326132500+01:00[Europe/Warsaw]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-03-16T00:31:43.951428+01:00[Europe/Warsaw]")
 public class CreateUserRequestBody {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
