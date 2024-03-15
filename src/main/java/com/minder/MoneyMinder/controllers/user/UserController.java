@@ -42,7 +42,9 @@ public class UserController {
     public ResponseEntity<LoginResponse> register(@RequestBody RegisterUserRequest registerUserRequest) {
 
 
+
         if (checkIfRegisterUserRequestIsInvalid(registerUserRequest)) {
+
             return ResponseEntity.badRequest().build();
         }
 

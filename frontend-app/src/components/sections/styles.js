@@ -1,6 +1,8 @@
 export const Styles = ({ darkMode }) => ({
     
     iconFill: {
-        fill:'white'
+        fill:'white',
+        cursor: "pointer",  
     }
+
   });
