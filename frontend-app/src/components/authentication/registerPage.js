@@ -2,55 +2,80 @@ import DarkModeButton from "../sharedComponents/darkModeButton/darkModeButton";
 import { MoonIcon } from "../sharedComponents/icons/svgIcons";
 import { SunIcon } from "../sharedComponents/icons/svgIcons";
 import { handleAuthentication } from "../../utils/functions/authentication";
-import React, {  useState } from "react";
-import { appInfo } from "../../utils/datas/appInfo";
-import { EnvelopeIcon, LockIcon } from "../sharedComponents/icons/svgIcons";
+import React, { useState } from "react";
+import { appInfo } from "../../utils/data/appInfo";
+import {
+  EnvelopeIcon,
+  LockIcon,
+  UserIcon,
+  ArrowBackIcon,
+} from "../sharedComponents/icons/svgIcons";
 import "./auth.css";
 import { Styles } from "./styles";
 import { useContextElements } from "../../utils/hooks/customHooks";
-const LoginPage = () => {
-  const { updateLoginType,isDarkMode } = useContextElements();
+
+const RegisterPage = () => {
+  const { isDarkMode, updateLoginType } = useContextElements();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(true);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const check = await handleAuthentication(
-      { email, password },
-      "http://localhost:8080/users/login"
+    await handleAuthentication(
+      { name, email, password },
+      "http://localhost:8080/users/register"
     );
-    setError(check);
   };
   const style = Styles({ darkMode: isDarkMode });
 
+  const handleGoBack = () => {
+    updateLoginType("/login");
+  };
   return (
     <div className="RegisterContainer">
       <div className="darkmode">
         {" "}
         <DarkModeButton IconDark={MoonIcon} IconLight={SunIcon} />
       </div>
-      <h1>{appInfo.name} Login Page</h1>
+      <p
+        onClick={handleGoBack}
+        style={{ cursor: "pointer" }}
+        className="GoBack"
+      >
+        {" "}
+        <ArrowBackIcon  style={{ ...style.leftArrow }}  /> Go back to Login Page
+      </p>
+      <h1>{appInfo.name} Register Page</h1>
 
       <form onSubmit={handleSubmit} className="registerForm">
         <div className="inputFieldContainer">
           <div className="labelField">
-            <EnvelopeIcon style={{...style.iconFill}} />
+            <UserIcon style={{ ...style.iconFill }} />
           </div>
           <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="inputField"
-            placeholder="email"
-            autoComplete="email"
+            placeholder="name"
           />
         </div>
         <div className="inputFieldContainer">
           <div className="labelField">
-            <LockIcon
-              style={{...style.iconFill }}
-            />
+            <EnvelopeIcon style={{ ...style.iconFill }} />
+          </div>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="inputField"
+            placeholder="email"
+          />
+        </div>
+        <div className="inputFieldContainer">
+          <div className="labelField">
+            <LockIcon style={{ ...style.iconFill }} />
           </div>{" "}
           <input
             type="password"
@@ -60,26 +85,12 @@ const LoginPage = () => {
             placeholder="password"
           />
         </div>
-        {!error ? (
-          <p className="error">
-            You have entered an invalid username or password
-          </p>
-        ) : null}
         <button type="submit" className="RegisterButton">
-          Log in
+          Register
         </button>
-        <p className="noAccount">
-          Don't have an account yet ?{" "}
-          <div
-            onClick={() => updateLoginType("/signup")}
-            className="linkButton"
-          >
-            Register here
-          </div>
-        </p>
       </form>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

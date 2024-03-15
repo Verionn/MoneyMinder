@@ -4,7 +4,7 @@ import { GetDataFromApi } from "../../utils/functions/getDataFromApi";
 import { endpoint } from "../../utils/data/serverInfo";
 import { useEffect, useState } from "react";
 import { deleteItem } from "../../utils/functions/deleteItemFromApi";
-import { PostNewItem } from "../../utils/functions/addDatasToApi";
+import { PostNewItem } from "../../utils/functions/addDataToApi";
 import "./ItemList.css";
 export const ListSelectionNavigator = ({ listId }) => {
   const { listArray, updateListArray } = useContextElements();

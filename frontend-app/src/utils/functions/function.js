@@ -133,6 +133,27 @@ export const GetInfosFromList = ({ listID, operationType }) => {
   return null;
 };
 
+export function isElementInListCategory(CategoryList, categoryName) {
+  console.log(CategoryList, categoryName);
+  let isCategoryInList = false;
+  CategoryList.forEach((category) => {
+    if (category.name === categoryName) {
+      isCategoryInList = true;
+    }
+  });
+  return isCategoryInList;
+}
+
+export function findIdCategoryByName(CategoryList, categoryName) {
+  let categoryId = null;
+  CategoryList.forEach((category) => {
+    if (category.name === categoryName) {
+      categoryId = category.categoryId;
+    }
+  });
+  return categoryId;
+}
+
 /*
 export const CreateNotification = (type, message) => {
   switch (type) {

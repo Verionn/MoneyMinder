@@ -2,7 +2,7 @@ import "./section.css";
 import React, { useState } from "react";
 import { useContextElements } from "../../utils/hooks/customHooks";
 import { getActiveTitle } from "../../utils/functions/function";
-import { pageSections } from "../../utils/datas/appInfo";
+import { pageSections } from "../../utils/data/appInfo";
 import { PlusIcon, MenuIcon, ContentIcon, ChevronDownSquareIcon, LogOutIcon } from "../sharedComponents/icons/svgIcons";
 import { Styles } from "./styles";
 import CreateList  from "../sharedComponents/CreateList/createList";

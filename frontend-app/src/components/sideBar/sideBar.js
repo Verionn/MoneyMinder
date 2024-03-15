@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./sideBar.css";
 import { Container, Row } from "react-bootstrap";
 import Typography from "../sharedComponents/typography";
-import { pageSections } from "../../utils/datas/appInfo";
+import { pageSections } from "../../utils/data/appInfo";
 import { RenderSideBarSection } from "./renderSideBarSection";
 import { Styles } from "./styles";
 import { useContextElements } from "../../utils/hooks/customHooks";

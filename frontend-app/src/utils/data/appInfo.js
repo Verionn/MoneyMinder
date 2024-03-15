@@ -1,6 +1,6 @@
 import ShoppingLists from "../../components/shoppingLists/shoppingLists";
-import RegisterPage from "../../components/authentification/registerPage";
-import LoginPage from "../../components/authentification/LoginPage";
+import RegisterPage from "../../components/authentication/registerPage";
+import LoginPage from "../../components/authentication/authentication";
 
 export const appInfo = {
   name: "MoneyMinder",

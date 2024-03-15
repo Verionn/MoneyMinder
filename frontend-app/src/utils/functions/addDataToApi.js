@@ -1,3 +1,5 @@
+import { categoriesUrl } from "../data/serverInfo";
+
 export const PostNewList = async (listName, description, appendNewElement) => {
   try {
     const token = localStorage.getItem("token");
@@ -27,6 +29,7 @@ export const PostNewList = async (listName, description, appendNewElement) => {
 
 export  const PostNewItem = async (newItem, ItemsUrl, appendNewElement,listType) => {
   try {
+    console.log(newItem);
     const token = localStorage.getItem("token");
     const response = await fetch(ItemsUrl, {
       method: "POST",
@@ -49,4 +52,31 @@ export  const PostNewItem = async (newItem, ItemsUrl, appendNewElement,listType)
     return false;
   }
   return true;
+};
+
+
+export const PostNewCategory = async (CategoryName) => {
+  try {
+    const token = localStorage.getItem("token");
+    
+    const response = await fetch(categoriesUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: CategoryName }),
+    });
+    const newElement = await response.json();
+    
+   // appendNewElement(newElement);
+    if (!response.ok) {
+      throw new Error("Failed to create a new list");
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Error creating a new list:", error);
+    return false;
+  }
 };

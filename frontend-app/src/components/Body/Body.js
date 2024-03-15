@@ -1,12 +1,12 @@
 import SideBar from "../sideBar/sideBar";
 import "./Body.css";
-import { appInfo, loginBtn, Credit } from "../../utils/datas/appInfo";
+import { appInfo, loginBtn, Credit } from "../../utils/data/appInfo";
 import { useContextElements } from "../../utils/hooks/customHooks";
 import { Styles } from "./styles";
 import Section from "../sections/section";
 import { useEffect } from "react";
 import RenderRoutes from "../../utils/router/Routes";
-import { AuthObject } from "../../utils/datas/appInfo";
+import { AuthObject } from "../../utils/data/appInfo";
 import { useNavigate } from "react-router";
 const Body = () => {
   const { isDarkMode, handleResize, windowWidth,LoginType } = useContextElements();

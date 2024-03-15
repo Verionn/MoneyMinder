@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { modifyList } from "../../utils/functions/modifyDatasInApi";
+import { modifyList } from "../../utils/functions/modifyDataInApi";
 import { useContextElements } from "../../utils/hooks/customHooks";
 const ModifyList = ({
   modifying,

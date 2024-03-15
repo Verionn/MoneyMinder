@@ -6,8 +6,6 @@ export const GetDataFromApi = ({ apiUrl, options = {} }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  
-
   const fetchOptions = useMemo(() => {
     const token = localStorage.getItem("token");
 
@@ -23,6 +21,7 @@ export const GetDataFromApi = ({ apiUrl, options = {} }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(apiUrl, fetchOptions);
+        
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

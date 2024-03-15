@@ -89,7 +89,7 @@ const ItemBox = ({ listId }) => {
     updatePurchasedItemsArray,
   ]);
   useEffect(() => {
-    console.log("itemsArray", itemsArray);
+    
   }, [itemsArray, purchasedItemsArray]);
 
   if (loading) return <div>Loading...</div>;

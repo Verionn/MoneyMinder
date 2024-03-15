@@ -1,6 +1,6 @@
 import SectionHeader from "./sectionHeader";
 import './section.css'
-import {pageSections} from '../../utils/datas/appInfo';
+import {pageSections} from '../../utils/data/appInfo';
 import DisplayRoutes from "../routes/DisplayRoutes";
 const Section = ({ section }) => {
   return (
