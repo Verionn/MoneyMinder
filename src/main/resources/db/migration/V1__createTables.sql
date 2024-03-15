@@ -53,3 +53,11 @@ CREATE TABLE IF NOT EXISTS purchased_item_entity (
     time_created TIMESTAMP WITHOUT TIME ZONE,
     time_bought TIMESTAMP WITHOUT TIME ZONE
     );
+
+CREATE TABLE IF NOT EXISTS reset_password_token_entity (
+    id SERIAL PRIMARY KEY,
+    token VARCHAR(100) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    expiration_date TIMESTAMP WITHOUT TIME ZONE
+    );

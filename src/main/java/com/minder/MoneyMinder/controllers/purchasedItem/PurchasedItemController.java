@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(path = "/purchasedItems")
+
+@RequestMapping(path = "/purchased-items")
+
 public class PurchasedItemController {
     private final PurchasedItemService purchasedItemService;
     private final PurchasedItemRepository purchasedItemRepository;
