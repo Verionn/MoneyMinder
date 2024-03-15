@@ -1,6 +1,6 @@
 import { useContextElements } from "../../utils/hooks/customHooks";
-import { GetDatasFromApi } from "../../utils/functions/getDatasFromApi";
-import { endpoint } from "../../utils/datas/serverInfo";
+import { GetDataFromApi } from "../../utils/functions/getDataFromApi";
+import { endpoint } from "../../utils/data/serverInfo";
 import { useEffect } from "react";
 import "./shoppingLists.css";
 import { Styles } from "./styles";
@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 const ShoppingLists = () => {
   const { listArray, updateListArray, isDarkMode } = useContextElements();
   const apiURL = `${endpoint}/lists`;
-  const { data, loading, error } = GetDatasFromApi({ apiUrl: apiURL });
+  const { data, loading, error } = GetDataFromApi({ apiUrl: apiURL });
   const [isShowingDescription, setIsShowingDescription] = useState([]);
   const [isDeletingList, setIsDeletingList] = useState(-1);
   const [isModifyingName, setIsModifyingName] = useState(-1);
@@ -49,16 +49,19 @@ const ShoppingLists = () => {
     });
   };
 
-  const toglleDeleteList = (index) => {
+  const toggleDeleteList = (index,event) => {
+    event.stopPropagation();
     setIsDeletingList(index);
   };
-  const toggleModifyIcon = (index) => {
+  const toggleModifyIcon = (index,event) => {
+    event.stopPropagation(); 
     setIsModifyingName(index);
     setIsModifyingDescription(index);
     toggleDescription(index);
   };
 
-  const handleListClick = (listId) => {
+  const handleListClick = (listId,event) => {
+    event.stopPropagation();
     navigate(`/shopping-list/${listId}`);
   };
 
@@ -69,7 +72,7 @@ const ShoppingLists = () => {
           key={`list-${list.listId}`}
           className="singleList"
           style={{ ...styles.singleList }}
-          onClick={() => handleListClick(list.listId)}
+          onClick={(e) => handleListClick(list.listId,e)}
         >
           <div className="singleListHeader">
             {isModifyingName === index ? (
@@ -92,11 +95,11 @@ const ShoppingLists = () => {
             <div className="listIcons">
               <EditIcon
                 style={{ ...styles.icons }}
-                onClick={() => toggleModifyIcon(index)}
+                onClick={(e) => toggleModifyIcon(index,e)}
               />
               <TrashIcon
                 style={{ ...styles.icons }}
-                onClick={() => toglleDeleteList(index)}
+                onClick={(e) => toggleDeleteList(index,e)}
               />
               <ConfirmAction
                 show={index === isDeletingList}
@@ -109,7 +112,7 @@ const ShoppingLists = () => {
           <div className="singleListBody">
             <div className="SingleListStats">
               <p>
-                {`Items Boughts : `}
+                {`Items Bought : `}
                 <GetInfosFromPurchasedItemsList
                   listID={list.listId}
                   operationType={"len"}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { endpoint } from "../datas/serverInfo";
-import { GetDatasFromApi } from "../functions/getDatasFromApi";
+import { endpoint } from "../data/serverInfo";
+import { GetDataFromApi } from "./getDataFromApi";
 import { useGetInfosFromPurchasedItemsList } from "../hooks/customHooks";
 
 export function setFonSize(tag, isGoodTag) {
@@ -66,7 +66,6 @@ export const GetInfosFromItemList = ({ listID, operationType }) => {
     error: purchasedItemListError,
   } = useGetInfosFromPurchasedItemsList({ listID, operationType: "len" });
 
-
   const {
     result: purchasedItemPrice,
     loading: purchasedItemListLoadingPrice,
@@ -74,53 +73,63 @@ export const GetInfosFromItemList = ({ listID, operationType }) => {
   } = useGetInfosFromPurchasedItemsList({ listID, operationType: "price" });
 
   const apiUrl = `${endpoint}/lists/${listID}/items`;
-  const { data } = GetDatasFromApi({ apiUrl: apiUrl });
-  if (operationType === "price") {
-    let price = 0;
-    data?.items?.forEach((item) => {
-      price += item.price*item.amount;
-    });
-    return price.toFixed(2);
+  const { data } = GetDataFromApi({ apiUrl: apiUrl });
+
+  if (data && purchasedItemListLength && purchasedItemPrice) {
+    if (operationType === "price") {
+      let price = 0;
+      data?.items?.forEach((item) => {
+        price += item.price * item.amount;
+      });
+      return price.toFixed(2);
+    }
+    if (operationType === "len") return data?.items?.length;
+    if (operationType === "itemsCount") {
+      if (purchasedItemListLoading) return null;
+      if (purchasedItemListError) return null;
+
+      return data?.items?.length + purchasedItemListLength;
+    }
+    if (operationType === "allItemsPrice") {
+      let price = 0;
+      data?.items?.forEach((item) => {
+        price += item.price * item.amount;
+      });
+      if (purchasedItemListLoadingPrice) return null;
+      if (purchasedItemListErrorPrice) return null;
+      return (Number(purchasedItemPrice) + Number(price)).toFixed(2);
+    }
   }
-  if (operationType === "len") return data?.items?.length;
-  if(operationType === "itemsCount"){
-    if(purchasedItemListLoading) return null;
-    if(purchasedItemListError) return null;
-    return data?.items?.length + purchasedItemListLength;
-  }
-  if(operationType === "allItemsPrice"){
-    let price = 0;
-    data?.items?.forEach((item) => {
-      price += item.price*item.amount;
-    });
-    if(purchasedItemListLoadingPrice) return null;
-    if(purchasedItemListErrorPrice) return null;
-    return (Number(purchasedItemPrice)+Number(price)).toFixed(2);
-  }
-  return null;
+
+  return 0;
 };
 
 export const GetInfosFromPurchasedItemsList = ({ listID, operationType }) => {
-  const apiUrl = `${endpoint}/purchasedItems/lists/${listID}`;
-  const { data } = GetDatasFromApi({ apiUrl: apiUrl });
-  if (operationType === "price") {
-    let price = 0;
-    data?.purchasedItems?.forEach((item) => {
-      price += item.price*item.amount;
-    });
-    return price.toFixed(2);
+  const apiUrl = `${endpoint}/purchased-items/lists/${listID}`;
+  const { data } = GetDataFromApi({ apiUrl: apiUrl });
+  if (data) {
+    if (operationType === "price") {
+      let price = 0;
+      data?.purchasedItems?.forEach((item) => {
+        price += item.price * item.amount;
+      });
+      return price.toFixed(2);
+    }
+    if (operationType === "len") return data?.purchasedItems?.length;
   }
-  if (operationType === "len") return data?.purchasedItems?.length;
-  return null;
+  return 0;
 };
 
 export const GetInfosFromList = ({ listID, operationType }) => {
   const apiUrl = `${endpoint}/lists/${listID}`;
-  const { data } = GetDatasFromApi({ apiUrl: apiUrl });
-  if (operationType === "name") {
-    return data?.name;
+  const { data } = GetDataFromApi({ apiUrl: apiUrl });
+  if (data) {
+    if (operationType === "name") {
+      return data?.name;
+    }
+    if (operationType === "description") return data?.description;
   }
-  if (operationType === "description") return data?.description;
+
   return null;
 };
 

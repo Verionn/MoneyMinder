@@ -1,8 +1,8 @@
 import { useContextElements } from "../../utils/hooks/customHooks";
 import { Styles } from "./styles";
 import { useEffect, useState } from "react";
-import { GetDatasFromApi } from "../../utils/functions/getDatasFromApi";
-import { endpoint } from "../../utils/datas/serverInfo";
+import { GetDataFromApi } from "../../utils/functions/getDataFromApi";
+import { endpoint } from "../../utils/data/serverInfo";
 import { Container, Row, Col } from "react-bootstrap";
 import "./ItemList.css";
 import TotalPriceFooter from "./TotalPriceFooter";
@@ -23,7 +23,7 @@ const ItemBox = ({ listId }) => {
     windowWidth,
     isDarkMode,
     itemsArray,
-    purchasedItemsArray,  
+    purchasedItemsArray,
     handleDeleteItemsInItemsArray,
     updateItemsArray,
     handleAddPurchasedItem,
@@ -31,14 +31,14 @@ const ItemBox = ({ listId }) => {
   } = useContextElements();
   const styles = Styles({ darkMode: isDarkMode, windowWidth });
   const apiURL = `${endpoint}/lists/${listId}/items`;
-  const apiUlrPurchasedItems = `${endpoint}/purchasedItems/lists/${listId}`;
-  const { data, loading, error } = GetDatasFromApi({ apiUrl: apiURL });
+  const apiUlrPurchasedItems = `${endpoint}/purchased-items/lists/${listId}`;
+  const { data, loading, error } = GetDataFromApi({ apiUrl: apiURL });
   const {
     data: purchasedItems,
     loading: loadingPurchasedItems,
     error: errorPurchasedItems,
-  } = GetDatasFromApi({ apiUrl: apiUlrPurchasedItems });
- 
+  } = GetDataFromApi({ apiUrl: apiUlrPurchasedItems });
+
   const navigation = useNavigate();
   useEffect(() => {}, [windowWidth, isDarkMode]);
   const handleCloseItemLists = () => {
@@ -77,10 +77,17 @@ const ItemBox = ({ listId }) => {
     if (data?.items && !loading) {
       updateItemsArray(data);
     }
-    if(purchasedItems?.purchasedItems && !loadingPurchasedItems){
+    if (purchasedItems?.purchasedItems && !loadingPurchasedItems) {
       updatePurchasedItemsArray(purchasedItems);
     }
-  }, [data, loading, updateItemsArray, purchasedItems, loadingPurchasedItems, updatePurchasedItemsArray]);
+  }, [
+    data,
+    loading,
+    updateItemsArray,
+    purchasedItems,
+    loadingPurchasedItems,
+    updatePurchasedItemsArray,
+  ]);
   useEffect(() => {
     console.log("itemsArray", itemsArray);
   }, [itemsArray, purchasedItemsArray]);
@@ -133,7 +140,7 @@ const ItemBox = ({ listId }) => {
                   />
                 )
             )}
-            <div className="PurchasedItemsTitle">Purchased Items</div>
+          <div className="PurchasedItemsTitle">Purchased Items</div>
 
           {purchasedItemsArray.purchasedItems &&
             purchasedItemsArray.purchasedItems.map((item, index) => (
@@ -159,7 +166,9 @@ const ItemBox = ({ listId }) => {
           <Col xs={6} className="">
             <button
               className="ButtonItem deleteButton"
-              onClick={() => initiateItemsDeletion(setIsDeletting, selectedItems)}
+              onClick={() =>
+                initiateItemsDeletion(setIsDeletting, selectedItems)
+              }
             >
               Delete selected Items
             </button>
@@ -204,7 +213,7 @@ const ItemBox = ({ listId }) => {
               data,
               listId,
               handleAddPurchasedItem,
-              handleDeleteItemsInItemsArray,
+              handleDeleteItemsInItemsArray
             )
           }
           canConfirm={true}

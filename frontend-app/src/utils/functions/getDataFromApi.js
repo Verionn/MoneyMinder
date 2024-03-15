@@ -1,7 +1,7 @@
 // LISTS and ITEMS
 import { useState, useEffect, useMemo } from "react";
 
-export const GetDatasFromApi = ({ apiUrl, options = {} }) => {
+export const GetDataFromApi = ({ apiUrl, options = {} }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

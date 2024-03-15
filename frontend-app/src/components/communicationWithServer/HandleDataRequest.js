@@ -36,7 +36,7 @@ export const GetListsData = ({ apiUrl }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { initializeArray, listArray,allListAndItesm } = UseListArray();
+  const { initializeArray, listArray, allListAndItesm } = UseListArray();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,7 +58,6 @@ export const GetListsData = ({ apiUrl }) => {
     fetchData();
   }, [apiUrl, initializeArray]);
 
-
   return { data, loading, error };
 };
 
@@ -78,7 +77,6 @@ export const GetItemListData = ({ apiUrl }) => {
         const result = await response.json();
         setItems(result.items);
         await initializeArray(result.items, "items");
-      
       } catch (error) {
         setError(error);
       } finally {
@@ -92,12 +90,12 @@ export const GetItemListData = ({ apiUrl }) => {
   return { items, loading, error };
 };
 
-///purchasedItems/lists/{listId}
+/// purchased-itemss/lists/{listId}
 export const GetPurchasedItemListData = ({ listID }) => {
   const [purchasedItems, setPurchasedItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const apiUrl = `${endpoint}/purchasedItems/lists/${listID}`;
+  const apiUrl = `${endpoint}/ purchased-itemss/lists/${listID}`;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -107,7 +105,6 @@ export const GetPurchasedItemListData = ({ listID }) => {
         }
         const result = await response.json();
         setPurchasedItems(result.purchasedItems);
-      
       } catch (error) {
         setError(error);
       } finally {
@@ -197,7 +194,7 @@ export const PostNewCategory = async ({ NewCategoryName }) => {
   }
 };
 
-export const PostCheckedItem = async (item,addElement) => {
+export const PostCheckedItem = async (item, addElement) => {
   try {
     let itemId = item.itemId;
     let listId = item.listId;
@@ -220,12 +217,11 @@ export const PostCheckedItem = async (item,addElement) => {
     return false;
   }
   return true;
-}
+};
 
 //Delete data from server
 export const deleteItem = async (item) => {
   try {
-    
     const response = await fetch(
       `http://localhost:8080/lists/${item.listId}/items/${item.itemId}`,
       {
@@ -254,7 +250,6 @@ export const deleteItem = async (item) => {
     console.error("Error deleting item:", error);
   }
 };
-
 
 const getByText = (method, type, message) => {
   if (message === "success") {
