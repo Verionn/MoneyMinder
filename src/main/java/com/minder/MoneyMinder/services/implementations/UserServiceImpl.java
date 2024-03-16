@@ -95,10 +95,6 @@ public class UserServiceImpl implements UserService {
                 )
         );
 
-        //TODO:
-        //sprawdzic czy jest zweryfikowany jezeli nie jest to nie wpuszczac
-
-
         return userRepository.findByEmail(loginRequest.email())
                 .map(user -> {
                     var jwtToken = jwtService.generateToken(user);
@@ -156,6 +152,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResetPasswordTokenEntity getResetPasswordTokenEntityByToken(String token) {
         return resetPasswordTokenRepository.getTokenEntityByToken(token);
+    }
+
+    @Override
+    public VerifyEmailTokenEntity getVerifyEmailTokenEntityByToken(String token) {
+        return verifyEmailTokenRepository.getTokenEntityByToken(token);
     }
 
     @Override

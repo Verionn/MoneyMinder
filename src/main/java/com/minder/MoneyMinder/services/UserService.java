@@ -3,6 +3,7 @@ package com.minder.MoneyMinder.services;
 
 import com.minder.MoneyMinder.controllers.user.dto.*;
 import com.minder.MoneyMinder.models.ResetPasswordTokenEntity;
+import com.minder.MoneyMinder.models.VerifyEmailTokenEntity;
 import io.vavr.control.Either;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,8 @@ public interface UserService {
     Boolean checkIfResetPasswordTokenExists(String token);
 
     ResetPasswordTokenEntity getResetPasswordTokenEntityByToken(String token);
+
+    VerifyEmailTokenEntity getVerifyEmailTokenEntityByToken(String token);
 
     void removeToken(String token);
 
