@@ -1,0 +1,92 @@
+.RegisterContainer {
+  
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.darkmode {
+  position: absolute;
+  top: 1%;
+  right: 5%;
+  cursor: pointer;
+}
+
+.registerForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+ 
+}
+
+.inputField {
+  height: 40px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 1rem;
+  padding: 5px;
+}
+.inputFieldContainer {
+ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.labelField {
+  font-size: 1.5rem;
+  white-space: nowrap;
+  border: 3px solid var(--primary-color);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  fill:white;
+}
+
+.RegisterButton{
+    width: 120px;
+    height: 50px;
+    border-radius: 8px;
+    background-color: var(--secondary-color);
+    font-size: 1.5rem;
+    color: white;
+}
+.linkButton{
+    text-decoration: none;
+    color: var(--primary-color-10-lighter);
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+.error{
+    color: red;
+    
+    font-weight: bold;
+}
+
+.noAccount{
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.GoBack{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+}

@@ -4,10 +4,12 @@ import { deleteList } from "../../utils/functions/deleteItemFromApi";
 import { useContextElements } from "../../utils/hooks/customHooks";
 export const ConfirmAction = ({ show, listName, setIsDeletingList,listId,children="" }) => {
   const { handleDelete } = useContextElements();
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.stopPropagation();
     setIsDeletingList(-1);
   };
-  const handleDeleteList = () => {
+  const handleDeleteList = (e) => {
+    e.stopPropagation();
     if(deleteList(listId,handleDelete)){
       
     }else alert("Failed to delete the list");

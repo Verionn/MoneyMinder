@@ -1,5 +1,6 @@
 package com.minder.MoneyMinder.controllers.user;
 
+
 import com.minder.MoneyMinder.controllers.user.dto.*;
 import com.minder.MoneyMinder.models.ResetPasswordTokenEntity;
 import com.minder.MoneyMinder.services.UserService;
@@ -8,14 +9,17 @@ import com.minder.MoneyMinder.services.mappers.UserMapper;
 import java.time.Duration;
 
 import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -28,6 +32,7 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper = UserMapper.INSTANCE;
 
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
@@ -37,11 +42,15 @@ public class UserController {
     public ResponseEntity<HttpStatus> register(HttpServletRequest request,
                                                @RequestBody RegisterUserRequest registerUserRequest) {
 
+
+
         if (checkIfRegisterUserRequestIsInvalid(registerUserRequest)) {
+
             return ResponseEntity.badRequest().build();
         }
 
         if (checkIfEmailIsRegistered(registerUserRequest.email())) {
+
             return ResponseEntity.status(CONFLICT).build();
         }
         userService.register(request, registerUserRequest);
@@ -51,6 +60,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+
 
         if (checkIfLoginRequestIsInvalid(loginRequest)) {
             return ResponseEntity.badRequest().build();
@@ -64,12 +74,11 @@ public class UserController {
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
 
-        //TODO: dodać testy do logowania z weryfikacja
-
         return userService.login(loginRequest)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.FORBIDDEN).build());
     }
+
 
     @PutMapping("/change-password")
     public ResponseEntity<LoginResponse> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
@@ -183,6 +192,7 @@ public class UserController {
     private boolean checkIfResetPasswordRequestIsInvalid(ResetPasswordRequest resetPasswordRequest) {
         return resetPasswordRequest.email().isBlank()
                 || !resetPasswordRequest.email().contains("@");
+
     }
 
     private boolean checkIfLoginRequestIsInvalid(LoginRequest loginRequest) {

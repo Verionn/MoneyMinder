@@ -16,13 +16,18 @@ export const ContextProvider = ({ children }) => {
   );
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
+  const [LoginType, setLoginType] = useState("login");
   const [listArray, setListArray] = useState({ lists: [] });
   const [itemsArray, setItemsArray] = useState({ items: [] });
   const [purchasedItemsArray, setPurchasedItemsArray] = useState({purchasedItems: []});
 
   const updateActiveSection = (sectionId) => {
     setActiveSection(sectionId);
+  };
+
+  const updateLoginType = (type) => {
+   
+    setLoginType(type);
   };
 
   const handleResize = () => {
@@ -144,6 +149,7 @@ export const ContextProvider = ({ children }) => {
         windowWidth,
         itemsArray,
         purchasedItemsArray,
+        LoginType,
         updateDarkMode,
         updateActiveSection,
         updateListArray,
@@ -157,6 +163,7 @@ export const ContextProvider = ({ children }) => {
         handleDeleteItemsInPurchasedItems,
         handleAddPurchasedItem,
         updatePurchasedItemsArray,
+        updateLoginType,
       }}
     >
       {children}

@@ -13,9 +13,8 @@ const AddNewItemForm = ({ onSave, onCancel }) => {
       name,
       price: parseFloat(price),
       amount: parseInt(amount, 10),
-      categoryId: parseInt(categoryId, 10),
+      categoryId: categoryId,
       weight: parseInt(weight, 10),
-      timeCreated: new Date().toISOString(),
     });
   };
 
@@ -46,10 +45,10 @@ const AddNewItemForm = ({ onSave, onCancel }) => {
         required
       />
       <input
-        type="number"
+        type="string"
         value={categoryId}
         onChange={(e) => setCategoryId(e.target.value)}
-        placeholder="Category ID"
+        placeholder="Category name"
         required
       />
       <input

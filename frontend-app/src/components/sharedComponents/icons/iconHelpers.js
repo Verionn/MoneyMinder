@@ -2,7 +2,7 @@ const iconCart = require("../../../utils/assets/jsonIcons/system-solid-6-shoppin
 const iconTrash = require("../../../utils/assets/jsonIcons/system-solid-39-trash.json");
 const iconHelp = require("../../../utils/assets/jsonIcons/system-solid-57-help-question.json");
 const iconSettings = require("../../../utils/assets/jsonIcons/system-solid-63-settings-cog.json");
-
+const iconPencil = require("../../../utils/assets/jsonIcons/wired-flat-35-edit.json");
 //ALL STATES FOR EACH ICON
 
 export const iconStateMap = {
@@ -24,6 +24,11 @@ export const iconStateMap = {
     clicked: "in-cog",
     hover1: "hover-cog",
     hover2: "hover-cog-2",
+  },
+  pencilIcon: {
+    clicked: "in-dynamic",
+    hover1: "hover-circle",
+    hover2: "hover-line",
   },
 };
 
@@ -52,6 +57,8 @@ export const getIconType = (iconName) => {
       return iconHelp;
     case "settingsIcon":
       return iconSettings;
+    case "pencilIcon":
+      return iconPencil;
     default:
       return null;
   }
@@ -60,24 +67,24 @@ export const getIconType = (iconName) => {
 export const getIconState = (iconName, currentState, iconStateMap) => {
   if (!iconStateMap[iconName]) throw new Error("Icon not found");
   const iconState = iconStateMap[iconName];
-  console.log("iconState", iconState);
   switch (iconName) {
     case "cartIcon":
-  
     case "helpIcon":
     case "settingsIcon":
+    case "pencilIcon":
       if (currentState === "clicked") {
         return iconState.clicked;
       } else if (currentState === "enter") {
         return iconState.hover1;
       }
+      break;
     case "trashIcon":
       if (currentState === "clicked") {
         return iconState.clicked;
       } else if (currentState === "enter") {
         return iconState.hover2;
       }
-
+      break;
     default:
       return null;
   }

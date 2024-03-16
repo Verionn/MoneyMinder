@@ -39,21 +39,25 @@ public abstract class MoneyMinderApplicationTests {
     protected static final String USERS_RESOURCE = "/users";
     protected static final String LOGIN_PATH = USERS_RESOURCE + "/login";
     protected static final String REGISTER_PATH = USERS_RESOURCE + "/register";
+
     protected static final String CHANGE_PASSWORD_PATH = USERS_RESOURCE + "/change-password";
     protected static final String RESET_PASSWORD_PATH = USERS_RESOURCE + "/reset-password";
     protected static final String CONFIRM_RESET_PASSWORD_PATH = USERS_RESOURCE + "/confirm-reset-password%s";
+
     protected static final String CATEGORIES_RESOURCE = "/categories";
     protected static final String LISTS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d";
     protected static final String CATEGORY_DETAILS_PATH_FORMAT = CATEGORIES_RESOURCE + "/%d";
     protected static final String ITEMS_RESOURCE = LISTS_RESOURCE + "/%d/items";
     protected static final String ITEMS_DETAILS_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d";
     protected static final String MARK_ITEM_PURCHASED_PATH_FORMAT = LISTS_RESOURCE + "/%d/items/%d/purchased";
+
     protected static final String PURCHASED_ITEMS_BY_CATEGORY_ID_PATH_FORMAT = "/purchased-items/categories/%d";
     protected static final String PURCHASED_ITEMS_BY_CATEGORY_ID_AND_DAYS_PATH_FORMAT = "/purchased-items/categories/%d/days/%d";
     protected static final String PURCHASED_ITEMS_BY_DAYS_PATH_FORMAT = "/purchased-items/days/%d";
     protected static final String PURCHASED_ITEMS_BY_AMOUNT_OF_ITEMS_PATH_FORMAT = "/purchased-items/items/%d";
     protected static final String PURCHASED_ITEMS_BY_LIST_ID_FORMAT= "/purchased-items/lists/%d";
     protected static final String PURCHASED_ITEMS_BY_PREFIX_PATH_FORMAT = "/purchased-items/names/%s";
+
     protected static final String FULL_PRICE_PATH_FORMAT = LISTS_RESOURCE + "/%d/fullprice";
     public static final String LIST_DESCRIPTION = "GO TO THE LIDL BCS OF PROMOTIONS";
     public static final String NEW_LIST_DESCRIPTION = "GO TO THE BIEDRONKA BCS DZIK GRAPE IS THERE";
@@ -93,6 +97,7 @@ public abstract class MoneyMinderApplicationTests {
     public static final long AMOUNT_OF_ITEMS = 2;
     public static final LocalDateTime VALID_DATE = LocalDateTime.parse("2023-10-15T21:15:00");
     public static final String REGISTERED_USER_EMAIL = "verion@gmail.com";
+
     public static final String UNREGISTERED_USER_EMAIL = "joramek@gmail.com";
     public static final String REGISTERED_USER_PASSWORD = "12345";
     public static final String VALID_USER_EMAIL = "cebulaczek@gmail.com";
@@ -106,6 +111,7 @@ public abstract class MoneyMinderApplicationTests {
     public static final String RANDOM_CONFIRM_RESET_PASSWORD_TOKEN = "62eJDacd-ORKa-4930-9831-eec546b91830";
     public static final String EXPIRED_CONFIRM_RESET_PASSWORD_TOKEN = "expiredl-ORKa-4930-9831-eec546b91830";
     public static final String VALID_CONFIRM_RESET_PASSWORD_TOKEN = "validsdl-ORKa-4930-9831-eec546b91830";
+
     protected String userToken;
 
     @Autowired
@@ -120,8 +126,10 @@ public abstract class MoneyMinderApplicationTests {
     }
 
     private void registerUser(String email, String name, String password){
+
         var response = client.postForEntity(prepareUrl(REGISTER_PATH),
                 new RegisterUserRequest(name, password, email), RegisterUserRequest.class);
+
     }
 
     protected void runWithoutToken() {
@@ -130,7 +138,9 @@ public abstract class MoneyMinderApplicationTests {
         );
     }
 
+
     public String getToken(String email, String password) {
+
         var loginUserRequest = client.postForEntity(prepareUrl(LOGIN_PATH), new LoginRequest(email, password),
                 LoginResponse.class
         );

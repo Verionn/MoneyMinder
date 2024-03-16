@@ -1,5 +1,6 @@
 package com.minder.MoneyMinder.services.implementations;
 
+
 import com.minder.MoneyMinder.controllers.user.dto.*;
 import com.minder.MoneyMinder.models.ResetPasswordTokenEntity;
 import com.minder.MoneyMinder.models.Role;
@@ -11,6 +12,7 @@ import com.minder.MoneyMinder.repositories.VerifyEmailTokenRepository;
 import com.minder.MoneyMinder.services.UserService;
 import com.minder.MoneyMinder.services.mappers.UserMapper;
 import io.vavr.control.Either;
+
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,13 +21,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import java.io.UnsupportedEncodingException;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,6 +39,7 @@ import static com.minder.MoneyMinder.controllers.user.UserController.VERIFY_ACCO
 
 @Service
 public class UserServiceImpl implements UserService {
+
 
     private final JavaMailSender mailSender;
     private final UserRepository userRepository;
@@ -101,6 +107,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+
     public Optional<LoginResponse> changePassword(ChangePasswordRequest changePasswordRequest, UserResponse user) {
         userRepository.findById(user.userId())
                 .map(userEntity -> updateUserEntityPassword(userEntity, changePasswordRequest.newPassword()))
@@ -182,6 +189,7 @@ public class UserServiceImpl implements UserService {
     public boolean checkIfEmailExists(String email) {
         return userRepository.existsByEmail(email);
     }
+
 
     private UserEntity updateUserEntityPassword(UserEntity userEntity, String password) {
         userEntity.setPassword(passwordEncoder.encode(password));

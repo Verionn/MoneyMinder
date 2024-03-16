@@ -1,15 +1,19 @@
 import SideBar from "../sideBar/sideBar";
 import "./Body.css";
-import { appInfo, loginBtn, Credit } from "../../utils/datas/appInfo";
+import { appInfo, loginBtn, Credit } from "../../utils/data/appInfo";
 import { useContextElements } from "../../utils/hooks/customHooks";
 import { Styles } from "./styles";
 import Section from "../sections/section";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import RenderRoutes from "../../utils/router/Routes";
-import { LoginPage } from "../../utils/datas/appInfo";
+import { AuthObject } from "../../utils/data/appInfo";
+import { useNavigate } from "react-router";
 const Body = () => {
-  const { isDarkMode, handleResize, windowWidth } = useContextElements();
-  const [isLogin, setIsLogin] = useState(false);
+  const { isDarkMode, handleResize, windowWidth,LoginType } = useContextElements();
+  const Token = localStorage.getItem("token");
+
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -18,17 +22,27 @@ const Body = () => {
     };
   }, [handleResize]);
 
+  useEffect(() => {
+    if (!Token) {
+      if(LoginType === "/signup") navigate("/signup");
+      else navigate("/login");
+    }
+   
+  }, [Token, navigate,LoginType]);
+
   const styles = Styles({ darkMode: isDarkMode, windowWidth: windowWidth });
 
   return (
-    <div className="appStates">
-      {isLogin ? (
-        <div className="appBody" style={{ ...styles.root }}>
+    <div className="appStates" style={{ ...styles.root }}>
+      {Token ? (
+        <div className="appBody">
           <SideBar appInfo={appInfo} login={loginBtn} Credit={Credit} />
           <Section />
         </div>
       ) : (
-        <RenderRoutes routes={LoginPage} />
+        <>
+          <RenderRoutes routes={AuthObject} style={{ ...styles.root }} />
+        </>
       )}
     </div>
   );

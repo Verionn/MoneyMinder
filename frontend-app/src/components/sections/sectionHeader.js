@@ -2,10 +2,11 @@ import "./section.css";
 import React, { useState } from "react";
 import { useContextElements } from "../../utils/hooks/customHooks";
 import { getActiveTitle } from "../../utils/functions/function";
-import { pageSections } from "../../utils/datas/appInfo";
-import { PlusIcon, MenuIcon, ContentIcon, ChevronDownSquareIcon } from "../sharedComponents/icons/svgIcons";
+import { pageSections } from "../../utils/data/appInfo";
+import { PlusIcon, MenuIcon, ContentIcon, ChevronDownSquareIcon, LogOutIcon } from "../sharedComponents/icons/svgIcons";
 import { Styles } from "./styles";
 import CreateList  from "../sharedComponents/CreateList/createList";
+import { handleLogout } from "../../utils/functions/authentication";
 const SectionHeder = () => {
   const [show, setShow] = useState(false);
   const { activeSection, isDarkMode } = useContextElements();
@@ -19,7 +20,7 @@ const SectionHeder = () => {
     setShow(true);
   };
   return (
-    <div className="sectionHeader">
+    <div className="sectionHeader" style={{...style.headerBackground}}>
       <h1>{title}</h1>
       <div className="sectionHeaderRight">
         <button className="addListContainer" onClick={handleShow}>
@@ -34,7 +35,9 @@ const SectionHeder = () => {
           )}
           <p>View</p>
           <ChevronDownSquareIcon style={{ ...style.iconFill }} />
+
         </button>
+        <LogOutIcon style={{ ...style.iconFill }} onClick={handleLogout} />
       </div>
       {show && <CreateList setShow={setShow} show={show} />}
     </div>

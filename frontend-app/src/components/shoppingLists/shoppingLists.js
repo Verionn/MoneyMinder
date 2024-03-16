@@ -1,6 +1,6 @@
 import { useContextElements } from "../../utils/hooks/customHooks";
-import { GetDatasFromApi } from "../../utils/functions/getDatasFromApi";
-import { endpoint } from "../../utils/datas/serverInfo";
+import { GetDataFromApi } from "../../utils/functions/getDataFromApi";
+import { endpoint } from "../../utils/data/serverInfo";
 import { useEffect } from "react";
 import "./shoppingLists.css";
 import { Styles } from "./styles";
@@ -18,17 +18,18 @@ import {
 } from "../../utils/functions/function";
 import { SingleListStats } from "./singleListStats";
 import { useNavigate } from "react-router-dom";
+import EmptyArray from "../sharedComponents/NothingHere/emptyArray";
+import CreateList from "../sharedComponents/CreateList/createList";
 
 const ShoppingLists = () => {
   const { listArray, updateListArray, isDarkMode } = useContextElements();
   const apiURL = `${endpoint}/lists`;
-  const { data, loading, error } = GetDatasFromApi({ apiUrl: apiURL });
+  const { data, loading, error } = GetDataFromApi({ apiUrl: apiURL });
   const [isShowingDescription, setIsShowingDescription] = useState([]);
   const [isDeletingList, setIsDeletingList] = useState(-1);
   const [isModifyingName, setIsModifyingName] = useState(-1);
   const [isModifyingDescription, setIsModifyingDescription] = useState(-1);
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     if (data && data.lists) {
@@ -41,27 +42,49 @@ const ShoppingLists = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   const styles = Styles({ darMokde: isDarkMode });
-  const toggleDescription = (index) => {
+  const toggleDescription = (index, event) => {
+    event.stopPropagation();
     setIsShowingDescription((prevState) => {
       const newState = [...prevState];
       newState[index] = !newState[index];
       return newState;
     });
   };
-
-  const toglleDeleteList = (index) => {
+const handleIsModifyingDescription = (index, event) => {
+  event.stopPropagation();
+  setIsModifyingDescription(index);
+};
+const handleIsModifyingName = (index, event) => {
+  event.stopPropagation();
+  setIsModifyingName(index);
+};
+  const toggleDeleteList = (index, event) => {
+    event.stopPropagation();
     setIsDeletingList(index);
   };
-  const toggleModifyIcon = (index) => {
+  const toggleModifyIcon = (index, event) => {
+    event.stopPropagation();
     setIsModifyingName(index);
     setIsModifyingDescription(index);
-    toggleDescription(index);
+     toggleDescription(index, event);
   };
 
-  const handleListClick = (listId) => {
+  const handleListClick = (listId, event) => {
+    event.stopPropagation();
     navigate(`/shopping-list/${listId}`);
   };
 
+  if (listArray.lists.length === 0)
+    return (
+      <EmptyArray
+        Icon={"pencilIcon"}
+        size={"100px"}
+        title={"No list created yet."}
+        recommendation={"Create a new list to start shopping."}
+        buttonText={"Create a new list"}
+        ButtonAction={CreateList}
+      />
+    );
   return (
     <div className="listContainer">
       {listArray?.lists?.map((list, index) => (
@@ -69,7 +92,7 @@ const ShoppingLists = () => {
           key={`list-${list.listId}`}
           className="singleList"
           style={{ ...styles.singleList }}
-          onClick={() => handleListClick(list.listId)}
+          onClick={(e) => handleListClick(list.listId, e)}
         >
           <div className="singleListHeader">
             {isModifyingName === index ? (
@@ -82,7 +105,7 @@ const ShoppingLists = () => {
               />
             ) : (
               <div
-                onClick={() => setIsModifyingName(index)}
+                onClick={(e) => handleIsModifyingName(index,e)}
                 style={{ cursor: "pointer" }}
                 className="listNameInListContainer"
               >
@@ -92,11 +115,11 @@ const ShoppingLists = () => {
             <div className="listIcons">
               <EditIcon
                 style={{ ...styles.icons }}
-                onClick={() => toggleModifyIcon(index)}
+                onClick={(e) => toggleModifyIcon(index, e)}
               />
               <TrashIcon
                 style={{ ...styles.icons }}
-                onClick={() => toglleDeleteList(index)}
+                onClick={(e) => toggleDeleteList(index, e)}
               />
               <ConfirmAction
                 show={index === isDeletingList}
@@ -109,7 +132,7 @@ const ShoppingLists = () => {
           <div className="singleListBody">
             <div className="SingleListStats">
               <p>
-                {`Items Boughts : `}
+                {`Items Bought : `}
                 <GetInfosFromPurchasedItemsList
                   listID={list.listId}
                   operationType={"len"}
@@ -126,7 +149,7 @@ const ShoppingLists = () => {
                   listID={list.listId}
                   operationType={"allItemsPrice"}
                 />{" "}
-                $
+                
               </p>
             </div>
             <div className="ListProgessionBar">
@@ -138,7 +161,7 @@ const ShoppingLists = () => {
               }`}
             >
               <button
-                onClick={() => toggleDescription(index)}
+                onClick={(e) => toggleDescription(index,e)}
                 className="ButtonExpandList"
               >
                 Description <ChevronDown />{" "}
@@ -156,7 +179,7 @@ const ShoppingLists = () => {
                   <p
                     style={{ ...styles.listExpanded }}
                     className="listExpanded"
-                    onClick={() => setIsModifyingDescription(index)}
+                    onClick={(e) => handleIsModifyingDescription(index,e)}
                   >
                     {list.description || "No description provided."}
                   </p>

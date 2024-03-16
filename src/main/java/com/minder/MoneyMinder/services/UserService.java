@@ -1,11 +1,13 @@
 package com.minder.MoneyMinder.services;
 
+
 import com.minder.MoneyMinder.controllers.user.dto.*;
 import com.minder.MoneyMinder.models.ResetPasswordTokenEntity;
 import io.vavr.control.Either;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,6 +21,7 @@ public interface UserService {
     Either<UserResponse, Integer> getUserByEmail();
 
     boolean checkIfEmailExists(String email);
+
 
     Optional<LoginResponse> changePassword(ChangePasswordRequest changePasswordRequest, UserResponse user);
 

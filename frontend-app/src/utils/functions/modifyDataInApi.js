@@ -1,4 +1,4 @@
-import { endpoint } from "../datas/serverInfo";
+import { endpoint } from "../data/serverInfo";
 
 export const modifyList = async (listId, updatedData,updateListArray) => {
   try {

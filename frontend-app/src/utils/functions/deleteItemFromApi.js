@@ -1,4 +1,4 @@
-import { endpoint } from "../datas/serverInfo";
+import { endpoint } from "../data/serverInfo";
 
 const deleteItemFromApi = async (url) => {
   const response = await fetch(url, {
@@ -23,11 +23,12 @@ export const deleteList = async (listId, handleDelete) => {
   }
 };
 
-export const deleteItem = async (itemId,listId) => {
+export const deleteItem = async (itemId, listId) => {
   try {
-    const response = await deleteItemFromApi(`${endpoint}/lists/${listId}/items/${itemId}`);
+    const response = await deleteItemFromApi(
+      `${endpoint}/lists/${listId}/items/${itemId}`
+    );
     if (response.status === 200) {
-      
       return true;
     } else {
       console.error("Failed to delete the item:", response);

@@ -17,11 +17,13 @@ export const SingleListStats = ({ listID }) => {
   } = useGetInfosFromPurchasedItemsList({ listID, operationType: "len" });
 
   if (itemListLoading || purchasedItemListLoading) return <div>Loading...</div>;
-  if (itemListError || purchasedItemListError) return <div>Error occurred</div>;
+  if (itemListError || purchasedItemListError) return <ProgressBar progress={0} color="var(--secondary-color)" />;
   const procent = (purchasedItemListLength / (itemListLength+purchasedItemListLength)) * 100;
-  console.log(purchasedItemListLength, itemListLength, procent);
+ 
+  if(isNaN(procent)) return <ProgressBar progress={0} color="var(--secondary-color)" />;
   if (procent === 0)
     return <ProgressBar progress={0} color="var(--secondary-color)" />;
+
   return (
     <ProgressBar progress={procent.toFixed(1)} color="var(--secondary-color)" />
   );

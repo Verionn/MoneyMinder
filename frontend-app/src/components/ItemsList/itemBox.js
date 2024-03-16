@@ -1,8 +1,8 @@
 import { useContextElements } from "../../utils/hooks/customHooks";
 import { Styles } from "./styles";
 import { useEffect, useState } from "react";
-import { GetDatasFromApi } from "../../utils/functions/getDatasFromApi";
-import { endpoint } from "../../utils/datas/serverInfo";
+import { GetDataFromApi } from "../../utils/functions/getDataFromApi";
+import { endpoint } from "../../utils/data/serverInfo";
 import { Container, Row, Col } from "react-bootstrap";
 import "./ItemList.css";
 import TotalPriceFooter from "./TotalPriceFooter";
@@ -18,12 +18,14 @@ import {
   initiateItemsCheck,
   checkAndProcessPurchasedItems,
 } from "./ItemListHelper";
+import EmptyArray from "../sharedComponents/NothingHere/emptyArray";
+
 const ItemBox = ({ listId }) => {
   const {
     windowWidth,
     isDarkMode,
     itemsArray,
-    purchasedItemsArray,  
+    purchasedItemsArray,
     handleDeleteItemsInItemsArray,
     updateItemsArray,
     handleAddPurchasedItem,
@@ -31,20 +33,20 @@ const ItemBox = ({ listId }) => {
   } = useContextElements();
   const styles = Styles({ darkMode: isDarkMode, windowWidth });
   const apiURL = `${endpoint}/lists/${listId}/items`;
-  const apiUlrPurchasedItems = `${endpoint}/purchasedItems/lists/${listId}`;
-  const { data, loading, error } = GetDatasFromApi({ apiUrl: apiURL });
+  const apiUlrPurchasedItems = `${endpoint}/purchased-items/lists/${listId}`;
+  const { data, loading, error } = GetDataFromApi({ apiUrl: apiURL });
   const {
     data: purchasedItems,
     loading: loadingPurchasedItems,
     error: errorPurchasedItems,
-  } = GetDatasFromApi({ apiUrl: apiUlrPurchasedItems });
- 
+  } = GetDataFromApi({ apiUrl: apiUlrPurchasedItems });
+
   const navigation = useNavigate();
   useEffect(() => {}, [windowWidth, isDarkMode]);
   const handleCloseItemLists = () => {
     navigation("/shopping-list");
   };
-  const [isDeletting, setIsDeletting] = useState(-1);
+  const [isDeleting, setIsDeleting] = useState(-1);
   const [isChecking, setIsChecking] = useState(-1);
   const [selectedItems, setSelectedItems] = useState({
     items: new Set(),
@@ -77,13 +79,18 @@ const ItemBox = ({ listId }) => {
     if (data?.items && !loading) {
       updateItemsArray(data);
     }
-    if(purchasedItems?.purchasedItems && !loadingPurchasedItems){
+    if (purchasedItems?.purchasedItems && !loadingPurchasedItems) {
       updatePurchasedItemsArray(purchasedItems);
     }
-  }, [data, loading, updateItemsArray, purchasedItems, loadingPurchasedItems, updatePurchasedItemsArray]);
-  useEffect(() => {
-    console.log("itemsArray", itemsArray);
-  }, [itemsArray, purchasedItemsArray]);
+  }, [
+    data,
+    loading,
+    updateItemsArray,
+    purchasedItems,
+    loadingPurchasedItems,
+    updatePurchasedItemsArray,
+  ]);
+  useEffect(() => {}, [itemsArray, purchasedItemsArray]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -118,35 +125,46 @@ const ItemBox = ({ listId }) => {
             Weight
           </Col>
         </Row>
-        <div className="allItems">
-          {itemsArray.items &&
-            itemsArray.items.map(
-              (item, index) =>
-                item.listId === Number(listId) && (
-                  <ItemRow
-                    key={`Item-${item.itemId}`}
-                    item={item}
-                    onSelect={(itemId, isSelected) =>
-                      handleSelect(itemId, isSelected, false)
-                    }
-                    isSelected={isItemSelected(item.itemId, false)}
-                  />
-                )
-            )}
+        {itemsArray.items.length === 0 ? (
+           <EmptyArray
+           Icon={'pencilIcon'}
+           size={'50px'}
+           title={"No Items. What do you need to buy?"}
+           recommendation={"start by adding new items to your list by click on the + button."}
+           displayButton={false}
+         />
+        ) : (
+          <div className="allItems">
+            {itemsArray.items &&
+              itemsArray.items.map(
+                (item, index) =>
+                  item.listId === Number(listId) && (
+                    <ItemRow
+                      key={`Item-${item.itemId}`}
+                      item={item}
+                      onSelect={(itemId, isSelected) =>
+                        handleSelect(itemId, isSelected, false)
+                      }
+                      isSelected={isItemSelected(item.itemId, false)}
+                    />
+                  )
+              )}
             <div className="PurchasedItemsTitle">Purchased Items</div>
 
-          {purchasedItemsArray.purchasedItems &&
-            purchasedItemsArray.purchasedItems.map((item, index) => (
-              <ItemRow
-                key={`purchasedItem-${item.itemId}`}
-                item={item}
-                onSelect={(itemId, isSelected) =>
-                  handleSelect(itemId, isSelected, true)
-                }
-                isSelected={isItemSelected(item.itemId, true)}
-              />
-            ))}
-        </div>
+            {purchasedItemsArray.purchasedItems &&
+              purchasedItemsArray.purchasedItems.map((item, index) => (
+                <ItemRow
+                  key={`purchasedItem-${item.itemId}`}
+                  item={item}
+                  onSelect={(itemId, isSelected) =>
+                    handleSelect(itemId, isSelected, true)
+                  }
+                  isSelected={isItemSelected(item.itemId, true)}
+                />
+              ))}
+          </div>
+        )}
+
         <Row className="ButtonsItems">
           <Col xs={6} className="">
             <button
@@ -159,7 +177,9 @@ const ItemBox = ({ listId }) => {
           <Col xs={6} className="">
             <button
               className="ButtonItem deleteButton"
-              onClick={() => initiateItemsDeletion(setIsDeletting, selectedItems)}
+              onClick={() =>
+                initiateItemsDeletion(setIsDeleting, selectedItems)
+              }
             >
               Delete selected Items
             </button>
@@ -167,10 +187,10 @@ const ItemBox = ({ listId }) => {
         </Row>
         <TotalPriceFooter listId={listId} />
       </Container>
-      {isDeletting === 1 && (
+      {isDeleting === 1 && (
         <CustomModal
           show={true}
-          onClose={() => setIsDeletting(-1)}
+          onClose={() => setIsDeleting(-1)}
           ModalTitle={`Do you want to delete selected items ?`}
           confirmButtonColor="red"
           ModalConfirmationButton="Delete"
@@ -180,7 +200,7 @@ const ItemBox = ({ listId }) => {
               selectedItems,
               data,
               setSelectedItems,
-              setIsDeletting,
+              setIsDeleting,
               handleDeleteItemsInItemsArray
             )
           }
@@ -204,7 +224,7 @@ const ItemBox = ({ listId }) => {
               data,
               listId,
               handleAddPurchasedItem,
-              handleDeleteItemsInItemsArray,
+              handleDeleteItemsInItemsArray
             )
           }
           canConfirm={true}
