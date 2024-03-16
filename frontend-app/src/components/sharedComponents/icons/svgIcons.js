@@ -13,3 +13,4 @@ export {ReactComponent as EnvelopeIcon} from "../../../utils/assets/SVG/bx-envel
 export {ReactComponent as UserIcon} from "../../../utils/assets/SVG/bx-user.svg";
 export {ReactComponent as LockIcon} from "../../../utils/assets/SVG/lock-svgrepo-com.svg";
 export {ReactComponent as ArrowBackIcon} from "../../../utils/assets/SVG/bx-left-arrow-circle.svg";
+export {ReactComponent as ListIcon} from "../../../utils/assets/SVG/bx-list-ul.svg";

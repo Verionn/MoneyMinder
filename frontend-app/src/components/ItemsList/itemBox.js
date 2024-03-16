@@ -18,6 +18,8 @@ import {
   initiateItemsCheck,
   checkAndProcessPurchasedItems,
 } from "./ItemListHelper";
+import EmptyArray from "../sharedComponents/NothingHere/emptyArray";
+
 const ItemBox = ({ listId }) => {
   const {
     windowWidth,
@@ -44,7 +46,7 @@ const ItemBox = ({ listId }) => {
   const handleCloseItemLists = () => {
     navigation("/shopping-list");
   };
-  const [isDeletting, setIsDeletting] = useState(-1);
+  const [isDeleting, setIsDeleting] = useState(-1);
   const [isChecking, setIsChecking] = useState(-1);
   const [selectedItems, setSelectedItems] = useState({
     items: new Set(),
@@ -88,9 +90,7 @@ const ItemBox = ({ listId }) => {
     loadingPurchasedItems,
     updatePurchasedItemsArray,
   ]);
-  useEffect(() => {
-    
-  }, [itemsArray, purchasedItemsArray]);
+  useEffect(() => {}, [itemsArray, purchasedItemsArray]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -125,35 +125,46 @@ const ItemBox = ({ listId }) => {
             Weight
           </Col>
         </Row>
-        <div className="allItems">
-          {itemsArray.items &&
-            itemsArray.items.map(
-              (item, index) =>
-                item.listId === Number(listId) && (
-                  <ItemRow
-                    key={`Item-${item.itemId}`}
-                    item={item}
-                    onSelect={(itemId, isSelected) =>
-                      handleSelect(itemId, isSelected, false)
-                    }
-                    isSelected={isItemSelected(item.itemId, false)}
-                  />
-                )
-            )}
-          <div className="PurchasedItemsTitle">Purchased Items</div>
+        {itemsArray.items.length === 0 ? (
+           <EmptyArray
+           Icon={'pencilIcon'}
+           size={'50px'}
+           title={"No Items. What do you need to buy?"}
+           recommendation={"start by adding new items to your list by click on the + button."}
+           displayButton={false}
+         />
+        ) : (
+          <div className="allItems">
+            {itemsArray.items &&
+              itemsArray.items.map(
+                (item, index) =>
+                  item.listId === Number(listId) && (
+                    <ItemRow
+                      key={`Item-${item.itemId}`}
+                      item={item}
+                      onSelect={(itemId, isSelected) =>
+                        handleSelect(itemId, isSelected, false)
+                      }
+                      isSelected={isItemSelected(item.itemId, false)}
+                    />
+                  )
+              )}
+            <div className="PurchasedItemsTitle">Purchased Items</div>
 
-          {purchasedItemsArray.purchasedItems &&
-            purchasedItemsArray.purchasedItems.map((item, index) => (
-              <ItemRow
-                key={`purchasedItem-${item.itemId}`}
-                item={item}
-                onSelect={(itemId, isSelected) =>
-                  handleSelect(itemId, isSelected, true)
-                }
-                isSelected={isItemSelected(item.itemId, true)}
-              />
-            ))}
-        </div>
+            {purchasedItemsArray.purchasedItems &&
+              purchasedItemsArray.purchasedItems.map((item, index) => (
+                <ItemRow
+                  key={`purchasedItem-${item.itemId}`}
+                  item={item}
+                  onSelect={(itemId, isSelected) =>
+                    handleSelect(itemId, isSelected, true)
+                  }
+                  isSelected={isItemSelected(item.itemId, true)}
+                />
+              ))}
+          </div>
+        )}
+
         <Row className="ButtonsItems">
           <Col xs={6} className="">
             <button
@@ -167,7 +178,7 @@ const ItemBox = ({ listId }) => {
             <button
               className="ButtonItem deleteButton"
               onClick={() =>
-                initiateItemsDeletion(setIsDeletting, selectedItems)
+                initiateItemsDeletion(setIsDeleting, selectedItems)
               }
             >
               Delete selected Items
@@ -176,10 +187,10 @@ const ItemBox = ({ listId }) => {
         </Row>
         <TotalPriceFooter listId={listId} />
       </Container>
-      {isDeletting === 1 && (
+      {isDeleting === 1 && (
         <CustomModal
           show={true}
-          onClose={() => setIsDeletting(-1)}
+          onClose={() => setIsDeleting(-1)}
           ModalTitle={`Do you want to delete selected items ?`}
           confirmButtonColor="red"
           ModalConfirmationButton="Delete"
@@ -189,7 +200,7 @@ const ItemBox = ({ listId }) => {
               selectedItems,
               data,
               setSelectedItems,
-              setIsDeletting,
+              setIsDeleting,
               handleDeleteItemsInItemsArray
             )
           }

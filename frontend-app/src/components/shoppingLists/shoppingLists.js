@@ -18,6 +18,8 @@ import {
 } from "../../utils/functions/function";
 import { SingleListStats } from "./singleListStats";
 import { useNavigate } from "react-router-dom";
+import EmptyArray from "../sharedComponents/NothingHere/emptyArray";
+import CreateList from "../sharedComponents/CreateList/createList";
 
 const ShoppingLists = () => {
   const { listArray, updateListArray, isDarkMode } = useContextElements();
@@ -28,7 +30,6 @@ const ShoppingLists = () => {
   const [isModifyingName, setIsModifyingName] = useState(-1);
   const [isModifyingDescription, setIsModifyingDescription] = useState(-1);
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     if (data && data.lists) {
@@ -49,22 +50,33 @@ const ShoppingLists = () => {
     });
   };
 
-  const toggleDeleteList = (index,event) => {
+  const toggleDeleteList = (index, event) => {
     event.stopPropagation();
     setIsDeletingList(index);
   };
-  const toggleModifyIcon = (index,event) => {
-    event.stopPropagation(); 
+  const toggleModifyIcon = (index, event) => {
+    event.stopPropagation();
     setIsModifyingName(index);
     setIsModifyingDescription(index);
     toggleDescription(index);
   };
 
-  const handleListClick = (listId,event) => {
+  const handleListClick = (listId, event) => {
     event.stopPropagation();
     navigate(`/shopping-list/${listId}`);
   };
 
+  if (listArray.lists.length === 0)
+    return (
+      <EmptyArray
+        Icon={'pencilIcon'}
+        size={'100px'}
+        title={"No list created yet."}
+        recommendation={"Create a new list to start shopping."}
+        buttonText={"Create a new list"}
+        ButtonAction={CreateList}
+      />
+    );
   return (
     <div className="listContainer">
       {listArray?.lists?.map((list, index) => (
@@ -72,7 +84,7 @@ const ShoppingLists = () => {
           key={`list-${list.listId}`}
           className="singleList"
           style={{ ...styles.singleList }}
-          onClick={(e) => handleListClick(list.listId,e)}
+          onClick={(e) => handleListClick(list.listId, e)}
         >
           <div className="singleListHeader">
             {isModifyingName === index ? (
@@ -95,11 +107,11 @@ const ShoppingLists = () => {
             <div className="listIcons">
               <EditIcon
                 style={{ ...styles.icons }}
-                onClick={(e) => toggleModifyIcon(index,e)}
+                onClick={(e) => toggleModifyIcon(index, e)}
               />
               <TrashIcon
                 style={{ ...styles.icons }}
-                onClick={(e) => toggleDeleteList(index,e)}
+                onClick={(e) => toggleDeleteList(index, e)}
               />
               <ConfirmAction
                 show={index === isDeletingList}

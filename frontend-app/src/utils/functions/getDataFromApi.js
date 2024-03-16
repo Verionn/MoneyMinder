@@ -14,7 +14,7 @@ export const GetDataFromApi = ({ apiUrl, options = {} }) => {
       ...options.headers,
     };
     return { ...options, headers };
-  }, [options, apiUrl]);
+  }, [options]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +34,7 @@ export const GetDataFromApi = ({ apiUrl, options = {} }) => {
     };
 
     fetchData();
-  }, [apiUrl]);
+  }, [apiUrl,]);
 
   return { data, loading, error };
 };
