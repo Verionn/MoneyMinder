@@ -42,14 +42,22 @@ const ShoppingLists = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   const styles = Styles({ darMokde: isDarkMode });
-  const toggleDescription = (index) => {
+  const toggleDescription = (index, event) => {
+    event.stopPropagation();
     setIsShowingDescription((prevState) => {
       const newState = [...prevState];
       newState[index] = !newState[index];
       return newState;
     });
   };
-
+const handleIsModifyingDescription = (index, event) => {
+  event.stopPropagation();
+  setIsModifyingDescription(index);
+};
+const handleIsModifyingName = (index, event) => {
+  event.stopPropagation();
+  setIsModifyingName(index);
+};
   const toggleDeleteList = (index, event) => {
     event.stopPropagation();
     setIsDeletingList(index);
@@ -58,7 +66,7 @@ const ShoppingLists = () => {
     event.stopPropagation();
     setIsModifyingName(index);
     setIsModifyingDescription(index);
-    toggleDescription(index);
+     toggleDescription(index, event);
   };
 
   const handleListClick = (listId, event) => {
@@ -69,8 +77,8 @@ const ShoppingLists = () => {
   if (listArray.lists.length === 0)
     return (
       <EmptyArray
-        Icon={'pencilIcon'}
-        size={'100px'}
+        Icon={"pencilIcon"}
+        size={"100px"}
         title={"No list created yet."}
         recommendation={"Create a new list to start shopping."}
         buttonText={"Create a new list"}
@@ -97,7 +105,7 @@ const ShoppingLists = () => {
               />
             ) : (
               <div
-                onClick={() => setIsModifyingName(index)}
+                onClick={(e) => handleIsModifyingName(index,e)}
                 style={{ cursor: "pointer" }}
                 className="listNameInListContainer"
               >
@@ -141,7 +149,7 @@ const ShoppingLists = () => {
                   listID={list.listId}
                   operationType={"allItemsPrice"}
                 />{" "}
-                $
+                
               </p>
             </div>
             <div className="ListProgessionBar">
@@ -153,7 +161,7 @@ const ShoppingLists = () => {
               }`}
             >
               <button
-                onClick={() => toggleDescription(index)}
+                onClick={(e) => toggleDescription(index,e)}
                 className="ButtonExpandList"
               >
                 Description <ChevronDown />{" "}
@@ -171,7 +179,7 @@ const ShoppingLists = () => {
                   <p
                     style={{ ...styles.listExpanded }}
                     className="listExpanded"
-                    onClick={() => setIsModifyingDescription(index)}
+                    onClick={(e) => handleIsModifyingDescription(index,e)}
                   >
                     {list.description || "No description provided."}
                   </p>

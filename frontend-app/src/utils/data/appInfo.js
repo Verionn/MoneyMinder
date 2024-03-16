@@ -1,6 +1,7 @@
 import ShoppingLists from "../../components/shoppingLists/shoppingLists";
 import RegisterPage from "../../components/authentication/registerPage";
 import LoginPage from "../../components/authentication/authentication";
+import Settings from "../../components/settings/settings";
 
 export const appInfo = {
   name: "MoneyMinder",
@@ -68,6 +69,6 @@ export const pageSections = [
     id: "settings",
     icon: "settingsIcon",
     path: "/settings",
-    element: someText,
+    element: <Settings />,
   },
 ];

@@ -18,7 +18,6 @@ const SideBar = ({ appInfo, login, Credit }) => {
   };
   const handleCollapse = () => {
     setIsCollapsed(!isCollapsed);
-    updateDarkMode();
   };
 
   const styles = Styles({ Collapsed: isCollapsed, darkMode: isDarkMode });
@@ -29,14 +28,14 @@ const SideBar = ({ appInfo, login, Credit }) => {
         <Row className="custom-Row appInfo">
           <img src={appInfo.logo} alt="logo" className="logo" />
           {isCollapsed ? null : (
-            <Typography tag="h5" className="appName" style={styles.appInfo}>
+            <Typography tag="h4" className="appName" style={styles.appInfo}>
               {appInfo.name}
             </Typography>
           )}
         </Row>
-        <Row className="custom-row login" style={styles.customRow}>
+        {/*<Row className="custom-row login" style={styles.customRow}>
           {!isCollapsed ? <button className="loginBtn">{login}</button> : null}
-        </Row>
+          </Row>*/}
 
         <RenderSideBarSection
           sections={pageSections}
@@ -47,7 +46,8 @@ const SideBar = ({ appInfo, login, Credit }) => {
         </Row>
         <Row className="custom-row">
           privacy Policy
-          <br /><br />
+          <br />
+          <br />
           Terms of Service{/*Implement later*/}
         </Row>
         <Row className="sectionSeparator">

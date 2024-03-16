@@ -20,7 +20,7 @@ const SectionHeder = () => {
     setShow(true);
   };
   return (
-    <div className="sectionHeader">
+    <div className="sectionHeader" style={{...style.headerBackground}}>
       <h1>{title}</h1>
       <div className="sectionHeaderRight">
         <button className="addListContainer" onClick={handleShow}>

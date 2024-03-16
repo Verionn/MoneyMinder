@@ -23,7 +23,7 @@ export const CustomModal = ({
       <div className="custom-modal">
         <div className="custom-modal-header" style={{...style.header}}>
           <h2>{ModalTitle}</h2>
-          <button onClick={onClose} className="custom-modal-close-button" style={{...style.closeButton}}>
+          <button onClick={(e)=>onClose(e)} className="custom-modal-close-button" style={{...style.closeButton}}>
             &times;
           </button>
         </div>
@@ -33,7 +33,7 @@ export const CustomModal = ({
             Close
           </button>
           <button
-            onClick={functionTOCall}
+            onClick={(e)=>functionTOCall(e)}
             style={{ backgroundColor: confirmButtonColor }}
             className="custom-modal-footer-button"
             disabled={!canConfirm}

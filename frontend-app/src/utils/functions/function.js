@@ -154,6 +154,16 @@ export function findIdCategoryByName(CategoryList, categoryName) {
   return categoryId;
 }
 
+export function findCategoryNameById  (CategoryList, categoryId) {
+  let categoryName = null;
+  CategoryList.forEach((category) => {
+    if (category.categoryId === categoryId) {
+      categoryName = category.name;
+    }
+  });
+  return categoryName;
+};
+
 /*
 export const CreateNotification = (type, message) => {
   switch (type) {

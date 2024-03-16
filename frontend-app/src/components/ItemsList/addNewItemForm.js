@@ -15,7 +15,6 @@ const AddNewItemForm = ({ onSave, onCancel }) => {
       amount: parseInt(amount, 10),
       categoryId: categoryId,
       weight: parseInt(weight, 10),
-      timeCreated: new Date().toISOString(),
     });
   };
 

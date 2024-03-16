@@ -16,7 +16,8 @@ const ModifyList = ({
     if (modifying === "name") setEditableListName(e.target.value);
   };
 
-  const saveListName = async () => {
+  const saveListName = async (e) => {
+    e.stopPropagation();
     if (
       editableListName.length > 0 &&
       editableListName.length < 50 &&
@@ -38,7 +39,8 @@ const ModifyList = ({
       );
     setDefault(-1);
   };
-  const cancel = () => {
+  const cancel = (e) => {
+    e.stopPropagation();
     setDefault(-1);
   };
 
@@ -92,10 +94,10 @@ const ModifyList = ({
           type="text"
         />
       ) : null}
-      <button style={{ ...styles.saveButton }} onClick={saveListName}>
+      <button style={{ ...styles.saveButton }} onClick={(e)=>saveListName(e)}>
         Save
       </button>
-      <button style={{ ...styles.cancelButton }} onClick={cancel}>
+      <button style={{ ...styles.cancelButton }} onClick={(e)=>cancel(e)}>
         Cancel
       </button>
     </div>

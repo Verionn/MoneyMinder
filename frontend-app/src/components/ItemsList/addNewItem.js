@@ -10,16 +10,14 @@ import {
 } from "../../utils/functions/addDataToApi";
 import { GetDataFromApi } from "../../utils/functions/getDataFromApi";
 import { categoriesUrl } from "../../utils/data/serverInfo";
-import { findIdCategoryByName, isElementInListCategory } from "../../utils/functions/function";
+import {
+  findIdCategoryByName,
+  isElementInListCategory,
+} from "../../utils/functions/function";
 const AddNewItem = ({ listId }) => {
   const [isAdding, setIsAdding] = useState(false);
   const { handleAddItem } = useContextElements();
-  const {
-    data: CategoryData,
-    loading: CategoryLoading,
-    error: CategoryError,
-  } = GetDataFromApi({ apiUrl: categoriesUrl });
-
+  const { data: CategoryData } = GetDataFromApi({ apiUrl: categoriesUrl });
 
   const handleSaveNewItem = async (newItem) => {
     console.log(newItem);
@@ -28,13 +26,16 @@ const AddNewItem = ({ listId }) => {
       if (!check) {
         alert("Category not found and not created");
         return;
-      } 
+      }
     }
-    const categoryId =findIdCategoryByName(CategoryData.categories, newItem.categoryId);
-    if(categoryId!==null) newItem.categoryId = categoryId;
+    const categoryId = findIdCategoryByName(
+      CategoryData.categories,
+      newItem.categoryId
+    );
+    if (categoryId !== null) newItem.categoryId = categoryId;
     newItem.listId = Number(listId);
-    if(isNaN(newItem.weight))newItem.weight="";
-    console.log(newItem);
+    if (isNaN(newItem.weight)) newItem.weight = 0;
+
     PostNewItem(
       newItem,
       `http://localhost:8080/lists/${listId}/items`,
