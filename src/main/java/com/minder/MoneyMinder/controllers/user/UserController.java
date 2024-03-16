@@ -2,6 +2,7 @@ package com.minder.MoneyMinder.controllers.user;
 
 import com.minder.MoneyMinder.controllers.user.dto.*;
 import com.minder.MoneyMinder.models.ResetPasswordTokenEntity;
+import com.minder.MoneyMinder.models.VerifyEmailTokenEntity;
 import com.minder.MoneyMinder.services.UserService;
 import com.minder.MoneyMinder.services.mappers.UserMapper;
 
@@ -60,7 +61,7 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-        if(!checkIfUserIsVerified(loginRequest.email())){
+        if (!checkIfUserIsVerified(loginRequest.email())) {
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
 
@@ -115,7 +116,7 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-        if (checkIfTokenIsExpired(token)) {
+        if (checkIfResetPasswordTokenIsExpired(token)) {
             userService.removeToken(token);
             return ResponseEntity.notFound().build();
         }
@@ -137,7 +138,9 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-        //TODO: sprawdzic czy token nie wygasl
+        if (checkIfVerifyEmailTokenIsExpired(token)) {
+            return ResponseEntity.badRequest().build();
+        }
 
         userService.verify(token);
 
@@ -145,7 +148,7 @@ public class UserController {
     }
 
 
-    private boolean checkIfTokenIsExpired(String token) {
+    private boolean checkIfResetPasswordTokenIsExpired(String token) {
         ResetPasswordTokenEntity resetPasswordTokenEntity = userService.getResetPasswordTokenEntityByToken(token);
 
         LocalDateTime expirationDate = resetPasswordTokenEntity.getExpirationDate();
@@ -153,6 +156,16 @@ public class UserController {
 
         Duration duration = Duration.between(expirationDate, now);
         return duration.getSeconds() > RESET_PASSWORD_TOKEN_EXPIRATION_TIME_IN_MINUTES * 60;
+    }
+
+    private boolean checkIfVerifyEmailTokenIsExpired(String token) {
+        VerifyEmailTokenEntity verifyEmailTokenEntity = userService.getVerifyEmailTokenEntityByToken(token);
+
+        LocalDateTime expirationDate = verifyEmailTokenEntity.getExpirationDate();
+        LocalDateTime now = LocalDateTime.now();
+
+        Duration duration = Duration.between(expirationDate, now);
+        return duration.getSeconds() > VERIFY_ACCOUNT_TOKEN_EXPIRATION_TIME_IN_MINUTES * 60;
     }
 
     private boolean checkIfResetPasswordTokenIsInvalid(String token) {
