@@ -454,9 +454,7 @@ paths:
           description: List or Item not found
 
 
-
   /purchased-items/categories/{categoryId}/days/{days}:
-
     get:
       security:
         - bearerAuth: []
@@ -486,9 +484,7 @@ paths:
           description: Wrong amount of days
 
 
-
   /purchased-items/categories/{categoryId}:
-
     get:
       security:
         - bearerAuth: []
@@ -510,9 +506,7 @@ paths:
           description: Category not found
 
 
-
   /purchased-items/names/{prefix}:
-
     get:
       security:
         - bearerAuth: []
@@ -532,9 +526,7 @@ paths:
           description: Successfully returned names
 
 
-
   /purchased-items/days/{days}:
-
     get:
       security:
         - bearerAuth: []
@@ -556,9 +548,7 @@ paths:
           description: Wrong amount of days
 
 
-
   /purchased-items/items/{amountOfItems}:
-
     get:
       security:
         - bearerAuth: []
@@ -580,9 +570,7 @@ paths:
           description: Wrong amount of items
 
 
-
   /purchased-items/lists/{listId}:
-
     get:
       security:
         - bearerAuth: []
@@ -646,10 +634,11 @@ paths:
         '400':
           description: Bad request
         '401':
+          description: user is not verified
+        '404':
           description: User with that email does not exists
         '403':
           description: User couldn't be authenticated
-
 
 
   /users/change-password:
@@ -729,6 +718,27 @@ paths:
         '404':
           description: Token is expired or does not exist
 
+  /users/verify-user:
+    get:
+      tags:
+        - users
+      description: set user as verified
+      operationId: verifyUser
+      parameters:
+        - name: VerifyEmailToken
+          in: query
+          description: verification token
+          required: true
+          schema:
+            type: string
+            example: '62eiredl-ORKa-4930-9831-eec546b91830'
+      responses:
+        '200':
+          description: successfully verified user
+        '400':
+          description: token is invalid
+        '404':
+          description: Token is expired or does not exist
 
 components:
   schemas:
@@ -878,14 +888,12 @@ components:
         name:
           type: string
           example: 'verion'
-
         password:
           type: string
           example: 'K#lasdf&82z'
         email:
           type: string
           example: 'verion@gmail.com'
-
 
     LoginUserRequestBody:
       required:
@@ -899,7 +907,6 @@ components:
         password:
           type: string
           example: 'K#lasdf&82z'
-
 
     ChangePasswordRequestBody:
       required:
@@ -935,7 +942,6 @@ components:
         password:
           type: string
           example: '1234567'
-
 
   headers:
     JsonWebToken:

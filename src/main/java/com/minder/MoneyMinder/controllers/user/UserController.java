@@ -57,12 +57,14 @@ public class UserController {
         }
 
         if (!checkIfEmailIsRegistered(loginRequest.email())) {
-            return ResponseEntity.status(UNAUTHORIZED).build();
+            return ResponseEntity.notFound().build();
         }
 
         if(!checkIfUserIsVerified(loginRequest.email())){
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
+
+        //TODO: dodać testy do logowania z weryfikacja
 
         return userService.login(loginRequest)
                 .map(ResponseEntity::ok)
@@ -134,6 +136,8 @@ public class UserController {
         if (!checkIfVerifyEmailTokenExists(token)) {
             return ResponseEntity.notFound().build();
         }
+
+        //TODO: sprawdzic czy token nie wygasl
 
         userService.verify(token);
 
