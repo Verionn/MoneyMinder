@@ -740,6 +740,28 @@ paths:
         '404':
           description: Token is expired or does not exist
 
+  /users/verify-user:
+    get:
+      tags:
+        - users
+      description: set user as verified
+      operationId: verifyUser
+      parameters:
+        - name: VerifyEmailToken
+          in: query
+          description: verification token
+          required: true
+          schema:
+            type: string
+            example: '62eiredl-ORKa-4930-9831-eec546b91830'
+      responses:
+        '200':
+          description: successfully verified user
+        '400':
+          description: token is invalid
+        '404':
+          description: Token is expired or does not exist
+
 components:
   schemas:
 
