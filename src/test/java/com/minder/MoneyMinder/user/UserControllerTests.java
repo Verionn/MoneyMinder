@@ -24,7 +24,6 @@ import static org.springframework.http.HttpStatus.*;
 public class UserControllerTests extends MoneyMinderApplicationTests {
     @Test
     @DisplayName("Should not login and return forbidden when given invalid password")
-
     public void shouldNotLoginWhenGivenInvalidPassword() {
         //when
         var loginResponse = client.exchange(prepareUrl(LOGIN_PATH), HttpMethod.POST,
@@ -35,10 +34,8 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
     }
 
     @Test
-    @DisplayName("Should return 403 when given invalid data")
-
-    public void shouldReturnForbiddenWhenGivenInvalidData() {
-
+    @DisplayName("Should return bad request when given invalid data")
+    public void shouldReturnBadRequestWhenGivenInvalidData() {
         //when
         var loginResponse = client.exchange(prepareUrl(LOGIN_PATH), HttpMethod.POST,
                 new HttpEntity<>(new LoginRequest(INVALID_USER_EMAIL, INVALID_USER_PASSWORD)), LoginResponse.class);
@@ -48,8 +45,8 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
     }
 
     @Test
-    @DisplayName("Should return 403 when given empty data")
-    public void shouldReturnForbiddenWhenGivenEmptyData() {
+    @DisplayName("Should return 400 when given empty data")
+    public void shouldReturnBadRequestWhenGivenEmptyData() {
         //when
         var loginResponse = client.exchange(prepareUrl(LOGIN_PATH), HttpMethod.POST,
                 new HttpEntity<>(new LoginRequest(INVALID_USER_EMAIL, INVALID_USER_PASSWORD)), LoginResponse.class);
@@ -72,9 +69,7 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
 
     @Test
     @DisplayName("Should return bad request when given invalid email")
-
-    public void shouldReturnForbiddenWhenGivenInvalidEmail() {
-
+    public void shouldReturnBadRequestWhenGivenInvalidEmail() {
         //when
         var registerResponse = client.exchange(prepareUrl(REGISTER_PATH), HttpMethod.POST,
                 new HttpEntity<>(new RegisterUserRequest(VALID_USER_NAME, INVALID_USER_EMAIL, VALID_USER_PASSWORD)), LoginResponse.class);
@@ -85,7 +80,7 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
 
     @Test
     @DisplayName("Should return bad request when given invalid password")
-    public void shouldReturnForbiddenWhenGivenInvalidPassword() {
+    public void shouldReturnBadRequestWhenGivenInvalidPassword() {
         //when
         var registerResponse = client.exchange(prepareUrl(REGISTER_PATH), HttpMethod.POST,
                 new HttpEntity<>(new RegisterUserRequest(VALID_USER_NAME, VALID_USER_EMAIL, INVALID_USER_PASSWORD)), LoginResponse.class);
@@ -115,7 +110,6 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
 
         //then
         assertThat(registerResponse.getStatusCode(), is(equalTo(OK)));
-        assertThat(registerResponse.getBody(), is(not(nullValue())));
     }
 
     @Test
@@ -145,14 +139,13 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
 
     @Test
     @DisplayName("Should return 401 when trying to login on unregistered email")
-
     public void shouldReturnUnauthorizedWhenTryingToLoginOnUnregisteredEmail() {
 
         var loginResponse = client.exchange(prepareUrl(LOGIN_PATH), HttpMethod.POST,
                 new HttpEntity<>(new LoginRequest(VALID_USER_EMAIL, REGISTERED_USER_PASSWORD)), LoginResponse.class);
 
         //then
-        assertThat(loginResponse.getStatusCode(), is(equalTo(UNAUTHORIZED)));
+        assertThat(loginResponse.getStatusCode(), is(equalTo(NOT_FOUND)));
         assertThat(loginResponse.getBody(), is(nullValue()));
     }
 
@@ -297,5 +290,4 @@ public class UserControllerTests extends MoneyMinderApplicationTests {
 
         assertThat(changePasswordResponse.getStatusCode(), is(equalTo(FORBIDDEN)));
     }
-
 }
