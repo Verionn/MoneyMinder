@@ -1,6 +1,5 @@
 package com.minder.MoneyMinder.controllers.user;
 
-
 import com.minder.MoneyMinder.controllers.user.dto.*;
 import com.minder.MoneyMinder.models.ResetPasswordTokenEntity;
 import com.minder.MoneyMinder.services.UserService;
@@ -9,17 +8,14 @@ import com.minder.MoneyMinder.services.mappers.UserMapper;
 import java.time.Duration;
 
 import jakarta.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -27,11 +23,10 @@ import static org.springframework.http.HttpStatus.*;
 @RequestMapping("/users")
 public class UserController {
 
-
-    private static final int EXPIRATION_TIME_IN_MINUTES = 10;
+    public static final int RESET_PASSWORD_TOKEN_EXPIRATION_TIME_IN_MINUTES = 10;
+    public static final int VERIFY_ACCOUNT_TOKEN_EXPIRATION_TIME_IN_MINUTES = 10;
     private final UserService userService;
     private final UserMapper userMapper = UserMapper.INSTANCE;
-
 
     @Autowired
     public UserController(UserService userService) {
@@ -39,33 +34,33 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<LoginResponse> register(@RequestBody RegisterUserRequest registerUserRequest) {
-
-
+    public ResponseEntity<HttpStatus> register(HttpServletRequest request,
+                                               @RequestBody RegisterUserRequest registerUserRequest) {
 
         if (checkIfRegisterUserRequestIsInvalid(registerUserRequest)) {
-
             return ResponseEntity.badRequest().build();
         }
 
         if (checkIfEmailIsRegistered(registerUserRequest.email())) {
-
             return ResponseEntity.status(CONFLICT).build();
         }
+        userService.register(request, registerUserRequest);
 
-        return ResponseEntity.ok(userService.register(registerUserRequest));
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-
 
         if (checkIfLoginRequestIsInvalid(loginRequest)) {
             return ResponseEntity.badRequest().build();
         }
 
         if (!checkIfEmailIsRegistered(loginRequest.email())) {
+            return ResponseEntity.status(UNAUTHORIZED).build();
+        }
 
+        if(!checkIfUserIsVerified(loginRequest.email())){
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
 
@@ -73,7 +68,6 @@ public class UserController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.FORBIDDEN).build());
     }
-
 
     @PutMapping("/change-password")
     public ResponseEntity<LoginResponse> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
@@ -93,7 +87,8 @@ public class UserController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<HttpStatus> resetPassword(HttpServletRequest request, @RequestBody ResetPasswordRequest resetPasswordRequest) {
+    public ResponseEntity<HttpStatus> resetPassword(HttpServletRequest request,
+                                                    @RequestBody ResetPasswordRequest resetPasswordRequest) {
 
         if (checkIfResetPasswordRequestIsInvalid(resetPasswordRequest)) {
             return ResponseEntity.badRequest().build();
@@ -104,7 +99,8 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-        userService.resetPassword(userMapper.resetPasswordRequestToResetPasswordTokenEntity(resetPasswordRequest, username), request);
+        userService.resetPassword(userMapper.resetPasswordRequestToResetPasswordTokenEntity(
+                resetPasswordRequest, username, RESET_PASSWORD_TOKEN_EXPIRATION_TIME_IN_MINUTES), request);
         return ResponseEntity.ok().build();
     }
 
@@ -113,7 +109,7 @@ public class UserController {
             @RequestParam("token") String token,
             @RequestBody ConfirmResetPasswordRequest confirmResetPasswordRequest) {
 
-        if (checkIfTokenIsInvalid(token)) {
+        if (checkIfResetPasswordTokenIsInvalid(token)) {
             return ResponseEntity.notFound().build();
         }
 
@@ -129,6 +125,22 @@ public class UserController {
         return userService.confirmResetPassword(token, confirmResetPasswordRequest);
     }
 
+    @GetMapping("/verify-email")
+    public ResponseEntity<HttpStatus> verify(@RequestParam("token") String token) {
+        if (token.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        if (!checkIfVerifyEmailTokenExists(token)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        userService.verify(token);
+
+        return ResponseEntity.ok().build();
+    }
+
+
     private boolean checkIfTokenIsExpired(String token) {
         ResetPasswordTokenEntity resetPasswordTokenEntity = userService.getResetPasswordTokenEntityByToken(token);
 
@@ -136,14 +148,18 @@ public class UserController {
         LocalDateTime now = LocalDateTime.now();
 
         Duration duration = Duration.between(expirationDate, now);
-        return duration.getSeconds() > EXPIRATION_TIME_IN_MINUTES * 60;
+        return duration.getSeconds() > RESET_PASSWORD_TOKEN_EXPIRATION_TIME_IN_MINUTES * 60;
     }
 
-    private boolean checkIfTokenIsInvalid(String token) {
+    private boolean checkIfResetPasswordTokenIsInvalid(String token) {
         if (token.isBlank()) {
             return true;
         }
-        return !userService.checkIfTokenExists(token);
+        return !userService.checkIfResetPasswordTokenExists(token);
+    }
+
+    private boolean checkIfVerifyEmailTokenExists(String token) {
+        return userService.checkIfVerifyEmailTokenExists(token);
     }
 
     private boolean checkIfChangePasswordRequestIsInvalid(ChangePasswordRequest changePasswordRequest) {
@@ -163,7 +179,6 @@ public class UserController {
     private boolean checkIfResetPasswordRequestIsInvalid(ResetPasswordRequest resetPasswordRequest) {
         return resetPasswordRequest.email().isBlank()
                 || !resetPasswordRequest.email().contains("@");
-
     }
 
     private boolean checkIfLoginRequestIsInvalid(LoginRequest loginRequest) {
@@ -172,5 +187,9 @@ public class UserController {
 
     private boolean checkIfEmailIsRegistered(String email) {
         return userService.checkIfEmailExists(email);
+    }
+
+    private boolean checkIfUserIsVerified(String email) {
+        return userService.checkIfUserIsVerified(email);
     }
 }

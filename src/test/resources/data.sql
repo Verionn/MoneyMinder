@@ -1,16 +1,18 @@
-insert into user_entity (name, password, email, role)
+insert into user_entity (name, password, email, role, verified)
 values (
-   'verion',
-   '$2a$10$VfbQPT7JpzA2AzuUkN98Aer0Kos4OCbrh0En/.cADXab82JykvWbS', --12345,
-   'verion@gmail.com',
-   'USER'
+       'verion',
+       '$2a$10$VfbQPT7JpzA2AzuUkN98Aer0Kos4OCbrh0En/.cADXab82JykvWbS', --12345,
+       'verion@gmail.com',
+       'USER',
+        true
 );
-insert into user_entity (name, password, email, role)
+insert into user_entity (name, password, email, role, verified)
 values (
-           'bajcik',
-           '$2a$10$VfbQPT7JpzA2AzuUkN98Aer0Kos4OCbrh0En/.cADXab82JykvWbS', --12345,
-           'bajcik@gmail.com',
-           'ADMIN'
+       'bajcik',
+       '$2a$10$VfbQPT7JpzA2AzuUkN98Aer0Kos4OCbrh0En/.cADXab82JykvWbS', --12345,
+       'bajcik@gmail.com',
+       'ADMIN',
+        true
        );
 
 insert into reset_password_token_entity(token, email, name, expiration_date)

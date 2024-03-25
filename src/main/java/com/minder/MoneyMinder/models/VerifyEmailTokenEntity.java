@@ -8,8 +8,7 @@ import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
-public class ResetPasswordTokenEntity {
-
+public class VerifyEmailTokenEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -18,14 +17,14 @@ public class ResetPasswordTokenEntity {
     private String email;
     private LocalDateTime expirationDate;
 
-    public ResetPasswordTokenEntity(String token, String email, String name, int tokenExpiration) {
+    public VerifyEmailTokenEntity(String token, String email, String name, int tokenExpiration) {
         this.token = token;
         this.email = email;
         this.name = name;
         this.expirationDate = LocalDateTime.now().plusMinutes(tokenExpiration);
     }
 
-    public ResetPasswordTokenEntity() {
+    public VerifyEmailTokenEntity() {
 
     }
 
@@ -35,6 +34,14 @@ public class ResetPasswordTokenEntity {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -49,26 +56,7 @@ public class ResetPasswordTokenEntity {
         return expirationDate;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
-    }
-
-    @Override
-    public String toString() {
-        return "ResetPasswordTokenEntity{" +
-                "id=" + id +
-                ", token='" + token + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", expirationDate=" + expirationDate +
-                '}';
     }
 }

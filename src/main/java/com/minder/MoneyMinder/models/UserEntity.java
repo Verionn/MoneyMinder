@@ -20,6 +20,7 @@ public class UserEntity implements UserDetails {
     private String password;
     private String email;
     private LocalDateTime time_created;
+    private boolean verified;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -32,6 +33,7 @@ public class UserEntity implements UserDetails {
         this.name = name;
         this.password = password;
         this.email = email;
+        this.verified = false;
         this.role = role;
     }
 
@@ -117,5 +119,13 @@ public class UserEntity implements UserDetails {
 
     public void setTime_created(LocalDateTime time_created) {
         this.time_created = time_created;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 }
