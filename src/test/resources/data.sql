@@ -6,6 +6,13 @@ values (
    'USER',
     TRUE
 );
+
+insert into category_entity(user_id, name)
+VALUES (
+        1,
+        'Testowa kategoria'
+);
+
 insert into user_entity (name, password, email, role, verified)
 values (
    'bajcik',
@@ -14,6 +21,7 @@ values (
    'ADMIN',
     TRUE
 );
+
 insert into reset_password_token_entity(token, email, name, expiration_date)
 values(
        'expiredl-ORKa-4930-9831-eec546b91830',
