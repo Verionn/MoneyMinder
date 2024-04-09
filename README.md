@@ -26,6 +26,24 @@ Do you ever find yourself wondering where your money goes, feeling like it slips
   - by days
 * Share list with someone (TODO)
 
-# Configuration & installation
+# Installation & configuration
 
-##### To build the project, we require connections to a PostgreSQL database and a mail server. The default database name is MoneyMinder, but you have the option to change it in the local.properties file, as with the mail server data.
+1. Clone repository
+  ```
+    git clone https://github.com/Verionn/MoneyMinder
+  ```
+2. Install PostgreSQL database
+    ```
+    https://www.postgresql.org/download/
+    ```
+3. Setup database settings
+   ```
+   Go to application-local.properties and set it according to your database data
+   ```
+   ![image](https://github.com/Verionn/MoneyMinder/assets/86195102/16872e85-1a1f-404b-b966-40c07c7b7e2b)
+4. Setup mail server
+   ```
+   Find application.properties file and set the smtp mail server values 
+   ```
+   ![image](https://github.com/Verionn/MoneyMinder/assets/86195102/e56df03c-b74f-42bb-8e08-39b4bcf7d211)
+
