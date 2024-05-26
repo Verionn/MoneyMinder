@@ -83,16 +83,16 @@ public class ItemController {
         }
         var userId = user.getLeft().userId();
 
+        if (checkIfNewItemRequestBodyIsInvalid(createItemRequestBody)) {
+            return ResponseEntity.badRequest().build();
+        }
+
         if (!checkIfListExists(listId, userId)) {
             return ResponseEntity.notFound().build();
         }
 
         if(!checkIfCategoryExists(createItemRequestBody.categoryId(), userId)){
             return ResponseEntity.notFound().build();
-        }
-
-        if (checkIfNewItemRequestBodyIsInvalid(createItemRequestBody)) {
-            return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(itemMapper.itemToItemResponse(
